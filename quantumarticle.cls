@@ -98,7 +98,8 @@
 \@medpenalty  151
 \@highpenalty 301
 \usepackage{xcolor}
-\definecolor{quantumviolet}{HTML}{400d71} %Quantum violet
+%\definecolor{quantumviolet}{HTML}{400d71} %Quantum violet
+\definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
 \setcounter{topnumber}{2}
 \renewcommand\topfraction{.7}
 \setcounter{bottomnumber}{1}
