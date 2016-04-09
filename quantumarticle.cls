@@ -97,6 +97,8 @@
 \@lowpenalty   51
 \@medpenalty  151
 \@highpenalty 301
+\usepackage{xcolor}
+\definecolor{quantumviolet}{HTML}{400d71} %Quantum violet
 \setcounter{topnumber}{2}
 \renewcommand\topfraction{.7}
 \setcounter{bottomnumber}{1}
@@ -153,15 +155,7 @@
   \null\vfil
   \vskip 60\p@
   \begin{center}%
-    {\LARGE \@title \par}%
-    \vskip 3em%
-    {\large
-     \lineskip .75em%
-      \begin{tabular}[t]{c}%
-        \@author
-      \end{tabular}\par}%
-      \vskip 1.5em%
-    {\large \@date \par}%       % Set date in \large size.
+    \@maketitle
   \end{center}\par
   \@thanks
   \vfil\null
@@ -197,7 +191,7 @@
       \global\@topnum\z@   % Prevents figures from going at top of page.
       \@maketitle
     \fi
-    \thispagestyle{plain}\@thanks
+    \thispagestyle{fancy}\@thanks
   \endgroup
   \setcounter{footnote}{0}%
   \global\let\thanks\relax
@@ -212,20 +206,20 @@
   \global\let\date\relax
   \global\let\and\relax
 }
+\fi
 \def\@maketitle{%
-  \newpage\sffamily
+  \sffamily
   \null
   \let \footnote \thanks
     \noindent\@printtitle
-    \vskip 0.5em%
+    \vskip 1.5em%
     \noindent\@printauthors
-    \vskip 0.5em%
+    \vskip 1em%
     \noindent\@printaffiliations
-    \vskip 0.5em%
-    \noindent\footnotesize\@date
+    \vskip 0em%
+    \noindent{\footnotesize\color{gray}\@date}
   \par
   \vskip 1.5em}
-\fi
 \setcounter{secnumdepth}{3}
 \newcounter {part}
 \newcounter {section}
@@ -557,7 +551,7 @@
                 \twocolumn[\section*{\indexname}]%
                 \@mkboth{\MakeUppercase\indexname}%
                         {\MakeUppercase\indexname}%
-                \thispagestyle{plain}\parindent\z@
+                \thispagestyle{fancy}\parindent\z@
                 \parskip\z@ \@plus .3\p@\relax
                 \columnseprule \z@
                 \columnsep 35\p@
@@ -591,7 +585,13 @@
   \space\number\day, \number\year}
 \setlength\columnsep{20\p@}
 \setlength\columnseprule{0\p@}
-\pagestyle{plain}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrule}{}
+\renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{gray}\hrulefill}\vss}}
+\fancyhf{}
+\cfoot{\thepage}
+\lfoot{}
 \pagenumbering{arabic}
 \if@twoside
 \else
@@ -605,7 +605,7 @@
   \onecolumn
 \fi
 %title
-\def\@printtitle{\Huge \@title}
+\def\@printtitle{{\Huge\color{quantumviolet} \@title}}
 % author handling
 \newcounter{@authorcounter}
 \csdef{@authors}{}
@@ -643,7 +643,7 @@
 \def\@printaffiliations{%
   \ifcsdef{affiliations}{}{\csdef{affiliations}{}}%
   \newcounter{@affiliationnum}%
-  {\footnotesize\forlistloop{\stepcounter{@affiliationnum}\@printaffiliation\the@affiliationnum}{\affiliations}}%
+  {\footnotesize\color{gray}\forlistloop{\stepcounter{@affiliationnum}\@printaffiliation\the@affiliationnum}{\affiliations}}%
 }
 
 
