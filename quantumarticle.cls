@@ -20,7 +20,7 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
               [2016/03/18 v1.0
-               class for Quantum - the open quantum journal (http://quantum-journal.org)]
+               class for Quantum - the open quant-ph overlay journal (http://quantum-journal.org)]
 \newcommand\@ptsize{}
 \newif\if@restonecol
 \newif\if@titlepage
