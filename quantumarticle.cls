@@ -98,7 +98,6 @@
 \@medpenalty  151
 \@highpenalty 301
 \usepackage{xcolor}
-%\definecolor{quantumviolet}{HTML}{400d71} %Quantum violet
 \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
 \setcounter{topnumber}{2}
 \renewcommand\topfraction{.7}
@@ -591,7 +590,7 @@
 \renewcommand{\headrule}{}
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{gray}\hrulefill}\vss}}
 \fancyhf{}
-\cfoot{\thepage}
+\cfoot{\sffamily\thepage}
 \lfoot{}
 \pagenumbering{arabic}
 \if@twoside
@@ -606,7 +605,7 @@
   \onecolumn
 \fi
 %title
-\def\@printtitle{{\Huge\color{quantumviolet} \@title}}
+\def\@printtitle{{\Huge\color{quantumviolet}{\@title}}}
 % author handling
 \newcounter{@authorcounter}
 \csdef{@authors}{}
@@ -646,6 +645,51 @@
   \newcounter{@affiliationnum}%
   {\footnotesize\color{gray}\forlistloop{\stepcounter{@affiliationnum}\@printaffiliation\the@affiliationnum}{\affiliations}}%
 }
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\makeatletter
+\newlength{\@eQ}%Capital Q height
+\newlength{\@w}%line width
+\newlength{\@rl}%rounding length
+\newlength{\@cw}%character width
+\newlength{\@ch}%lower case character height
+\newcommand{\Quantum} {%
+{\sffamily%\color{quantumviolet}%
+\setlength{\@eQ}{\dimexpr\fontcharht\font`Q\relax}%
+\setlength{\@w}{0.088\@eQ}%
+\setlength{\@rl}{0.18\@eQ}%
+\setlength{\@cw}{0.5\@eQ}%
+\setlength{\@ch}{0.65\@eQ}%
+\tikz[baseline,x=\@eQ,y=\@eQ,every node/.append style={fill=none,inner sep=0pt,outer sep=0pt,node distance=0},rounded corners=0.3\@w]{%
+  %<> leg in back
+  % \fill[] (0,0.5) -- ++(0.22,0.5) -- ++(\@w,0) -- ++(-0.22,-0.5) -- ++(0.22,-0.5) -- ++(-\@w,0) -- cycle;
+  % \fill[xshift=.95\@eQ] (0,0.5) node (eastend) {} -- ++(-0.22,0.5) -- ++(-\@w,0) -- ++(0.22,-0.5) -- ++(-0.22,-0.5) -- ++(\@w,0) -- cycle;
+  % \begin{scope}
+  %   \clip[xshift=.95\@eQ,overlay] (0.5\@w,0.5) -- ++(-0.22,-0.5) -- (0,0) -- (0.5\@w,0.5) ++(-2\@w,0) -- ++(-0.22,-0.5) -- ($(-2*0.22,0)$) -- ++(0.22,0.5) --cycle;
+  %   \fill[xshift=.95\@eQ] (0,0) -- ++(-0.22,0.5) -- ++(-\@w,0) -- ++(0.22,-0.5) -- cycle;    
+  % \end{scope}
+  %<> leg in front
+  \fill[] (0,0.5) -- ++(0.22,0.5) -- ++(\@w,0) -- ++(-0.22,-0.5) -- ++(0.22,-0.5) -- ++(-\@w,0) -- cycle;
+  \fill[xshift=.95\@eQ] (0,0) -- ++(-0.22,0.5) -- ++(-\@w,0) -- ++(0.22,-0.5) -- cycle;    
+  \begin{scope}
+    \clip[xshift=.95\@eQ,overlay] (-1.5\@w,0) -- ++(-0.22,0.5) -- ++(0,-0.5) -- cycle (0.5\@w,0) -- ++($2*(-0.22,0.5)$) -- (0.5\@w,1) --cycle;
+    \fill[xshift=.95\@eQ] (0,0.5) node (eastend) {} -- ++(-0.22,0.5) -- ++(-\@w,0) -- ++(0.22,-0.5) -- ++(-0.22,-0.5) -- ++(\@w,0) -- cycle;
+  \end{scope}
+  %u
+  \fill[shift={($(current bounding box.south east)+(0.15\@eQ,0)$)}] (0,\@ch) -- (0,\@rl) to[out=-90,in=180] ($(\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+  %a
+  \fill[shift={($(current bounding box.south east)+(0.18\@eQ,0)$)}] ($(0,\@rl)$) to[out=-90,in=180] ($(\@rl,0)$) -- (\@cw,0) -- ++($(0,\@ch)-(0,\@rl)$) to[out=90,in=0] ++($(-\@rl,\@rl)$) -- ($(\@w,\@ch)$) -- ++(0,-\@w) -- ++($(\@rl,0)$) to[out=0,in=90] ($(\@cw,\@ch)-(\@w,\@rl)$) -- ($(\@cw,0)-(\@w,-\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) to[out=90,in=180] 
+  ($(\@rl,0.5\@ch)+(0,-0.5\@w)$) -- ($(\@cw,0.5\@ch)+(-0.5\@w,-0.5\@w)$) -- ++($(0,\@w)$) -- ($(\@rl,0.5\@ch)+(0,0.5\@w)$) to[out=180,in=90] cycle;
+  %n
+  \fill[shift={($(current bounding box.south east)+(0.18\@eQ+\@cw,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180] ($(\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+  %t
+  \fill[shift={($(current bounding box.south east)+(0.18\@eQ,0)$)}] (0,\@ch) rectangle ($(0.9\@cw,\@ch) + (0,-\@w)$) (\@w,0.9) -- (\@w,\@rl) to[out=-90,in=180] ($(\@w,0)+(\@rl,0)$) -- ($(0.9\@cw,0)$) -- ++(0,\@w) -- ($(\@w,0)+(\@rl,\@w)$) to[out=180,in=-90] ($(2\@w,\@rl)$) -- ($(2\@w,0.9)$) --cycle;
+  %u
+  \fill[shift={($(current bounding box.south east)+(0.18\@eQ,0)$)}] (0,\@ch) -- (0,\@rl) to[out=-90,in=180] ($(\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+  %m
+  \fill[shift={($(current bounding box.south east)+(0.18\@eQ+2*\@cw-\@w,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180] ($(\@rl,0)$) -- ($(2\@cw,0)-(\@w,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@cw,\@w)+(0,0)$) -- ++($(0,-\@w)+(0,\@ch)$) -- ++($(-\@w,0)$) -- ++($(0,-\@ch)+(0,\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+}}}
+\makeatother
 
 
 \endinput
