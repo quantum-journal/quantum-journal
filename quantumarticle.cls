@@ -745,18 +745,32 @@
  \ifstrempty{#1}{%
    \internal@author{#2}%
  }{%
-   Elsevier style affiliations not yet implemented!%
+   \internal@elseauthor{#1}{#2}
  }}%
+\def\addauthortolabel#1#2{%
+  \ifcsdef{authorswithlabel#2}{}{\csdef{authorswithlabel#2}{}}%
+  \listcsxadd{authorswithlabel#2}{#1}}%
+\def\internal@elseauthor#1#2{%
+  \stepcounter{@authorcounter}
+  \ifcsdef{@authors}{}{\csdef{@authors}{}}%
+  \listxadd{\@authors}{#2}%
+  \forcsvlist{\addauthortolabel{\the@authorcounter}}{#1}%
+  \ifbool{@startnewauthorgroup}{\csundef{@authorgroup}}{}%
+  \ifcsdef{@authorgroup}{}{\csdef{@authorgroup}{}}%
+  \listxadd{\@authorgroup}{\the@authorcounter}%
+  \boolfalse{@startnewauthorgroup}%
+}%
 \def\internal@author#1{%
   \stepcounter{@authorcounter}
   \ifcsdef{@authors}{}{\csdef{@authors}{}}%
   \listxadd{\@authors}{#1}%
   \ifbool{@startnewauthorgroup}{\csundef{@authorgroup}}{}
   \ifcsdef{@authorgroup}{}{\csdef{@authorgroup}{}}%
-  \listxadd{\@authorgroup}{\the@authorcounter}% must be reset if previous command was affiliation!
+  \listxadd{\@authorgroup}{\the@authorcounter}
   \boolfalse{@startnewauthorgroup}
 }
-\def\@printauthor#1#2{#2\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{, and }{}}}
+\def\@@spaceafter#1{#1 }
+\def\@printauthor#1#2{#2\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@spaceafter}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{, and }{}}}
 \def\@printauthors{%
   \newcounter{@authornum}%
   \large\forlistloop{\stepcounter{@authornum}\@printauthor\the@authornum}{\@authors}%
@@ -768,18 +782,29 @@
 \ifcsdef{author#2affiliations}{}{\csdef{author#2affiliations}{}}%
 \listcsgadd{author#2affiliations}{#1}
 }
-\def\affiliation{\internal@affiliation}%
-\newcommand{\address}[2][]{%
+\newcommand{\address}[2][]{\affiliation[#1]{#2}}
+\newcommand{\affiliation}[2][]{%
  \ifstrempty{#1}{%
    \internal@affiliation{#2}%
  }{%
-   Elsevier style affiliations not yet implemented!%
+   \elseinternal@affiliation{#1}{#2}
  }}%
+\def\elseinternal@affiliation#1#2{%
+  \booltrue{@startnewauthorgroup}
+  \ifcsdef{affiliations}{}{\csdef{affiliations}{}}%
+  \expandafter\def\csname\detokenize{#2}\endcsname{#2}%
+  \stepcounter{@affiliationcounter}%
+  \listxadd{\affiliations}{\detokenize{#2}}%
+  \csxdef{affiliation\detokenize{#2}number}{\the@affiliationcounter{}}%
+  \ifcsdef{authorswithlabel#1}{%
+    \forlistcsloop{\@addaffiliation{\csname affiliation\detokenize{#2}number\endcsname}}{authorswithlabel#1}%
+  }{}%
+}
 \def\internal@affiliation#1{%
   \booltrue{@startnewauthorgroup}
   \ifcsdef{affiliations}{}{\csdef{affiliations}{}}%
   \expandafter\def\csname\detokenize{#1}\endcsname{#1} %to handle special characters such as \'a and \l we create a macro with whose name is the detokenized version of #1 and that expands to #1 and later call it in \@printaffiliation
-  \xifinlist{\detokenize{#1}}{\affiliations}{}{\stepcounter{@affiliationcounter}\listxadd{\affiliations}{\detokenize{#1}}\csxdef{affiliation\detokenize{#1}number}{\the@affiliationcounter{} }}%
+  \xifinlist{\detokenize{#1}}{\affiliations}{}{\stepcounter{@affiliationcounter}\listxadd{\affiliations}{\detokenize{#1}}\csxdef{affiliation\detokenize{#1}number}{\the@affiliationcounter{}}}%
   \forlistloop{\@addaffiliation{\csname affiliation\detokenize{#1}number\endcsname}}{\@authorgroup}%
 }
 \def\@printaffiliation#1#2{\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{#1}}{}\csname #2\endcsname\ifnumcomp{#1}{<}{\the@affiliationcounter}{\newline}{}}
