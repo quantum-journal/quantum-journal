@@ -29,25 +29,25 @@
 \DeclareOption{a4paper}
    {\setlength\paperheight {297mm}%
     \setlength\paperwidth  {210mm}}
-% \DeclareOption{a5paper}
-%    {\setlength\paperheight {210mm}%
-%     \setlength\paperwidth  {148mm}}
-% \DeclareOption{b5paper}
-%    {\setlength\paperheight {250mm}%
-%     \setlength\paperwidth  {176mm}}
+\DeclareOption{a5paper}
+   {\setlength\paperheight {210mm}%
+    \setlength\paperwidth  {148mm}}
+\DeclareOption{b5paper}
+   {\setlength\paperheight {250mm}%
+    \setlength\paperwidth  {176mm}}
 \DeclareOption{letterpaper}
    {\setlength\paperheight {11in}%
     \setlength\paperwidth  {8.5in}}
-% \DeclareOption{legalpaper}
-%    {\setlength\paperheight {14in}%
-%     \setlength\paperwidth  {8.5in}}
-% \DeclareOption{executivepaper}
-%    {\setlength\paperheight {10.5in}%
-%     \setlength\paperwidth  {7.25in}}
-% \DeclareOption{landscape}
-%    {\setlength\@tempdima   {\paperheight}%
-%     \setlength\paperheight {\paperwidth}%
-%     \setlength\paperwidth  {\@tempdima}}
+\DeclareOption{legalpaper}
+   {\setlength\paperheight {14in}%
+    \setlength\paperwidth  {8.5in}}
+\DeclareOption{executivepaper}
+   {\setlength\paperheight {10.5in}%
+    \setlength\paperwidth  {7.25in}}
+\DeclareOption{landscape}
+   {\setlength\@tempdima   {\paperheight}%
+    \setlength\paperheight {\paperwidth}%
+    \setlength\paperwidth  {\@tempdima}}
 \fi
 \if@compatibility
   \renewcommand\@ptsize{0}
@@ -84,11 +84,90 @@
       }%
    \renewcommand\newblock{\par}}%
 }
+%declare some dummy options for compatibility
+\DeclareOption{checkin}{}
+\DeclareOption{preprint}{}
+\DeclareOption{reprint}{}
+\DeclareOption{manuscript}{}
+\DeclareOption{noshowpacs}{}
+\DeclareOption{showkeys}{}
+\DeclareOption{noshowkeys}{}
+\DeclareOption{balancelastpage}{}
+\DeclareOption{nobalancelastpage}{}
+\DeclareOption{nopreprintnumbers}{}
+\DeclareOption{preprintnumbers}{}
+\DeclareOption{hyperref}{}
+\DeclareOption{bibnotes}{}
+\DeclareOption{nobibnotes}{}
+\DeclareOption{footinbib}{}
+\DeclareOption{nofootinbib}{}
+\DeclareOption{altaffilletter}{}
+\DeclareOption{altaffilsymbol}{}
+\DeclareOption{superbib}{}
+\DeclareOption{citeautoscript}{}
+\DeclareOption{longbibliography}{}
+\DeclareOption{nolongbibliography}{}
+\DeclareOption{eprint}{}
+\DeclareOption{noeprint}{}
+\DeclareOption{author-year}{}
+\DeclareOption{numerical}{}
+\DeclareOption{galley}{}
+\DeclareOption{raggedbottom}{}
+\DeclareOption{tightenlines}{}
+\DeclareOption{lengthcheck}{}
+\DeclareOption{reprint}{}
+\DeclareOption{eqsecnum}{}
+\DeclareOption{secnumarabic}{}
+\DeclareOption{fleqn}{}
+\DeclareOption{floats}{}
+\DeclareOption{endfloats}{}
+\DeclareOption{endfloats*}{}
+\DeclareOption{osa}{}
+\DeclareOption{osameet}{}
+\DeclareOption{opex}{}
+\DeclareOption{tops}{}
+\DeclareOption{josa}{}
+\DeclareOption{amsfonts}{%
+  \def\class@amsfonts{\RequirePackage{amsfonts}}%
+}%
+\DeclareOption{noamsfonts}{}
+\DeclareOption{amssymb}{%
+  \def\class@amssymb{\RequirePackage{amssymb}}%
+}%
+\DeclareOption{noamssymb}{}
+\DeclareOption{amsmath}{%
+  \def\class@amsmath{\RequirePackage{amsmath}[\ver@amsmath@prefer]}%
+}%
+\DeclareOption{noamsmath}{}
+\DeclareOption{byrevtex}{}
+\DeclareOption{floatfix}{}
+\DeclareOption{nofloatfix}{}
+\DeclareOption{ltxgridinfo}{}
+\DeclareOption{outputdebug}{}
+\DeclareOption{raggedfooter}{}
+\DeclareOption{noraggedfooter}{}
+\DeclareOption{frontmatterverbose}{}
+\DeclareOption{linenumbers}{}
+\DeclareOption{nomerge}{}
+\DeclareOption{hypertext}{}
+\DeclareOption{frontmatterverbose}{}
+\DeclareOption{inactive}{}
+\DeclareOption{groupedaddress}{}
+\DeclareOption{unsortedaddress}{}
+\DeclareOption{runinaddress}{}
+\DeclareOption{superscriptaddress}{}
+\DeclareOption{}{}
+\DeclareOption{}{}
+\DeclareOption{}{}
+
+
+
 \ExecuteOptions{letterpaper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
-%\RequirePackage{times}
+
 \RequirePackage{etoolbox}
 \input{size1\@ptsize.clo}
+
 \usepackage[margin=2cm,bottom=3cm]{geometry}
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
@@ -97,8 +176,17 @@
 \@lowpenalty   51
 \@medpenalty  151
 \@highpenalty 301
+
 \usepackage{xcolor}
 \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
+\definecolor{quantumgray}{HTML}{555555} %Quantum violet
+\let\origif@twocolumn\if@twocolumn
+\RequirePackage{ltxgrid}
+\let\if@twocolumn\origif@twocolumn
+\let\col@number\@colnum
+\newcommand{\twocolumn}[1][]{#1\twocolumngrid}
+\newcommand{\onecolumn}{\onecolumngrid}
+
 \setcounter{topnumber}{2}
 \renewcommand\topfraction{.7}
 \setcounter{bottomnumber}{1}
@@ -217,9 +305,10 @@
     \vskip 1em%
     \noindent\@printaffiliations
     \vskip 0em%
-    \noindent{\footnotesize\color{gray}\@date}
+    \noindent{\footnotesize\color{quantumgray}\@date}
   \par
-  \vskip 1.5em}
+  \vskip 1.5em
+}
 \setcounter{secnumdepth}{3}
 \newcounter {part}
 \newcounter {section}
@@ -386,7 +475,7 @@
 \newenvironment{titlepage}
     {%
       \if@twocolumn
-        \@restonecoltrue\onecolumn
+        \@restonecoltrue\onecolumn\newpage
       \else
         \@restonecolfalse\newpage
       \fi
@@ -588,9 +677,10 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \renewcommand{\headrule}{}
-\renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{gray}\hrulefill}\vss}}
+%\renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\hrulefill}\vss}}
+\renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
-\cfoot{\sffamily\thepage}
+\cfoot{\color{quantumgray}\sffamily\thepage}
 \lfoot{}
 \pagenumbering{arabic}
 \if@twoside
@@ -604,12 +694,59 @@
 \else
   \onecolumn
 \fi
+
+%the following is mostly taken from revtex4-1:
+\if@twocolumn
+\newbox\widetext@top
+\newbox\widetext@bot
+\newenvironment{widetext}{%
+  \par\ignorespaces
+  \setbox\widetext@top\vbox{%
+   \hb@xt@\hsize{%
+     {\color{quantumgray}%
+    \leaders\hrule\hfil
+    \vrule\@height6\p@}
+   }%
+  }%
+  \setbox\widetext@bot\hb@xt@\hsize{%
+    {\color{quantumgray}%
+    \vrule\@depth6\p@
+    \leaders\hrule\hfil}
+  }%
+  \onecolumngrid
+  \vskip10\p@
+  \dimen@\ht\widetext@top\advance\dimen@\dp\widetext@top
+  \cleaders\box\widetext@top\vskip\dimen@
+  \vskip6\p@
+  \prep@math@patch
+}{%
+  \par
+  \vskip6\p@
+  \setbox\widetext@bot\vbox{%
+   \hb@xt@\hsize{\hfil\box\widetext@bot}%
+  }%
+  \dimen@\ht\widetext@bot\advance\dimen@\dp\widetext@bot
+  \cleaders\box\widetext@bot\vskip\dimen@
+  \vskip8.5\p@
+  \twocolumngrid\global\@ignoretrue
+  \@endpetrue
+}%
+\else
+\newenvironment{widetext}{}{}
+\fi
+
+
 %title
 \def\@printtitle{{\Huge\color{quantumviolet}{\@title}}}
 % author handling
 \newcounter{@authorcounter}
 \csdef{@authors}{}
-\def\author{\internal@author}%
+\renewcommand{\author}[2][]{%
+ \ifstrempty{#1}{%
+   \internal@author{#2}%
+ }{%
+   Elsevier style affiliations not yet implemented!%
+ }}%
 \def\internal@author#1{%
   \stepcounter{@authorcounter}
   \ifcsdef{@authors}{}{\csdef{@authors}{}}%
@@ -632,6 +769,12 @@
 \listcsgadd{author#2affiliations}{#1}
 }
 \def\affiliation{\internal@affiliation}%
+\newcommand{\address}[2][]{%
+ \ifstrempty{#1}{%
+   \internal@affiliation{#2}%
+ }{%
+   Elsevier style affiliations not yet implemented!%
+ }}%
 \def\internal@affiliation#1{%
   \booltrue{@startnewauthorgroup}
   \ifcsdef{affiliations}{}{\csdef{affiliations}{}}%
@@ -643,11 +786,10 @@
 \def\@printaffiliations{%
   \ifcsdef{affiliations}{}{\csdef{affiliations}{}}%
   \newcounter{@affiliationnum}%
-  {\footnotesize\color{gray}\forlistloop{\stepcounter{@affiliationnum}\@printaffiliation\the@affiliationnum}{\affiliations}}%
+  {\footnotesize\color{quantumgray}\forlistloop{\stepcounter{@affiliationnum}\@printaffiliation\the@affiliationnum}{\affiliations}}%
 }
 \usepackage{tikz}
 \usetikzlibrary{calc}
-\makeatletter
 \newlength{\@eQ}%Capital Q height
 \newlength{\@w}%line width
 \newlength{\@rl}%rounding length
@@ -689,7 +831,11 @@
   %m
   \fill[shift={($(current bounding box.south east)+(0.18\@eQ+2*\@cw-\@w,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180] ($(\@rl,0)$) -- ($(2\@cw,0)-(\@w,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@cw,\@w)+(0,0)$) -- ++($(0,-\@w)+(0,\@ch)$) -- ++($(-\@w,0)$) -- ++($(0,-\@ch)+(0,\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
 }}}
-\makeatother
+
+\newcommand{\ead}[1]{} %ignore email addresses given with the ead command
+\newcommand{\cortext}[1][]{} %ignore corresponding author information
+\newcommand{\fntext}[1][]{} %author footnotes
+
 
 
 \endinput
