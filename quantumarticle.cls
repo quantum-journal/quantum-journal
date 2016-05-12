@@ -821,6 +821,8 @@
 \newlength{\@cw}%character width
 \newlength{\@ch}%lower case character height
 \newlength{\@cr}%corner radius
+\newlength{\@sl}%<> slant
+\newlength{\@xt}%<> x thickeness
 \newcommand{\Quantum} {%
 {\sffamily%\color{quantumviolet}%
 \setlength{\@eQ}{\dimexpr\fontcharht\font`Q\relax}%
@@ -829,20 +831,22 @@
 \setlength{\@cw}{0.5\@eQ}%
 \setlength{\@ch}{0.65\@eQ}%
 \setlength{\@cr}{0.3\@w}%
+\setlength{\@sl}{0.22\@eQ}%
+\setlength{\@xt}{1.113588507968435\@w}%=math.sqrt(1/(1-pow(22./50.,2)))*\@w
 \tikz[baseline,x=\@eQ,y=\@eQ,every node/.append style={fill=none,inner sep=0pt,outer sep=0pt,node distance=0},rounded corners=\@cr]{%
   %<> leg in back
-  % \fill[] (0,0.5) -- ++(0.22,0.5) -- ++(\@w,0) -- ++(-0.22,-0.5) -- ++(0.22,-0.5) -- ++(-\@w,0) -- cycle;
-  % \fill[xshift=.95\@eQ] (0,0.5) node (eastend) {} -- ++(-0.22,0.5) -- ++(-\@w,0) -- ++(0.22,-0.5) -- ++(-0.22,-0.5) -- ++(\@w,0) -- cycle;
+  % \fill[] (0,0.5) -- ++(\@sl,0.5) -- ++(\@xt,0) -- ++(-\@sl,-0.5) -- ++(\@sl,-0.5) -- ++(-\@xt,0) -- cycle;
+  % \fill[xshift=.95\@eQ] (0,0.5) node (eastend) {} -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- ++(-\@sl,-0.5) -- ++(\@xt,0) -- cycle;
   % \begin{scope}
-  %   \clip[xshift=.95\@eQ,overlay] (0.5\@w,0.5) -- ++(-0.22,-0.5) -- (0,0) -- (0.5\@w,0.5) ++(-2\@w,0) -- ++(-0.22,-0.5) -- ($(-2*0.22,0)$) -- ++(0.22,0.5) --cycle;
-  %   \fill[xshift=.95\@eQ] (0,0) -- ++(-0.22,0.5) -- ++(-\@w,0) -- ++(0.22,-0.5) -- cycle;    
+  %   \clip[xshift=.95\@eQ,overlay] (0.5\@xt,0.5) -- ++(-\@sl,-0.5) -- (0,0) -- (0.5\@xt,0.5) ++(-2\@xt,0) -- ++(-\@sl,-0.5) -- ($(-2*\@sl,0)$) -- ++(\@sl,0.5) --cycle;
+  %   \fill[xshift=.95\@eQ] (0,0) -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- cycle;    
   % \end{scope}
   %<> leg in front
-  \fill[] (0,0.5) -- ++(0.22,0.5) -- ++(\@w,0) -- ++(-0.22,-0.5) -- ++(0.22,-0.5) -- ++(-\@w,0) -- cycle;
-  \begin{scope}[xshift=0.998\@eQ]
-    \fill (0,0) -- ++(-0.22,0.5) -- ++(-\@w,0) -- ++(0.22,-0.5) -- cycle;    
-    \clip[overlay,rounded corners=0] (-1.35\@w,0) -- ++(-0.22,0.5) -- ++(0,-0.5) -- cycle (0.35\@w,0) -- ++($2*(-0.22,0.5)$) -- (0.5\@w,1) --cycle;
-    \fill (0,0.5) node (eastend) {} -- ++(-0.22,0.5) -- ++(-\@w,0) -- ++(0.22,-0.5) -- ++(-0.22,-0.5) -- ++(\@w,0) -- cycle;
+  \fill[] (0,0.5) -- ++(\@sl,0.5) -- ++(\@xt,0) -- ++(-\@sl,-0.5) -- ++(\@sl,-0.5) -- ++(-\@xt,0) -- cycle;
+  \begin{scope}[xshift=\@eQ]
+    \fill (0,0) -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- cycle;    
+    \clip[overlay,rounded corners=0] (-1.35\@w,0) -- ++(-\@sl,0.5) -- ++(0,-0.5) -- cycle (0.35\@w,0) -- ++($2*(-\@sl,0.5)$) -- (0.5\@w,1) --cycle;
+    \fill (0,0.5) node (eastend) {} -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- ++(-\@sl,-0.5) -- ++(\@xt,0) -- cycle;
   \end{scope}
   %u
   \def\@u##1{%
@@ -852,15 +856,15 @@
   \fill[shift={($(current bounding box.south east)+(0.115\@eQ,0)$)}] ($(0,\@rl)$) to[out=-90,in=180] ($(\@rl,0)$) -- (\@cw,0) -- ++($(0,\@ch)-(0,\@rl)$) to[out=90,in=0] ++($(-\@rl,\@rl)$) -- ($(\@w,\@ch)$) -- ++(0,-\@w) -- ++($(\@rl,0)$) to[out=0,in=90] ($(\@cw,\@ch)-(\@w,\@rl)$) -- ($(\@cw,0)-(\@w,-\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) to[out=90,in=180] 
   ($(\@rl,0.5\@ch)+(0,-0.5\@w)$) -- ($(\@cw,0.5\@ch)+(-0.5\@w,-0.5\@w)$) -- ++($(0,\@w)$) -- ($(\@rl,0.5\@ch)+(0,0.5\@w)$) to[out=180,in=90] cycle;
   %n
-  \fill[shift={($(current bounding box.south east)+(0.18\@eQ+\@cw,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.2] ($(\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+  \fill[shift={($(current bounding box.south east)+(0.18\@eQ+\@cw,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.22] ($(1.2\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
   %t
   \fill[shift={($(current bounding box.south east)+(0.11\@eQ,0)$)}] 
-  (\@w,0.9) [rounded corners=0] -- (\@w,\@ch) [rounded corners=\@cr] -- (0,\@ch) -- ++(0,-\@w) [rounded corners=0] -- ++(\@w,0) [rounded corners=\@cr] -- (\@w,\@rl) to[out=-90,in=180,looseness=1.3] ($(\@w,0)+(\@rl,0)$) -- ($(0.64\@cw,0)$) -- ++(0,\@w) -- ($(\@w,0)+(\@rl,\@w)$) to[out=180,in=-90,looseness=1.3] ($(2\@w,\@rl)$) -- ++($(0,\@ch-\@rl-\@w)$) -- ($(0.64\@cw,\@ch-\@w)$) -- ++(0,\@w) [rounded corners=0] -- (2\@w,\@ch) [rounded corners=\@cr] -- ($(2\@w,0.9)$) --cycle;
+  (\@w,0.9) [rounded corners=0] -- (\@w,\@ch) [rounded corners=\@cr] -- (0,\@ch) -- ++(0,-\@w) [rounded corners=0] -- ++(\@w,0) [rounded corners=\@cr] -- (\@w,\@rl) to[out=-90,in=180,looseness=1.3,overlay] ($(\@w,-0.1\@w)+(\@rl,0)$) to[overlay] ($(0.64\@cw,-0.1\@w)$) -- ++(0,\@w) -- ($(\@w,0)+(\@rl,0.9\@w)$) to[out=180,in=-90,looseness=1.4] ($(2\@w,\@rl)$) -- ++($(0,\@ch-\@rl-\@w)$) -- ($(0.64\@cw,\@ch-\@w)$) -- ++(0,\@w) [rounded corners=0] -- (2\@w,\@ch) [rounded corners=\@cr] -- ($(2\@w,0.9)$) --cycle;
   %u
   \@u{shift={($(current bounding box.south east)+(0.125\@eQ,0)$)}}
 %  \fill[shift={($(current bounding box.south east)+(0.125\@eQ,0)$)}] (0,\@ch) -- (0,\@rl) to[out=-90,in=180] ($(\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
   %m
-  \fill[shift={($(current bounding box.south east)+(0.16\@eQ+2*\@cw-\@w,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180] ($(\@rl,0)$) -- ($(2\@cw,0)-(\@w,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@cw,\@w)+(0,0)$) -- ++($(0,-\@w)+(0,\@ch)$) -- ++($(-\@w,0)$) -- ++($(0,-\@ch)+(0,\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+  \fill[shift={($(current bounding box.south east)+(0.16\@eQ+1.93*\@cw-\@w,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.2] ($(1.2\@rl,0)$) -- ($(1.93\@cw,0)-(\@w,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=184,in=-4] ($(0.97\@cw,1.05\@w)+(0,0)$) -- ++($(0,-1.05\@w)+(0,\@ch)$) -- ++($(-\@w,0)$) -- ++($(0,-\@ch)+(0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
 }}}
 
 \newcommand{\ead}[1]{} %ignore email addresses given with the ead command
