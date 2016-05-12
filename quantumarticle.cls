@@ -841,30 +841,37 @@
   %   \clip[xshift=.95\@eQ,overlay] (0.5\@xt,0.5) -- ++(-\@sl,-0.5) -- (0,0) -- (0.5\@xt,0.5) ++(-2\@xt,0) -- ++(-\@sl,-0.5) -- ($(-2*\@sl,0)$) -- ++(\@sl,0.5) --cycle;
   %   \fill[xshift=.95\@eQ] (0,0) -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- cycle;    
   % \end{scope}
+  \node[overlay,anchor=base west,opacity=0] {Q};
   %<> leg in front
   \fill[] (0,0.5) -- ++(\@sl,0.5) -- ++(\@xt,0) -- ++(-\@sl,-0.5) -- ++(\@sl,-0.5) -- ++(-\@xt,0) -- cycle;
   \begin{scope}[xshift=\@eQ]
     \fill (0,0) -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- cycle;    
-    \clip[overlay,rounded corners=0] (-1.35\@w,0) -- ++(-\@sl,0.5) -- ++(0,-0.5) -- cycle (0.35\@w,0) -- ++($2*(-\@sl,0.5)$) -- (0.5\@w,1) --cycle;
+    \clip[overlay,rounded corners=0] (-1.34\@xt,0) -- ++(-\@sl,0.5) -- ++(0,-0.5) -- cycle (0.34\@xt,0) -- ++($2*(-\@sl,0.5)$) -- (0.5\@xt,1) --cycle;
     \fill (0,0.5) node (eastend) {} -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- ++(-\@sl,-0.5) -- ++(\@xt,0) -- cycle;
   \end{scope}
   %u
   \def\@u##1{%
     \fill[##1] (0,\@ch) -- (0,1.06\@rl) to[out=-90,in=184,looseness=1.2,overlay] ($(\@cw-\@w,0)$) -- ($(\@cw,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@cw-\@w,\@w)$) to[out=184,in=-90,looseness=1.1] ($(\@w,1.06\@rl)$) -- (\@w,\@ch) --cycle;}
   \@u{shift={($(current bounding box.south east)+(0.172\@eQ,0)$)}}
+  \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {u};
   %a
-  \fill[shift={($(current bounding box.south east)+(0.115\@eQ,0)$)}] ($(0,\@rl)$) to[out=-90,in=180] ($(\@rl,0)$) -- (\@cw,0) -- ++($(0,\@ch)-(0,\@rl)$) to[out=90,in=0] ++($(-\@rl,\@rl)$) -- ($(\@w,\@ch)$) -- ++(0,-\@w) -- ++($(\@rl,0)$) to[out=0,in=90] ($(\@cw,\@ch)-(\@w,\@rl)$) -- ($(\@cw,0)-(\@w,-\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) to[out=90,in=180] 
-  ($(\@rl,0.5\@ch)+(0,-0.5\@w)$) -- ($(\@cw,0.5\@ch)+(-0.5\@w,-0.5\@w)$) -- ++($(0,\@w)$) -- ($(\@rl,0.5\@ch)+(0,0.5\@w)$) to[out=180,in=90] cycle;
+  \fill[shift={($(current bounding box.south east)+(0.110\@eQ,0)$)}] (\@cw,0) -- ++($(0,\@ch)-(0,\@rl)$) to[out=90,in=0,looseness=1.22] ++($(-1.22\@rl,\@rl)$) -- ($(\@w,\@ch-0.1\@w)$) -- ++(0.1\@w,-\@w) -- ($(1.22\@rl,\@ch-\@w)$) to[out=0,in=90,looseness=1.3,rounded corners=0] ($(\@cw,\@ch)-(\@w,\@rl)$) -- ($(\@cw,0)-(\@w,-\@w)$) -- 
+  ($(\@rl,\@w)$) to[out=180,in=-100,looseness=0.95,rounded corners=0] ($(1.05\@w,0.33\@ch)$) to[out=80,in=176,looseness=1.0] ($(\@cw-\@w,0.47\@ch)$) to[rounded corners=0] ++(0,-\@cr) to[rounded corners=0] ++($(0,\@cr+\@w)$) to[out=176,in=0] ($(1.2\@rl,0.48\@ch)+(0,\@w)$) to[out=180,in=90,rounded corners=0] ($(0.05\@w,0.33\@ch)$) to[out=-90,in=180,looseness=1.1,rounded corners=0] ($(\@rl,0)$) -- cycle;
+  \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {a};
   %n
-  \fill[shift={($(current bounding box.south east)+(0.18\@eQ+\@cw,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.22] ($(1.2\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+  \fill[shift={($(current bounding box.south east)+(0.181\@eQ+\@cw,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.22] ($(1.2\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+  \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {n};
   %t
-  \fill[shift={($(current bounding box.south east)+(0.11\@eQ,0)$)}] 
-  (\@w,0.9) [rounded corners=0] -- (\@w,\@ch) [rounded corners=\@cr] -- (0,\@ch) -- ++(0,-\@w) [rounded corners=0] -- ++(\@w,0) [rounded corners=\@cr] -- (\@w,\@rl) to[out=-90,in=180,looseness=1.3,overlay] ($(\@w,-0.1\@w)+(\@rl,0)$) to[overlay] ($(0.64\@cw,-0.1\@w)$) -- ++(0,\@w) -- ($(\@w,0)+(\@rl,0.9\@w)$) to[out=180,in=-90,looseness=1.4] ($(2\@w,\@rl)$) -- ++($(0,\@ch-\@rl-\@w)$) -- ($(0.64\@cw,\@ch-\@w)$) -- ++(0,\@w) [rounded corners=0] -- (2\@w,\@ch) [rounded corners=\@cr] -- ($(2\@w,0.9)$) --cycle;
+  \fill[shift={($(current bounding box.south east)+(0.111\@eQ,0)$)}] 
+  (\@w,0.9) [rounded corners=0] -- (\@w,\@ch) [rounded corners=\@cr] -- (0,\@ch) -- ++(0,-\@w) to[rounded corners=0] ++(\@w,0) -- (\@w,\@rl) to[out=-90,in=180,looseness=1.3,overlay] ($(\@w,-0.1\@w)+(\@rl,0)$) to[overlay] ($(0.64\@cw,-0.1\@w)$) -- ++(0,\@w) -- ($(\@w,0)+(\@rl,0.9\@w)$) to[out=180,in=-90,looseness=1.4] ($(2\@w,\@rl)$) -- ++($(0,\@ch-\@rl-\@w)$) -- ($(0.64\@cw,\@ch-\@w)$) -- ++(0,\@w) to[rounded corners=0] (2\@w,\@ch) -- ($(2\@w,0.9)$) --cycle;
+  \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {t};
   %u
   \@u{shift={($(current bounding box.south east)+(0.125\@eQ,0)$)}}
 %  \fill[shift={($(current bounding box.south east)+(0.125\@eQ,0)$)}] (0,\@ch) -- (0,\@rl) to[out=-90,in=180] ($(\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+  \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {u};
   %m
   \fill[shift={($(current bounding box.south east)+(0.16\@eQ+1.93*\@cw-\@w,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.2] ($(1.2\@rl,0)$) -- ($(1.93\@cw,0)-(\@w,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=184,in=-4] ($(0.97\@cw,1.05\@w)+(0,0)$) -- ++($(0,-1.05\@w)+(0,\@ch)$) -- ++($(-\@w,0)$) -- ++($(0,-\@ch)+(0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+  \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {m};
 }}}
 
 \newcommand{\ead}[1]{} %ignore email addresses given with the ead command
