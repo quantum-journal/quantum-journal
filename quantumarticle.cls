@@ -162,7 +162,7 @@
 
 
 
-\ExecuteOptions{letterpaper,10pt,oneside,twocolumn,notitlepage,final}
+\ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
 
 \RequirePackage{etoolbox}
