@@ -275,7 +275,6 @@
         \twocolumn[\@maketitle]%
       \fi
     \else
-      \newpage
       \global\@topnum\z@   % Prevents figures from going at top of page.
       \@maketitle
     \fi
@@ -421,16 +420,19 @@
                                 \normalfont\bfseries #1}
 \if@titlepage
   \newenvironment{abstract}{%
+    \ifx\maketitle\relax{}\else\maketitle\fi
       \titlepage
       \null\vfil
+      \thispagestyle{empty}%
       \@beginparpenalty\@lowpenalty
       \begin{center}%
         \bfseries \abstractname
         \@endparpenalty\@M
       \end{center}}%
-     {\par\vfil\null\endtitlepage}
+     {\par\vfil\null\newpage\endtitlepage}
 \else
   \newenvironment{abstract}{%
+    \ifx\maketitle\relax{}\else\maketitle\fi
       \if@twocolumn
       \bf
       \else
