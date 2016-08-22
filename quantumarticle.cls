@@ -676,6 +676,7 @@
   \space\number\day, \number\year}
 \setlength\columnsep{20\p@}
 \setlength\columnseprule{0\p@}
+\setlength{\footnotesep}{2\baselineskip}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \renewcommand{\headrule}{}
@@ -779,7 +780,19 @@
 \def\@printauthors{%
   \newcounter{@authornum}%
   \large\forlistloop{\stepcounter{@authornum}%
-    \@printauthorextrainfo{\the@authornum}%
+    \ifcsdef{author\the@authornum hasextras}{%
+    \insert\footins{\footnotesize%
+%      \interlinepenalty\interfootnotelinepenalty
+%      \splittopskip\footnotesep
+%      \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
+      \if@twocolumn
+      \hsize\dimexpr 0.5\linewidth-0.5\columnsep\relax \@parboxrestore%
+      \else
+      \hsize\dimexpr \linewidth\relax \@parboxrestore%
+      \fi
+      \flushleft%
+      \@printauthorextrainfo{\the@authornum}%\vspace{5\p@}%
+    }}{}%
     \@printauthor\the@authornum}{\@authors}%
 }
 % affiliation handling
@@ -820,25 +833,27 @@
   \newcounter{@affiliationnum}%
   {\footnotesize\color{quantumgray}\forlistloop{\stepcounter{@affiliationnum}\@printaffiliation\the@affiliationnum}{\affiliations}}%
 }
-%collaboration, email, homepage, altaffiliation, and thanks handling.
-\def\@printauthorextrainfo#1{\insert\footins{\footnotesize
-     \interlinepenalty\interfootnotelinepenalty
-     \splittopskip\footnotesep
-     \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
-     \hsize\columnwidth \@parboxrestore\noindent\csname @authorname#1\endcsname: \forlistcsloop{\@@spaceafter}{author#1emails}\forlistcsloop{\@@spaceafter}{author#1homepages}\forlistcsloop{\@@spaceafter}{author#1thanks}}}
+%collaboration and altaffiliation
 \newcommand{\collaboration}[1]{\author{#1}}
 \newcommand{\altaffiliation}[2][]{\affiliation{#1#2}}
+%email, homepage, and thanks handling
+\def\@printauthorextrainfo#1{%
+  \csname @authorname#1\endcsname: \ifcsdef{author#1emails}{\forlistcsloop{\@@spaceafter}{author#1emails}}{}\ifcsdef{author#1homepages}{\ifcsdef{author#1emails}{\unskip, }{}\forlistcsloop{\@@spaceafter}{author#1homepages}}{}\ifcsdef{author#1thanks}{\ifcsdef{author#1emails}{\ifcsdef{author#1homepages}{\unskip, }{\unskip, }}{\ifcsdef{author#1homepages}{\unskip, }{}}\forlistcsloop{\@@spaceafter}{author#1thanks}}{}%
+}
 \newcommand{\email}[2][]{\@email{#1}{#2}}
 \newcommand{\homepage}[2][]{\@homepage{#1}{#2}}
 \renewcommand{\thanks}[2][]{\@thanks{#1}{#2}}
 \def\@email#1#2{%
 \@addemail{#1#2}{\@currentauthornumber}
+\csdef{author\@currentauthornumber hasextras}{}
 }
 \def\@homepage#1#2{%
 \@addhomepage{#1#2}{\@currentauthornumber}
+\csdef{author\@currentauthornumber hasextras}{}
 }
 \def\@thanks#1#2{%
 \@addthanks{#1#2}{\@currentauthornumber}
+\csdef{author\@currentauthornumber hasextras}{}
 }
 \def\@addemail#1#2{
 \ifcsdef{author#2emails}{}{\csdef{author#2emails}{}}%
