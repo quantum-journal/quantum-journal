@@ -19,7 +19,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2016/03/18 v1.0
+              [2016/08/22 v1.1
                class for Quantum - the open quant-ph overlay journal (http://quantum-journal.org)]
 \newcommand\@ptsize{}
 \newif\if@restonecol
@@ -245,13 +245,13 @@
   \begin{center}%
     \@maketitle
   \end{center}\par
-  \@thanks
+%  \@thanks
   \vfil\null
   \end{titlepage}%
   \setcounter{footnote}{0}%
   \global\let\thanks\relax
   \global\let\maketitle\relax
-  \global\let\@thanks\@empty
+%  \global\let\@thanks\@empty
   \global\let\@author\@empty
   \global\let\@date\@empty
   \global\let\@title\@empty
@@ -278,13 +278,13 @@
       \global\@topnum\z@   % Prevents figures from going at top of page.
       \@maketitle
     \fi
-    \thispagestyle{fancy}\@thanks
+    \thispagestyle{fancy}%\@thanks
   \endgroup
   \setcounter{footnote}{0}%
   \global\let\thanks\relax
   \global\let\maketitle\relax
   \global\let\@maketitle\relax
-  \global\let\@thanks\@empty
+%  \global\let\@thanks\@empty
   \global\let\@author\@empty
   \global\let\@date\@empty
   \global\let\@title\@empty
@@ -748,7 +748,10 @@
    \internal@author{#2}%
  }{%
    \internal@elseauthor{#1}{#2}
- }}%
+ }%
+ \csdef{@authorname\the@authorcounter}{#2}%
+ \def\@currentauthornumber{\the@authorcounter}%
+}%
 \def\addauthortolabel#1#2{%
   \ifcsdef{authorswithlabel#2}{}{\csdef{authorswithlabel#2}{}}%
   \listcsxadd{authorswithlabel#2}{#1}}%
@@ -775,7 +778,9 @@
 \def\@printauthor#1#2{#2\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@spaceafter}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{, and }{}}}
 \def\@printauthors{%
   \newcounter{@authornum}%
-  \large\forlistloop{\stepcounter{@authornum}\@printauthor\the@authornum}{\@authors}%
+  \large\forlistloop{\stepcounter{@authornum}%
+    \@printauthorextrainfo{\the@authornum}%
+    \@printauthor\the@authornum}{\@authors}%
 }
 % affiliation handling
 \newbool{@startnewauthorgroup}
@@ -815,6 +820,40 @@
   \newcounter{@affiliationnum}%
   {\footnotesize\color{quantumgray}\forlistloop{\stepcounter{@affiliationnum}\@printaffiliation\the@affiliationnum}{\affiliations}}%
 }
+%collaboration, email, homepage, altaffiliation, and thanks handling.
+\def\@printauthorextrainfo#1{\insert\footins{\footnotesize
+     \interlinepenalty\interfootnotelinepenalty
+     \splittopskip\footnotesep
+     \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
+     \hsize\columnwidth \@parboxrestore\noindent\csname @authorname#1\endcsname: \forlistcsloop{\@@spaceafter}{author#1emails}\forlistcsloop{\@@spaceafter}{author#1homepages}\forlistcsloop{\@@spaceafter}{author#1thanks}}}
+\newcommand{\collaboration}[1]{\author{#1}}
+\newcommand{\altaffiliation}[2][]{\affiliation{#1#2}}
+\newcommand{\email}[2][]{\@email{#1}{#2}}
+\newcommand{\homepage}[2][]{\@homepage{#1}{#2}}
+\renewcommand{\thanks}[2][]{\@thanks{#1}{#2}}
+\def\@email#1#2{%
+\@addemail{#1#2}{\@currentauthornumber}
+}
+\def\@homepage#1#2{%
+\@addhomepage{#1#2}{\@currentauthornumber}
+}
+\def\@thanks#1#2{%
+\@addthanks{#1#2}{\@currentauthornumber}
+}
+\def\@addemail#1#2{
+\ifcsdef{author#2emails}{}{\csdef{author#2emails}{}}%
+\listcsgadd{author#2emails}{#1}
+}
+\def\@addhomepage#1#2{
+\ifcsdef{author#2homepages}{}{\csdef{author#2homepages}{}}%
+\listcsgadd{author#2homepages}{#1}
+}
+\def\@addthanks#1#2{
+\ifcsdef{author#2thanks}{}{\csdef{author#2thanks}{}}%
+\listcsgadd{author#2thanks}{#1}
+}
+
+
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \newlength{\@eQ}%Capital Q height
