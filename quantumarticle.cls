@@ -855,8 +855,8 @@
 \def\@printauthorextrainfo#1{%
   \csname @authorname#1\endcsname: \ifcsdef{author#1emails}{\forlistcsloop{\@@spaceafter}{author#1emails}}{}\ifcsdef{author#1homepages}{\ifcsdef{author#1emails}{\unskip, }{}\forlistcsloop{\@@spaceafter}{author#1homepages}}{}\ifcsdef{author#1thanks}{\ifcsdef{author#1emails}{\ifcsdef{author#1homepages}{\unskip, }{\unskip, }}{\ifcsdef{author#1homepages}{\unskip, }{}}\forlistcsloop{\@@spaceafter}{author#1thanks}}{}%
 }
-\newcommand{\email}[2][]{\@email{#1}{#2}}
-\newcommand{\homepage}[2][]{\@homepage{#1}{#2}}
+\newcommand{\email}[2][]{\@email{#1}{\href{mailto:#2}{#2}}}
+\newcommand{\homepage}[2][]{\@homepage{#1}{\href{#2}{#2}}}
 \renewcommand{\thanks}[2][]{\@thanks{#1}{#2}}
 \def\@email#1#2{%
 \@addemail{#1#2}{\@currentauthornumber}
