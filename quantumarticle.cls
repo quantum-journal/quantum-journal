@@ -19,7 +19,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2016/08/22 v1.1
+              [2016/08/23 v1.2
                class for Quantum - the open quant-ph overlay journal (http://quantum-journal.org)]
 \newcommand\@ptsize{}
 \newif\if@restonecol
@@ -796,10 +796,14 @@
 %      \interlinepenalty\interfootnotelinepenalty
 %      \splittopskip\footnotesep
 %      \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
-      \if@twocolumn
-      \hsize\dimexpr 0.5\linewidth-0.5\columnsep\relax \@parboxrestore%
+      \if@titlepage
+       \hsize\dimexpr \linewidth\relax \@parboxrestore
       \else
-      \hsize\dimexpr \linewidth\relax \@parboxrestore%
+       \if@twocolumn
+        \hsize\dimexpr 0.5\linewidth-0.5\columnsep\relax \@parboxrestore
+       \else
+        \hsize\dimexpr \linewidth\relax \@parboxrestore
+       \fi
       \fi
       \flushleft%
       \@printauthorextrainfo{\the@authornum}%\vspace{5\p@}%
