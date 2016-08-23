@@ -177,6 +177,17 @@
 \@medpenalty  151
 \@highpenalty 301
 
+% Define revtex-style symbols.
+\IfFileExists{bbmb.sty}{
+  \RequirePackage{bbm}
+  \DeclareRobustCommand\openone{\mathbbm{1}}
+}{
+  % This uses a similar technique to {revtex4-1}'s openone,
+  % namely two overstruck numeral 1s, but implemented using mboxes
+  % and math kerning as suggested by The Comprehensive LaTeX Symbol List.
+  \DeclareRobustCommand\openone{{\mbox{\small1}\normalsize\mkern-5.5mu1}}
+}
+
 \usepackage{xcolor}
 \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
 \definecolor{quantumgray}{HTML}{555555} %Quantum violet
