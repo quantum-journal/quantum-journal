@@ -15,6 +15,12 @@ The `quantumarticle` class tries to be **maximally compatible** with existing do
 
 If you encouter any problems, please write an email including a minimal working example that illustrates the problem to quantumarticle@quantum-journal.org
 
+## Contributing
+
+In case you encounter problems using the article class please consider opening a bug report in our bug-tracker under https://github.com/cgogolin/quantum-journal/issues or contact us via email under latex@quantum-journal.org.
+
+Improvements submitted as pull requestes are very much appreciated! Please submit them agains the develop branch.
+
 ## Copyright
 
 Copyright 2016
