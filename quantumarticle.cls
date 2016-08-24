@@ -177,11 +177,13 @@
 \@medpenalty  151
 \@highpenalty 301
 
-% avoid bitmap fonts by loading either lmodern or cm-super
+% avoid bitmap fonts by loading lmodern or at least checking for cm-super
 \IfFileExists{lmodern.sty}{
   \RequirePackage{lmodern}
 }{
-  \RequirePackage{cm-super}
+  \IfFileExists{type1ec.sty}{}{
+    \PackageError{quantumarticle}{Either the lmodern or the cm-super package are required by quantumarticle in order to produce high quality pdf output.}{Please install the lmodern package, or, if this is not possible, the cm-super package.}
+  }
 }
 
 % Define a revtex-style openone symbol
