@@ -168,7 +168,7 @@
 \RequirePackage{etoolbox}
 \input{size1\@ptsize.clo}
 
-\usepackage[margin=2cm,bottom=3cm]{geometry}
+\RequirePackage[margin=2cm,bottom=3cm]{geometry}
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
 \renewcommand\baselinestretch{}
@@ -188,7 +188,7 @@
   \DeclareRobustCommand\openone{{\mbox{\small1}\normalsize\mkern-5.5mu1}}
 }
 
-\usepackage{xcolor}
+\RequirePackage{xcolor}
 \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
 \definecolor{quantumgray}{HTML}{555555} %Quantum violet
 \let\origif@twocolumn\if@twocolumn
@@ -697,7 +697,7 @@
 \setlength\columnsep{20\p@}
 \setlength\columnseprule{0\p@}
 \setlength{\footnotesep}{2\baselineskip}
-\usepackage{fancyhdr}
+\RequirePackage{fancyhdr}
 \pagestyle{fancy}
 \renewcommand{\headrule}{}
 %\renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\hrulefill}\vss}}
@@ -892,8 +892,11 @@
 \listcsgadd{author#2thanks}{#1}
 }
 
+\newif\if@tikz
+\IfFileExists{tikz.sty}{\@tikztrue}{\@tikzfalse}
 
-\usepackage{tikz}
+\if@tikz
+\RequirePackage{tikz}
 \usetikzlibrary{calc}
 \newlength{\@eQ}%Capital Q height
 \newlength{\@w}%line width
@@ -903,7 +906,8 @@
 \newlength{\@cr}%corner radius
 \newlength{\@sl}%<> slant
 \newlength{\@xt}%<> x thickeness
-\newcommand{\Quantum} {%
+
+\DeclareRobustCommand{\Quantum}{%
 {\sffamily%\color{quantumviolet}%
 \setlength{\@eQ}{\dimexpr\fontcharht\font`Q\relax}%
 \setlength{\@w}{0.088\@eQ}%
@@ -956,6 +960,7 @@
   \fill[shift={($(current bounding box.south east)+(0.16\@eQ+1.93*\@cw-\@w,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.2] ($(1.2\@rl,0)$) -- ($(1.93\@cw,0)-(\@w,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=184,in=-4] ($(0.97\@cw,1.05\@w)+(0,0)$) -- ++($(0,-1.05\@w)+(0,\@ch)$) -- ++($(-\@w,0)$) -- ++($(0,-\@ch)+(0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
   \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {m};
 }}}
+\fi
 
 \newcommand{\ead}[1]{} %ignore email addresses given with the ead command
 \newcommand{\cortext}[1][]{} %ignore corresponding author information
