@@ -184,15 +184,20 @@
   \RequirePackage{cm-super}
 }
 
-% Define revtex-style symbols.
-\IfFileExists{bbmb.sty}{
+% Define a revtex-style openone symbol
+\IfFileExists{bbm.sty}{
   \RequirePackage{bbm}
   \DeclareRobustCommand\openone{\mathbbm{1}}
 }{
-  % This uses a similar technique to {revtex4-1}'s openone,
-  % namely two overstruck numeral 1s, but implemented using mboxes
-  % and math kerning as suggested by The Comprehensive LaTeX Symbol List.
-  \DeclareRobustCommand\openone{{\mbox{\small1}\normalsize\mkern-5.5mu1}}
+  \IfFileExists{dsfont.sty}{
+    \RequirePackage{dsfont}
+    \DeclareRobustCommand\openone{\mathds{1}}
+  }{
+    % This uses a similar technique to {revtex4-1}'s openone,
+    % namely two overstruck numeral 1s, but implemented using mboxes
+    % and math kerning as suggested by The Comprehensive LaTeX Symbol List.
+    \DeclareRobustCommand\openone{{\mbox{\small1}\mkern-5.5mu1}}
+  }
 }
 
 \RequirePackage{xcolor}
