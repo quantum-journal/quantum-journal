@@ -177,6 +177,13 @@
 \@medpenalty  151
 \@highpenalty 301
 
+% avoid bitmap fonts by loading either lmodern or cm-super
+\IfFileExists{lmodern.sty}{
+  \RequirePackage{lmodern}
+}{
+  \RequirePackage{cm-super}
+}
+
 % Define revtex-style symbols.
 \IfFileExists{bbmb.sty}{
   \RequirePackage{bbm}
