@@ -565,8 +565,17 @@
 \newcommand\@tocrmarg{2.55em}
 \newcommand\@dotsep{4.5}
 \setcounter{tocdepth}{3}
+% We use a trick from Ivan Andrus (http://stackoverflow.com/a/2785740)
+% to hide the "\section*{Contents}" command from the table of contents
+% to avoid getting an ugly duplication of the Contents header inside
+% the table itself.
+%
+% This trick consists of temporarily redefining \addcontentsline to
+% do nothing during the expansion of the arguments to \tocless.
+\newcommand{\nocontentsline}[3]{}
+\newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
 \newcommand\tableofcontents{%
-    \section*{\contentsname
+    \tocless{\section*}{\contentsname
         \@mkboth{%
            \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
     \@starttoc{toc}%
