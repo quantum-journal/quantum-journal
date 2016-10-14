@@ -19,7 +19,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2016/08/23 v1.2
+              [2016/08/23 v1.3
                class for Quantum - the open quant-ph overlay journal (http://quantum-journal.org)]
 \newcommand\@ptsize{}
 \newif\if@restonecol
@@ -165,10 +165,14 @@
 \ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
 
+\newcommand{\@dontusepackage}[2][]{%taken from http://tex.stackexchange.com/questions/39415/unload-a-latex-package
+  \@namedef{ver@#2.sty}{9999/12/31}%
+  \@namedef{opt@#2.sty}{#1}}
+
 \RequirePackage{etoolbox}
 \input{size1\@ptsize.clo}
 
-\usepackage[margin=2cm,bottom=3cm]{geometry}
+\RequirePackage[margin=2cm,bottom=3cm]{geometry}
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
 \renewcommand\baselinestretch{}
@@ -177,18 +181,32 @@
 \@medpenalty  151
 \@highpenalty 301
 
-% Define revtex-style symbols.
-\IfFileExists{bbmb.sty}{
+% avoid bitmap fonts by loading lmodern or at least checking for cm-super
+\IfFileExists{lmodern.sty}{
+  \RequirePackage{lmodern}
+}{
+  \IfFileExists{type1ec.sty}{}{
+    \PackageError{quantumarticle}{Either the lmodern or the cm-super package are required by quantumarticle in order to produce high quality pdf output.}{Please install the lmodern package, or, if this is not possible, the cm-super package.}
+  }
+}
+
+% Define a revtex-style openone symbol
+\IfFileExists{bbm.sty}{
   \RequirePackage{bbm}
   \DeclareRobustCommand\openone{\mathbbm{1}}
 }{
-  % This uses a similar technique to {revtex4-1}'s openone,
-  % namely two overstruck numeral 1s, but implemented using mboxes
-  % and math kerning as suggested by The Comprehensive LaTeX Symbol List.
-  \DeclareRobustCommand\openone{{\mbox{\small1}\normalsize\mkern-5.5mu1}}
+  \IfFileExists{dsfont.sty}{
+    \RequirePackage{dsfont}
+    \DeclareRobustCommand\openone{\mathds{1}}
+  }{
+    % This uses a similar technique to {revtex4-1}'s openone,
+    % namely two overstruck numeral 1s, but implemented using mboxes
+    % and math kerning as suggested by The Comprehensive LaTeX Symbol List.
+    \DeclareRobustCommand\openone{{\mbox{\small1}\mkern-5.5mu1}}
+  }
 }
 
-\usepackage{xcolor}
+\RequirePackage{xcolor}
 \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
 \definecolor{quantumgray}{HTML}{555555} %Quantum violet
 \let\origif@twocolumn\if@twocolumn
@@ -565,8 +583,17 @@
 \newcommand\@tocrmarg{2.55em}
 \newcommand\@dotsep{4.5}
 \setcounter{tocdepth}{3}
+% We use a trick from Ivan Andrus (http://stackoverflow.com/a/2785740)
+% to hide the "\section*{Contents}" command from the table of contents
+% to avoid getting an ugly duplication of the Contents header inside
+% the table itself.
+%
+% This trick consists of temporarily redefining \addcontentsline to
+% do nothing during the expansion of the arguments to \tocless.
+\newcommand{\nocontentsline}[3]{}
+\newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
 \newcommand\tableofcontents{%
-    \section*{\contentsname
+    \tocless{\section*}{\contentsname
         \@mkboth{%
            \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
     \@starttoc{toc}%
@@ -621,6 +648,14 @@
     \@starttoc{lot}%
     }
 \let\l@table\l@figure
+% Declare a new \acknowledgements command for {revtex4-1}
+% compatability.
+\newcommand{\acknowledgmentsname}{Acknowledgments}
+\newcommand{\acknowledgments}[1]{%
+    \section*{\acknowledgmentsname}%
+    #1%
+}
+%
 \newdimen\bibindent
 \setlength\bibindent{1.5em}
 \newenvironment{thebibliography}[1]
@@ -688,7 +723,7 @@
 \setlength\columnsep{20\p@}
 \setlength\columnseprule{0\p@}
 \setlength{\footnotesep}{2\baselineskip}
-\usepackage{fancyhdr}
+\RequirePackage{fancyhdr}
 \pagestyle{fancy}
 \renewcommand{\headrule}{}
 %\renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\hrulefill}\vss}}
@@ -818,6 +853,12 @@
 \listcsgadd{author#2affiliations}{#1}
 }
 \newcommand{\address}[2][]{\affiliation[#1]{#2}}
+
+%for compatibility with authblk
+\@dontusepackage{authblk} 
+\newcommand{\affil}[2][]{
+  \affiliation[#1]{#2}}
+
 \newcommand{\affiliation}[2][]{%
  \ifstrempty{#1}{%
    \internal@affiliation{#2}%
@@ -883,8 +924,11 @@
 \listcsgadd{author#2thanks}{#1}
 }
 
+\newif\if@tikz
+\IfFileExists{tikz.sty}{\@tikztrue}{\@tikzfalse}
 
-\usepackage{tikz}
+\if@tikz
+\RequirePackage{tikz}
 \usetikzlibrary{calc}
 \newlength{\@eQ}%Capital Q height
 \newlength{\@w}%line width
@@ -894,7 +938,8 @@
 \newlength{\@cr}%corner radius
 \newlength{\@sl}%<> slant
 \newlength{\@xt}%<> x thickeness
-\newcommand{\Quantum} {%
+
+\DeclareRobustCommand{\Quantum}{%
 {\sffamily%\color{quantumviolet}%
 \setlength{\@eQ}{\dimexpr\fontcharht\font`Q\relax}%
 \setlength{\@w}{0.088\@eQ}%
@@ -947,6 +992,7 @@
   \fill[shift={($(current bounding box.south east)+(0.16\@eQ+1.93*\@cw-\@w,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.2] ($(1.2\@rl,0)$) -- ($(1.93\@cw,0)-(\@w,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=184,in=-4] ($(0.97\@cw,1.05\@w)+(0,0)$) -- ++($(0,-1.05\@w)+(0,\@ch)$) -- ++($(-\@w,0)$) -- ++($(0,-\@ch)+(0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
   \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {m};
 }}}
+\fi
 
 \newcommand{\ead}[1]{} %ignore email addresses given with the ead command
 \newcommand{\cortext}[1][]{} %ignore corresponding author information
