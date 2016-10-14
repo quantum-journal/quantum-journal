@@ -648,6 +648,14 @@
     \@starttoc{lot}%
     }
 \let\l@table\l@figure
+% Declare a new \acknowledgements command for {revtex4-1}
+% compatability.
+\newcommand{\acknowledgmentsname}{Acknowledgments}
+\newcommand{\acknowledgments}[1]{%
+    \section*{\acknowledgmentsname}%
+    #1%
+}
+%
 \newdimen\bibindent
 \setlength\bibindent{1.5em}
 \newenvironment{thebibliography}[1]
