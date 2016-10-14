@@ -165,6 +165,10 @@
 \ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
 
+\newcommand{\@dontusepackage}[2][]{%taken from http://tex.stackexchange.com/questions/39415/unload-a-latex-package
+  \@namedef{ver@#2.sty}{9999/12/31}%
+  \@namedef{opt@#2.sty}{#1}}
+
 \RequirePackage{etoolbox}
 \input{size1\@ptsize.clo}
 
@@ -841,6 +845,12 @@
 \listcsgadd{author#2affiliations}{#1}
 }
 \newcommand{\address}[2][]{\affiliation[#1]{#2}}
+
+%for compatibility with authblk
+\@dontusepackage{authblk} 
+\newcommand{\affil}[2][]{
+  \affiliation[#1]{#2}}
+
 \newcommand{\affiliation}[2][]{%
  \ifstrempty{#1}{%
    \internal@affiliation{#2}%

@@ -7,10 +7,13 @@
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}  
-\usepackage[pdftex]{hyperref}
+\usepackage[pdftex,colorlinks=true,
+allcolors=quantumviolet]{hyperref}
 
 \usepackage{tikz}
 \usepackage{lipsum}
+
+\newtheorem{theorem}{Theorem}
 
 \begin{document}
 
@@ -55,34 +58,41 @@ For multi-line equations \textbf{align} is \href{http://tex.stackexchange.com/qu
 \end{align}
 Whether you prefer to refer to equations as Eq.~\eqref{emc}, Equation~\ref{emc}, or just \eqref{emc} is up to you, but please be consistent.
 
-\paragraph{Paragraphs}
-The paragraph is the smallest unit of sectioning.
-Feel free to end the paragraph title with a full stop if you find this appropriate.
-
-\subsection{Footnotes and references}
-\label{sec:subsec1}
-Footnotes\footnote{Only use footnotes when appropriate.} appear in the bottom of the page.
-References to other works \cite{Foo2035} appear in the References section at the end of the work.
-You can manually format your citations or use BibTeX, BibLaTeX, or any other package, as you see fit.
-Feel free to use a citation and bibliography style that you deem appropriate for your work.
-Important: As a cutesy to your readers, please include click-able links, preferably using the DOI of the cited work, or, if this is not available/applicable, to the arXiv page, for all citations.  
-
 \subsubsection{Figures}
-See Fig.~\ref{fig:figure1} for an example of how to include figures.
-Feel free to place them at the top or bottom of the page, or in the middle of a paragraph as you see fit.
-Try to place them on the same page as the text referring to them.
-
-\begin{figure}[tb]
+\begin{figure}[t]
   \centering
   \begin{tikzpicture}
     \draw (-4,-2.5) rectangle (4,2.5);
-    \node[rotate=20] {\Huge Quantum};
+    \node[rotate=20] {\color{quantumviolet}\Huge\Quantum};
   \end{tikzpicture}
   \caption{Every figure must have an informative caption and a number.
     The caption can be placed above, below, or to the side of the figure, as you see fit.
     The same applies for tables, boxes, and other floating elements.}
   \label{fig:figure1}
 \end{figure}
+
+See Fig.~\ref{fig:figure1} for an example of how to include figures.
+Feel free to place them at the top or bottom of the page, or in the middle of a paragraph as you see fit.
+Try to place them on the same page as the text referring to them.
+
+\subsection{Footnotes and references}
+\label{sec:subsec1}
+Footnotes\footnote{Only use footnotes when appropriate.} appear in the bottom of the page.
+References to other works \cite{Foo2035} appear in the References section at the end of the work.
+
+\begin{theorem}[DOI links are required]
+  Important: As a Quantum is a member of Crossref all references to works that have a DOI must be hyper-linked according to the DOI.
+\end{theorem}
+Suppose the DOI of an article that you want to cite is 10.22331/idonotexist, then you can cite it by using the following in your thebibliography environment (see \cite{Foo2035}):
+\begin{verbatim}
+\bibitem{Foo2035}
+  Foo and Bar, 
+  \href{https://doi.org/10.22331/
+        idonotexist}{Quantum 
+        \textbf{123}, 123456 (1916).}
+\end{verbatim}
+Apart from this hard requirement you can format your citations in any style that you find appropriate as long as it uniquely identifies the cited works.
+We encourage the use of BibTeX and/or BibLaTeX to generate your bibliography from the bibtex formated meta data provided by publishers.
 
 \section{Summary section}
 \label{sec:sec1}
@@ -96,9 +106,14 @@ Quantum encourages to load the following extra packages:
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}  
-\usepackage[pdftex]{hyperref}  
+\usepackage[pdftex,colorlinks=true,
+      allcolors=quantumviolet]{hyperref}
 \end{verbatim}
 Packages that change font settings, such as \textbf{times} or \textbf{helvet} should not be loaded.
+
+\paragraph{Paragraphs}
+The paragraph is the smallest unit of sectioning.
+Feel free to end the paragraph title with a full stop if you find this appropriate.
 
 \section{Wide equations}
 Very wide equations can be shown expanding over both columns using the \textbf{widetext} environment.
@@ -112,7 +127,10 @@ In \textbf{onecolumn} mode, the \textbf{widetext} environment has no effect.
 \bibliographystyle{plain}
 \begin{thebibliography}{9}
 \bibitem{Foo2035}
-  Foo and Bar, \href{http://quantum-journal.org}{Quantum} \textbf{123}, 123456 (2016).
+  Foo and Bar, 
+  \href{https://doi.org/10.22331/
+        idonotexist}{Quantum 
+        \textbf{123}, 123456 (1916).}
 \end{thebibliography}
 
 \appendix
