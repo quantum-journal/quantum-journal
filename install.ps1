@@ -36,6 +36,13 @@
 #    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ##############################################################################
 
+## PARAMETERS ################################################################
+
+param(
+    [switch] $NoInstallTeXClass = $false,
+    [switch] $InstallPandocTemplate = $false
+);
+
 ## TYPES #####################################################################
 
 try {
@@ -165,19 +172,49 @@ function assert_installed {
     }
 }
 
-## INSTALL SCRIPT ############################################################
+function find_pandoc_datadir {
+    $pandoc_version = pandoc --version;
 
-$tex_dist = detect_latex_distribution;
-if ($tex_dist -eq [TeXDistributions]::None) {
-    throw [System.IO.FileNotFoundException] "No LaTeX distribution found. Aborting.";
+    foreach ($line in $pandoc_version.Split("`n")) {
+        if ($line.Trim().StartsWith("Default user data directory:")) {
+            $head, $tail = $line.Split(":", 2);
+            return $tail.Trim();
+        }
+    }
 }
 
-$tex_userdir = find_tex_userdir -tex_dist $tex_dist;
+## INSTALL SCRIPT ############################################################
 
-install_tex_resource -source "quantumarticle.cls" -tds_path "tex/latex/quantumarticle" -tex_userdir $tex_userdir;
+if (-not $NoInstallTeXClass) {
 
-refresh_tex_hash -tex_dist $tex_dist;
+    $tex_dist = detect_latex_distribution;
+    if ($tex_dist -eq [TeXDistributions]::None) {
+        throw [System.IO.FileNotFoundException] "No LaTeX distribution found. Aborting.";
+    }
 
-assert_installed "quantumarticle.cls";
+    $tex_userdir = find_tex_userdir -tex_dist $tex_dist;
 
-echo "All TeX resources installed successfully.";
+    install_tex_resource -source "quantumarticle.cls" -tds_path "tex/latex/quantumarticle" -tex_userdir $tex_userdir;
+
+    refresh_tex_hash -tex_dist $tex_dist;
+
+    assert_installed "quantumarticle.cls";
+
+    echo "All TeX resources installed successfully.";
+
+}
+
+if ($InstallPandocTemplate) {
+
+    if (-not (which pandoc)) {
+        throw [System.IO.FileNotFoundException] 'Pandoc is not installed on $PATH.';
+    }
+
+    $pandoc_datadir = find_pandoc_datadir;
+    $pandoc_templatedir = Join-Path -Path $pandoc_datadir -ChildPath "templates";
+    
+    mkdir -Path $pandoc_templatedir -ErrorAction Ignore;
+
+    cp "layouts/pandoc/quantumarticle.latex" $pandoc_templatedir;
+
+}
