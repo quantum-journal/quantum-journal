@@ -90,7 +90,7 @@ function refresh_tex_hash {
         }
 
         "Other" {
-            texhash -R;
+            texhash;
             break;
         }
     }
@@ -103,7 +103,7 @@ function assert_installed {
     # Filter out of kpsewhich the current directory (starts with "./",
     # even on operating systems with \ path separators).
     foreach ($source in $sources) {
-        $which_output = kpsewhich -all $source;
+        $which_output = kpsewhich -all -progname=pdflatex $source;
         $found = $false;
 
         foreach ($which_line in $which_output.Split([environment]::NewLine)) {
