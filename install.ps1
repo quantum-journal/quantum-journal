@@ -8,7 +8,7 @@
 try {
     Add-Type -TypeDefinition @"
        public enum TeXDistributions {
-          MiKTeX, Other, None
+          MiKTeX, TeXLive, Other, None
        }
 "@
 } catch {}
@@ -35,6 +35,8 @@ function detect_latex_distribution() {
 
     if ($version_header.Contains("MiKTeX")) {
         return [TeXDistributions]::MiKTeX;
+    } elseif ($version_header.Contains("TeX Live")) {
+        return [TeXDistributions]::TeXLive;
     } else {
         return [TeXDistributions]::Other;
     }
@@ -59,9 +61,13 @@ function find_tex_userdir {
             throw [System.IO.FileNotFoundException] "No MiKTeX user install directory found.";
         }
 
+        "TeXLive" {
+            return kpsewhich --expand-var='$TEXMFHOME';
+        }
+
         "Other" {
-            echo "finding texdir some other way.";
-            break;
+            # Make a resonable guess if we can't figure out otherwise.
+            return Resolve-Path "~/texmf";
         }
     }
 
@@ -81,7 +87,10 @@ function install_tex_resource {
 }
 
 function refresh_tex_hash {
-    param([TeXDistributions] $tex_dist = [TeXDistributions]::Other)
+    param(
+        [TeXDistributions] $tex_dist = [TeXDistributions]::Other,
+        [string] $tex_userdir = ""
+    )
     
     switch ($tex_dist) {
         "MiKTeX" {
@@ -89,8 +98,13 @@ function refresh_tex_hash {
             break;
         }
 
+        "TeXLive" {
+            texhash "$tex_userdir";
+            break;
+        }
+
         "Other" {
-            texhash;
+            texhash "$tex_userdir";
             break;
         }
     }
