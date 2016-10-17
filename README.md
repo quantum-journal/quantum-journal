@@ -2,6 +2,26 @@
 
 `quantumarticle` is the document class for typsetting articles in Quantum.
 
+## Installing `{quantumarticle}`
+
+The `quantumarticle` class is provided with install scripts for bash and PowerShell. These scripts should work for Windows 7 or later with MiKTeX, or for TeX Live with Linux or macOS / OS X. To install the class into your user-local LaTeX directory from within bash:
+
+```bash
+$ cd quantum-journal/
+$ ./install.sh
+```
+
+Similarly, under PowerShell:
+
+```powershell
+PS > cd quantum-journal/
+PS > ./install.ps1
+```
+
+To manually install ``{quantumarticle}``, copy ``quantumarticle.cls`` to ``texmf/tex/latex/quantumarticle`` within your home directory (``~`` under Linux and macOS / OS X, or typically ``C:\Users\``*``your username``*) under Windows) and run ``texhash`` (TeX Live) or ``initexmf --update-fndb`` (MiKTeX).
+
+To test that the installation completed successfull, copy ``quantum-template.tex`` to another directory and compile it as normal.
+
 ## Usage
 
 To use it, download the latest version of `quantumarticle.cls` from above and put it into the same folder as your main LaTeX source file.
