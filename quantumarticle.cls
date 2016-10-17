@@ -4,7 +4,8 @@
 %% Quantum - the open quantum journal
 %%
 %% Copyright 2016
-%% Christian Gogolin and Quantum - the open quantum journal
+%% Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
+%% (http://quantum-journal.org/about/)
 %% 
 %% It is derived from `article.cls' available from
 %% https://www.ctan.org/pkg/article
