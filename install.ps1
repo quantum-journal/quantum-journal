@@ -36,6 +36,33 @@
 #    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ##############################################################################
 
+<#
+
+.SYNOPSIS
+
+    Installs the {quantumarticle} document class.
+
+.DESCRIPTION
+
+    This script installs the {quantumarticle} document class for use with
+    either MiKTeX or TeX Live, and optionally installs templates for use with
+    LyX and Pandoc.
+
+.PARAMETER NoInstallTeXClass
+
+    If set, disables installing the {quantumarticle} document class. This is
+    useful if you only want to install support for other document processing
+    tools.
+
+.PARAMETER InstallPandocTemplate
+
+    If set, installs a template for use with Pandoc into the current users'
+    Pandoc data directory, as reported by "pandoc --version". This template
+    can then be used with the "--template=quantumarticle" argument to pandoc,
+    as in examples/pandoc/pandoc-example.md.
+
+#>
+
 ## PARAMETERS ################################################################
 
 param(
@@ -175,7 +202,7 @@ function assert_installed {
 function find_pandoc_datadir {
     $pandoc_version = pandoc --version;
 
-    foreach ($line in $pandoc_version.Split("`n")) {
+    foreach ($line in $pandoc_version.Split([environment]::NewLine)) {
         if ($line.Trim().StartsWith("Default user data directory:")) {
             $head, $tail = $line.Split(":", 2);
             return $tail.Trim();
