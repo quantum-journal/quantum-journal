@@ -2,8 +2,8 @@ $if(false)$
 %%
 % quantumarticle.latex: Pandoc template for preparing Quantum articles.
 %%
-% Based on revquantum.latex and default.latex, each licensed under
-% the modified BSD license.
+% Based on revquantum.latex and default.latex, following the BSD license.
+% Please see the associated LICENSE.md for details.
 %%
 % USAGE EXAMPLES
 %
@@ -31,7 +31,6 @@ $if(false)$
 %
 % - We disable BibLaTeX support in favor of natbib support for keeping
 %   compatability with {revtex4-1} and with arXiv submission.
-%
 %% 
 $endif$
 
