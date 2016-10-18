@@ -105,8 +105,142 @@ Institute for Quantum Optics & Quantum Information (IQOQI), Austrian Academy
  of Sciences, Boltzmanngasse 3, Vienna A-1090, Austria
 \end_layout
 
+\begin_layout Abstract
+In the standard, 
+\series bold
+twocolum
+\series default
+, layout the abstract is typeset as a bold face first paragraph.
+ Quantum also supports a 
+\series bold
+onecolum
+\series default
+ layout with the abstract above the text.
+ Both can be combined with the 
+\series bold
+titlepage
+\series default
+ option to obtain a format with dedicated title and abstract pages that
+ are not included in the page count.
+ This format can be more suitable for long articles.
+ The 
+\series bold
+abstract
+\series default
+ environment can appear both before and after the 
+\series bold
+
+\backslash
+maketitle
+\series default
+ command and calling 
+\series bold
+
+\backslash
+maketitle
+\series default
+ is optional, as long as there is an 
+\series bold
+abstract
+\series default
+.
+ Both 
+\series bold
+abstract
+\series default
+ and 
+\series bold
+
+\backslash
+maketitle
+\series default
+ however must be placed after all other 
+\series bold
+
+\backslash
+author
+\series default
+, 
+\series bold
+
+\backslash
+affiliation
+\series default
+, etc.
+\backslash
+ commands.
+\end_layout
+
+\begin_layout Standard
+In the 
+\series bold
+twocolumn
+\series default
+ layout and without the 
+\series bold
+titlepage
+\series default
+ option there can be a paragraph directly following the abstract before
+ the first section.
+ In 
+\series bold
+onecolumn
+\series default
+ format or with a dedicated 
+\series bold
+titlepage
+\series default
+, this should be avoided.
+\end_layout
+
 \begin_layout Section
 Sectioning and equations
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:sec1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sections, subsections, subsubsections, and paragraphs should be typeset
+ with the standard LaTeX commands.
+ You can use use the standard commands for equations.
+ For multi-line equations 
+\backslash
+
+\series bold
+align
+\series default
+ is 
+\begin_inset CommandInset href
+LatexCommand href
+name "preferable"
+target "http://tex.stackexchange.com/questions/196/eqnarray-vs-align"
+
+\end_inset
+
+ over 
+\series bold
+eqnarray
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+E & =m\,c^{2}\label{emc}\\
+a^{2}+b^{2} & =c^{2}\nonumber \\
+H\,|\psi\rangle & =E\,|\psi\rangle\nonumber \\
+(\openone\otimes A)\,(B\otimes\openone) & =A\otimes B\nonumber 
+\end{align}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
