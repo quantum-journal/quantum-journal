@@ -1,0 +1,139 @@
+#% Do not delete the line below; configure depends on this
+#  \DeclareLaTeXClass[quantumarticle]{Quantum Article}
+#  \DeclareCategory{Articles}
+# Author : Christopher Granade <cgranade@cgranade.com>
+
+# Declare the version of the LyX format that we're using.
+Format 60
+
+# LyX standard includes, these ship with LyX itself.
+Input stdclass.inc
+
+# We support five levels, of which the first three
+# are ToC significant.
+# \section, \subsection, \subsubsubsection, \paragraph, \subparagraph.
+SecNumDepth             5
+TocDepth                3
+
+DefaultStyle        Standard
+
+## CLASS OPTIONS #############################################################
+
+ClassOptions
+    Other   twocolumn
+End
+
+## FRONT MATTER ##############################################################
+
+Style Title
+    Align Left
+    TextFont
+        Color       Purple
+        Family      Sans
+    EndFont
+End
+
+Style Author
+    Category        FrontMatter
+    Align           Left
+    TextFont
+        Family      Sans
+    EndFont
+End
+
+Style Affiliation
+    Category        FrontMatter
+    Margin          Dynamic
+    LatexType       Command
+    LatexName       affiliation
+    InTitle         1
+    ParSkip         0.4
+    AlignPossible   Left
+    TextFont
+        Family      Sans
+    EndFont
+
+    # Declare a label for this layout.
+    LabelType       Static
+    LabelSep        M
+    LabelString     "Affiliation:"
+    LabelFont
+        Color       Green
+        Series      Bold
+        Family      Sans
+    EndFont
+End
+
+Style E-Mail
+    Category        FrontMatter
+    Margin          Dynamic
+    LatexType       Command
+    LatexName       email
+    InTitle         1
+    ParSkip         0.4
+    AlignPossible   Left
+    TextFont
+        Family      Typewriter
+    EndFont
+
+    # Declare a label for this layout.
+    LabelType       Static
+    LabelSep        M
+    LabelString     "E-mail:"
+    LabelFont
+        Color       Green
+        Series      Bold
+        Family      Sans
+    EndFont
+End
+
+## SECTION STYLES ############################################################
+
+Style Section
+    Align                   Left
+    LabelType               Static
+    LabelCounter            section
+    LabelString             "\arabic{section}"
+    LabelStringAppendix     "Appendix \Alph{section}"
+    TocLevel                1
+    LabelFont
+        Family              Sans
+    EndFont
+    TextFont
+      Family                Sans
+    EndFont
+End
+
+Style Subsection
+    Align                   Left
+    LabelType               Static
+    LabelCounter            subsection
+    LabelString             "\arabic{section}.\arabic{subsection}"
+    LabelStringAppendix     "Appendix \Alph{section}.\arabic{subsection}"
+    TocLevel                2
+    LabelFont
+        Family              Sans
+    EndFont
+    TextFont
+      Family                Sans
+    EndFont
+End
+
+
+Style Paragraph
+    Align           Left
+    Font
+      Shape         Italic
+    EndFont
+End
+
+# Disable styles for chapters and parts; the former is unsupported
+# by {quantumarticle}, the latter is a TODO for this layout.
+
+NoStyle Chapter
+NoCounter chapter
+NoStyle Chapter*
+
+NoStyle Part
+NoCounter part
+NoStyle Part*
