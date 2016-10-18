@@ -1,0 +1,230 @@
+$if(false)$
+%%
+% quantumarticle.latex: Pandoc template for preparing Quantum articles.
+%%
+% Based on revquantum.latex and default.latex, each licensed under
+% the modified BSD license.
+%%
+% USAGE EXAMPLES
+%
+% PDF only, without bibliography:
+% pandoc article.md -o article.pdf --template=quantumarticle
+%
+% PDF only, with bibliography:
+% pandoc --natbib --filter pandoc-citeproc --template=revquantum article.md -o article.tex
+% latexmk article.tex
+%
+%%
+% DESIGN NOTES
+%
+% - We use if(false) Pandoc conditionals to guard comment blocks that
+%   should not appear in the generated TeX, making it easier to output
+%   to an arXiv-ready submission. This technique should be familiar to
+%   LaTeX style authors as a parallel to \iffalse, but is somewhat different:
+%   our technique breaks if someone specifies a metadata key named "false."
+%
+% - The way authors and affiliations are specified is quite different
+%   than other Pandoc templates, such that Markdown files generated
+%   for this template will likely not work as intended elsewhere.
+%   This is because we need to attach affiliations, e-mails, homepages,
+%   and thanks for each author.
+%
+% - We disable BibLaTeX support in favor of natbib support for keeping
+%   compatability with {revtex4-1} and with arXiv submission.
+%
+%% 
+$endif$
+
+\documentclass[prx,aps,$if(twocolumn)$twocolumn$else$onecolumn$endif$,superscriptaddress,11pt,notitlepage$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{quantumarticle}
+
+$if(false)$
+% Pandoc emits \citet, but we want \cite for consistency with
+% {revtex4-1} style citations.
+$endif$
+\usepackage{natbib}
+\setcitestyle{numbers,square}
+\renewcommand{\citep}{\cite}
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
+  \usepackage[utf8]{inputenc}
+$if(euro)$
+  \usepackage{eurosym}
+$endif$
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  allcolors=quantumviolet,
+  unicode=true,
+$if(title-meta)$
+            pdftitle={$title-meta$},
+$endif$
+$if(author)$
+            pdfauthor={$for(author)$$author.name$$sep$ and $endfor$}
+$endif$
+$if(subtitle)$
+            pdfsubject={$subtitle$},
+$endif$
+$if(keywords)$
+            pdfkeywords={$for(keywords)$$keywords$$sep$; $endfor$},
+$endif$
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+$if(tables)$
+\usepackage{longtable,booktabs}
+$endif$
+$if(graphics)$
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+$endif$
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+$if(indent)$
+$else$
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+$endif$
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+$if(numbersections)$
+\setcounter{secnumdepth}{5}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+$if(subparagraph)$
+$else$
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+$endif$
+
+\begin{document}
+
+%% FRONT MATTER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+$if(title)$
+\title{$title$$if(subtitle)$\\\vspace{0.5em}{\large $subtitle$}$endif$}
+$endif$
+
+$for(author)$
+  \author{$author.name$}
+  $if(author.affiliation)$
+    \affiliation{$author.affiliation$}
+  $endif$
+  $if(author.email)$
+    \email{$author.email$}
+  $endif$
+  $if(author.homepage)$
+    \homepage{$author.homepage$}
+  $endif$
+$endfor$
+
+\date{$date$}
+
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+$if(title)$
+\maketitle
+$endif$
+
+%% MAIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+$for(include-before)$
+$include-before$
+$endfor$
+
+$if(toc)$
+{
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+
+$body$
+
+%% BIBLIOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+$if(bibliography)$
+
+$if(twocolumn)$
+\onecolumngrid
+$endif$
+
+$if(biblio-title)$
+\renewcommand\refname{$biblio-title$}
+$endif$
+
+\bibliographystyle{apsrev4-1}
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+
+$endif$
+
+$for(include-after)$
+$include-after$
+$endfor$
+
+\end{document}
