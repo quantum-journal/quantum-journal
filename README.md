@@ -44,7 +44,8 @@ Improvements submitted as pull requestes are very much appreciated! Please submi
 ## Copyright
 
 Copyright 2016
-Christian Gogolin and Quantum - the open quantum journal
+Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
+(http://quantum-journal.org/about/)
 
 `quantumarticle.cls` is derived from `article.cls` available from
 https://www.ctan.org/pkg/article
