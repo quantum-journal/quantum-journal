@@ -785,7 +785,9 @@
 
 
 %title
-\def\@printtitle{{\Huge\color{quantumviolet}{\@title}}}
+\def\@printtitle{%
+  {\Huge\href{http://quantum-journal.org/?s=\@title}{\color{quantumviolet}{\@title}}}%
+}
 % author handling
 \newcounter{@authorcounter}
 \csdef{@authors}{}
@@ -997,7 +999,8 @@
 \newcommand{\cortext}[1][]{} %ignore corresponding author information
 \newcommand{\fntext}[1][]{} %author footnotes
 
-
+%set default options for hyperref to make links more pretty
+\PassOptionsToPackage{colorlinks=true,allcolors=quantumviolet}{hyperref}
 
 \endinput
 %%
