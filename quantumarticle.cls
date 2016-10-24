@@ -157,9 +157,7 @@
 \DeclareOption{unsortedaddress}{}
 \DeclareOption{runinaddress}{}
 \DeclareOption{superscriptaddress}{}
-\DeclareOption{}{}
-\DeclareOption{}{}
-\DeclareOption{}{}
+\DeclareOption{table}{}
 
 
 
@@ -282,9 +280,9 @@
   \global\let\thanks\relax
   \global\let\maketitle\relax
 %  \global\let\@thanks\@empty
-  \global\let\@author\@empty
-  \global\let\@date\@empty
-  \global\let\@title\@empty
+%  \global\let\@author\@empty
+%  \global\let\@date\@empty
+%  \global\let\@title\@empty
   \global\let\title\relax
   \global\let\author\relax
   \global\let\date\relax
@@ -315,9 +313,9 @@
   \global\let\maketitle\relax
   \global\let\@maketitle\relax
 %  \global\let\@thanks\@empty
-  \global\let\@author\@empty
-  \global\let\@date\@empty
-  \global\let\@title\@empty
+%  \global\let\@author\@empty
+%  \global\let\@date\@empty
+%  \global\let\@title\@empty
   \global\let\title\relax
   \global\let\author\relax
   \global\let\date\relax
