@@ -157,9 +157,7 @@
 \DeclareOption{unsortedaddress}{}
 \DeclareOption{runinaddress}{}
 \DeclareOption{superscriptaddress}{}
-\DeclareOption{table}{}
-
-
+\DeclareOption{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \textbackslash{}documetnclass command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
 
 \ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
