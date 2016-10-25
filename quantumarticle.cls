@@ -722,12 +722,12 @@
 \setlength{\footnotesep}{2\baselineskip}
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
+\fancyfoot[C]{\thepage}
 \renewcommand{\headrule}{}
-%\renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\hrulefill}\vss}}
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
-\cfoot{\color{quantumgray}\sffamily\thepage}
-\lfoot{}
+\fancyfoot[C]{\sffamily\textcolor{quantumviolet}\thepage}
+\fancyfoot[L]{\textcolor{quantumviolet}\Quantum}
 \pagenumbering{arabic}
 \if@twoside
 \else
