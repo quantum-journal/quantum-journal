@@ -20,7 +20,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2016/08/23 v1.4
+              [2016/08/23 v1.5
                class for Quantum - the open quant-ph overlay journal (http://quantum-journal.org)]
 \newcommand\@ptsize{}
 \newif\if@restonecol
@@ -158,6 +158,8 @@
 \DeclareOption{runinaddress}{}
 \DeclareOption{superscriptaddress}{}
 \DeclareOption{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \textbackslash{}documetnclass command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
+\newif\ifpublished\publishedfalse
+\DeclareOption{published}{\publishedtrue}
 
 \ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
@@ -205,7 +207,7 @@
 
 \RequirePackage{xcolor}
 \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
-\definecolor{quantumgray}{HTML}{555555} %Quantum violet
+\definecolor{quantumgray}{HTML}{555555} %Quantum gray
 \let\origif@twocolumn\if@twocolumn
 \RequirePackage{ltxgrid}
 \let\if@twocolumn\origif@twocolumn
@@ -727,7 +729,7 @@
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
 \fancyfoot[C]{\sffamily\textcolor{quantumviolet}\thepage}
-\fancyfoot[L]{\textcolor{quantumviolet}\Quantum}
+\ifpublished\fancyfoot[L]{\textcolor{quantumviolet}\Quantum}\else\fancyfoot[L]{}\fi
 \pagenumbering{arabic}
 \if@twoside
 \else
