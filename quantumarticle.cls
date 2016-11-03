@@ -4,7 +4,8 @@
 %% Quantum - the open quantum journal
 %%
 %% Copyright 2016
-%% Christian Gogolin and Quantum - the open quantum journal
+%% Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
+%% (http://quantum-journal.org/about/)
 %% 
 %% It is derived from `article.cls' available from
 %% https://www.ctan.org/pkg/article
@@ -19,7 +20,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2016/08/23 v1.3
+              [2016/08/23 v1.4
                class for Quantum - the open quant-ph overlay journal (http://quantum-journal.org)]
 \newcommand\@ptsize{}
 \newif\if@restonecol
@@ -156,11 +157,7 @@
 \DeclareOption{unsortedaddress}{}
 \DeclareOption{runinaddress}{}
 \DeclareOption{superscriptaddress}{}
-\DeclareOption{}{}
-\DeclareOption{}{}
-\DeclareOption{}{}
-
-
+\DeclareOption{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \textbackslash{}documetnclass command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
 
 \ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
@@ -281,9 +278,9 @@
   \global\let\thanks\relax
   \global\let\maketitle\relax
 %  \global\let\@thanks\@empty
-  \global\let\@author\@empty
-  \global\let\@date\@empty
-  \global\let\@title\@empty
+%  \global\let\@author\@empty
+%  \global\let\@date\@empty
+%  \global\let\@title\@empty
   \global\let\title\relax
   \global\let\author\relax
   \global\let\date\relax
@@ -314,9 +311,9 @@
   \global\let\maketitle\relax
   \global\let\@maketitle\relax
 %  \global\let\@thanks\@empty
-  \global\let\@author\@empty
-  \global\let\@date\@empty
-  \global\let\@title\@empty
+%  \global\let\@author\@empty
+%  \global\let\@date\@empty
+%  \global\let\@title\@empty
   \global\let\title\relax
   \global\let\author\relax
   \global\let\date\relax
@@ -725,12 +722,12 @@
 \setlength{\footnotesep}{2\baselineskip}
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
+\fancyfoot[C]{\thepage}
 \renewcommand{\headrule}{}
-%\renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\hrulefill}\vss}}
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
-\cfoot{\color{quantumgray}\sffamily\thepage}
-\lfoot{}
+\fancyfoot[C]{\sffamily\textcolor{quantumviolet}\thepage}
+\fancyfoot[L]{\textcolor{quantumviolet}\Quantum}
 \pagenumbering{arabic}
 \if@twoside
 \else
@@ -786,7 +783,9 @@
 
 
 %title
-\def\@printtitle{{\Huge\color{quantumviolet}{\@title}}}
+\def\@printtitle{%
+  {\Huge\href{http://quantum-journal.org/?s=\@title}{\color{quantumviolet}{\@title}}}%
+}
 % author handling
 \newcounter{@authorcounter}
 \csdef{@authors}{}
@@ -998,7 +997,8 @@
 \newcommand{\cortext}[1][]{} %ignore corresponding author information
 \newcommand{\fntext}[1][]{} %author footnotes
 
-
+%set default options for hyperref to make links more pretty
+\PassOptionsToPackage{colorlinks=true,allcolors=quantumviolet}{hyperref}
 
 \endinput
 %%
