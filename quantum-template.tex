@@ -6,7 +6,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath}  
+\usepackage{amsmath}
 \usepackage{hyperref}
 
 \usepackage{tikz}
@@ -31,9 +31,9 @@
 \maketitle
 
 \begin{abstract}
-  In the standard, \textbf{twocolum}, layout the abstract is typeset as a bold face first paragraph.
-  Quantum also supports a \textbf{onecolum} layout with the abstract above the text.
-  Both can be combined with the \textbf{titlepage} option to obtain a format with dedicated title and abstract pages that are not included in the page count. 
+  In the standard, \textbf{twocolumn}, layout the abstract is typeset as a bold face first paragraph.
+  Quantum also supports a \textbf{onecolumn} layout with the abstract above the text.
+  Both can be combined with the \textbf{titlepage} option to obtain a format with dedicated title and abstract pages that are not included in the page count.
   This format can be more suitable for long articles.
   The \textbf{abstract} environment can appear both before and after the \textbf{\textbackslash{}maketitle} command and calling \textbf{\textbackslash{}maketitle} is optional, as long as there is an \textbf{abstract}.
   Both \textbf{abstract} and \textbf{\textbackslash{}maketitle} however must be placed after all other \textbf{\textbackslash{}author}, \textbf{\textbackslash{}affiliation}, etc.\ commands.
@@ -88,13 +88,13 @@ References to other works \cite{Foo2035} appear in the References section at the
 Suppose the DOI of an article that you want to cite is 10.22331/idonotexist, then you can cite it by using the following in your thebibliography environment (see \cite{Foo2035}):
 \begin{verbatim}
 \bibitem{Foo2035}
-  Foo and Bar, 
+  Foo and Bar,
   \href{https://doi.org/10.22331/
-        idonotexist}{Quantum 
+        idonotexist}{Quantum
         \textbf{123}, 123456 (1916).}
 \end{verbatim}
 Apart from this hard requirement you can format your citations in any style that you find appropriate as long as it uniquely identifies the cited works.
-We encourage the use of BibTeX and/or BibLaTeX to generate your bibliography from the bibtex formated meta data provided by publishers.
+We encourage the use of BibTeX and/or BibLaTeX to generate your bibliography from the bibtex formatted meta data provided by publishers.
 
 \section{Summary section}
 \label{sec:sec1}
@@ -102,12 +102,12 @@ Longer articles should include a section that, early on, explains the main resul
 Depending on the target audience this section can be used to, for example, present the main theorem, or provide a summary of the results for a wider audience.
 
 \section{Extra packages}
-Quantum encourages to load the following extra packages: 
+Quantum encourages to load the following extra packages:
 \begin{verbatim}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath}  
+\usepackage{amsmath}
 \usepackage{hyperref}
 \end{verbatim}
 Packages that change font settings, such as \textbf{times} or \textbf{helvet} should not be loaded.
@@ -128,9 +128,9 @@ In \textbf{onecolumn} mode, the \textbf{widetext} environment has no effect.
 \bibliographystyle{plain}
 \begin{thebibliography}{9}
 \bibitem{Foo2035}
-  Foo and Bar, 
+  Foo and Bar,
   \href{https://doi.org/10.22331/
-        idonotexist}{Quantum 
+        idonotexist}{Quantum
         \textbf{123}, 123456 (1916).}
 \end{thebibliography}
 
@@ -143,14 +143,14 @@ Appendices should appearer after the main References.
 \subsection{Subsection}
 Ideally, the command \textbf{\textbackslash{}appendix} should be put before the appendices to get appropriate section numbering.
 The appendices are then numbered alphabetic, with numeric (sub)subsection numbering.
-Equations continue to be numbered sequentially. 
+Equations continue to be numbered sequentially.
 \begin{equation}
   A \neq B
 \end{equation}
 You are free to change this in case it is more appropriate for your article, but a consistent and unambiguous numbering of sections and equations must be ensured.
 
 \section{Problems and Bugs}
-In case you encounter problems using the article class please consider opening a bug report in our bug-tracker under \href{https://github.com/cgogolin/quantum-journal/issues}{https://github.com/cgogolin/quantum-journal/issues} or contact us via email under \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org}. 
+In case you encounter problems using the article class please consider opening a bug report in our bug-tracker under \href{https://github.com/cgogolin/quantum-journal/issues}{https://github.com/cgogolin/quantum-journal/issues} or contact us via email under \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org}.
 
 \end{document}
 
