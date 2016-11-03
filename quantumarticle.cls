@@ -205,7 +205,7 @@
 
 \RequirePackage{xcolor}
 \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
-\definecolor{quantumgray}{HTML}{555555} %Quantum violet
+\definecolor{quantumgray}{HTML}{555555} %Quantum gray
 \let\origif@twocolumn\if@twocolumn
 \RequirePackage{ltxgrid}
 \let\if@twocolumn\origif@twocolumn
