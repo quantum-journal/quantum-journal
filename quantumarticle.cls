@@ -158,6 +158,8 @@
 \DeclareOption{runinaddress}{}
 \DeclareOption{superscriptaddress}{}
 \DeclareOption{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \textbackslash{}documetnclass command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
+\newif\ifpublished\publishedfalse
+\DeclareOption{published}{\publishedtrue}
 
 \ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
@@ -727,7 +729,7 @@
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
 \fancyfoot[C]{\sffamily\textcolor{quantumviolet}\thepage}
-\fancyfoot[L]{\textcolor{quantumviolet}\Quantum}
+\ifpublished\fancyfoot[L]{\textcolor{quantumviolet}\Quantum}\else\fancyfoot[L]{}\fi
 \pagenumbering{arabic}
 \if@twoside
 \else
