@@ -1,0 +1,157 @@
+\documentclass[prx,a4paper,aps,twocolumn,superscriptaddress,11pt]{quantumarticle}
+%\documentclass[prl,twocolumn,superscriptaddress]{revtex4-1}
+%\documentclass[onecolumn]{quantumarticle}
+%\documentclass[titlepage,oneside]{quantumarticle}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}  
+\usepackage{hyperref}
+
+\usepackage{tikz}
+\usepackage{lipsum}
+
+\newtheorem{theorem}{Theorem}
+
+\begin{document}
+
+\title{Template demonstrating the quantumarticle class}
+\date{\today}
+\author{Lidia del Rio}
+\affiliation{Institute for Theoretical Physics, ETH Zurich, Switzerland}
+\author{Christian Gogolin}
+\email{latex@quantum-journal.org}
+\homepage{http://quantum-journal.org}
+\thanks{You can use the \textbf{\textbackslash{}email}, \textbf{\textbackslash{}homepage}, and \textbf{\textbackslash{}thanks} commands to add additional information for the preceding \textbf{\textbackslash{}author}. It is displayed, together with the author name, at the bottom of the first page.}
+\affiliation{ICFO-Institut de Ciencies Fotoniques, The Barcelona Institute of Science and Technology, 08860 Castelldefels (Barcelona), Spain}
+\author{Marcus Huber}
+\affiliation{Institute for Quantum Optics \& Quantum Information (IQOQI), Austrian Academy of Sciences, Boltzmanngasse 3, Vienna A-1090, Austria}
+
+\maketitle
+
+\begin{abstract}
+  In the standard, \textbf{twocolum}, layout the abstract is typeset as a bold face first paragraph.
+  Quantum also supports a \textbf{onecolum} layout with the abstract above the text.
+  Both can be combined with the \textbf{titlepage} option to obtain a format with dedicated title and abstract pages that are not included in the page count. 
+  This format can be more suitable for long articles.
+  The \textbf{abstract} environment can appear both before and after the \textbf{\textbackslash{}maketitle} command and calling \textbf{\textbackslash{}maketitle} is optional, as long as there is an \textbf{abstract}.
+  Both \textbf{abstract} and \textbf{\textbackslash{}maketitle} however must be placed after all other \textbf{\textbackslash{}author}, \textbf{\textbackslash{}affiliation}, etc.\ commands.
+\end{abstract}
+
+
+In the \textbf{twocolumn} layout and without the \textbf{titlepage} option there can be a paragraph directly following the abstract before the first section.
+In \textbf{onecolumn} format or with a dedicated \textbf{titlepage}, this should be avoided.
+
+Note that clicking the title performs a search for that title on \href{http://quantum-journal.org}{quantum-journal.org}.
+In this way readers can easily verify whether a work using the quantumarticle class was actually published in Quantum.
+
+\section{Sectioning and equations}
+\label{sec:sec1}
+Sections, subsections, subsubsections, and paragraphs should be typeset with the standard LaTeX commands.
+You can use use the standard commands for equations.
+For multi-line equations \textbf{align} is \href{http://tex.stackexchange.com/questions/196/eqnarray-vs-align}{preferable} over \textbf{eqnarray}.
+\begin{align}
+  \label{emc}
+  E &= m\,c^2\\
+  a^2 + b^2 &= c^2\\
+  H\,|\psi\rangle &= E\,|\psi\rangle\\
+  (\openone \otimes A)\,(B \otimes \openone) &= A \otimes B
+\end{align}
+Whether you prefer to refer to equations as Eq.~\eqref{emc}, Equation~\ref{emc}, or just \eqref{emc} is up to you, but please be consistent.
+
+\subsubsection{Figures}
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \draw (-4,-2.5) rectangle (4,2.5);
+    \node[rotate=20] {\color{quantumviolet}\Huge\Quantum};
+  \end{tikzpicture}
+  \caption{Every figure must have an informative caption and a number.
+    The caption can be placed above, below, or to the side of the figure, as you see fit.
+    The same applies for tables, boxes, and other floating elements.}
+  \label{fig:figure1}
+\end{figure}
+
+See Fig.~\ref{fig:figure1} for an example of how to include figures.
+Feel free to place them at the top or bottom of the page, or in the middle of a paragraph as you see fit.
+Try to place them on the same page as the text referring to them.
+
+\subsection{Footnotes and references}
+\label{sec:subsec1}
+Footnotes\footnote{Only use footnotes when appropriate.} appear in the bottom of the page.
+References to other works \cite{Foo2035} appear in the References section at the end of the work.
+
+\begin{theorem}[DOI links are required]
+  Important: As a Quantum is a member of Crossref all references to works that have a DOI must be hyper-linked according to the DOI.
+\end{theorem}
+Suppose the DOI of an article that you want to cite is 10.22331/idonotexist, then you can cite it by using the following in your thebibliography environment (see \cite{Foo2035}):
+\begin{verbatim}
+\bibitem{Foo2035}
+  Foo and Bar, 
+  \href{https://doi.org/10.22331/
+        idonotexist}{Quantum 
+        \textbf{123}, 123456 (1916).}
+\end{verbatim}
+Apart from this hard requirement you can format your citations in any style that you find appropriate as long as it uniquely identifies the cited works.
+We encourage the use of BibTeX and/or BibLaTeX to generate your bibliography from the bibtex formated meta data provided by publishers.
+
+\section{Summary section}
+\label{sec:sec1}
+Longer articles should include a section that, early on, explains the main results, their limitations, and assumptions.
+Depending on the target audience this section can be used to, for example, present the main theorem, or provide a summary of the results for a wider audience.
+
+\section{Extra packages}
+Quantum encourages to load the following extra packages: 
+\begin{verbatim}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}  
+\usepackage{hyperref}
+\end{verbatim}
+Packages that change font settings, such as \textbf{times} or \textbf{helvet} should not be loaded.
+
+\paragraph{Paragraphs}
+The paragraph is the smallest unit of sectioning.
+Feel free to end the paragraph title with a full stop if you find this appropriate.
+
+\section{Wide equations}
+Very wide equations can be shown expanding over both columns using the \textbf{widetext} environment.
+In \textbf{onecolumn} mode, the \textbf{widetext} environment has no effect.
+\begin{widetext}
+  \begin{equation}
+|\mathrm{AME}(n=6,q=5)\rangle=\sum_{i,j,k=0}^4 |i,j,k,i+j+k,i+2j+3k,i+3j+4k\rangle
+  \end{equation}
+\end{widetext}
+
+\bibliographystyle{plain}
+\begin{thebibliography}{9}
+\bibitem{Foo2035}
+  Foo and Bar, 
+  \href{https://doi.org/10.22331/
+        idonotexist}{Quantum 
+        \textbf{123}, 123456 (1916).}
+\end{thebibliography}
+
+\appendix
+
+\section{First section of the appendix}
+Quantum allows the usage of appendices.
+Appendices should appearer after the main References.
+
+\subsection{Subsection}
+Ideally, the command \textbf{\textbackslash{}appendix} should be put before the appendices to get appropriate section numbering.
+The appendices are then numbered alphabetic, with numeric (sub)subsection numbering.
+Equations continue to be numbered sequentially. 
+\begin{equation}
+  A \neq B
+\end{equation}
+You are free to change this in case it is more appropriate for your article, but a consistent and unambiguous numbering of sections and equations must be ensured.
+
+\section{Problems and Bugs}
+In case you encounter problems using the article class please consider opening a bug report in our bug-tracker under \href{https://github.com/cgogolin/quantum-journal/issues}{https://github.com/cgogolin/quantum-journal/issues} or contact us via email under \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org}. 
+
+\end{document}
+
+
