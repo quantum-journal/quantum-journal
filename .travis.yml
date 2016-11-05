@@ -5,6 +5,15 @@ addons:
         - texlive-fonts-extra
         - texlive-latex-recommended
         - texlive-latex-extra
+        - latexmk
 
 script:
+# Test whether the template compiles.
+- latexmk -interaction=nonstopmode -halt-on-error quantum-article.tex
+# Test whether the installer works.
+- bash install.sh
+# Test whether the template compiles against the installed version.
+- mkdir _build
+- cd _build
+- cp ../quantum-article.tex .
 - latexmk -interaction=nonstopmode -halt-on-error quantum-article.tex
