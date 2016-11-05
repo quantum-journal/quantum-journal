@@ -1,0 +1,10 @@
+addons:
+    apt:
+        packages:
+        - texlive-fonts-recommended
+        - texlive-fonts-extra
+        - texlive-latex-recommended
+        - texlive-latex-extra
+
+script:
+- latexmk -interaction=nonstopmode -halt-on-error quantum-article.tex
