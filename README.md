@@ -20,7 +20,7 @@ PS > ./install.ps1
 
 To manually install ``{quantumarticle}``, copy ``quantumarticle.cls`` to ``texmf/tex/latex/quantumarticle`` within your home directory (``~`` under Linux and macOS / OS X, or typically ``C:\Users\``*``your username``*) under Windows) and run ``texhash`` (TeX Live) or ``initexmf --update-fndb`` (MiKTeX).
 
-To test that the installation completed successfull, copy ``quantum-template.tex`` to another directory and compile it as normal.
+To test that the installation completed successfully, copy ``quantum-template.tex`` to another directory and compile it normally.
 
 ## Usage
 
@@ -39,7 +39,7 @@ If you encouter any problems, please write an email including a minimal working 
 
 In case you encounter problems using the article class please consider opening a bug report in our bug-tracker under https://github.com/cgogolin/quantum-journal/issues or contact us via email under latex@quantum-journal.org.
 
-Improvements submitted as pull requestes are very much appreciated! Please submit them agains the develop branch.
+Improvements submitted as pull requestes are very much appreciated! Please submit them against the develop branch.
 
 ## Copyright
 
