@@ -654,34 +654,47 @@
     \section*{\acknowledgmentsname}%
     #1%
 }
-%
+
 \newdimen\bibindent
 \setlength\bibindent{1.5em}
-\newenvironment{thebibliography}[1]
-     {\section*{\refname}%
+\AtBeginDocument{%
+  \@ifpackageloaded{biblatex}{}{%
+    %we only need to do this if biblatex is not in use
+    \RequirePackage{ltxcmds}
+    \newenvironment{thebibliography}[1]
+    {%
+      \makeatletter%
+      \ltx@ifpackageloaded{natbib}{}{%
+        \ltx@ifpackageloaded{biblatex}{}{%
+          \ClassWarning{quantumarticle}{The quantumarticle class recommends generating the bibliography from a BibTeX file containing DOIs with either natbib or biblatex in order to ensure the generation of DOI hyperlinks}%
+        }%
+      }%
+      \makeatother%
+      \section*{\refname}%
       \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
       \list{\@biblabel{\@arabic\c@enumiv}}%
-           {\settowidth\labelwidth{\@biblabel{#1}}%
-            \leftmargin\labelwidth
-            \advance\leftmargin\labelsep
-            \@openbib@code
-            \usecounter{enumiv}%
-            \let\p@enumiv\@empty
-            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      {\settowidth\labelwidth{\@biblabel{#1}}%
+        \leftmargin\labelwidth
+        \advance\leftmargin\labelsep
+        \@openbib@code
+        \usecounter{enumiv}%
+        \let\p@enumiv\@empty
+        \renewcommand\theenumiv{\@arabic\c@enumiv}}%
       \sloppy
       \clubpenalty4000
       \@clubpenalty \clubpenalty
       \widowpenalty4000%
       \sfcode`\.\@m}
-     {\def\@noitemerr
-       {\@latex@warning{Empty `thebibliography' environment}}%
+    {\def\@noitemerr
+      {\@latex@warning{Empty `thebibliography' environment}}%
       \endlist}
-\newcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
-\let\@openbib@code\@empty
+    \newcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
+    \let\@openbib@code\@empty
+  }}
 \newenvironment{theindex}
-               {\if@twocolumn
-                  \@restonecolfalse
-                \else
+  {\if@twocolumn
+    \@restonecolfalse
+    \else
                   \@restonecoltrue
                 \fi
                 \twocolumn[\section*{\indexname}]%
@@ -1001,6 +1014,25 @@
 
 %set default options for hyperref to make links more pretty
 \PassOptionsToPackage{colorlinks=true,allcolors=quantumviolet}{hyperref}
+
+%enable DOIs if biblatex is used by default
+\PassOptionsToPackage{doi=true}{biblatex}
+
+\AtBeginDocument{%
+  \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}%
+
+  \@ifpackageloaded{natbib}{%
+    \@ifpackageloaded{doi}{}{%
+      \renewcommand{\doi}[1]{\href{https://doi.org/\detokenize{#1}}{DOI: \detokenize{#1}}}%
+    }%
+  }{%
+    \@ifpackageloaded{biblatex}{
+      \DeclareFieldFormat{doi}{\mkbibacro{DOI}\addcolon\space\href{http://dx.doi.org/\detokenize{#1}}{\detokenize{#1}}}
+    }{%
+      \ClassWarning{quantumarticle}{Neither natbib nor biblatex have been loaded. The quantumarticle class recommends to use one of these packages to get DOI hyperlinks in bibliographies generated from BibTeX files.}%
+    }%
+  }
+}
 
 \endinput
 %%
