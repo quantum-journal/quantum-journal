@@ -23,7 +23,7 @@
 \author{Christian Gogolin}
 \email{latex@quantum-journal.org}
 \homepage{http://quantum-journal.org}
-\thanks{You can use the \textbf{\textbackslash{}email}, \textbf{\textbackslash{}homepage}, and \textbf{\textbackslash{}thanks} commands to add additional information for the preceding \textbf{\textbackslash{}author}. It is displayed, together with the author name, at the bottom of the first page.}
+\thanks{You can use the \texttt{\textbackslash{}email}, \texttt{\textbackslash{}homepage}, and \texttt{\textbackslash{}thanks} commands to add additional information for the preceding \texttt{\textbackslash{}author}. It is displayed, together with the author name, at the bottom of the first page.}
 \affiliation{ICFO-Institut de Ciencies Fotoniques, The Barcelona Institute of Science and Technology, 08860 Castelldefels (Barcelona), Spain}
 \author{Marcus Huber}
 \affiliation{Institute for Quantum Optics \& Quantum Information (IQOQI), Austrian Academy of Sciences, Boltzmanngasse 3, Vienna A-1090, Austria}
@@ -31,17 +31,17 @@
 \maketitle
 
 \begin{abstract}
-  In the standard, \textbf{twocolumn}, layout the abstract is typeset as a bold face first paragraph.
-  Quantum also supports a \textbf{onecolumn} layout with the abstract above the text.
-  Both can be combined with the \textbf{titlepage} option to obtain a format with dedicated title and abstract pages that are not included in the page count.
+  In the standard, \texttt{twocolumn}, layout the abstract is typeset as a bold face first paragraph.
+  Quantum also supports a \texttt{onecolumn} layout with the abstract above the text.
+  Both can be combined with the \texttt{titlepage} option to obtain a format with dedicated title and abstract pages that are not included in the page count.
   This format can be more suitable for long articles.
-  The \textbf{abstract} environment can appear both before and after the \textbf{\textbackslash{}maketitle} command and calling \textbf{\textbackslash{}maketitle} is optional, as long as there is an \textbf{abstract}.
-  Both \textbf{abstract} and \textbf{\textbackslash{}maketitle} however must be placed after all other \textbf{\textbackslash{}author}, \textbf{\textbackslash{}affiliation}, etc.\ commands.
+  The \texttt{abstract} environment can appear both before and after the \texttt{\textbackslash{}maketitle} command and calling \texttt{\textbackslash{}maketitle} is optional, as long as there is an \texttt{abstract}.
+  Both \texttt{abstract} and \texttt{\textbackslash{}maketitle} however must be placed after all other \texttt{\textbackslash{}author}, \texttt{\textbackslash{}affiliation}, etc.\ commands.
 \end{abstract}
 
 
-In the \textbf{twocolumn} layout and without the \textbf{titlepage} option there can be a paragraph directly following the abstract before the first section.
-In \textbf{onecolumn} format or with a dedicated \textbf{titlepage}, this should be avoided.
+In the \texttt{twocolumn} layout and without the \texttt{titlepage} option there can be a paragraph directly following the abstract before the first section.
+In \texttt{onecolumn} format or with a dedicated \texttt{titlepage}, this should be avoided.
 
 Note that clicking the title performs a search for that title on \href{http://quantum-journal.org}{quantum-journal.org}.
 In this way readers can easily verify whether a work using the quantumarticle class was actually published in Quantum.
@@ -49,7 +49,7 @@ In this way readers can easily verify whether a work using the quantumarticle cl
 \section{Sectioning and equations}
 Sections, subsections, subsubsections, and paragraphs should be typeset with the standard LaTeX commands.
 You can use use the standard commands for equations.
-For multi-line equations \textbf{align} is \href{http://tex.stackexchange.com/questions/196/eqnarray-vs-align}{preferable} over \textbf{eqnarray}.
+For multi-line equations \texttt{align} is \href{http://tex.stackexchange.com/questions/196/eqnarray-vs-align}{preferable} over \texttt{eqnarray}.
 \begin{align}
   \label{emc}
   E &= m\,c^2\\
@@ -57,7 +57,7 @@ For multi-line equations \textbf{align} is \href{http://tex.stackexchange.com/qu
   H\,|\psi\rangle &= E\,|\psi\rangle\\
   (\openone \otimes A)\,(B \otimes \openone) &= A \otimes B
 \end{align}
-Whether you prefer to refer to equations as Eq.~\eqref{emc}, Equation~\ref{emc}, or just \eqref{emc} is up to you, but please be consistent.
+Whether you prefer to refer to equations as Eq.~\eqref{emc}, Equation~\ref{emc}, or just \eqref{emc} is up to you, but please be consistent and use the \texttt{\textbackslash{}eqref\{\dots\}} command instead of writing \texttt{(\textbackslash{}ref\{\dots\})}.
 
 \subsubsection{Figures}
 \begin{figure}[t]
@@ -75,32 +75,75 @@ Whether you prefer to refer to equations as Eq.~\eqref{emc}, Equation~\ref{emc},
 See Fig.~\ref{fig:figure1} for an example of how to include figures.
 Feel free to place them at the top or bottom of the page, or in the middle of a paragraph as you see fit.
 Try to place them on the same page as the text referring to them.
+A figure on the first page can help readers remember and recognize your work more easily.
 
-\subsection{Footnotes and references}
+\subsection{Citations and footnotes}
 \label{sec:subsec1}
-Footnotes\footnote{Only use footnotes when appropriate.} appear in the bottom of the page.
-References to other works \cite{Foo2035} appear in the References section at the end of the work.
+References to other works appear in the References section at the end of the work.
 
 \begin{theorem}[DOI links are required]
-  Important: As a Quantum is a member of Crossref all references to works that have a DOI must be hyper-linked according to the DOI.
+  Important: As a Quantum is a member of Crossref all references to works that have a DOI must be hyperlinked according to the DOI.
 \end{theorem}
-Suppose the DOI of an article that you want to cite is 10.22331/idonotexist, then you can cite it by using the following in your thebibliography environment (see \cite{Foo2035}):
+
+This can be achieved in several ways, depending on how you format your bibliography.
+Suppose the DOI of an article \cite{examplecitation} that you want to cite is \texttt{10.22331/idonotexist}.
+If you are formating your bibliography manually, you can cite this work using the following in your \texttt{thebibliography} environment:
 \begin{verbatim}
-\bibitem{Foo2035}
-  Foo and Bar,
+\bibitem{examplecitation}
+  Name Surname,
   \href{https://doi.org/10.22331/
         idonotexist}{Quantum
         \textbf{123}, 123456 (1916).}
 \end{verbatim}
-Apart from this hard requirement you can format your citations in any style that you find appropriate as long as it uniquely identifies the cited works.
-We encourage the use of BibTeX and/or BibLaTeX to generate your bibliography from the bibtex formatted meta data provided by publishers.
+If you are using BibTeX, you can load the \texttt{natbib} package by putting
+\begin{verbatim}
+\usepackage{natbib}
+\end{verbatim}
+in the preamble of your document and then use the \texttt{plainnat} citation style by including your BibTeX bibliography \texttt{mybibliography.bib} where you want the bibliography to appear as follows:
+\begin{verbatim}
+\bibliographystyle{plainnat}
+\bibliography{mybibliography}
+\end{verbatim}
+The quantumarticle class automatically detects that the \texttt{natbib} package was loaded and redefines the \texttt{\textbackslash{}doi} command to create hyperlinks.
+This is likely the easiest option if you are converting from another document class.
+If you want to used BibLaTeX, you can instead add
+\begin{verbatim}
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{mybibliography.bib}
+\end{verbatim}
+to the preamble of your document and then output the bibliography with
+\begin{verbatim}
+\printbibliography
+\end{verbatim}
+where appropriate.
+
+The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declared a suitable field format to make it a hyperlink.
+Due to issues with \texttt{biber} we recommend to use the \texttt{bibtex} backend of \texttt{biblatex}.
+
+We encourage the use of BibTeX and/or BibLaTeX to generate your bibliography from the BibTeX meta-data provided by publishers.
+For DOI linking to work, the BibTeX file must contain the \texttt{doi} field as for example in:
+\begin{verbatim}
+@article{examplecitation,
+  author = {Surname, Name},
+  title = {Title},
+  journal = {Quantum},
+  volume = {123},
+  page = {123456},
+  year = {1916},
+  doi = {10.1103/PhysRevLett.107.120501},
+}
+\end{verbatim}
+Feel free to change the appearance of citations in any way you like by using a different \texttt{bibliographystyle} or via the advanced mechanisms provided by BibLaTeX.
+The only two requirements are that citations must uniquely identify the cited work and that they must contain a DOI hyperlink whenever possible.
+
+Footnotes\footnote{Only use footnotes when appropriate.} appear in the bottom of the page.
 
 \section{Summary section}
 Longer articles should include a section that, early on, explains the main results, their limitations, and assumptions.
 Depending on the target audience this section can be used to, for example, present the main theorem, or provide a summary of the results for a wider audience.
 
 \section{Extra packages}
-Quantum encourages to load the following extra packages:
+Quantum encourages you to load the following extra packages:
 \begin{verbatim}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -108,15 +151,16 @@ Quantum encourages to load the following extra packages:
 \usepackage{amsmath}
 \usepackage{hyperref}
 \end{verbatim}
-Packages that change font settings, such as \textbf{times} or \textbf{helvet} should not be loaded.
+If you do not load the \texttt{hyperref} package, quantumarticle automatically loads it for you.
+Packages that change font settings, such as \texttt{times} or \texttt{helvet} should be avoided.
 
 \paragraph{Paragraphs}
 The paragraph is the smallest unit of sectioning.
 Feel free to end the paragraph title with a full stop if you find this appropriate.
 
 \section{Wide equations}
-Very wide equations can be shown expanding over both columns using the \textbf{widetext} environment.
-In \textbf{onecolumn} mode, the \textbf{widetext} environment has no effect.
+Very wide equations can be shown expanding over both columns using the \texttt{widetext} environment.
+In \texttt{onecolumn} mode, the \texttt{widetext} environment has no effect.
 \begin{widetext}
   \begin{equation}
 |\mathrm{AME}(n=6,q=5)\rangle=\sum_{i,j,k=0}^4 |i,j,k,i+j+k,i+2j+3k,i+3j+4k\rangle
@@ -125,8 +169,8 @@ In \textbf{onecolumn} mode, the \textbf{widetext} environment has no effect.
 
 \bibliographystyle{plain}
 \begin{thebibliography}{9}
-\bibitem{Foo2035}
-  Foo and Bar,
+\bibitem{examplecitation}
+  Name Surname,
   \href{https://doi.org/10.22331/
         idonotexist}{Quantum
         \textbf{123}, 123456 (1916).}
@@ -139,7 +183,7 @@ Quantum allows the usage of appendices.
 Appendices should appearer after the main References.
 
 \subsection{Subsection}
-Ideally, the command \textbf{\textbackslash{}appendix} should be put before the appendices to get appropriate section numbering.
+Ideally, the command \texttt{\textbackslash{}appendix} should be put before the appendices to get appropriate section numbering.
 The appendices are then numbered alphabetic, with numeric (sub)subsection numbering.
 Equations continue to be numbered sequentially.
 \begin{equation}
@@ -151,5 +195,3 @@ You are free to change this in case it is more appropriate for your article, but
 In case you encounter problems using the article class please consider opening a bug report in our bug-tracker under \href{https://github.com/cgogolin/quantum-journal/issues}{https://github.com/cgogolin/quantum-journal/issues} or contact us via email under \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org}.
 
 \end{document}
-
-
