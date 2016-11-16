@@ -684,7 +684,10 @@
       \clubpenalty4000
       \@clubpenalty \clubpenalty
       \widowpenalty4000%
-      \sfcode`\.\@m}
+      \sfcode`\.\@m
+      \setlength{\parskip}{0pt}
+      \setlength{\itemsep}{0pt plus 0.1ex}
+    }
     {\def\@noitemerr
       {\@latex@warning{Empty `thebibliography' environment}}%
       \endlist}
@@ -695,17 +698,17 @@
   {\if@twocolumn
     \@restonecolfalse
     \else
-                  \@restonecoltrue
-                \fi
-                \twocolumn[\section*{\indexname}]%
-                \@mkboth{\MakeUppercase\indexname}%
-                        {\MakeUppercase\indexname}%
-                \thispagestyle{fancy}\parindent\z@
-                \parskip\z@ \@plus .3\p@\relax
-                \columnseprule \z@
-                \columnsep 35\p@
-                \let\item\@idxitem}
-               {\if@restonecol\onecolumn\else\clearpage\fi}
+    \@restonecoltrue
+    \fi
+    \twocolumn[\section*{\indexname}]%
+    \@mkboth{\MakeUppercase\indexname}%
+    {\MakeUppercase\indexname}%
+    \thispagestyle{fancy}\parindent\z@
+    \parskip\z@ \@plus .3\p@\relax
+    \columnseprule \z@
+    \columnsep 35\p@
+    \let\item\@idxitem}
+  {\if@restonecol\onecolumn\else\clearpage\fi}
 \newcommand\@idxitem{\par\hangindent 40\p@}
 \newcommand\subitem{\@idxitem \hspace*{20\p@}}
 \newcommand\subsubitem{\@idxitem \hspace*{30\p@}}
