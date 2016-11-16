@@ -2,44 +2,42 @@
 
 `quantumarticle` is the document class for typsetting articles in Quantum.
 
-## Installing `{quantumarticle}`
+## Installation and usage
 
-The `quantumarticle` class is provided with install scripts for bash and PowerShell. These scripts should work for Windows 7 or later with MiKTeX, or for TeX Live with Linux or macOS / OS X. To install the class into your user-local LaTeX directory from within bash:
+To use the `quantumarticle` document class with LaTeX simply start your documment with the line:
 
-```bash
-$ cd quantum-journal/
-$ ./install.sh
+```latex
+\documentclass[your options]{quantumarticle}
+
 ```
+Before you can do this however, you must install `quantumarticle.cls`. You have several options for doing this:
 
-Similarly, under PowerShell:
+1. The `quantumarticle` class is provided with install scripts for bash and PowerShell. These scripts should work for Windows 7 or later with MiKTeX, or for TeX Live with Linux or macOS / OS X. To install the class into your user-local LaTeX directory from within bash:
+ ```bash
+ $ cd quantum-journal/
+ $ ./install.sh
+ ```
+ Similarly, under PowerShell:
+ ```powershell
+ PS > cd quantum-journal/
+ PS > ./install.ps1
+ ```
 
-```powershell
-PS > cd quantum-journal/
-PS > ./install.ps1
-```
+2. To manually install `quantumarticle`, copy `quantumarticle.cls` to `texmf/tex/latex/quantumarticle` within your home directory (under Linux, macOS, and OS X `~/`, or under Windows typically `C:\Users\[your username]`) and run `texhash` (TeX Live) or `initexmf --update-fndb` (MiKTeX).
 
-To manually install ``{quantumarticle}``, copy ``quantumarticle.cls`` to ``texmf/tex/latex/quantumarticle`` within your home directory (``~`` under Linux and macOS / OS X, or typically ``C:\Users\``*``your username``*) under Windows) and run ``texhash`` (TeX Live) or ``initexmf --update-fndb`` (MiKTeX).
+3. Alternatively you can use `quantumarticle.cls` without installing it by simply putting it in the same folder as your main LaTeX source file. This can be the most convenient option if you are working on a manuscript together with collaborators that do not want to install `quantumarticle.cls` and are exchaning the source files of your manuscript via email of cloud storage services.
 
-To test that the installation completed successfully, copy ``quantum-template.tex`` to another directory and compile it normally.
-
-## Usage
-
-To use it, download the latest version of `quantumarticle.cls` from above and put it into the same folder as your main LaTeX source file.
-Then, simply change the document class to `quantumarticle` in the preamble of your document.
-
-    \documentclass[your options]{quantumarticle}
+4. Finally, you can use `quantumarticle.cls` without even downloading it at all  on the collaborative writing platform [overleaf](https://www.overleaf.com/) by starting you project from the `quantumarticle` [template](https://www.overleaf.com/latex/templates/template-for-submission-to-quantum-journal/gsjgyhxrtrzy) provided for your convenience. 
 
 ## Compatibility
 
 The `quantumarticle` class tries to be **maximally compatible** with existing document classes, such as, `article`, `revtex`, `iopart`, and `elsarticle`. It supports all standard options, like `twocolumn`, `onecolumn`, `titlepage`, as well as the standard syntax for defining the title page with the `\author`, `\address`, and `\affiliation` commands and the `abstract` environment.
 
-If you encouter any problems, please write an email including a minimal working example that illustrates the problem to quantumarticle@quantum-journal.org
-
 ## Contributing
 
-In case you encounter problems using the article class please consider opening a bug report in our bug-tracker under https://github.com/cgogolin/quantum-journal/issues or contact us via email under latex@quantum-journal.org.
+In case you encounter problems using the article class please consider opening a bug report in our [bug-tracker on github](https://github.com/cgogolin/quantum-journal/issues] or contact us via email under latex@quantum-journal.org.
 
-Improvements submitted as pull requests are very much appreciated! Please submit them against the develop branch.
+Improvements submitted as pull requests against the `development` branch are very much appreciated!
 
 ## Copyright
 
