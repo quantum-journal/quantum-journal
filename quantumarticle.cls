@@ -20,7 +20,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2016/11/14 v1.6
+              [2016/11/14 v1.7
                class for Quantum - the open quant-ph overlay journal (http://quantum-journal.org)]
 \newcommand\@ptsize{}
 \newif\if@restonecol
@@ -160,18 +160,41 @@
 \DeclareOption{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \textbackslash{}documetnclass command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
 \newif\ifpublished\publishedfalse
 \DeclareOption{published}{\publishedtrue}
+\newif\ifrevtexcompatibility
+\revtexcompatibilityfalse
+\DeclareOption{aps}{\revtexcompatibilitytrue}
+\DeclareOption{pra}{\revtexcompatibilitytrue}
+\DeclareOption{prb}{\revtexcompatibilitytrue}
+\DeclareOption{pre}{\revtexcompatibilitytrue}
+\DeclareOption{prl}{\revtexcompatibilitytrue}
+\DeclareOption{prx}{\revtexcompatibilitytrue}
+\DeclareOption{aip}{\revtexcompatibilitytrue}
 
+% we are loading xcolor below, then subsequently loading color with non trivial options in the document results in the error
+% ERROR: LaTeX Error: Option clash for package color.
+% with the suggested solution to add the options to the \documentclass command so that they are passed on when the documentclass loads color. Passing on of options to color or xcolor, however doesn't work automatically. So we simply pass all unknown options on to color and xcolor to make this fix proposed by latex actually work
+\DeclareOption*{
+   \PassOptionsToPackage{\CurrentOption}{color}
+   \PassOptionsToPackage{\CurrentOption}{xcolor}
+}
 \ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
-
-\newcommand{\@dontusepackage}[2][]{%taken from http://tex.stackexchange.com/questions/39415/unload-a-latex-package
-  \@namedef{ver@#2.sty}{9999/12/31}%
-  \@namedef{opt@#2.sty}{#1}}
 
 \RequirePackage{etoolbox}
 \input{size1\@ptsize.clo}
 
+%enable the blacklisting of packages by patching the \usepackage command
+\csdef{@packageblacklist}{}
+\newcommand{\@blacklistpackage}[2][]{
+  \listxadd{\@packageblacklist}{#2}%
+}
+\let\oldusepackage\usepackage
+\renewcommand{\usepackage}[2][]{
+  \ifinlist{#2}{\@packageblacklist}{}{\oldusepackage[#1]{#2}}
+}
+
 \RequirePackage[margin=2cm,bottom=3cm]{geometry}
+\@blacklistpackage{geometry}
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
 \renewcommand\baselinestretch{}
@@ -204,7 +227,6 @@
     \DeclareRobustCommand\openone{{\mbox{\small1}\mkern-5.5mu1}}
   }
 }
-
 \RequirePackage{xcolor}
 \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
 \definecolor{quantumgray}{HTML}{555555} %Quantum gray
@@ -657,55 +679,54 @@
 
 \newdimen\bibindent
 \setlength\bibindent{1.5em}
-\AtBeginDocument{%
-  \@ifpackageloaded{biblatex}{}{%
-    %we only need to do this if biblatex is not in use
-    \RequirePackage{ltxcmds}
-    \newenvironment{thebibliography}[1]
-    {%
-      \makeatletter%
-      \ltx@ifpackageloaded{natbib}{}{%
-        \ltx@ifpackageloaded{biblatex}{}{%
-          \ClassWarning{quantumarticle}{The quantumarticle class recommends generating the bibliography from a BibTeX file containing DOIs with either natbib or biblatex in order to ensure the generation of DOI hyperlinks}%
-        }%
-      }%
-      \makeatother%
-      \section*{\refname}%
-      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
-      \list{\@biblabel{\@arabic\c@enumiv}}%
-      {\settowidth\labelwidth{\@biblabel{#1}}%
-        \leftmargin\labelwidth
-        \advance\leftmargin\labelsep
-        \@openbib@code
-        \usecounter{enumiv}%
-        \let\p@enumiv\@empty
-        \renewcommand\theenumiv{\@arabic\c@enumiv}}%
-      \sloppy
-      \clubpenalty4000
-      \@clubpenalty \clubpenalty
-      \widowpenalty4000%
-      \sfcode`\.\@m}
-    {\def\@noitemerr
-      {\@latex@warning{Empty `thebibliography' environment}}%
-      \endlist}
-    \newcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
-    \let\@openbib@code\@empty
-  }}
+\RequirePackage{ltxcmds}
+\newenvironment{thebibliography}[1]
+{%
+  \makeatletter%
+  \ltx@ifpackageloaded{natbib}{}{%
+    \ltx@ifpackageloaded{biblatex}{}{%
+      \ClassWarning{quantumarticle}{The quantumarticle class recommends generating the bibliography from a BibTeX file containing DOIs with either natbib or biblatex in order to ensure the generation of DOI hyperlinks}%
+    }%
+  }%
+  \makeatother%
+  \section*{\refname}%
+  \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+  \list{\@biblabel{\@arabic\c@enumiv}}%
+  {\settowidth\labelwidth{\@biblabel{#1}}%
+    \leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \@openbib@code
+    \usecounter{enumiv}%
+    \let\p@enumiv\@empty
+    \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+  \sloppy
+  \clubpenalty4000
+  \@clubpenalty \clubpenalty
+  \widowpenalty4000%
+  \sfcode`\.\@m
+  \setlength{\parskip}{100pt}
+  \setlength{\itemsep}{0pt plus 0.3ex}
+}
+{\def\@noitemerr
+  {\@latex@warning{Empty `thebibliography' environment}}%
+  \endlist}
+\newcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
+\let\@openbib@code\@empty
 \newenvironment{theindex}
   {\if@twocolumn
     \@restonecolfalse
     \else
-                  \@restonecoltrue
-                \fi
-                \twocolumn[\section*{\indexname}]%
-                \@mkboth{\MakeUppercase\indexname}%
-                        {\MakeUppercase\indexname}%
-                \thispagestyle{fancy}\parindent\z@
-                \parskip\z@ \@plus .3\p@\relax
-                \columnseprule \z@
-                \columnsep 35\p@
-                \let\item\@idxitem}
-               {\if@restonecol\onecolumn\else\clearpage\fi}
+    \@restonecoltrue
+    \fi
+    \twocolumn[\section*{\indexname}]%
+    \@mkboth{\MakeUppercase\indexname}%
+    {\MakeUppercase\indexname}%
+    \thispagestyle{fancy}\parindent\z@
+    \parskip\z@ \@plus .3\p@\relax
+    \columnseprule \z@
+    \columnsep 35\p@
+    \let\item\@idxitem}
+  {\if@restonecol\onecolumn\else\clearpage\fi}
 \newcommand\@idxitem{\par\hangindent 40\p@}
 \newcommand\subitem{\@idxitem \hspace*{20\p@}}
 \newcommand\subsubitem{\@idxitem \hspace*{30\p@}}
@@ -736,6 +757,7 @@
 \setlength\columnseprule{0\p@}
 \setlength{\footnotesep}{2\baselineskip}
 \RequirePackage{fancyhdr}
+\@blacklistpackage{fancyhdr}
 \pagestyle{fancy}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrule}{}
@@ -869,10 +891,9 @@
 \newcommand{\address}[2][]{\affiliation[#1]{#2}}
 
 %for compatibility with authblk
-\@dontusepackage{authblk} 
+\@blacklistpackage{authblk} 
 \newcommand{\affil}[2][]{
   \affiliation[#1]{#2}}
-
 \newcommand{\affiliation}[2][]{%
  \ifstrempty{#1}{%
    \internal@affiliation{#2}%
@@ -1022,6 +1043,7 @@
   \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}%
 
   \@ifpackageloaded{natbib}{%
+    \setlength{\bibsep}{0pt plus 0.3ex}
     \@ifpackageloaded{doi}{}{%
       \renewcommand{\doi}[1]{\href{https://doi.org/\detokenize{#1}}{DOI: \detokenize{#1}}}%
     }%
@@ -1031,6 +1053,28 @@
     }{%
       \ClassWarning{quantumarticle}{Neither natbib nor biblatex have been loaded. The quantumarticle class recommends to use one of these packages to get DOI hyperlinks in bibliographies generated from BibTeX files.}%
     }%
+  }
+}
+
+\ifrevtexcompatibility
+\providecommand{\pacs}[1]{}
+\providecommand{\keywords}[1]{}
+
+\AtEndPreamble{%in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
+  \@ifpackageloaded{biblatex}{}{%
+    \usepackage[numbers,sort&compress]{natbib}
+    \bibliographystyle{plainnat}
+    \providecommand\textcite[1]{\citet{#1}}
+    \providecommand\onlinecite[1]{\cite{#1}}
+  }
+}
+\fi
+
+\newenvironment{acknowledgements}{\section*{Acknowledgements}}{}
+
+\AtBeginDocument{%
+  \providecommand\text[1]{
+    \ClassError{quantumarticle}{To use the \noexpand\text command please load the mathtools package.}{}
   }
 }
 
