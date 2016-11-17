@@ -894,7 +894,6 @@
 \@blacklistpackage{authblk} 
 \newcommand{\affil}[2][]{
   \affiliation[#1]{#2}}
-
 \newcommand{\affiliation}[2][]{%
  \ifstrempty{#1}{%
    \internal@affiliation{#2}%
@@ -1044,6 +1043,7 @@
   \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}%
 
   \@ifpackageloaded{natbib}{%
+    \setlength{\bibsep}{0pt plus 0.3ex}
     \@ifpackageloaded{doi}{}{%
       \renewcommand{\doi}[1]{\href{https://doi.org/\detokenize{#1}}{DOI: \detokenize{#1}}}%
     }%
@@ -1057,13 +1057,12 @@
 }
 
 \ifrevtexcompatibility
-\newcommand{\pacs}[1]{}
-\newcommand{\keywords}[1]{}
+\providecommand{\pacs}[1]{}
+\providecommand{\keywords}[1]{}
 
 \AtEndPreamble{%in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
   \@ifpackageloaded{biblatex}{}{%
     \usepackage[numbers,sort&compress]{natbib}
-    \setlength{\bibsep}{0pt plus 0.3ex}
     \bibliographystyle{plainnat}
     \providecommand\textcite[1]{\citet{#1}}
     \providecommand\onlinecite[1]{\cite{#1}}
