@@ -168,6 +168,7 @@
 \DeclareOption{pre}{\revtexcompatibilitytrue}
 \DeclareOption{prl}{\revtexcompatibilitytrue}
 \DeclareOption{prx}{\revtexcompatibilitytrue}
+\DeclareOption{aip}{\revtexcompatibilitytrue}
 
 % we are loading xcolor below, then subsequently loading color with non trivial options in the document results in the error
 % ERROR: LaTeX Error: Option clash for package color.
@@ -1057,6 +1058,7 @@
 
 \ifrevtexcompatibility
 \newcommand{\pacs}[1]{}
+\newcommand{\keywords}[1]{}
 \RequirePackage[numbers,sort&compress]{natbib}
 \setlength{\bibsep}{0pt plus 0.3ex}
 \AtBeginDocument{%
