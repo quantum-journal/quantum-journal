@@ -1056,6 +1056,7 @@
 }
 
 \ifrevtexcompatibility
+\newcommand{\pacs}[1]{}
 \RequirePackage[numbers,sort&compress]{natbib}
 \setlength{\bibsep}{0pt plus 0.3ex}
 \AtBeginDocument{%
@@ -1064,6 +1065,8 @@
   \bibliographystyle{plainnat}
 }
 \fi
+
+\newenvironment{acknowledgements}{\section*{Acknowledgements}}{}
 
 \endinput
 %%
