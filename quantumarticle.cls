@@ -1059,16 +1059,25 @@
 \ifrevtexcompatibility
 \newcommand{\pacs}[1]{}
 \newcommand{\keywords}[1]{}
-\RequirePackage[numbers,sort&compress]{natbib}
-\setlength{\bibsep}{0pt plus 0.3ex}
-\AtBeginDocument{%
-  \providecommand\textcite[1]{\citet{#1}}
-  \providecommand\onlinecite[1]{\cite{#1}}
-  \bibliographystyle{plainnat}
+
+\AtEndPreamble{%in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
+  \@ifpackageloaded{biblatex}{}{%
+    \usepackage[numbers,sort&compress]{natbib}
+    \setlength{\bibsep}{0pt plus 0.3ex}
+    \bibliographystyle{plainnat}
+    \providecommand\textcite[1]{\citet{#1}}
+    \providecommand\onlinecite[1]{\cite{#1}}
+  }
 }
 \fi
 
 \newenvironment{acknowledgements}{\section*{Acknowledgements}}{}
+
+\AtBeginDocument{%
+  \providecommand\text[1]{
+    \ClassError{quantumarticle}{To use the \noexpand\text command please load the mathtools package.}{}
+  }
+}
 
 \endinput
 %%
