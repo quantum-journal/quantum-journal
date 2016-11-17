@@ -169,17 +169,31 @@
 \DeclareOption{prl}{\revtexcompatibilitytrue}
 \DeclareOption{prx}{\revtexcompatibilitytrue}
 
+% we are loading xcolor below, then subsequently loading color with non trivial options in the document results in the error
+% ERROR: LaTeX Error: Option clash for package color.
+% with the suggested solution to add the options to the \documentclass command so that they are passed on when the documentclass loads color. Passing on of options to color or xcolor, however doesn't work automatically. So we simply pass all unknown options on to color and xcolor to make this fix proposed by latex actually work
+\DeclareOption*{
+   \PassOptionsToPackage{\CurrentOption}{color}
+   \PassOptionsToPackage{\CurrentOption}{xcolor}
+}
 \ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
-
-\newcommand{\@dontusepackage}[2][]{%taken from http://tex.stackexchange.com/questions/39415/unload-a-latex-package
-  \@namedef{ver@#2.sty}{9999/12/31}%
-  \@namedef{opt@#2.sty}{#1}}
 
 \RequirePackage{etoolbox}
 \input{size1\@ptsize.clo}
 
+%enable the blacklisting of packages by patching the \usepackage command
+\csdef{@packageblacklist}{}
+\newcommand{\@blacklistpackage}[2][]{
+  \listxadd{\@packageblacklist}{#2}%
+}
+\let\oldusepackage\usepackage
+\renewcommand{\usepackage}[2][]{
+  \ifinlist{#2}{\@packageblacklist}{}{\oldusepackage[#1]{#2}}
+}
+
 \RequirePackage[margin=2cm,bottom=3cm]{geometry}
+\@blacklistpackage{geometry}
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
 \renewcommand\baselinestretch{}
@@ -689,8 +703,8 @@
   \@clubpenalty \clubpenalty
   \widowpenalty4000%
   \sfcode`\.\@m
-  \setlength{\parskip}{0pt}
-  \setlength{\itemsep}{0pt plus 0.1ex}
+  \setlength{\parskip}{100pt}
+  \setlength{\itemsep}{0pt plus 0.3ex}
 }
 {\def\@noitemerr
   {\@latex@warning{Empty `thebibliography' environment}}%
@@ -742,6 +756,7 @@
 \setlength\columnseprule{0\p@}
 \setlength{\footnotesep}{2\baselineskip}
 \RequirePackage{fancyhdr}
+\@blacklistpackage{fancyhdr}
 \pagestyle{fancy}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrule}{}
@@ -875,7 +890,7 @@
 \newcommand{\address}[2][]{\affiliation[#1]{#2}}
 
 %for compatibility with authblk
-\@dontusepackage{authblk} 
+\@blacklistpackage{authblk} 
 \newcommand{\affil}[2][]{
   \affiliation[#1]{#2}}
 
@@ -1041,13 +1056,14 @@
 }
 
 \ifrevtexcompatibility
-\RequirePackage[sort&compress]{natbib}
+\RequirePackage[numbers,sort&compress]{natbib}
+\setlength{\bibsep}{0pt plus 0.3ex}
 \AtBeginDocument{%
   \providecommand\textcite[1]{\citet{#1}}
   \providecommand\onlinecite[1]{\cite{#1}}
+  \bibliographystyle{plainnat}
 }
 \fi
-
 
 \endinput
 %%
