@@ -204,7 +204,6 @@
     \DeclareRobustCommand\openone{{\mbox{\small1}\mkern-5.5mu1}}
   }
 }
-
 \RequirePackage{xcolor}
 \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
 \definecolor{quantumgray}{HTML}{555555} %Quantum gray
@@ -657,43 +656,39 @@
 
 \newdimen\bibindent
 \setlength\bibindent{1.5em}
-\AtBeginDocument{%
-  \@ifpackageloaded{biblatex}{}{%
-    %we only need to do this if biblatex is not in use
-    \RequirePackage{ltxcmds}
-    \newenvironment{thebibliography}[1]
-    {%
-      \makeatletter%
-      \ltx@ifpackageloaded{natbib}{}{%
-        \ltx@ifpackageloaded{biblatex}{}{%
-          \ClassWarning{quantumarticle}{The quantumarticle class recommends generating the bibliography from a BibTeX file containing DOIs with either natbib or biblatex in order to ensure the generation of DOI hyperlinks}%
-        }%
-      }%
-      \makeatother%
-      \section*{\refname}%
-      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
-      \list{\@biblabel{\@arabic\c@enumiv}}%
-      {\settowidth\labelwidth{\@biblabel{#1}}%
-        \leftmargin\labelwidth
-        \advance\leftmargin\labelsep
-        \@openbib@code
-        \usecounter{enumiv}%
-        \let\p@enumiv\@empty
-        \renewcommand\theenumiv{\@arabic\c@enumiv}}%
-      \sloppy
-      \clubpenalty4000
-      \@clubpenalty \clubpenalty
-      \widowpenalty4000%
-      \sfcode`\.\@m
-      \setlength{\parskip}{0pt}
-      \setlength{\itemsep}{0pt plus 0.1ex}
-    }
-    {\def\@noitemerr
-      {\@latex@warning{Empty `thebibliography' environment}}%
-      \endlist}
-    \newcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
-    \let\@openbib@code\@empty
-  }}
+\RequirePackage{ltxcmds}
+\newenvironment{thebibliography}[1]
+{%
+  \makeatletter%
+  \ltx@ifpackageloaded{natbib}{}{%
+    \ltx@ifpackageloaded{biblatex}{}{%
+      \ClassWarning{quantumarticle}{The quantumarticle class recommends generating the bibliography from a BibTeX file containing DOIs with either natbib or biblatex in order to ensure the generation of DOI hyperlinks}%
+    }%
+  }%
+  \makeatother%
+  \section*{\refname}%
+  \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+  \list{\@biblabel{\@arabic\c@enumiv}}%
+  {\settowidth\labelwidth{\@biblabel{#1}}%
+    \leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \@openbib@code
+    \usecounter{enumiv}%
+    \let\p@enumiv\@empty
+    \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+  \sloppy
+  \clubpenalty4000
+  \@clubpenalty \clubpenalty
+  \widowpenalty4000%
+  \sfcode`\.\@m
+  \setlength{\parskip}{0pt}
+  \setlength{\itemsep}{0pt plus 0.1ex}
+}
+{\def\@noitemerr
+  {\@latex@warning{Empty `thebibliography' environment}}%
+  \endlist}
+\newcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
+\let\@openbib@code\@empty
 \newenvironment{theindex}
   {\if@twocolumn
     \@restonecolfalse
