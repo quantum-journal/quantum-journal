@@ -160,6 +160,14 @@
 \DeclareOption{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \textbackslash{}documetnclass command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
 \newif\ifpublished\publishedfalse
 \DeclareOption{published}{\publishedtrue}
+\newif\ifrevtexcompatibility
+\revtexcompatibilityfalse
+\DeclareOption{aps}{\revtexcompatibilitytrue}
+\DeclareOption{pra}{\revtexcompatibilitytrue}
+\DeclareOption{prb}{\revtexcompatibilitytrue}
+\DeclareOption{pre}{\revtexcompatibilitytrue}
+\DeclareOption{prl}{\revtexcompatibilitytrue}
+\DeclareOption{prx}{\revtexcompatibilitytrue}
 
 \ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
@@ -1031,6 +1039,15 @@
     }%
   }
 }
+
+\ifrevtexcompatibility
+\RequirePackage[sort&compress]{natbib}
+\AtBeginDocument{%
+  \providecommand\textcite[1]{\citet{#1}}
+  \providecommand\onlinecite[1]{\cite{#1}}
+}
+\fi
+
 
 \endinput
 %%
