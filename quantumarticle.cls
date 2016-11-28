@@ -1034,7 +1034,7 @@
 \newcommand{\fntext}[1][]{} %author footnotes
 
 %set default options for hyperref to make links more pretty
-\PassOptionsToPackage{colorlinks=true,allcolors=quantumviolet,breaklinks=true}{hyperref}
+\PassOptionsToPackage{colorlinks=true,allcolors=quantumviolet,breaklinks=true,hyperindex}{hyperref}
 
 %enable DOIs if biblatex is used by default
 \PassOptionsToPackage{doi=true}{biblatex}
