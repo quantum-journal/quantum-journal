@@ -231,6 +231,7 @@
 \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
 \definecolor{quantumgray}{HTML}{555555} %Quantum gray
 \let\origif@twocolumn\if@twocolumn
+\def\class@name{ltxutil}%get rid of You should define the class name before reading in this package. Using default warning from ltxutils
 \RequirePackage{ltxgrid}
 \let\if@twocolumn\origif@twocolumn
 \let\col@number\@colnum
