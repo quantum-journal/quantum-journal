@@ -1054,6 +1054,9 @@
   }{%
     \@ifpackageloaded{biblatex}{
       \DeclareFieldFormat{doi}{\mkbibacro{DOI}\addcolon\space\href{http://dx.doi.org/\detokenize{#1}}{\detokenize{#1}}}
+      \setcounter{biburllcpenalty}{1000}
+      \setcounter{biburlucpenalty}{1000}
+      \setcounter{biburlnumpenalty}{1000}
     }{%
       \ClassWarning{quantumarticle}{Neither natbib nor biblatex have been loaded. The quantumarticle class recommends to use one of these packages to get DOI hyperlinks in bibliographies generated from BibTeX files.}%
     }%
