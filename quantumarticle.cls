@@ -1038,13 +1038,21 @@
 \newcommand{\fntext}[1][]{} %author footnotes
 
 %set default options for hyperref to make links more pretty
-\PassOptionsToPackage{colorlinks=true,allcolors=quantumviolet,breaklinks=true,hyperindex}{hyperref}
+\PassOptionsToPackage{colorlinks=true,allcolors=quantumviolet,hyperindex}{hyperref}
+\ifnum\pdfoutput=0
+\else
+\PassOptionsToPackage{breaklinks=true}{hyperref}
+\fi
 
 %enable DOIs if biblatex is used by default
 \PassOptionsToPackage{doi=true}{biblatex}
 
 \AtBeginDocument{%
   \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}%
+
+  \ifnum\pdfoutput=0
+  \ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex)}{Without this, hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information}
+  \fi
 
   \@ifpackageloaded{natbib}{%
     \setlength{\bibsep}{0pt plus 0.3ex}
@@ -1081,7 +1089,7 @@
 
 \AtBeginDocument{%
   \providecommand\text[1]{
-    \ClassError{quantumarticle}{To use the \noexpand\text command please load the mathtools package.}{}
+    \ClassError{quantumarticle}{To use the \string\text command please load the mathtools package}{}
   }
 }
 
