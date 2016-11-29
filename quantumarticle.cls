@@ -1051,7 +1051,7 @@
   \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}%
 
   \ifnum\pdfoutput=0
-  \ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex)}{Without this, hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information}
+  \ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex)}{Without this, hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
   \fi
 
   \@ifpackageloaded{natbib}{%
