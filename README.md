@@ -35,7 +35,7 @@ The `quantumarticle` class tries to be **maximally compatible** with existing do
 
 ## Contributing
 
-In case you encounter problems using the article class please consider opening a bug report in our [bug-tracker on github](https://github.com/cgogolin/quantum-journal/issues] or contact us via email under latex@quantum-journal.org.
+In case you encounter problems using the article class please consider opening a bug report in our [bug-tracker on github](https://github.com/cgogolin/quantum-journal/issues) or contact us via email under latex@quantum-journal.org.
 
 Improvements submitted as pull requests against the `development` branch are very much appreciated!
 

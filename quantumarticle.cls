@@ -1,7 +1,7 @@
 %%
 %% This is file `quantumarticle.cls',
 %% it provides the quantumarticle class for typesetting articles in
-%% Quantum - the open quantum journal
+%% Quantum - the open journal for quantum science
 %%
 %% Copyright 2016
 %% Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
@@ -20,8 +20,8 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2016/11/14 v1.7
-               class for Quantum - the open quant-ph overlay journal (http://quantum-journal.org)]
+              [2016/11/29 v1.8
+               class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \newcommand\@ptsize{}
 \newif\if@restonecol
 \newif\if@titlepage
@@ -301,6 +301,7 @@
   \setcounter{footnote}{0}%
   \global\let\thanks\relax
   \global\let\maketitle\relax
+  \global\let\@maketitle\relax
 %  \global\let\@thanks\@empty
 %  \global\let\@author\@empty
 %  \global\let\@date\@empty
@@ -357,6 +358,14 @@
     \noindent{\footnotesize\color{quantumgray}\@date}
   \par
   \vskip 1.5em
+  \makeatletter%
+  \hypersetup{%
+    pdftitle={\detokenize\expandafter{\@title}},
+    pdfauthor={\@authorsonly},
+    pdfkeywords={\@keywords},
+    pdfcreator={LaTeX with hyperref package and class quantumarticle \csname ver@quantumarticle.cls\endcsname},
+  }%
+  \makeatother%
 }
 \setcounter{secnumdepth}{3}
 \newcounter {part}
@@ -821,7 +830,11 @@
 
 %title
 \def\@printtitle{%
-  {\Huge\href{http://quantum-journal.org/?s=\@title}{\color{quantumviolet}{\@title}}}%
+  {\Huge\href{http://quantum-journal.org/?s=\detokenize\expandafter{\@title}}{%
+      \begin{minipage}{1.0\linewidth}%
+        \color{quantumviolet}{\@title}%
+      \end{minipage}}%
+  }%
 }
 % author handling
 \newcounter{@authorcounter}
@@ -880,6 +893,10 @@
       \@printauthorextrainfo{\the@authornum}%\vspace{5\p@}%
     }}{}%
     \@printauthor\the@authornum}{\@authors}%
+}
+\def\@@addcommabetween#1{\ifdef{\firstauthoronly}{, }{\def\firstauthoronly{}}#1}
+\def\@authorsonly{%
+  \forlistloop{\@@addcommabetween}{\@authors}%
 }
 % affiliation handling
 \newbool{@startnewauthorgroup}
@@ -1034,13 +1051,21 @@
 \newcommand{\fntext}[1][]{} %author footnotes
 
 %set default options for hyperref to make links more pretty
-\PassOptionsToPackage{colorlinks=true,allcolors=quantumviolet}{hyperref}
+\PassOptionsToPackage{colorlinks=true,allcolors=quantumviolet,hyperindex}{hyperref}
+\ifnum\pdfoutput=0
+\else
+\PassOptionsToPackage{breaklinks=true}{hyperref}
+\fi
 
 %enable DOIs if biblatex is used by default
 \PassOptionsToPackage{doi=true}{biblatex}
 
 \AtBeginDocument{%
   \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}%
+
+  \ifnum\pdfoutput=0
+  \ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex)}{Without this, hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
+  \fi
 
   \@ifpackageloaded{natbib}{%
     \setlength{\bibsep}{0pt plus 0.3ex}
@@ -1050,15 +1075,21 @@
   }{%
     \@ifpackageloaded{biblatex}{
       \DeclareFieldFormat{doi}{\mkbibacro{DOI}\addcolon\space\href{http://dx.doi.org/\detokenize{#1}}{\detokenize{#1}}}
+      \setcounter{biburllcpenalty}{1000}
+      \setcounter{biburlucpenalty}{1000}
+      \setcounter{biburlnumpenalty}{1000}
     }{%
       \ClassWarning{quantumarticle}{Neither natbib nor biblatex have been loaded. The quantumarticle class recommends to use one of these packages to get DOI hyperlinks in bibliographies generated from BibTeX files.}%
     }%
   }
 }
 
+\def\@keywords{}
+\providecommand{\keywords}{}
+\renewcommand{\keywords}[1]{\def\@keywords{#1}}
+
 \ifrevtexcompatibility
 \providecommand{\pacs}[1]{}
-\providecommand{\keywords}[1]{}
 
 \AtEndPreamble{%in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
   \@ifpackageloaded{biblatex}{}{%
@@ -1074,7 +1105,7 @@
 
 \AtBeginDocument{%
   \providecommand\text[1]{
-    \ClassError{quantumarticle}{To use the \noexpand\text command please load the mathtools package.}{}
+    \ClassError{quantumarticle}{To use the \string\text command please load the mathtools package}{}
   }
 }
 
