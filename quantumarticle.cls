@@ -1,7 +1,7 @@
 %%
 %% This is file `quantumarticle.cls',
 %% it provides the quantumarticle class for typesetting articles in
-%% Quantum - the open quantum journal
+%% Quantum - the open journal for quantum science
 %%
 %% Copyright 2016
 %% Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
@@ -21,7 +21,7 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
               [2016/11/14 v1.7
-               class for Quantum - the open quant-ph overlay journal (http://quantum-journal.org)]
+               class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \newcommand\@ptsize{}
 \newif\if@restonecol
 \newif\if@titlepage
@@ -301,6 +301,7 @@
   \setcounter{footnote}{0}%
   \global\let\thanks\relax
   \global\let\maketitle\relax
+  \global\let\@maketitle\relax
 %  \global\let\@thanks\@empty
 %  \global\let\@author\@empty
 %  \global\let\@date\@empty
@@ -357,6 +358,14 @@
     \noindent{\footnotesize\color{quantumgray}\@date}
   \par
   \vskip 1.5em
+  \makeatletter%
+  \hypersetup{%
+    pdftitle={\detokenize\expandafter{\@title}},
+    pdfauthor={\@authorsonly},
+    pdfkeywords={\@keywords},
+    pdfcreator={LaTeX with hyperref package and class quantumarticle \csname ver@quantumarticle.cls\endcsname},
+  }%
+  \makeatother%
 }
 \setcounter{secnumdepth}{3}
 \newcounter {part}
@@ -821,7 +830,7 @@
 
 %title
 \def\@printtitle{%
-  {\Huge\href{http://quantum-journal.org/?s=\@title}{%
+  {\Huge\href{http://quantum-journal.org/?s=\detokenize\expandafter{\@title}}{%
       \begin{minipage}{1.0\linewidth}%
         \color{quantumviolet}{\@title}%
       \end{minipage}}%
@@ -884,6 +893,10 @@
       \@printauthorextrainfo{\the@authornum}%\vspace{5\p@}%
     }}{}%
     \@printauthor\the@authornum}{\@authors}%
+}
+\def\@@addcommabetween#1{\ifdef{\firstauthoronly}{, }{\def\firstauthoronly{}}#1}
+\def\@authorsonly{%
+  \forlistloop{\@@addcommabetween}{\@authors}%
 }
 % affiliation handling
 \newbool{@startnewauthorgroup}
@@ -1071,9 +1084,12 @@
   }
 }
 
+\def\@keywords{}
+\providecommand{\keywords}{}
+\renewcommand{\keywords}[1]{\def\@keywords{#1}}
+
 \ifrevtexcompatibility
 \providecommand{\pacs}[1]{}
-\providecommand{\keywords}[1]{}
 
 \AtEndPreamble{%in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
   \@ifpackageloaded{biblatex}{}{%
