@@ -128,17 +128,17 @@
 \DeclareOption{opex}{}
 \DeclareOption{tops}{}
 \DeclareOption{josa}{}
-\DeclareOption{amsfonts}{%
-  \def\class@amsfonts{\RequirePackage{amsfonts}}%
-}%
+\newif\ifamsfonts
+\amsfontsfalse
+\DeclareOption{amsfonts}{\amsfontstrue}%
 \DeclareOption{noamsfonts}{}
-\DeclareOption{amssymb}{%
-  \def\class@amssymb{\RequirePackage{amssymb}}%
-}%
+\newif\ifamssymb
+\amssymbfalse
+\DeclareOption{amssymb}{\amssymbtrue}%
 \DeclareOption{noamssymb}{}
-\DeclareOption{amsmath}{%
-  \def\class@amsmath{\RequirePackage{amsmath}[\ver@amsmath@prefer]}%
-}%
+\newif\ifamsmath
+\amsmathfalse
+\DeclareOption{amsmath}{\amsmathtrue}%
 \DeclareOption{noamsmath}{}
 \DeclareOption{byrevtex}{}
 \DeclareOption{floatfix}{}
@@ -192,6 +192,7 @@
 \renewcommand{\usepackage}[2][]{
   \ifinlist{#2}{\@packageblacklist}{}{\oldusepackage[#1]{#2}}
 }
+\@blacklistpackage{titlesec}
 
 \RequirePackage[margin=2cm,bottom=3cm]{geometry}
 \@blacklistpackage{geometry}
@@ -949,18 +950,26 @@
 \def\@printauthorextrainfo#1{%
   \csname @authorname#1\endcsname: \ifcsdef{author#1emails}{\forlistcsloop{\@@spaceafter}{author#1emails}}{}\ifcsdef{author#1homepages}{\ifcsdef{author#1emails}{\unskip, }{}\forlistcsloop{\@@spaceafter}{author#1homepages}}{}\ifcsdef{author#1thanks}{\ifcsdef{author#1emails}{\ifcsdef{author#1homepages}{\unskip, }{\unskip, }}{\ifcsdef{author#1homepages}{\unskip, }{}}\forlistcsloop{\@@spaceafter}{author#1thanks}}{}%
 }
-\newcommand{\email}[2][]{\@email{#1}{\href{mailto:#2}{#2}}}
-\newcommand{\homepage}[2][]{\@homepage{#1}{\href{#2}{#2}}}
-\renewcommand{\thanks}[2][]{\@thanks{#1}{#2}}
-\def\@email#1#2{%
+\newcommand{\email}[2][]{%
+\ifcsdef{@currentauthornumber}{}{\ClassError{quantumarticle}{\string\email{} may only appear after the first \string\author{} command}{}}
+\@email{#1}{\href{mailto:#2}{#2}}}
+\newcommand{\homepage}[2][]{%
+\ifcsdef{@currentauthornumber}{}{\ClassError{quantumarticle}{\string\homepage{} may only appear after the first \string\author{} command}{}}
+\@homepage{#1}{\href{#2}{#2}}}
+\renewcommand{\thanks}[2][]{%
+\ifcsdef{@currentauthornumber}{}{\ClassError{quantumarticle}{\string\thanks{} may only appear after the first \string\author{} command}{}}
+\@thanks{#1}{#2}}
+\def\@email#1#2{%}
 \@addemail{#1#2}{\@currentauthornumber}
 \csdef{author\@currentauthornumber hasextras}{}
 }
 \def\@homepage#1#2{%
+\ifcsdef{@currentauthornumber}{}{\def\@currentauthornumber{0}}%in case \homepage is called before the first author
 \@addhomepage{#1#2}{\@currentauthornumber}
 \csdef{author\@currentauthornumber hasextras}{}
 }
 \def\@thanks#1#2{%
+\ifcsdef{@currentauthornumber}{}{\def\@currentauthornumber{0}}%in case \thanks is called before the first author
 \@addthanks{#1#2}{\@currentauthornumber}
 \csdef{author\@currentauthornumber hasextras}{}
 }
@@ -1089,8 +1098,13 @@
 \providecommand{\keywords}{}
 \renewcommand{\keywords}[1]{\def\@keywords{#1}}
 
+\ifamsfonts\RequirePackage{amsfonts}\fi
+\ifamssymb\RequirePackage{amssymb}\fi
+\ifamsmath\RequirePackage{amsmath}\fi
+
 \ifrevtexcompatibility
 \providecommand{\pacs}[1]{}
+\providecommand{\preprint}[1]{}
 
 \AtEndPreamble{%in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
   \@ifpackageloaded{biblatex}{}{%
@@ -1106,7 +1120,7 @@
 
 \AtBeginDocument{%
   \providecommand\text[1]{
-    \ClassError{quantumarticle}{To use the \string\text command please load the mathtools package}{}
+    \ClassError{quantumarticle}{To use the \string\text{} command please load the mathtools package}{}
   }
 }
 
