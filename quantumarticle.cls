@@ -821,7 +821,11 @@
 
 %title
 \def\@printtitle{%
-  {\Huge\href{http://quantum-journal.org/?s=\@title}{\color{quantumviolet}{\@title}}}%
+  {\Huge\href{http://quantum-journal.org/?s=\@title}{%
+      \begin{minipage}{1.0\linewidth}%
+        \color{quantumviolet}{\@title}%
+      \end{minipage}}%
+  }%
 }
 % author handling
 \newcounter{@authorcounter}
