@@ -766,7 +766,7 @@
   \space\number\day, \number\year}
 \setlength\columnsep{20\p@}
 \setlength\columnseprule{0\p@}
-\setlength{\footnotesep}{2\baselineskip}
+\setlength{\footnotesep}{\baselineskip}
 \RequirePackage{fancyhdr}
 \@blacklistpackage{fancyhdr}
 \pagestyle{fancy}
