@@ -15,7 +15,8 @@ addons:
         # such as {ltxgrid}, are shipped with the "publishers"
         # Ubuntu package.
         - texlive-publishers
-        # {tikz} and PGF are support.
+        # {tikz} and PGF are supported by two packages in Trusty.
+        - pgf
         - texlive-pictures
         # {xcolor} is required to make the Quantum purple color.
         - latex-xcolor
