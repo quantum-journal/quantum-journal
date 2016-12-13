@@ -6,7 +6,7 @@ addons:
         - texlive-latex-recommended
         - texlive-latex-extra
         # {xcolor} is required to make the Quantum purple color.
-        - texlive-xcolor
+        - latex-xcolor
         # {quantumarticle} additionally requires either lmodern or cm-super.
         - fonts-lmodern # FIXME: this package is currently blocked by Travis, we should ask for its inclusion.
         - cm-super
