@@ -8,7 +8,7 @@ addons:
         # {xcolor} is required to make the Quantum purple color.
         - latex-xcolor
         # {quantumarticle} additionally requires either lmodern or cm-super.
-        - fonts-lmodern # FIXME: this package is currently blocked by Travis, we should ask for its inclusion.
+        # - fonts-lmodern
         - cm-super
 script:
 # Test whether the template compiles.
