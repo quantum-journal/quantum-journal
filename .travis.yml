@@ -5,10 +5,15 @@ addons:
         - texlive-fonts-extra
         - texlive-latex-recommended
         - texlive-latex-extra
+        # Some of the additional packages we depend on,
+        # such as {ltxgrid}, are shipped with the "publishers"
+        # Ubuntu package.
+        - texlive-publishers
         # {xcolor} is required to make the Quantum purple color.
         - latex-xcolor
         # {quantumarticle} additionally requires either lmodern or cm-super.
-        # - fonts-lmodern
+        # We go with cm-super here due to issues with fonts-lmodern raising
+        # apt errors.
         - cm-super
 script:
 # Test whether the template compiles.
