@@ -1105,9 +1105,11 @@
 \ifrevtexcompatibility
 \providecommand{\pacs}[1]{}
 \providecommand{\preprint}[1]{}
+\fi
 
 \AtEndPreamble{%in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
   \@ifpackageloaded{biblatex}{}{%
+    \ifrevtexcompatibility
     \usepackage[numbers,sort&compress]{natbib}
     \newif\if@bibliographystyleset
     \@bibliographystylesetfalse
@@ -1117,9 +1119,9 @@
     \renewcommand{\bibliography}[1]{\if@bibliographystyleset\else\bibliographystyle{plainnat}\fi\@origbibliography{#1}}
     \providecommand\textcite[1]{\citet{#1}}
     \providecommand\onlinecite[1]{\cite{#1}}
+    \fi
   }
 }
-\fi
 
 \newenvironment{acknowledgements}{\section*{Acknowledgements}}{}
 
