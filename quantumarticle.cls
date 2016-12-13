@@ -1109,7 +1109,12 @@
 \AtEndPreamble{%in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
   \@ifpackageloaded{biblatex}{}{%
     \usepackage[numbers,sort&compress]{natbib}
-    \bibliographystyle{plainnat}
+    \newif\if@bibliographystyleset
+    \@bibliographystylesetfalse
+    \let\@origbibliographystyle\bibliographystyle
+    \renewcommand{\bibliographystyle}[1]{\@bibliographystylesettrue\@origbibliographystyle{#1}}
+    \let\@origbibliography\bibliography
+    \renewcommand{\bibliography}[1]{\if@bibliographystyleset\else\bibliographystyle{plainnat}\fi\@origbibliography{#1}}
     \providecommand\textcite[1]{\citet{#1}}
     \providecommand\onlinecite[1]{\cite{#1}}
   }
