@@ -180,8 +180,6 @@
 \ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
 
-\def\class@name{ltxutil}%get rid of You should define the class name before reading in this package. Using default warning from ltxutils
-\RequirePackage{ltxgrid}%ltxgrid must be loaded before etoolbox, otherwise terrible things can happen: http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend?noredirect=1#comment843815_343856
 \RequirePackage{etoolbox}
 \input{size1\@ptsize.clo}
 
@@ -234,6 +232,8 @@
 \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
 \definecolor{quantumgray}{HTML}{555555} %Quantum gray
 \let\origif@twocolumn\if@twocolumn
+\def\class@name{ltxutil}%get rid of "You should define the class name before reading in this package. Using default" warning from ltxutils
+\RequirePackage{ltxgrid}%ltxgrid should be loaded before etoolbox, otherwise terrible things can happen: http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend?noredirect=1#comment843815_343856
 \let\if@twocolumn\origif@twocolumn
 \let\col@number\@colnum
 \newcommand{\twocolumn}[1][]{#1\twocolumngrid}
