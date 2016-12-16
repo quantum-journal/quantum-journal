@@ -715,7 +715,6 @@
   \@clubpenalty \clubpenalty
   \widowpenalty4000%
   \sfcode`\.\@m
-  \setlength{\parskip}{100pt}
   \setlength{\itemsep}{0pt plus 0.3ex}
 }
 {\def\@noitemerr
