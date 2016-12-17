@@ -872,7 +872,7 @@
   \boolfalse{@startnewauthorgroup}
 }
 \def\@@spaceafter#1{#1 }
-\def\@printauthor#1#2{#2\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@spaceafter}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{, and }{}}}
+\def\@printauthor#1#2{#2\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@spaceafter}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
 \def\@printauthors{%
   \newcounter{@authornum}%
   \large\forlistloop{\stepcounter{@authornum}%
