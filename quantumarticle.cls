@@ -1131,6 +1131,12 @@
   }
 }
 
+\AtEndPreamble{
+  \ltx@ifpackageloaded{caption}{}{%
+    \RequirePackage[font={small,sf}]{caption}
+  }
+}
+
 \endinput
 %%
 %% End of file `quantumarticle.cls'.
