@@ -232,7 +232,7 @@
 \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
 \definecolor{quantumgray}{HTML}{555555} %Quantum gray
 \let\origif@twocolumn\if@twocolumn
-\def\class@name{ltxutil}%get rid of "You should define the class name before reading in this package. Using default" warning from ltxutils
+\def\class@name{ltxutil}%get rid of "You should define the class name before reading in this package. Using default" warning from ltxutils which is loaded by ltxgrid
 \RequirePackage{ltxgrid}%ltxgrid should be loaded before etoolbox, otherwise terrible things can happen: http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend?noredirect=1#comment843815_343856
 \let\if@twocolumn\origif@twocolumn
 \let\col@number\@colnum
@@ -788,7 +788,7 @@
   \onecolumn
 \fi
 
-%the following is mostly taken from revtex4-1:
+%the following is mostly taken from revtex4-1 (see https://www.ctan.org/pkg/revtex4-1)
 \if@twocolumn
 \newbox\widetext@top
 \newbox\widetext@bot
@@ -1079,6 +1079,7 @@
   \@ifpackageloaded{natbib}{%
     \setlength{\bibsep}{0pt plus 0.3ex}
     \@ifpackageloaded{doi}{}{%
+      \providecommand{\doi}[1]{}
       \renewcommand{\doi}[1]{\href{https://doi.org/\detokenize{#1}}{DOI: \detokenize{#1}}}%
     }%
   }{%
@@ -1087,9 +1088,7 @@
       \setcounter{biburllcpenalty}{1000}
       \setcounter{biburlucpenalty}{1000}
       \setcounter{biburlnumpenalty}{1000}
-    }{%
-      \ClassWarning{quantumarticle}{Neither natbib nor biblatex have been loaded. The quantumarticle class recommends to use one of these packages to get DOI hyperlinks in bibliographies generated from BibTeX files.}%
-    }%
+    }{}%
   }
 }
 
@@ -1104,23 +1103,25 @@
 \ifrevtexcompatibility
 \providecommand{\pacs}[1]{}
 \providecommand{\preprint}[1]{}
-\fi
 
 \AtEndPreamble{%in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
   \@ifpackageloaded{biblatex}{}{%
-    \ifrevtexcompatibility
     \usepackage[numbers,sort&compress]{natbib}
-    \newif\if@bibliographystyleset
-    \@bibliographystylesetfalse
-    \let\@origbibliographystyle\bibliographystyle
-    \renewcommand{\bibliographystyle}[1]{\@bibliographystylesettrue\@origbibliographystyle{#1}}
-    \let\@origbibliography\bibliography
-    \renewcommand{\bibliography}[1]{\if@bibliographystyleset\else\bibliographystyle{plainnat}\fi\@origbibliography{#1}}
-    \providecommand\textcite[1]{\citet{#1}}
-    \providecommand\onlinecite[1]{\cite{#1}}
-    \fi
   }
+  \let\@recordedbibliographystyle\relax
+  \let\@origbibliographystyle\bibliographystyle
+  \renewcommand{\bibliographystyle}[1]{\let\@recordedbibliographystyle#1\@origbibliographystyle{#1}\ClassWarning{quantumarticle}{bibliographystyle was recorded}{}}
+  \let\@origbibliography\bibliography
+  \renewcommand{\bibliography}[1]{%
+    \ifx\@recordedbibliographystyle\relax\bibliographystyle{plainnat}\fi
+    \ltx@ifpackageloaded{natbib}{}{%
+      \ltx@ifpackageloaded{biblatex}{}{%
+        \ClassWarning{quantumarticle}{You are manually generating your bibliography. Please make sure that all references include DOI hyperlinks. quantumarticle recommends the use of BibTeX with either the natbib nor biblatex package for generating the bibliography.}}}%
+    \@origbibliography{#1}}
+  \providecommand\textcite[1]{\citet{#1}}
+  \providecommand\onlinecite[1]{\cite{#1}}
 }
+\fi 
 
 \newenvironment{acknowledgements}{\section*{Acknowledgements}}{}
 
