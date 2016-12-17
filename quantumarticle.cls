@@ -239,6 +239,20 @@
 \newcommand{\twocolumn}[1][]{#1\twocolumngrid}
 \newcommand{\onecolumn}{\onecolumngrid}
 
+%repair what ltxutils has destroyed (see http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend) 
+\patchcmd\enddocument
+  {\deadcycles}
+  {\let\AfterEndDocument\@firstofone    
+   \@afterenddocumenthook
+   \deadcycles}
+  {}
+  {\AtEndDocument{%
+     \let\etb@@end\@@end
+     \def\@@end{%
+       \let\AfterEndDocument\@firstofone
+       \@afterenddocumenthook
+       \etb@@end}}}
+
 \setcounter{topnumber}{2}
 \renewcommand\topfraction{.7}
 \setcounter{bottomnumber}{1}
