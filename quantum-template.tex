@@ -180,6 +180,7 @@ In \texttt{onecolumn} mode, the \texttt{widetext} environment has no effect.
   StackExchange discussion on \href{http://tex.stackexchange.com/questions/6810/automatically-adding-doi-fields-to-a-hand-made-bibliography}{``Automatically adding DOI fields to a hand-made bibliography'' (2016-11-18)}
 \end{thebibliography}
 
+\onecolumn\newpage
 \appendix
 
 \section{First section of the appendix}
@@ -194,6 +195,8 @@ Equations continue to be numbered sequentially.
   A \neq B
 \end{equation}
 You are free to change this in case it is more appropriate for your article, but a consistent and unambiguous numbering of sections and equations must be ensured.
+
+If you want your appendices to appear in \texttt{onecolumn} mode but the rest of the document in \texttt{twocolumn} mode, you can insert the command \texttt{\textbackslash{}onecolumn\textbackslash{}newpage} before \texttt{\textbackslash{}appendix}.   
 
 \section{Problems and Bugs}
 In case you encounter problems using the article class please consider opening a bug report in our bug-tracker under \href{https://github.com/cgogolin/quantum-journal/issues}{https://github.com/cgogolin/quantum-journal/issues} or contact us via email under \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org}.
