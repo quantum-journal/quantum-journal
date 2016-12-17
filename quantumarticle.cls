@@ -289,7 +289,7 @@
     }
   \if@titlepage
   \newcommand\maketitle{\begin{titlepage}%
-  \let\footnotesize\small
+%  \let\footnotesize\small
   \let\footnoterule\relax
   \let \footnote \thanks
   \null\vfil
@@ -881,17 +881,18 @@
 %      \interlinepenalty\interfootnotelinepenalty
 %      \splittopskip\footnotesep
 %      \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
-      \if@titlepage
-       \hsize\dimexpr \linewidth\relax \@parboxrestore
-      \else
-       \if@twocolumn
-        \hsize\dimexpr 0.5\linewidth-0.5\columnsep\relax \@parboxrestore
-       \else
-        \hsize\dimexpr \linewidth\relax \@parboxrestore
-       \fi
-      \fi
-      \flushleft%
-      \@printauthorextrainfo{\the@authornum}%\vspace{5\p@}%
+      \if@titlepage%
+       \hsize\dimexpr \linewidth\relax \@parboxrestore%
+      \else%
+       \if@twocolumn%
+        \hsize\dimexpr 0.5\linewidth-0.5\columnsep\relax \@parboxrestore%
+       \else%
+        \hsize\dimexpr \linewidth\relax \@parboxrestore%
+       \fi%
+      \fi%
+      % \flushleft%
+      % \baselineskip=0pt%
+      \@printauthorextrainfo{\the@authornum}\vspace{0.5\baselineskip}%
     }}{}%
     \@printauthor\the@authornum}{\@authors}%
 }
@@ -942,7 +943,6 @@
   \newcounter{@affiliationnum}%
   \settowidth{\leftskip}{\footnotesize\textsuperscript{\the@affiliationcounter}}%
   {\footnotesize\color{quantumgray}%
-    % \setlength{\leftskip}{3cm}%\indent=\widthof{\hhantom{\textsuperscript{\the@affiliationcounter}}}
     \forlistloop{\stepcounter{@affiliationnum}\@printaffiliation\the@affiliationnum}{\affiliations}}%
 }
 %collaboration and altaffiliation
