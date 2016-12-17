@@ -1,7 +1,4 @@
-\documentclass[prx,a4paper,aps,twocolumn,superscriptaddress,11pt]{quantumarticle}
-%\documentclass[prl,twocolumn,superscriptaddress]{revtex4-1}
-%\documentclass[onecolumn]{quantumarticle}
-%\documentclass[titlepage,oneside]{quantumarticle}
+\documentclass[a4paper,twocolumn,superscriptaddress,11pt]{quantumarticle}
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -97,7 +94,7 @@ If you are formating your bibliography manually, you can cite this work using th
 \end{verbatim}
 If you are using BibTeX, you can load the \texttt{natbib} package by putting
 \begin{verbatim}
-\usepackage{natbib}
+\usepackage[numbers,sort&compress]{natbib}
 \end{verbatim}
 in the preamble of your document and then use the \texttt{plainnat} citation style by including your BibTeX bibliography \texttt{mybibliography.bib} where you want the bibliography to appear as follows:
 \begin{verbatim}
