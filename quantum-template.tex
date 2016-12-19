@@ -126,7 +126,7 @@ For DOI linking to work, the BibTeX file must contain the \texttt{doi} field as 
   volume = {123},
   page = {123456},
   year = {1916},
-  doi = {10.1103/PhysRevLett.107.120501},
+  doi = {10.22331/idonotexist},
 }
 \end{verbatim}
 More information on how to get DOI links in your document can be found on StackExchange \cite{howtogetdoilinksinbibliography,automaticallyaddingdoifieldstoahandmadebibliography}.
@@ -151,10 +151,6 @@ Quantum encourages you to load the following extra packages:
 If you do not load the \texttt{hyperref} package, quantumarticle automatically loads it for you.
 Packages that change font settings, such as \texttt{times} or \texttt{helvet} should be avoided.
 
-\paragraph{Paragraphs}
-The paragraph is the smallest unit of sectioning.
-Feel free to end the paragraph title with a full stop if you find this appropriate.
-
 \section{Wide equations}
 Very wide equations can be shown expanding over both columns using the \texttt{widetext} environment.
 In \texttt{onecolumn} mode, the \texttt{widetext} environment has no effect.
@@ -163,6 +159,10 @@ In \texttt{onecolumn} mode, the \texttt{widetext} environment has no effect.
 |\mathrm{AME}(n=6,q=5)\rangle=\sum_{i,j,k=0}^4 |i,j,k,i+j+k,i+2j+3k,i+3j+4k\rangle
   \end{equation}
 \end{widetext}
+
+\paragraph{Paragraphs}
+The paragraph is the smallest unit of sectioning.
+Feel free to end the paragraph title with a full stop if you find this appropriate.
 
 \bibliographystyle{plain}
 \begin{thebibliography}{9}
