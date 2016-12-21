@@ -959,9 +959,9 @@
 \def\@printaffiliations{%
   \ifcsdef{affiliations}{}{\csdef{affiliations}{}}%
   \newcounter{@affiliationnum}%
-  \ifnumcomp{\the@affiliationcounter}{>}{1}{
+  \ifnumcomp{\the@affiliationcounter}{>}{1}{%
     \settowidth{\leftskip}{\footnotesize\textsuperscript{\the@affiliationcounter}}%
-  }{}
+  }{}%
   {\footnotesize\color{quantumgray}%
     \forlistloop{\stepcounter{@affiliationnum}\@printaffiliation\the@affiliationnum}{\affiliations}}%
 }
