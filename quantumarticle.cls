@@ -204,36 +204,38 @@
 \@medpenalty  151
 \@highpenalty 301
 
-% avoid bitmap fonts by loading lmodern or at least checking for cm-super
-\IfFileExists{lmodern.sty}{
-  \RequirePackage{lmodern}
-}{
-  \IfFileExists{type1ec.sty}{}{
-    \PackageError{quantumarticle}{Either the lmodern or the cm-super package are required by quantumarticle in order to produce high quality pdf output.}{Please install the lmodern package, or, if this is not possible, the cm-super package.}
+\AtBeginDocument{
+  % avoid bitmap fonts by loading lmodern or at least checking for cm-super
+  \IfFileExists{lmodern.sty}{
+    \@ifpackageloaded{lmodern}{}{\RequirePackage{lmodern}}
+  }{
+    \IfFileExists{type1ec.sty}{}{
+      \PackageError{quantumarticle}{Either the lmodern or the cm-super package are required by quantumarticle in order to produce high quality pdf output.}{Please install the lmodern package, or, if this is not possible, the cm-super package.}
+    }
   }
+  % Define a revtex-style openone symbol
+  \IfFileExists{bbm.sty}{
+    \@ifpackageloaded{bbm}{}{\RequirePackage{bbm}}
+    \DeclareRobustCommand\openone{\mathbbm{1}}
+  }{
+    \IfFileExists{dsfont.sty}{
+      \@ifpackageloaded{dsfont}{}{\RequirePackage{dsfont}}
+      \DeclareRobustCommand\openone{\mathds{1}}
+    }{
+      % This uses a similar technique to {revtex4-1}'s openone,
+      % namely two overstruck numeral 1s, but implemented using mboxes
+      % and math kerning as suggested by The Comprehensive LaTeX Symbol List.
+      \DeclareRobustCommand\openone{{\mbox{\small1}\mkern-5.5mu1}}
+    }
+  }
+  \@ifpackageloaded{xcolor}{}{\RequirePackage{xcolor}}
+  \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
+  \definecolor{quantumgray}{HTML}{555555} %Quantum gray
 }
 
-% Define a revtex-style openone symbol
-\IfFileExists{bbm.sty}{
-  \RequirePackage{bbm}
-  \DeclareRobustCommand\openone{\mathbbm{1}}
-}{
-  \IfFileExists{dsfont.sty}{
-    \RequirePackage{dsfont}
-    \DeclareRobustCommand\openone{\mathds{1}}
-  }{
-    % This uses a similar technique to {revtex4-1}'s openone,
-    % namely two overstruck numeral 1s, but implemented using mboxes
-    % and math kerning as suggested by The Comprehensive LaTeX Symbol List.
-    \DeclareRobustCommand\openone{{\mbox{\small1}\mkern-5.5mu1}}
-  }
-}
-\RequirePackage{xcolor}
-\definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
-\definecolor{quantumgray}{HTML}{555555} %Quantum gray
 \let\origif@twocolumn\if@twocolumn
 \def\class@name{ltxutil}%get rid of "You should define the class name before reading in this package. Using default" warning from ltxutils which is loaded by ltxgrid
-\RequirePackage{ltxgrid}%ltxgrid should be loaded before etoolbox, otherwise terrible things can happen: http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend?noredirect=1#comment843815_343856
+\RequirePackage{ltxgrid}%ltxgrid should be loaded before etoolbox, otherwise terrible things can happen: http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend?noredirect=1#comment843815_343856 but if this is actually done, even more terrible things happen, so we partially repair what ltxgrid messes up below...
 \let\if@twocolumn\origif@twocolumn
 \let\col@number\@colnum
 \newcommand{\twocolumn}[1][]{#1\twocolumngrid}
@@ -375,12 +377,14 @@
   \par
   \vskip 1.5em
   \makeatletter%
+  \begingroup
   \hypersetup{%
     pdftitle={\detokenize\expandafter{\@title}},
     pdfauthor={\@authorsonly},
     pdfkeywords={\@keywords},
     pdfcreator={LaTeX with hyperref package and class quantumarticle \csname ver@quantumarticle.cls\endcsname},
   }%
+  \endgroup
   \makeatother%
 }
 \setcounter{secnumdepth}{3}
@@ -1005,73 +1009,74 @@
 \newif\if@tikz
 \IfFileExists{tikz.sty}{\@tikztrue}{\@tikzfalse}
 
-\if@tikz
-\RequirePackage{tikz}
-\usetikzlibrary{calc}
-\newlength{\@eQ}%Capital Q height
-\newlength{\@w}%line width
-\newlength{\@rl}%rounding length
-\newlength{\@cw}%character width
-\newlength{\@ch}%lower case character height
-\newlength{\@cr}%corner radius
-\newlength{\@sl}%<> slant
-\newlength{\@xt}%<> x thickeness
-
-\DeclareRobustCommand{\Quantum}{%
-{\sffamily%\color{quantumviolet}%
-\setlength{\@eQ}{\dimexpr\fontcharht\font`Q\relax}%
-\setlength{\@w}{0.088\@eQ}%
-\setlength{\@rl}{0.2\@eQ}%
-\setlength{\@cw}{0.5\@eQ}%
-\setlength{\@ch}{0.65\@eQ}%
-\setlength{\@cr}{0.3\@w}%
-\setlength{\@sl}{0.22\@eQ}%
-\setlength{\@xt}{1.113588507968435\@w}%=math.sqrt(1/(1-pow(22./50.,2)))*\@w
-\tikz[baseline,x=\@eQ,y=\@eQ,every node/.append style={fill=none,inner sep=0pt,outer sep=0pt,node distance=0},rounded corners=\@cr]{%
-  %<> leg in back
-  % \fill[] (0,0.5) -- ++(\@sl,0.5) -- ++(\@xt,0) -- ++(-\@sl,-0.5) -- ++(\@sl,-0.5) -- ++(-\@xt,0) -- cycle;
-  % \fill[xshift=.95\@eQ] (0,0.5) node (eastend) {} -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- ++(-\@sl,-0.5) -- ++(\@xt,0) -- cycle;
-  % \begin{scope}
-  %   \clip[xshift=.95\@eQ,overlay] (0.5\@xt,0.5) -- ++(-\@sl,-0.5) -- (0,0) -- (0.5\@xt,0.5) ++(-2\@xt,0) -- ++(-\@sl,-0.5) -- ($(-2*\@sl,0)$) -- ++(\@sl,0.5) --cycle;
-  %   \fill[xshift=.95\@eQ] (0,0) -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- cycle;    
-  % \end{scope}
-  \node[overlay,anchor=base west,opacity=0] {Q};
-  %<> leg in front
-  \fill[] (0,0.5) -- ++(\@sl,0.5) -- ++(\@xt,0) -- ++(-\@sl,-0.5) -- ++(\@sl,-0.5) -- ++(-\@xt,0) -- cycle;
-  \begin{scope}[xshift=\@eQ]
-    \fill (0,0) -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- cycle;    
-    \clip[overlay,rounded corners=0] (-1.34\@xt,0) -- ++(-\@sl,0.5) -- ++(0,-0.5) -- cycle (0.34\@xt,0) -- ++($2*(-\@sl,0.5)$) -- (0.5\@xt,1) --cycle;
-    \fill (0,0.5) node (eastend) {} -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- ++(-\@sl,-0.5) -- ++(\@xt,0) -- cycle;
-  \end{scope}
-  %u
-  \def\@u##1{%
-    \fill[##1] (0,\@ch) -- (0,1.06\@rl) to[out=-90,in=184,looseness=1.2,overlay] ($(\@cw-\@w,0)$) -- ($(\@cw,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@cw-\@w,\@w)$) to[out=184,in=-90,looseness=1.1] ($(\@w,1.06\@rl)$) -- (\@w,\@ch) --cycle;}
-  \@u{shift={($(current bounding box.south east)+(0.172\@eQ,0)$)}}
-  \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {u};
-  %a
-  \fill[shift={($(current bounding box.south east)+(0.110\@eQ,0)$)}] (\@cw,0) -- ++($(0,\@ch)-(0,\@rl)$) to[out=90,in=0,looseness=1.22] ++($(-1.22\@rl,\@rl)$) -- ($(\@w,\@ch)$) -- ++(0,-\@w) -- ($(1.22\@rl,\@ch-\@w)$) to[out=0,in=90,looseness=1.3,rounded corners=0] ($(\@cw,\@ch)-(\@w,\@rl)$) -- ($(\@cw,0)-(\@w,-\@w)$) -- 
-  ($(\@rl,\@w)$) to[out=180,in=-100,looseness=0.95,rounded corners=0] ($(1.05\@w,0.33\@ch)$) to[out=80,in=176,looseness=1.0] ($(\@cw-\@w,0.47\@ch)$) to[rounded corners=0] ++(0,-\@cr) to[rounded corners=0] ++($(0,\@cr+\@w)$) to[out=176,in=0] ($(1.2\@rl,0.48\@ch)+(0,\@w)$) to[out=180,in=90,rounded corners=0] ($(0.05\@w,0.33\@ch)$) to[out=-90,in=180,looseness=1.1,rounded corners=0] ($(\@rl,0)$) -- cycle;
-  \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {a};
-  % \fill[shift={($(current bounding box.south east)+(0.110\@eQ,0)$)}] (\@cw,0) -- ++($(0,\@ch)-(0,\@rl)$) to[out=90,in=0,looseness=1.22] ++($(-1.22\@rl,\@rl)$) -- ($(\@w,\@ch-0.1\@w)$) -- ++(0.1\@w,-\@w) -- ($(1.22\@rl,\@ch-\@w)$) to[out=0,in=90,looseness=1.3,rounded corners=0] ($(\@cw,\@ch)-(\@w,\@rl)$) -- ($(\@cw,0)-(\@w,-\@w)$) -- 
-  % ($(\@rl,\@w)$) to[out=180,in=-100,looseness=0.95,rounded corners=0] ($(1.05\@w,0.33\@ch)$) to[out=80,in=176,looseness=1.0] ($(\@cw-\@w,0.47\@ch)$) to[rounded corners=0] ++(0,-\@cr) to[rounded corners=0] ++($(0,\@cr+\@w)$) to[out=176,in=0] ($(1.2\@rl,0.48\@ch)+(0,\@w)$) to[out=180,in=90,rounded corners=0] ($(0.05\@w,0.33\@ch)$) to[out=-90,in=180,looseness=1.1,rounded corners=0] ($(\@rl,0)$) -- cycle;
-  % \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {a};
+\AtBeginDocument{
+  \if@tikz
+  \@ifpackageloaded{tikz}{}{\RequirePackage{tikz}}
+  \usetikzlibrary{calc}
+  \newlength{\@eQ}%Capital Q height
+  \newlength{\@w}%line width
+  \newlength{\@rl}%rounding length
+  \newlength{\@cw}%character width
+  \newlength{\@ch}%lower case character height
+  \newlength{\@cr}%corner radius
+  \newlength{\@sl}%<> slant
+  \newlength{\@xt}%<> x thickeness
+  
+  \DeclareRobustCommand{\Quantum}{%
+    {\sffamily%\color{quantumviolet}%
+      \setlength{\@eQ}{\dimexpr\fontcharht\font`Q\relax}%
+      \setlength{\@w}{0.088\@eQ}%
+      \setlength{\@rl}{0.2\@eQ}%
+      \setlength{\@cw}{0.5\@eQ}%
+      \setlength{\@ch}{0.65\@eQ}%
+      \setlength{\@cr}{0.3\@w}%
+      \setlength{\@sl}{0.22\@eQ}%
+      \setlength{\@xt}{1.113588507968435\@w}%=math.sqrt(1/(1-pow(22./50.,2)))*\@w
+      \tikz[baseline,x=\@eQ,y=\@eQ,every node/.append style={fill=none,inner sep=0pt,outer sep=0pt,node distance=0},rounded corners=\@cr]{%
+        % <> leg in back
+        % \fill[] (0,0.5) -- ++(\@sl,0.5) -- ++(\@xt,0) -- ++(-\@sl,-0.5) -- ++(\@sl,-0.5) -- ++(-\@xt,0) -- cycle;
+        % \fill[xshift=.95\@eQ] (0,0.5) node (eastend) {} -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- ++(-\@sl,-0.5) -- ++(\@xt,0) -- cycle;
+        % \begin{scope}
+        %   \clip[xshift=.95\@eQ,overlay] (0.5\@xt,0.5) -- ++(-\@sl,-0.5) -- (0,0) -- (0.5\@xt,0.5) ++(-2\@xt,0) -- ++(-\@sl,-0.5) -- ($(-2*\@sl,0)$) -- ++(\@sl,0.5) --cycle;
+        %   \fill[xshift=.95\@eQ] (0,0) -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- cycle;    
+        % \end{scope}
+        \node[overlay,anchor=base west,opacity=0] {Q};
+        % <> leg in front
+        \fill[] (0,0.5) -- ++(\@sl,0.5) -- ++(\@xt,0) -- ++(-\@sl,-0.5) -- ++(\@sl,-0.5) -- ++(-\@xt,0) -- cycle;
+        \begin{scope}[xshift=\@eQ]
+          \fill (0,0) -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- cycle;    
+          \clip[overlay,rounded corners=0] (-1.34\@xt,0) -- ++(-\@sl,0.5) -- ++(0,-0.5) -- cycle (0.34\@xt,0) -- ++($2*(-\@sl,0.5)$) -- (0.5\@xt,1) --cycle;
+          \fill (0,0.5) node (eastend) {} -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- ++(-\@sl,-0.5) -- ++(\@xt,0) -- cycle;
+        \end{scope}
+        % u
+        \def\@u##1{%
+          \fill[##1] (0,\@ch) -- (0,1.06\@rl) to[out=-90,in=184,looseness=1.2,overlay] ($(\@cw-\@w,0)$) -- ($(\@cw,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@cw-\@w,\@w)$) to[out=184,in=-90,looseness=1.1] ($(\@w,1.06\@rl)$) -- (\@w,\@ch) --cycle;}
+        \@u{shift={($(current bounding box.south east)+(0.172\@eQ,0)$)}}
+        \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {u};
+        % a
+        \fill[shift={($(current bounding box.south east)+(0.110\@eQ,0)$)}] (\@cw,0) -- ++($(0,\@ch)-(0,\@rl)$) to[out=90,in=0,looseness=1.22] ++($(-1.22\@rl,\@rl)$) -- ($(\@w,\@ch)$) -- ++(0,-\@w) -- ($(1.22\@rl,\@ch-\@w)$) to[out=0,in=90,looseness=1.3,rounded corners=0] ($(\@cw,\@ch)-(\@w,\@rl)$) -- ($(\@cw,0)-(\@w,-\@w)$) -- 
+        ($(\@rl,\@w)$) to[out=180,in=-100,looseness=0.95,rounded corners=0] ($(1.05\@w,0.33\@ch)$) to[out=80,in=176,looseness=1.0] ($(\@cw-\@w,0.47\@ch)$) to[rounded corners=0] ++(0,-\@cr) to[rounded corners=0] ++($(0,\@cr+\@w)$) to[out=176,in=0] ($(1.2\@rl,0.48\@ch)+(0,\@w)$) to[out=180,in=90,rounded corners=0] ($(0.05\@w,0.33\@ch)$) to[out=-90,in=180,looseness=1.1,rounded corners=0] ($(\@rl,0)$) -- cycle;
+        \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {a};
+        % \fill[shift={($(current bounding box.south east)+(0.110\@eQ,0)$)}] (\@cw,0) -- ++($(0,\@ch)-(0,\@rl)$) to[out=90,in=0,looseness=1.22] ++($(-1.22\@rl,\@rl)$) -- ($(\@w,\@ch-0.1\@w)$) -- ++(0.1\@w,-\@w) -- ($(1.22\@rl,\@ch-\@w)$) to[out=0,in=90,looseness=1.3,rounded corners=0] ($(\@cw,\@ch)-(\@w,\@rl)$) -- ($(\@cw,0)-(\@w,-\@w)$) -- 
+        % ($(\@rl,\@w)$) to[out=180,in=-100,looseness=0.95,rounded corners=0] ($(1.05\@w,0.33\@ch)$) to[out=80,in=176,looseness=1.0] ($(\@cw-\@w,0.47\@ch)$) to[rounded corners=0] ++(0,-\@cr) to[rounded corners=0] ++($(0,\@cr+\@w)$) to[out=176,in=0] ($(1.2\@rl,0.48\@ch)+(0,\@w)$) to[out=180,in=90,rounded corners=0] ($(0.05\@w,0.33\@ch)$) to[out=-90,in=180,looseness=1.1,rounded corners=0] ($(\@rl,0)$) -- cycle;
+        % \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {a};
   %n
-  \fill[shift={($(current bounding box.south east)+(0.181\@eQ+\@cw,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.22] ($(1.2\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
-  \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {n};
-  %t
-  \fill[shift={($(current bounding box.south east)+(0.111\@eQ,0)$)}] 
-  (\@w,0.9) [rounded corners=0] -- (\@w,\@ch) [rounded corners=\@cr] -- (0,\@ch) -- ++(0,-\@w) to[rounded corners=0] ++(\@w,0) -- (\@w,\@rl) to[out=-90,in=180,looseness=1.3,overlay] ($(\@w+\@rl,-0.07\@w)$) to[overlay] ++($(0.64\@cw-\@w-\@rl,0)$) -- ++(0,\@w) -- ++($(\@w+\@rl-0.64\@cw,0)$) to[out=180,in=-90,looseness=1.4] ($(2\@w,\@rl)$) -- ++($(0,\@ch-\@rl-\@w)$) -- ($(0.64\@cw,\@ch-\@w)$) -- ++(0,\@w) to[rounded corners=0] (2\@w,\@ch) -- ($(2\@w,0.9)$) --cycle;
-  \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {t};
-  %u
-  \@u{shift={($(current bounding box.south east)+(0.125\@eQ,0)$)}}
-%  \fill[shift={($(current bounding box.south east)+(0.125\@eQ,0)$)}] (0,\@ch) -- (0,\@rl) to[out=-90,in=180] ($(\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
-  \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {u};
-  %m
-  \fill[shift={($(current bounding box.south east)+(0.16\@eQ+1.93*\@cw-\@w,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.2] ($(1.2\@rl,0)$) -- ($(1.93\@cw,0)-(\@w,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=184,in=-4] ($(0.97\@cw,1.05\@w)+(0,0)$) -- ++($(0,-1.05\@w)+(0,\@ch)$) -- ++($(-\@w,0)$) -- ++($(0,-\@ch)+(0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
-  \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {m};
-}}}
-\fi
-
+        \fill[shift={($(current bounding box.south east)+(0.181\@eQ+\@cw,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.22] ($(1.2\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+        \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {n};
+        % t
+        \fill[shift={($(current bounding box.south east)+(0.111\@eQ,0)$)}] 
+        (\@w,0.9) [rounded corners=0] -- (\@w,\@ch) [rounded corners=\@cr] -- (0,\@ch) -- ++(0,-\@w) to[rounded corners=0] ++(\@w,0) -- (\@w,\@rl) to[out=-90,in=180,looseness=1.3,overlay] ($(\@w+\@rl,-0.07\@w)$) to[overlay] ++($(0.64\@cw-\@w-\@rl,0)$) -- ++(0,\@w) -- ++($(\@w+\@rl-0.64\@cw,0)$) to[out=180,in=-90,looseness=1.4] ($(2\@w,\@rl)$) -- ++($(0,\@ch-\@rl-\@w)$) -- ($(0.64\@cw,\@ch-\@w)$) -- ++(0,\@w) to[rounded corners=0] (2\@w,\@ch) -- ($(2\@w,0.9)$) --cycle;
+        \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {t};
+        % u
+        \@u{shift={($(current bounding box.south east)+(0.125\@eQ,0)$)}}
+        % \fill[shift={($(current bounding box.south east)+(0.125\@eQ,0)$)}] (0,\@ch) -- (0,\@rl) to[out=-90,in=180] ($(\@rl,0)$) -- (\@cw,0) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,\@w)$) -- ($(\@rl,\@w)$) to[out=180,in=-90] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+        \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {u};
+        % m
+        \fill[shift={($(current bounding box.south east)+(0.16\@eQ+1.93*\@cw-\@w,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.2] ($(1.2\@rl,0)$) -- ($(1.93\@cw,0)-(\@w,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=184,in=-4] ($(0.97\@cw,1.05\@w)+(0,0)$) -- ++($(0,-1.05\@w)+(0,\@ch)$) -- ++($(-\@w,0)$) -- ++($(0,-\@ch)+(0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
+        \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {m};
+      }}}
+  \fi
+}
 \newcommand{\ead}[1]{} %ignore email addresses given with the ead command
 \newcommand{\cortext}[1][]{} %ignore corresponding author information
 \newcommand{\fntext}[1][]{} %author footnotes
@@ -1113,9 +1118,9 @@
 \providecommand{\keywords}{}
 \renewcommand{\keywords}[1]{\def\@keywords{#1}}
 
-\ifamsfonts\RequirePackage{amsfonts}\fi
-\ifamssymb\RequirePackage{amssymb}\fi
-\ifamsmath\RequirePackage{amsmath}\fi
+\ifamsfonts\@ifpackageloaded{amsfonts}{}{\RequirePackage{amsfonts}}\fi
+\ifamssymb\@ifpackageloaded{amssymb}{}{\RequirePackage{amssymb}}\fi
+\ifamsmath\@ifpackageloaded{amsmath}{}{\RequirePackage{amsmath}}\fi
 
 \ifrevtexcompatibility
 \providecommand{\pacs}[1]{}
