@@ -951,7 +951,7 @@
 \def\internal@affiliation#1{%
   \booltrue{@startnewauthorgroup}
   \ifcsdef{affiliations}{}{\csdef{affiliations}{}}%
-  \expandafter\def\csname\detokenize{#1}\endcsname{#1} %to handle special characters such as \'a and \l we create a macro with whose name is the detokenized version of #1 and that expands to #1 and later call it in \@printaffiliation
+  \expandafter\def\csname\detokenize{#1}\endcsname{#1} %to handle special characters such as \'a and \l we create a macro whose name is the detokenized version of #1 and that expands to #1 and later call it in \@printaffiliation
   \xifinlist{\detokenize{#1}}{\affiliations}{}{\stepcounter{@affiliationcounter}\listxadd{\affiliations}{\detokenize{#1}}\csxdef{affiliation\detokenize{#1}number}{\the@affiliationcounter{}}}%
   \forlistloop{\@addaffiliation{\csname affiliation\detokenize{#1}number\endcsname}}{\@authorgroup}%
 }
@@ -959,7 +959,9 @@
 \def\@printaffiliations{%
   \ifcsdef{affiliations}{}{\csdef{affiliations}{}}%
   \newcounter{@affiliationnum}%
-  \settowidth{\leftskip}{\footnotesize\textsuperscript{\the@affiliationcounter}}%
+  \ifnumcomp{\the@affiliationcounter}{>}{1}{
+    \settowidth{\leftskip}{\footnotesize\textsuperscript{\the@affiliationcounter}}%
+  }{}
   {\footnotesize\color{quantumgray}%
     \forlistloop{\stepcounter{@affiliationnum}\@printaffiliation\the@affiliationnum}{\affiliations}}%
 }
