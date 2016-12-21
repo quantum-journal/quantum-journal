@@ -873,7 +873,7 @@
 \def\internal@elseauthor#1#2{%
   \stepcounter{@authorcounter}
   \ifcsdef{@authors}{}{\csdef{@authors}{}}%
-  \listxadd{\@authors}{#2}%
+  \listadd{\@authors}{#2}%
   \forcsvlist{\addauthortolabel{\the@authorcounter}}{#1}%
   \ifbool{@startnewauthorgroup}{\csundef{@authorgroup}}{}%
   \ifcsdef{@authorgroup}{}{\csdef{@authorgroup}{}}%
@@ -883,7 +883,7 @@
 \def\internal@author#1{%
   \stepcounter{@authorcounter}
   \ifcsdef{@authors}{}{\csdef{@authors}{}}%
-  \listxadd{\@authors}{#1}%
+  \listadd{\@authors}{#1}%
   \ifbool{@startnewauthorgroup}{\csundef{@authorgroup}}{}
   \ifcsdef{@authorgroup}{}{\csdef{@authorgroup}{}}%
   \listxadd{\@authorgroup}{\the@authorcounter}
