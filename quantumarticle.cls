@@ -914,10 +914,9 @@
     }}{}%
     \@printauthor\the@authornum}{\@authors}%
 }
-\def\@@addcommabetween#1{\ifdef{\firstauthoronly}{, }{\def\firstauthoronly{}}#1}
-\def\@authorsonly{%
-  \forlistloop{\@@addcommabetween}{\@authors}%
-}
+\def\@@addcommabetween#1{#1, }%this adds an ugly extra comma at the end but the variant below is not expandable and therefore leads to ugly warnings: http://tex.stackexchange.com/questions/50978/macro-to-extract-typeset-plain-text-from-a-command
+%\def\@@addcommabetween#1{\ifdef{\firstauthoronly}{, }{\def\firstauthoronly{\empty}}#1}
+\def\@authorsonly{\forlistloop{\@@addcommabetween}{\@authors}}
 % affiliation handling
 \newbool{@startnewauthorgroup}
 \newcounter{@affiliationcounter}
