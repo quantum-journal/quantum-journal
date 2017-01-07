@@ -91,6 +91,7 @@
 \DeclareOption{reprint}{}
 \DeclareOption{manuscript}{}
 \DeclareOption{noshowpacs}{}
+\DeclareOption{showpacs}{}
 \DeclareOption{showkeys}{}
 \DeclareOption{noshowkeys}{}
 \DeclareOption{balancelastpage}{}
@@ -121,6 +122,7 @@
 \DeclareOption{secnumarabic}{}
 \DeclareOption{fleqn}{}
 \DeclareOption{floats}{}
+\DeclareOption{stfloats}{}
 \DeclareOption{endfloats}{}
 \DeclareOption{endfloats*}{}
 \DeclareOption{osa}{}
@@ -135,6 +137,7 @@
 \newif\ifamssymb
 \amssymbfalse
 \DeclareOption{amssymb}{\amssymbtrue}%
+\DeclareOption{amssymbol}{\amssymbtrue}%
 \DeclareOption{noamssymb}{}
 \newif\ifamsmath
 \amsmathfalse
@@ -855,6 +858,8 @@
       \end{minipage}}%
   }%
 }
+%renew \title to allow for and ignore an optional argument
+\renewcommand{\title}[2][]{\gdef\@title{#2}}
 % author handling
 \newcounter{@authorcounter}
 \csdef{@authors}{}
@@ -1124,10 +1129,19 @@
 \ifamsmath\@ifpackageloaded{amsmath}{}{\RequirePackage{amsmath}}\fi
 
 \ifrevtexcompatibility
-\providecommand{\pacs}[1]{}
-\providecommand{\preprint}[1]{}
 
-\AtEndPreamble{%in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
+\AtBeginDocument{%
+  \providecommand{\pacs}[1]{}
+  \providecommand{\preprint}[1]{}
+  \providecommand{\volumeyear}[1]{}
+  \providecommand{\volumenumber}[1]{}
+  \providecommand{\issuenumber}[1]{}
+  \providecommand{\eid}[1]{}
+  \providecommand{\startpage}[1]{}
+  \def\endpage#1{\gdef\@endpage{#1}}
+}
+
+\AtEndPreamble{% in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
   \@ifpackageloaded{biblatex}{}{%
     \usepackage[numbers,sort&compress]{natbib}
   }
