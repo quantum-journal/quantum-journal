@@ -1147,7 +1147,10 @@
   }
   \let\@recordedbibliographystyle\relax
   \let\@origbibliographystyle\bibliographystyle
-  \renewcommand{\bibliographystyle}[1]{\let\@recordedbibliographystyle#1\@origbibliographystyle{#1}\ClassWarning{quantumarticle}{bibliographystyle was recorded}{}}
+  \renewcommand{\bibliographystyle}[1]{%
+    \@origbibliographystyle{#1}%
+    \gdef\@recordedbibliographystyle{#1}%
+  }
   \let\@origbibliography\bibliography
   \renewcommand{\bibliography}[1]{%
     \ifx\@recordedbibliographystyle\relax\bibliographystyle{plainnat}\fi
