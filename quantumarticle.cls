@@ -160,7 +160,7 @@
 \DeclareOption{unsortedaddress}{}
 \DeclareOption{runinaddress}{}
 \DeclareOption{superscriptaddress}{}
-\DeclareOption{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \textbackslash{}documetnclass command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
+\DeclareOption{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \string\documetnclass{} command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
 \newif\ifpublished\publishedfalse
 \DeclareOption{published}{\publishedtrue}
 \newif\ifrevtexcompatibility
@@ -854,7 +854,12 @@
 \def\@printtitle{%
   {\Huge\href{http://quantum-journal.org/?s=\detokenize\expandafter{\@title}}{%
       \begin{minipage}{1.0\linewidth}%
-        \color{quantumviolet}{\@title}%
+        \color{quantumviolet}{%
+          \begingroup%
+          \def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{}}{Please remove all such commands from your \string\title{}}}%
+          \@title%
+          \endgroup%
+        }%
       \end{minipage}}%
   }%
 }
