@@ -172,6 +172,9 @@
 \DeclareOption{prl}{\revtexcompatibilitytrue}
 \DeclareOption{prx}{\revtexcompatibilitytrue}
 \DeclareOption{aip}{\revtexcompatibilitytrue}
+\newif\ifallowfontchageintitle
+\allowfontchageintitlefalse
+\DeclareOption{allowfontchageintitle}{\allowfontchageintitletrue}
 
 % we are loading xcolor below, then subsequently loading color with non trivial options in the document results in the error
 % ERROR: LaTeX Error: Option clash for package color.
@@ -856,7 +859,7 @@
       \begin{minipage}{1.0\linewidth}%
         \color{quantumviolet}{%
           \begingroup%
-          \def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{}}{Please remove all such commands from your \string\title{}}}%
+          \ifallowfontchageintitle\else\def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{} Please remove all such commands from your \string\title{}. If you really really have to change the font for some part of the title you can allow this by giving the option allowfontchageintitle}{}}\fi%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
           \@title%
           \endgroup%
         }%
