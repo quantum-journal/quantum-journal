@@ -1138,6 +1138,9 @@
 
 \ifrevtexcompatibility
 
+\PassOptionsToPackage{numbers}{natbib}
+\PassOptionsToPackage{sort&compress}{natbib}
+
 \AtBeginDocument{%
   \providecommand{\pacs}[1]{}
   \providecommand{\preprint}[1]{}
@@ -1151,7 +1154,9 @@
 
 \AtEndPreamble{% in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
   \@ifpackageloaded{biblatex}{}{%
-    \usepackage[numbers,sort&compress]{natbib}
+    \@ifpackageloaded{natbib}{}{%
+      \usepackage{natbib}
+    }%
   }
   \let\@recordedbibliographystyle\relax
   \let\@origbibliographystyle\bibliographystyle
