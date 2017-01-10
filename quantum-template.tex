@@ -1,5 +1,5 @@
 \documentclass[a4paper,twocolumn,superscriptaddress,11pt]{quantumarticle}
-
+\pdfoutput=1
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
@@ -112,11 +112,19 @@ to the preamble of your document and then output the bibliography with
 \printbibliography
 \end{verbatim}
 where appropriate.
+You then have to upload the .bbl file along with the other source files when submitting to the arXiv.
+Due to incompatibilities between different LaTeX version we unfortunately can not recommend this option until the arXiv has updated its LaTeX system \cite{biblatexsubmittingtothearxiv}.
+
+In oder to get correct line breaks within links, please add the line 
+\begin{verbatim}
+\pdfoutput=1
+\end{verbatim}
+within the first within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv \cite{arxivpdfoutput}
 
 The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declared a suitable field format to make it a hyperlink.
 Due to issues with \texttt{biber} we recommend to use the \texttt{bibtex} backend of \texttt{biblatex}.
 
-We encourage the use of BibTeX and/or BibLaTeX to generate your bibliography from the BibTeX meta-data provided by publishers.
+We encourage the use of BibTeX to generate your bibliography from the BibTeX meta-data provided by publishers.
 For DOI linking to work, the BibTeX file must contain the \texttt{doi} field as for example in:
 \begin{verbatim}
 @article{examplecitation,
@@ -172,12 +180,20 @@ Feel free to end the paragraph title with a full stop if you find this appropria
         idonotexist}{Quantum
         \textbf{123}, 123456 (1916).}
 
+\bibitem{biblatexsubmittingtothearxiv}
+  StackExchange discussion on \href{http://tex.stackexchange.com/questions/26990/biblatex-submitting-to-the-arxiv}{``Biblatex: submitting to the arXiv'' (2017-01-10)}
+
+\bibitem{arxivpdfoutput}
+  Help article published by the arXiv on \href{https://arxiv.org/help/submit_tex}{``Considerations for TeX Submissions'' (2017-01-10)}
+
 \bibitem{howtogetdoilinksinbibliography}
   StackExchange discussion on \href{http://tex.stackexchange.com/questions/3802/how-to-get-doi-links-in-bibliography}{``How to get DOI links in bibliography'' (2016-11-18)}
   
 \bibitem{automaticallyaddingdoifieldstoahandmadebibliography}
   StackExchange discussion on \href{http://tex.stackexchange.com/questions/6810/automatically-adding-doi-fields-to-a-hand-made-bibliography}{``Automatically adding DOI fields to a hand-made bibliography'' (2016-11-18)}
 \end{thebibliography}
+
+
 
 \onecolumn\newpage
 \appendix
