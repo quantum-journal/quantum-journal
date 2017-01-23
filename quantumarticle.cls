@@ -20,7 +20,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2016/11/29 v1.8
+              [2017/01/23 v2.0
                class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \newcommand\@ptsize{}
 \newif\if@restonecol
