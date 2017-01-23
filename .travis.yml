@@ -1,0 +1,38 @@
+# Unfortunately, the version of LaTeX that ships on Ubuntu 12.04 (Precise)
+# comes with a *very* old {hyperref} that is incompatabile with several
+# other packages that we depend on.
+sudo: required
+dist: trusty
+
+addons:
+    apt:
+        packages:
+        - texlive-fonts-recommended
+        - texlive-fonts-extra
+        - texlive-latex-recommended
+        - texlive-latex-extra
+        # Some of the additional packages we depend on,
+        # such as {ltxgrid}, are shipped with the "publishers"
+        # Ubuntu package.
+        - texlive-publishers
+        # {tikz} and PGF are supported by two packages in Trusty.
+        - pgf
+        - texlive-pictures
+        # {xcolor} is required to make the Quantum purple color.
+        - latex-xcolor
+        # {quantumarticle} additionally requires either lmodern or cm-super.
+        # We go with cm-super here due to issues with fonts-lmodern raising
+        # apt errors.
+        - cm-super
+script:
+    # Test whether the template compiles.
+    - pdflatex -interaction=nonstopmode -halt-on-error quantum-template.tex
+    - pdflatex -interaction=nonstopmode -halt-on-error quantum-template.tex
+    # Test whether the installer works.
+    - bash install.sh
+    # Test whether the template compiles against the installed version.
+    - mkdir _build
+    - cd _build
+    - cp ../quantum-template.tex .
+    - pdflatex -interaction=nonstopmode -halt-on-error quantum-template.tex
+    - pdflatex -interaction=nonstopmode -halt-on-error quantum-template.tex
