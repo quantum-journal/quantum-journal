@@ -3,7 +3,7 @@
 %% it provides the quantumarticle class for typesetting articles in
 %% Quantum - the open journal for quantum science
 %%
-%% Copyright 2016
+%% Copyright 2016,2017
 %% Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
 %% (http://quantum-journal.org/about/)
 %% 
@@ -20,7 +20,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2017/01/23 v2.0
+              [2017/03/17 v2.1
                class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \newcommand\@ptsize{}
 \newif\if@restonecol
@@ -903,7 +903,7 @@
   \boolfalse{@startnewauthorgroup}
 }
 \def\@@spaceafter#1{#1 }
-\def\@printauthor#1#2{#2\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@spaceafter}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
+\def\@printauthor#1#2{\ifcsdef{author#1orcid}{\href{http://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@spaceafter}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
 \def\@printauthors{%
   \newcounter{@authornum}%
   \large\forlistloop{\stepcounter{@authornum}%
@@ -993,6 +993,9 @@
 \renewcommand{\thanks}[2][]{%
 \ifcsdef{@currentauthornumber}{}{\ClassError{quantumarticle}{\string\thanks{} may only appear after the first \string\author{} command}{}}
 \@thanks{#1}{#2}}
+\newcommand{\orcid}[2][]{%
+\ifcsdef{@currentauthornumber}{}{\ClassError{quantumarticle}{\string\orcid{} may only appear after the first \string\author{} command}{}}
+\@orcid{#1}{#2}}
 \def\@email#1#2{%}
 \@addemail{#1#2}{\@currentauthornumber}
 \csdef{author\@currentauthornumber hasextras}{}
@@ -1007,6 +1010,10 @@
 \@addthanks{#1#2}{\@currentauthornumber}
 \csdef{author\@currentauthornumber hasextras}{}
 }
+\def\@orcid#1#2{%
+\ifcsdef{@currentauthornumber}{}{\def\@currentauthornumber{0}}%in case \orcid is called before the first author
+\@addorcid{#1#2}{\@currentauthornumber}
+}
 \def\@addemail#1#2{
 \ifcsdef{author#2emails}{}{\csdef{author#2emails}{}}%
 \listcsgadd{author#2emails}{#1}
@@ -1018,6 +1025,9 @@
 \def\@addthanks#1#2{
 \ifcsdef{author#2thanks}{}{\csdef{author#2thanks}{}}%
 \listcsgadd{author#2thanks}{#1}
+}
+\def\@addorcid#1#2{
+\csdef{author#2orcid}{#1}%
 }
 
 \newif\if@tikz

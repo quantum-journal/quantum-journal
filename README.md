@@ -41,7 +41,7 @@ Improvements submitted as pull requests against the `development` branch are ver
 
 ## Copyright
 
-Copyright 2016
+Copyright 2017
 Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
 (http://quantum-journal.org/about/)
 
