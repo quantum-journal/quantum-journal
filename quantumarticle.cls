@@ -3,7 +3,7 @@
 %% it provides the quantumarticle class for typesetting articles in
 %% Quantum - the open journal for quantum science
 %%
-%% Copyright 2016
+%% Copyright 2016,2017
 %% Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
 %% (http://quantum-journal.org/about/)
 %% 
@@ -20,7 +20,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2017/01/23 v2.0
+              [2017/03/17 v2.1
                class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \newcommand\@ptsize{}
 \newif\if@restonecol
