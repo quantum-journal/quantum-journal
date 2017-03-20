@@ -903,7 +903,7 @@
   \boolfalse{@startnewauthorgroup}
 }
 \def\@@spaceafter#1{#1 }
-\def\@printauthor#1#2{\ifcsdef{author#1orcid}{\href{http://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@spaceafter}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
+\def\@printauthor#1#2{\ifcsdef{author#1orcid}{\href{https://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@spaceafter}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
 \def\@printauthors{%
   \newcounter{@authornum}%
   \large\forlistloop{\stepcounter{@authornum}%
@@ -1130,7 +1130,7 @@
     }%
   }{%
     \@ifpackageloaded{biblatex}{
-      \DeclareFieldFormat{doi}{\mkbibacro{DOI}\addcolon\space\href{http://dx.doi.org/\detokenize{#1}}{\detokenize{#1}}}
+      \DeclareFieldFormat{doi}{\mkbibacro{DOI}\addcolon\space\href{https://dx.doi.org/\detokenize{#1}}{\detokenize{#1}}}
       \setcounter{biburllcpenalty}{1000}
       \setcounter{biburlucpenalty}{1000}
       \setcounter{biburlnumpenalty}{1000}
