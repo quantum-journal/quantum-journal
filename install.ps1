@@ -36,6 +36,26 @@
 #    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ##############################################################################
 
+<#
+.SYNOPSIS
+    Installs the {quantumarticle} document class and optionally
+    builds submission packages.
+.EXAMPLE
+    ./install.ps1
+.EXAMPLE
+    ./install.ps1 -CTAN
+.LINK
+    http://quantum-journal.org
+.LINK
+    https://github.com/cgogolin/quantum-journal
+.PARAMETER CTAN
+    If present, this script will also build a ZIP archive suitable
+    for uploading {quantumarticle} to CTAN.
+#>
+param(
+    [switch] $CTAN
+)
+
 ## TYPES #####################################################################
 
 try {
@@ -181,3 +201,19 @@ refresh_tex_hash -tex_dist $tex_dist;
 assert_installed "quantumarticle.cls";
 
 echo "All TeX resources installed successfully.";
+
+if ($CTAN) {
+    # We use PoShTeX for this part so as to make it easier to build TDS archives
+    # in the future. To do so, we copy and paste bootstrapping code that ensures
+    # we have at least version 0.1.4 of PoShTeX.
+
+    #region Bootstrap PoShTeX
+    $modules = Get-Module -ListAvailable -Name posh-tex;
+    if (!$modules) {Install-Module posh-tex -Scope CurrentUser}
+    if (!($modules | ? {$_.Version -ge "0.1.4"})) {Update-Module posh-tex}
+    Import-Module posh-tex -Version "0.1.4"
+    #endregion
+
+    # Once we have PoShTeX, we can then directly invoke Export-CTANArchive.
+    Export-CTANArchive -ArchiveLayout Simple quantumarticle.cls, quantum-template.pdf, quantum-template.tex, README.md, install.sh, install.ps1
+}
