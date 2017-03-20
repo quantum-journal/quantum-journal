@@ -1,8 +1,5 @@
-\documentclass[prx,a4paper,aps,twocolumn,superscriptaddress,11pt]{quantumarticle}
-%\documentclass[prl,twocolumn,superscriptaddress]{revtex4-1}
-%\documentclass[onecolumn]{quantumarticle}
-%\documentclass[titlepage,oneside]{quantumarticle}
-
+\documentclass[a4paper,twocolumn,superscriptaddress,11pt]{quantumarticle}
+\pdfoutput=1
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
@@ -18,7 +15,7 @@
 
 \title{Template demonstrating the quantumarticle class}
 \date{\today}
-\author{Lidia del Rio}
+\author{Lídia del Rio}
 \affiliation{Institute for Theoretical Physics, ETH Zurich, Switzerland}
 \author{Christian Gogolin}
 \email{latex@quantum-journal.org}
@@ -39,7 +36,6 @@
   Both \texttt{abstract} and \texttt{\textbackslash{}maketitle} however must be placed after all other \texttt{\textbackslash{}author}, \texttt{\textbackslash{}affiliation}, etc.\ commands.
 \end{abstract}
 
-
 In the \texttt{twocolumn} layout and without the \texttt{titlepage} option there can be a paragraph directly following the abstract before the first section.
 In \texttt{onecolumn} format or with a dedicated \texttt{titlepage}, this should be avoided.
 
@@ -59,7 +55,7 @@ For multi-line equations \texttt{align} is \href{http://tex.stackexchange.com/qu
 \end{align}
 Whether you prefer to refer to equations as Eq.~\eqref{emc}, Equation~\ref{emc}, or just \eqref{emc} is up to you, but please be consistent and use the \texttt{\textbackslash{}eqref\{\dots\}} command instead of writing \texttt{(\textbackslash{}ref\{\dots\})}.
 
-\subsubsection{Figures}
+\subsection{Figures}
 \begin{figure}[t]
   \centering
   \begin{tikzpicture}
@@ -82,7 +78,7 @@ A figure on the first page can help readers remember and recognize your work mor
 References to other works appear in the References section at the end of the work.
 
 \begin{theorem}[DOI links are required]
-  Important: As a Quantum is a member of Crossref all references to works that have a DOI must be hyperlinked according to the DOI.
+  Important: As Quantum is a member of Crossref all references to works that have a DOI must be hyperlinked according to the DOI.
 \end{theorem}
 
 This can be achieved in several ways, depending on how you format your bibliography.
@@ -97,7 +93,7 @@ If you are formating your bibliography manually, you can cite this work using th
 \end{verbatim}
 If you are using BibTeX, you can load the \texttt{natbib} package by putting
 \begin{verbatim}
-\usepackage{natbib}
+\usepackage[numbers,sort&compress]{natbib}
 \end{verbatim}
 in the preamble of your document and then use the \texttt{plainnat} citation style by including your BibTeX bibliography \texttt{mybibliography.bib} where you want the bibliography to appear as follows:
 \begin{verbatim}
@@ -116,11 +112,19 @@ to the preamble of your document and then output the bibliography with
 \printbibliography
 \end{verbatim}
 where appropriate.
+You then have to upload the .bbl file along with the other source files when submitting to the arXiv.
+Due to incompatibilities between different LaTeX version we unfortunately can not recommend this option until the arXiv has updated its LaTeX system \cite{biblatexsubmittingtothearxiv}.
+
+In oder to get correct line breaks within links, please add the line 
+\begin{verbatim}
+\pdfoutput=1
+\end{verbatim}
+within the first within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv \cite{arxivpdfoutput}
 
 The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declared a suitable field format to make it a hyperlink.
 Due to issues with \texttt{biber} we recommend to use the \texttt{bibtex} backend of \texttt{biblatex}.
 
-We encourage the use of BibTeX and/or BibLaTeX to generate your bibliography from the BibTeX meta-data provided by publishers.
+We encourage the use of BibTeX to generate your bibliography from the BibTeX meta-data provided by publishers.
 For DOI linking to work, the BibTeX file must contain the \texttt{doi} field as for example in:
 \begin{verbatim}
 @article{examplecitation,
@@ -130,7 +134,7 @@ For DOI linking to work, the BibTeX file must contain the \texttt{doi} field as 
   volume = {123},
   page = {123456},
   year = {1916},
-  doi = {10.1103/PhysRevLett.107.120501},
+  doi = {10.22331/idonotexist},
 }
 \end{verbatim}
 More information on how to get DOI links in your document can be found on StackExchange \cite{howtogetdoilinksinbibliography,automaticallyaddingdoifieldstoahandmadebibliography}.
@@ -155,10 +159,6 @@ Quantum encourages you to load the following extra packages:
 If you do not load the \texttt{hyperref} package, quantumarticle automatically loads it for you.
 Packages that change font settings, such as \texttt{times} or \texttt{helvet} should be avoided.
 
-\paragraph{Paragraphs}
-The paragraph is the smallest unit of sectioning.
-Feel free to end the paragraph title with a full stop if you find this appropriate.
-
 \section{Wide equations}
 Very wide equations can be shown expanding over both columns using the \texttt{widetext} environment.
 In \texttt{onecolumn} mode, the \texttt{widetext} environment has no effect.
@@ -168,6 +168,10 @@ In \texttt{onecolumn} mode, the \texttt{widetext} environment has no effect.
   \end{equation}
 \end{widetext}
 
+\paragraph{Paragraphs}
+The paragraph is the smallest unit of sectioning.
+Feel free to end the paragraph title with a full stop if you find this appropriate.
+
 \bibliographystyle{plain}
 \begin{thebibliography}{9}
 \bibitem{examplecitation}
@@ -176,6 +180,12 @@ In \texttt{onecolumn} mode, the \texttt{widetext} environment has no effect.
         idonotexist}{Quantum
         \textbf{123}, 123456 (1916).}
 
+\bibitem{biblatexsubmittingtothearxiv}
+  StackExchange discussion on \href{http://tex.stackexchange.com/questions/26990/biblatex-submitting-to-the-arxiv}{``Biblatex: submitting to the arXiv'' (2017-01-10)}
+
+\bibitem{arxivpdfoutput}
+  Help article published by the arXiv on \href{https://arxiv.org/help/submit_tex}{``Considerations for TeX Submissions'' (2017-01-10)}
+
 \bibitem{howtogetdoilinksinbibliography}
   StackExchange discussion on \href{http://tex.stackexchange.com/questions/3802/how-to-get-doi-links-in-bibliography}{``How to get DOI links in bibliography'' (2016-11-18)}
   
@@ -183,6 +193,9 @@ In \texttt{onecolumn} mode, the \texttt{widetext} environment has no effect.
   StackExchange discussion on \href{http://tex.stackexchange.com/questions/6810/automatically-adding-doi-fields-to-a-hand-made-bibliography}{``Automatically adding DOI fields to a hand-made bibliography'' (2016-11-18)}
 \end{thebibliography}
 
+
+
+\onecolumn\newpage
 \appendix
 
 \section{First section of the appendix}
@@ -197,6 +210,8 @@ Equations continue to be numbered sequentially.
   A \neq B
 \end{equation}
 You are free to change this in case it is more appropriate for your article, but a consistent and unambiguous numbering of sections and equations must be ensured.
+
+If you want your appendices to appear in \texttt{onecolumn} mode but the rest of the document in \texttt{twocolumn} mode, you can insert the command \texttt{\textbackslash{}onecolumn\textbackslash{}newpage} before \texttt{\textbackslash{}appendix}.   
 
 \section{Problems and Bugs}
 In case you encounter problems using the article class please consider opening a bug report in our bug-tracker under \href{https://github.com/cgogolin/quantum-journal/issues}{https://github.com/cgogolin/quantum-journal/issues} or contact us via email under \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org}.
