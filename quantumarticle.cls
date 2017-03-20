@@ -1130,7 +1130,7 @@
     }%
   }{%
     \@ifpackageloaded{biblatex}{
-      \DeclareFieldFormat{doi}{\mkbibacro{DOI}\addcolon\space\href{https://dx.doi.org/\detokenize{#1}}{\detokenize{#1}}}
+      \DeclareFieldFormat{doi}{\mkbibacro{DOI}\addcolon\space\href{https://doi.org/\detokenize{#1}}{\detokenize{#1}}}
       \setcounter{biburllcpenalty}{1000}
       \setcounter{biburlucpenalty}{1000}
       \setcounter{biburlnumpenalty}{1000}
