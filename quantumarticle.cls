@@ -719,8 +719,10 @@
 {%
   \makeatletter%
   \ltx@ifpackageloaded{natbib}{}{%
-    \ltx@ifpackageloaded{biblatex}{}{%
-      \ClassWarning{quantumarticle}{The quantumarticle class recommends generating the bibliography from a BibTeX file containing DOIs with either natbib or biblatex in order to ensure the generation of DOI hyperlinks}%
+    \ltx@ifpackageloaded{biblatex}{
+      \ClassWarning{quantumarticle}{Unfortunately the quantumarticle can not recommend the use of biblatex due to incompatibilities between locally installed versions of biblatex and the version used by the arXiv.}%
+    }{%
+      \ClassWarning{quantumarticle}{The quantumarticle class recommends generating the bibliography from a BibTeX file containing DOIs with natbib in order to ensure the generation of DOI hyperlinks}%
     }%
   }%
   \makeatother%
@@ -1179,7 +1181,7 @@
     \ifx\@recordedbibliographystyle\relax\bibliographystyle{plainnat}\fi
     \ltx@ifpackageloaded{natbib}{}{%
       \ltx@ifpackageloaded{biblatex}{}{%
-        \ClassWarning{quantumarticle}{You are manually generating your bibliography. Please make sure that all references include DOI hyperlinks. quantumarticle recommends the use of BibTeX with either the natbib nor biblatex package for generating the bibliography.}}}%
+        \ClassWarning{quantumarticle}{You are manually generating your bibliography. Please make sure that all references include DOI hyperlinks. quantumarticle recommends the use of BibTeX together with the natbib package for generating the bibliography.}}}%
     \@origbibliography{#1}}
   \providecommand\textcite[1]{\citet{#1}}
   \providecommand\onlinecite[1]{\cite{#1}}
