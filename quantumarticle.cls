@@ -163,6 +163,8 @@
 \DeclareOption{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \string\documetnclass{} command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
 \newif\ifpublished\publishedfalse
 \DeclareOption{published}{\publishedtrue}
+\newif\ifaccepted\acceptedfalse
+\DeclareOption{accepted}{\acceptedtrue}
 \newif\ifrevtexcompatibility
 \revtexcompatibilityfalse
 \DeclareOption{aps}{\revtexcompatibilitytrue}
@@ -795,12 +797,12 @@
 \RequirePackage{fancyhdr}
 \@blacklistpackage{fancyhdr}
 \pagestyle{fancy}
-\fancyfoot[C]{\thepage}
 \renewcommand{\headrule}{}
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
-\fancyfoot[C]{\sffamily\textcolor{quantumviolet}\thepage}
-\ifpublished\fancyfoot[L]{\textcolor{quantumviolet}\Quantum}\else\fancyfoot[L]{}\fi
+\fancyfoot[C]{\sffamily\textcolor{quantumviolet}{\thepage}}
+\ifaccepted\fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum} ????-??-?? click title to verify}}\else\fancyfoot[L]{}\fi
+%\fancyfoot[R]{\sffamily\textcolor{quantumviolet}{\footnotesize foor}}
 \pagenumbering{arabic}
 \if@twoside
 \else
@@ -1201,6 +1203,50 @@
     \RequirePackage[font={small,sf}]{caption}
   }
 }
+
+\@blacklistpackage{berasans}
+\@blacklistpackage{arev}
+\@blacklistpackage{avant}
+\@blacklistpackage{bera}
+\@blacklistpackage{bookman}
+\@blacklistpackage{cabin}
+\@blacklistpackage{chancery}
+\@blacklistpackage{charter}
+\@blacklistpackage{cmbright}
+\@blacklistpackage{concrete}
+\@blacklistpackage{courier}
+\@blacklistpackage{dejavu}
+\@blacklistpackage{droid}
+\@blacklistpackage{drm}
+\@blacklistpackage{ebgaramond}
+\@blacklistpackage{euler}
+\@blacklistpackage{fourier}
+\@blacklistpackage{fouriernc}
+\@blacklistpackage{gentium}
+\@blacklistpackage{helvet}
+\@blacklistpackage{inconsolata}
+\@blacklistpackage{kpfonts}
+\@blacklistpackage{lato}
+\@blacklistpackage{libertineotf}
+\@blacklistpackage{libertine}
+\@blacklistpackage{librebaskerville}
+\@blacklistpackage{lmodern}
+\@blacklistpackage{mathdesign}
+\@blacklistpackage{mathpazo}
+\@blacklistpackage{mathptmx}
+\@blacklistpackage{newcent}
+\@blacklistpackage{newtx}
+\@blacklistpackage{quattrocento}
+\@blacklistpackage{tgadventor}
+\@blacklistpackage{tgbonum}
+\@blacklistpackage{tgchorus}
+\@blacklistpackage{tgcursor}
+\@blacklistpackage{tgheros}
+\@blacklistpackage{tgpagella}
+\@blacklistpackage{tgschola}
+\@blacklistpackage{tgtermes}
+\@blacklistpackage{times}
+\@blacklistpackage{yfonts}
 
 \endinput
 %%
