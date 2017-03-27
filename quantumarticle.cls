@@ -22,6 +22,7 @@
 \ProvidesClass{quantumarticle}
               [2017/03/17 v2.1
                class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
+\RequirePackage{xkeyval}
 \newcommand\@ptsize{}
 \newif\if@restonecol
 \newif\if@titlepage
@@ -164,7 +165,8 @@
 \newif\ifpublished\publishedfalse
 \DeclareOption{published}{\publishedtrue}
 \newif\ifaccepted\acceptedfalse
-\DeclareOption{accepted}{\acceptedtrue}
+%\DeclareOption{accepted}{\acceptedtrue}
+\DeclareOptionX{accepted}[]{\def\@accepteddate{#1}\acceptedtrue}
 \newif\ifrevtexcompatibility
 \revtexcompatibilityfalse
 \DeclareOption{aps}{\revtexcompatibilitytrue}
@@ -187,6 +189,7 @@
 }
 \ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
+\ProcessOptionsX
 
 \RequirePackage{etoolbox}
 \input{size1\@ptsize.clo}
@@ -805,7 +808,7 @@
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
 \fancyfoot[C]{\sffamily\textcolor{quantumviolet}{\thepage}}
-\ifaccepted\fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum} ????-??-?? click title to verify}}\else\fancyfoot[L]{}\fi
+\ifaccepted\fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}\else\fancyfoot[L]{}\fi
 %\fancyfoot[R]{\sffamily\textcolor{quantumviolet}{\footnotesize foor}}
 \pagenumbering{arabic}
 \if@twoside
