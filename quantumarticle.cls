@@ -20,8 +20,9 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2017/03/17 v2.1
+              [2017/03/17 v3.0
                class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
+\RequirePackage{xkeyval}
 \newcommand\@ptsize{}
 \newif\if@restonecol
 \newif\if@titlepage
@@ -163,6 +164,9 @@
 \DeclareOption{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \string\documetnclass{} command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
 \newif\ifpublished\publishedfalse
 \DeclareOption{published}{\publishedtrue}
+\newif\ifaccepted\acceptedfalse
+%\DeclareOption{accepted}{\acceptedtrue}
+\DeclareOptionX{accepted}[]{\def\@accepteddate{#1}\acceptedtrue}
 \newif\ifrevtexcompatibility
 \revtexcompatibilityfalse
 \DeclareOption{aps}{\revtexcompatibilitytrue}
@@ -185,6 +189,7 @@
 }
 \ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptions
+\ProcessOptionsX
 
 \RequirePackage{etoolbox}
 \input{size1\@ptsize.clo}
@@ -193,10 +198,14 @@
 \csdef{@packageblacklist}{}
 \newcommand{\@blacklistpackage}[2][]{
   \listxadd{\@packageblacklist}{#2}%
+  \ifstrempty{#1}{}{\csdef{@packageblacklisterrormessage#2}{#1 \string\usepackage{#2}}}
 }
 \let\oldusepackage\usepackage
 \renewcommand{\usepackage}[2][]{
-  \ifinlist{#2}{\@packageblacklist}{}{\oldusepackage[#1]{#2}}
+  \ifinlist{#2}{\@packageblacklist}{
+    \ifcsdef{@packageblacklisterrormessage#2}{
+      \ClassError{quantumarticle}{\csname @packageblacklisterrormessage#2\endcsname}{}}{}
+    }{\oldusepackage[#1]{#2}}
 }
 \@blacklistpackage{titlesec}
 
@@ -719,8 +728,10 @@
 {%
   \makeatletter%
   \ltx@ifpackageloaded{natbib}{}{%
-    \ltx@ifpackageloaded{biblatex}{}{%
-      \ClassWarning{quantumarticle}{The quantumarticle class recommends generating the bibliography from a BibTeX file containing DOIs with either natbib or biblatex in order to ensure the generation of DOI hyperlinks}%
+    \ltx@ifpackageloaded{biblatex}{
+      \ClassWarning{quantumarticle}{Unfortunately the quantumarticle can not recommend the use of biblatex due to incompatibilities between locally installed versions of biblatex and the version used by the arXiv.}%
+    }{%
+      \ClassWarning{quantumarticle}{The quantumarticle class recommends generating the bibliography from a BibTeX file containing DOIs with natbib in order to ensure the generation of DOI hyperlinks}%
     }%
   }%
   \makeatother%
@@ -793,12 +804,12 @@
 \RequirePackage{fancyhdr}
 \@blacklistpackage{fancyhdr}
 \pagestyle{fancy}
-\fancyfoot[C]{\thepage}
 \renewcommand{\headrule}{}
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
-\fancyfoot[C]{\sffamily\textcolor{quantumviolet}\thepage}
-\ifpublished\fancyfoot[L]{\textcolor{quantumviolet}\Quantum}\else\fancyfoot[L]{}\fi
+\fancyfoot[C]{\sffamily\textcolor{quantumviolet}{\thepage}}
+\ifaccepted\fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}\else\fancyfoot[L]{}\fi
+%\fancyfoot[R]{\sffamily\textcolor{quantumviolet}{\footnotesize foor}}
 \pagenumbering{arabic}
 \if@twoside
 \else
@@ -903,7 +914,7 @@
   \boolfalse{@startnewauthorgroup}
 }
 \def\@@spaceafter#1{#1 }
-\def\@printauthor#1#2{\ifcsdef{author#1orcid}{\href{http://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@spaceafter}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
+\def\@printauthor#1#2{\ifcsdef{author#1orcid}{\href{https://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@spaceafter}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
 \def\@printauthors{%
   \newcounter{@authornum}%
   \large\forlistloop{\stepcounter{@authornum}%
@@ -1130,7 +1141,7 @@
     }%
   }{%
     \@ifpackageloaded{biblatex}{
-      \DeclareFieldFormat{doi}{\mkbibacro{DOI}\addcolon\space\href{http://dx.doi.org/\detokenize{#1}}{\detokenize{#1}}}
+      \DeclareFieldFormat{doi}{\mkbibacro{DOI}\addcolon\space\href{https://doi.org/\detokenize{#1}}{\detokenize{#1}}}
       \setcounter{biburllcpenalty}{1000}
       \setcounter{biburlucpenalty}{1000}
       \setcounter{biburlnumpenalty}{1000}
@@ -1179,7 +1190,7 @@
     \ifx\@recordedbibliographystyle\relax\bibliographystyle{plainnat}\fi
     \ltx@ifpackageloaded{natbib}{}{%
       \ltx@ifpackageloaded{biblatex}{}{%
-        \ClassWarning{quantumarticle}{You are manually generating your bibliography. Please make sure that all references include DOI hyperlinks. quantumarticle recommends the use of BibTeX with either the natbib nor biblatex package for generating the bibliography.}}}%
+        \ClassWarning{quantumarticle}{You are manually generating your bibliography. Please make sure that all references include DOI hyperlinks. quantumarticle recommends the use of BibTeX together with the natbib package for generating the bibliography.}}}%
     \@origbibliography{#1}}
   \providecommand\textcite[1]{\citet{#1}}
   \providecommand\onlinecite[1]{\cite{#1}}
@@ -1199,6 +1210,50 @@
     \RequirePackage[font={small,sf}]{caption}
   }
 }
+
+\@blacklistpackage[You are not supposed to load custom font packages such as]{berasans}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{arev}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{avant}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{bera}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{bookman}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{cabin}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{chancery}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{charter}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{cmbright}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{concrete}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{courier}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{dejavu}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{droid}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{drm}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{ebgaramond}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{euler}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{fourier}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{fouriernc}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{gentium}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{helvet}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{inconsolata}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{kpfonts}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{lato}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{libertineotf}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{libertine}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{librebaskerville}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{lmodern}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{mathdesign}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{mathpazo}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{mathptmx}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{newcent}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{newtx}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{quattrocento}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{tgadventor}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{tgbonum}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{tgchorus}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{tgcursor}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{tgheros}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{tgpagella}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{tgschola}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{tgtermes}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{times}
+\@blacklistpackage[You are not supposed to load custom font packages such as]{yfonts}
 
 \endinput
 %%
