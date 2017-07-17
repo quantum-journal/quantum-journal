@@ -28,25 +28,25 @@
 \newif\if@titlepage
 \@titlepagefalse
 \if@compatibility\else
-\DeclareOption{a4paper}
+\DeclareOptionX{a4paper}
    {\setlength\paperheight {297mm}%
     \setlength\paperwidth  {210mm}}
-\DeclareOption{a5paper}
+\DeclareOptionX{a5paper}
    {\setlength\paperheight {210mm}%
     \setlength\paperwidth  {148mm}}
-\DeclareOption{b5paper}
+\DeclareOptionX{b5paper}
    {\setlength\paperheight {250mm}%
     \setlength\paperwidth  {176mm}}
-\DeclareOption{letterpaper}
+\DeclareOptionX{letterpaper}
    {\setlength\paperheight {11in}%
     \setlength\paperwidth  {8.5in}}
-\DeclareOption{legalpaper}
+\DeclareOptionX{legalpaper}
    {\setlength\paperheight {14in}%
     \setlength\paperwidth  {8.5in}}
-\DeclareOption{executivepaper}
+\DeclareOptionX{executivepaper}
    {\setlength\paperheight {10.5in}%
     \setlength\paperwidth  {7.25in}}
-\DeclareOption{landscape}
+\DeclareOptionX{landscape}
    {\setlength\@tempdima   {\paperheight}%
     \setlength\paperheight {\paperwidth}%
     \setlength\paperwidth  {\@tempdima}}
@@ -54,29 +54,29 @@
 \if@compatibility
   \renewcommand\@ptsize{0}
 \else
-\DeclareOption{10pt}{\renewcommand\@ptsize{0}}
+\DeclareOptionX{10pt}{\renewcommand\@ptsize{0}}
 \fi
-\DeclareOption{11pt}{\renewcommand\@ptsize{1}}
-\DeclareOption{12pt}{\renewcommand\@ptsize{2}}
+\DeclareOptionX{11pt}{\renewcommand\@ptsize{1}}
+\DeclareOptionX{12pt}{\renewcommand\@ptsize{2}}
 \if@compatibility\else
-\DeclareOption{oneside}{\@twosidefalse \@mparswitchfalse}
+\DeclareOptionX{oneside}{\@twosidefalse \@mparswitchfalse}
 \fi
-\DeclareOption{twoside}{\@twosidetrue  \@mparswitchtrue}
-\DeclareOption{draft}{\setlength\overfullrule{5pt}}
+\DeclareOptionX{twoside}{\@twosidetrue  \@mparswitchtrue}
+\DeclareOptionX{draft}{\setlength\overfullrule{5pt}}
 \if@compatibility\else
-\DeclareOption{final}{\setlength\overfullrule{0pt}}
+\DeclareOptionX{final}{\setlength\overfullrule{0pt}}
 \fi
-\DeclareOption{titlepage}{\@titlepagetrue}
+\DeclareOptionX{titlepage}{\@titlepagetrue}
 \if@compatibility\else
-\DeclareOption{notitlepage}{\@titlepagefalse}
+\DeclareOptionX{notitlepage}{\@titlepagefalse}
 \fi
 \if@compatibility\else
-\DeclareOption{onecolumn}{\@twocolumnfalse}
+\DeclareOptionX{onecolumn}{\@twocolumnfalse}
 \fi
-\DeclareOption{twocolumn}{\@twocolumntrue}
-\DeclareOption{leqno}{\input{leqno.clo}}
-\DeclareOption{fleqn}{\input{fleqn.clo}}
-\DeclareOption{openbib}{%
+\DeclareOptionX{twocolumn}{\@twocolumntrue}
+\DeclareOptionX{leqno}{\input{leqno.clo}}
+\DeclareOptionX{fleqn}{\input{fleqn.clo}}
+\DeclareOptionX{openbib}{%
   \AtEndOfPackage{%
    \renewcommand\@openbib@code{%
       \advance\leftmargin\bibindent
@@ -87,108 +87,106 @@
    \renewcommand\newblock{\par}}%
 }
 %declare some dummy options for compatibility
-\DeclareOption{checkin}{}
-\DeclareOption{preprint}{}
-\DeclareOption{reprint}{}
-\DeclareOption{manuscript}{}
-\DeclareOption{noshowpacs}{}
-\DeclareOption{showpacs}{}
-\DeclareOption{showkeys}{}
-\DeclareOption{noshowkeys}{}
-\DeclareOption{balancelastpage}{}
-\DeclareOption{nobalancelastpage}{}
-\DeclareOption{nopreprintnumbers}{}
-\DeclareOption{preprintnumbers}{}
-\DeclareOption{hyperref}{}
-\DeclareOption{bibnotes}{}
-\DeclareOption{nobibnotes}{}
-\DeclareOption{footinbib}{}
-\DeclareOption{nofootinbib}{}
-\DeclareOption{altaffilletter}{}
-\DeclareOption{altaffilsymbol}{}
-\DeclareOption{superbib}{}
-\DeclareOption{citeautoscript}{}
-\DeclareOption{longbibliography}{}
-\DeclareOption{nolongbibliography}{}
-\DeclareOption{eprint}{}
-\DeclareOption{noeprint}{}
-\DeclareOption{author-year}{}
-\DeclareOption{numerical}{}
-\DeclareOption{galley}{}
-\DeclareOption{raggedbottom}{}
-\DeclareOption{tightenlines}{}
-\DeclareOption{lengthcheck}{}
-\DeclareOption{reprint}{}
-\DeclareOption{eqsecnum}{}
-\DeclareOption{secnumarabic}{}
-\DeclareOption{fleqn}{}
-\DeclareOption{floats}{}
-\DeclareOption{stfloats}{}
-\DeclareOption{endfloats}{}
-\DeclareOption{endfloats*}{}
-\DeclareOption{osa}{}
-\DeclareOption{osameet}{}
-\DeclareOption{opex}{}
-\DeclareOption{tops}{}
-\DeclareOption{josa}{}
+\DeclareOptionX{checkin}{}
+\DeclareOptionX{preprint}{}
+\DeclareOptionX{reprint}{}
+\DeclareOptionX{manuscript}{}
+\DeclareOptionX{noshowpacs}{}
+\DeclareOptionX{showpacs}{}
+\DeclareOptionX{showkeys}{}
+\DeclareOptionX{noshowkeys}{}
+\DeclareOptionX{balancelastpage}{}
+\DeclareOptionX{nobalancelastpage}{}
+\DeclareOptionX{nopreprintnumbers}{}
+\DeclareOptionX{preprintnumbers}{}
+\DeclareOptionX{hyperref}{}
+\DeclareOptionX{bibnotes}{}
+\DeclareOptionX{nobibnotes}{}
+\DeclareOptionX{footinbib}{}
+\DeclareOptionX{nofootinbib}{}
+\DeclareOptionX{altaffilletter}{}
+\DeclareOptionX{altaffilsymbol}{}
+\DeclareOptionX{superbib}{}
+\DeclareOptionX{citeautoscript}{}
+\DeclareOptionX{longbibliography}{}
+\DeclareOptionX{nolongbibliography}{}
+\DeclareOptionX{eprint}{}
+\DeclareOptionX{noeprint}{}
+\DeclareOptionX{author-year}{}
+\DeclareOptionX{numerical}{}
+\DeclareOptionX{galley}{}
+\DeclareOptionX{raggedbottom}{}
+\DeclareOptionX{tightenlines}{}
+\DeclareOptionX{lengthcheck}{}
+\DeclareOptionX{reprint}{}
+\DeclareOptionX{eqsecnum}{}
+\DeclareOptionX{secnumarabic}{}
+\DeclareOptionX{fleqn}{}
+\DeclareOptionX{floats}{}
+\DeclareOptionX{stfloats}{}
+\DeclareOptionX{endfloats}{}
+\DeclareOptionX{endfloats*}{}
+\DeclareOptionX{osa}{}
+\DeclareOptionX{osameet}{}
+\DeclareOptionX{opex}{}
+\DeclareOptionX{tops}{}
+\DeclareOptionX{josa}{}
 \newif\ifamsfonts
 \amsfontsfalse
-\DeclareOption{amsfonts}{\amsfontstrue}%
-\DeclareOption{noamsfonts}{}
+\DeclareOptionX{amsfonts}{\amsfontstrue}%
+\DeclareOptionX{noamsfonts}{}
 \newif\ifamssymb
 \amssymbfalse
-\DeclareOption{amssymb}{\amssymbtrue}%
-\DeclareOption{amssymbol}{\amssymbtrue}%
-\DeclareOption{noamssymb}{}
+\DeclareOptionX{amssymb}{\amssymbtrue}%
+\DeclareOptionX{amssymbol}{\amssymbtrue}%
+\DeclareOptionX{noamssymb}{}
 \newif\ifamsmath
 \amsmathfalse
-\DeclareOption{amsmath}{\amsmathtrue}%
-\DeclareOption{noamsmath}{}
-\DeclareOption{byrevtex}{}
-\DeclareOption{floatfix}{}
-\DeclareOption{nofloatfix}{}
-\DeclareOption{ltxgridinfo}{}
-\DeclareOption{outputdebug}{}
-\DeclareOption{raggedfooter}{}
-\DeclareOption{noraggedfooter}{}
-\DeclareOption{frontmatterverbose}{}
-\DeclareOption{linenumbers}{}
-\DeclareOption{nomerge}{}
-\DeclareOption{hypertext}{}
-\DeclareOption{frontmatterverbose}{}
-\DeclareOption{inactive}{}
-\DeclareOption{groupedaddress}{}
-\DeclareOption{unsortedaddress}{}
-\DeclareOption{runinaddress}{}
-\DeclareOption{superscriptaddress}{}
-\DeclareOption{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \string\documetnclass{} command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
+\DeclareOptionX{amsmath}{\amsmathtrue}%
+\DeclareOptionX{noamsmath}{}
+\DeclareOptionX{byrevtex}{}
+\DeclareOptionX{floatfix}{}
+\DeclareOptionX{nofloatfix}{}
+\DeclareOptionX{ltxgridinfo}{}
+\DeclareOptionX{outputdebug}{}
+\DeclareOptionX{raggedfooter}{}
+\DeclareOptionX{noraggedfooter}{}
+\DeclareOptionX{frontmatterverbose}{}
+\DeclareOptionX{linenumbers}{}
+\DeclareOptionX{nomerge}{}
+\DeclareOptionX{hypertext}{}
+\DeclareOptionX{frontmatterverbose}{}
+\DeclareOptionX{inactive}{}
+\DeclareOptionX{groupedaddress}{}
+\DeclareOptionX{unsortedaddress}{}
+\DeclareOptionX{runinaddress}{}
+\DeclareOptionX{superscriptaddress}{}
+\DeclareOptionX{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \string\documetnclass{} command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
 \newif\ifpublished\publishedfalse
-\DeclareOption{published}{\publishedtrue}
+\DeclareOptionX{published}{\publishedtrue}
 \newif\ifaccepted\acceptedfalse
-%\DeclareOption{accepted}{\acceptedtrue}
 \DeclareOptionX{accepted}[]{\def\@accepteddate{#1}\acceptedtrue}
 \newif\ifrevtexcompatibility
 \revtexcompatibilityfalse
-\DeclareOption{aps}{\revtexcompatibilitytrue}
-\DeclareOption{pra}{\revtexcompatibilitytrue}
-\DeclareOption{prb}{\revtexcompatibilitytrue}
-\DeclareOption{pre}{\revtexcompatibilitytrue}
-\DeclareOption{prl}{\revtexcompatibilitytrue}
-\DeclareOption{prx}{\revtexcompatibilitytrue}
-\DeclareOption{aip}{\revtexcompatibilitytrue}
+\DeclareOptionX{aps}{\revtexcompatibilitytrue}
+\DeclareOptionX{pra}{\revtexcompatibilitytrue}
+\DeclareOptionX{prb}{\revtexcompatibilitytrue}
+\DeclareOptionX{pre}{\revtexcompatibilitytrue}
+\DeclareOptionX{prl}{\revtexcompatibilitytrue}
+\DeclareOptionX{prx}{\revtexcompatibilitytrue}
+\DeclareOptionX{aip}{\revtexcompatibilitytrue}
 \newif\ifallowfontchageintitle
 \allowfontchageintitlefalse
-\DeclareOption{allowfontchageintitle}{\allowfontchageintitletrue}
+\DeclareOptionX{allowfontchageintitle}{\allowfontchageintitletrue}
 
 % we are loading xcolor below, then subsequently loading color with non trivial options in the document results in the error
 % ERROR: LaTeX Error: Option clash for package color.
 % with the suggested solution to add the options to the \documentclass command so that they are passed on when the documentclass loads color. Passing on of options to color or xcolor, however doesn't work automatically. So we simply pass all unknown options on to color and xcolor to make this fix proposed by latex actually work
-\DeclareOption*{
+\DeclareOptionX*{
    \PassOptionsToPackage{\CurrentOption}{color}
    \PassOptionsToPackage{\CurrentOption}{xcolor}
 }
-\ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
-\ProcessOptions
+\ExecuteOptionsX{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptionsX
 
 \RequirePackage{etoolbox}
