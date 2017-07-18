@@ -237,7 +237,11 @@
 }
 \@blacklistpackage{titlesec}
 
+\if@twocolumn
 \RequirePackage[margin=2cm,bottom=3cm]{geometry}
+\else
+\RequirePackage[margin=3cm,bottom=3cm]{geometry}
+\fi
 \@blacklistpackage{geometry}
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
@@ -835,7 +839,7 @@
 \renewcommand{\headrule}{}
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
-\fancyfoot[C]{\sffamily\ifunpublished\else\textcolor{quantumviolet}\fi{\thepage}}
+\fancyfoot[C]{\sffamily\ifunpublished{\thepage}\else\textcolor{quantumviolet}{\thepage}\fi}
 \ifaccepted\ifunpublished\fancyfoot[L]{}\else\fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}\fi\else\fancyfoot[L]{}\fi
 %\fancyfoot[R]{\sffamily\textcolor{quantumviolet}{\footnotesize foor}}
 \pagenumbering{arabic}
