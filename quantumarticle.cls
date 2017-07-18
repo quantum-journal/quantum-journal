@@ -839,8 +839,19 @@
 \renewcommand{\headrule}{}
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
+\ifaccepted
+\fancyfoot[R]{\sffamily\ifunpublished{\thepage}\else\textcolor{quantumviolet}{\thepage}\fi}
+\else
 \fancyfoot[C]{\sffamily\ifunpublished{\thepage}\else\textcolor{quantumviolet}{\thepage}\fi}
-\ifaccepted\ifunpublished\fancyfoot[L]{}\else\fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}\fi\else\fancyfoot[L]{}\fi
+\fi
+\ifaccepted\ifunpublished
+\fancyfoot[L]{}
+\else
+\fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}
+\fi
+\else
+\fancyfoot[L]{}
+\fi
 %\fancyfoot[R]{\sffamily\textcolor{quantumviolet}{\footnotesize foor}}
 \pagenumbering{arabic}
 \if@twoside
