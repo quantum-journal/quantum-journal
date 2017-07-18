@@ -881,7 +881,9 @@
         \endgroup%
     \end{minipage}
     \else%
-    \href{http://quantum-journal.org/?s=\detokenize\expandafter{\@title}}{%
+    \edef\@titleexpanded{\detokenize\expandafter{\@title}}%
+    \if@xstring\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode\else\gdef\@titleforurl{\@titleexpanded}\fi%
+    \href{http://quantum-journal.org/?s=\@titleforurl}{%
       \begin{minipage}{1.0\linewidth}%
         \color{quantumviolet}{%
           \begingroup%
@@ -1059,8 +1061,13 @@
 
 \newif\if@tikz
 \IfFileExists{tikz.sty}{\@tikztrue}{\@tikzfalse}
+\newif\if@xstring
+\IfFileExists{xstring.sty}{\@xstringtrue}{\@xstringfalse}
 
 \AtBeginDocument{
+  \if@xstring
+  \@ifpackageloaded{xstring}{}{\RequirePackage{xstring}}
+  \fi
   \if@tikz
   \@ifpackageloaded{tikz}{}{\RequirePackage{tikz}}
   \usetikzlibrary{calc}
