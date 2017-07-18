@@ -181,10 +181,40 @@
 
 % we are loading xcolor below, then subsequently loading color with non trivial options in the document results in the error
 % ERROR: LaTeX Error: Option clash for package color.
-% with the suggested solution to add the options to the \documentclass command so that they are passed on when the documentclass loads color. Passing on of options to color or xcolor, however doesn't work automatically. So we simply pass all unknown options on to color and xcolor to make this fix proposed by latex actually work
+% with the suggested solution to add the options to the \documentclass command so that they are passed on when the documentclass loads color. Passing on of options to color or xcolor, however doesn't work automatically. So, to make this fix proposed by latex actually work, we pass all unknown options on to xcolor. As color complains about unknown options (and is pretty stable) we keep a list of its options and only pass on those 
+\csdef{@packagecoloroptionlist}{}
+\listxadd{\@packagecoloroptionlist}{monochrome}
+\listxadd{\@packagecoloroptionlist}{debugshow}
+\listxadd{\@packagecoloroptionlist}{setpagesize}
+\listxadd{\@packagecoloroptionlist}{nosetpagesize}
+\listxadd{\@packagecoloroptionlist}{dvips}
+\listxadd{\@packagecoloroptionlist}{xdvi}
+\listxadd{\@packagecoloroptionlist}{dvipdf}
+\listxadd{\@packagecoloroptionlist}{dvipdfm}
+\listxadd{\@packagecoloroptionlist}{dvipdfmx}
+\listxadd{\@packagecoloroptionlist}{pdftex}
+\listxadd{\@packagecoloroptionlist}{luatex}
+\listxadd{\@packagecoloroptionlist}{dvisvgm}
+\listxadd{\@packagecoloroptionlist}{xetex}
+\listxadd{\@packagecoloroptionlist}{dvipsone}
+\listxadd{\@packagecoloroptionlist}{dviwindo}
+\listxadd{\@packagecoloroptionlist}{emtex}
+\listxadd{\@packagecoloroptionlist}{dviwin}
+\listxadd{\@packagecoloroptionlist}{oztex}
+\listxadd{\@packagecoloroptionlist}{textures}
+\listxadd{\@packagecoloroptionlist}{pctexps}
+\listxadd{\@packagecoloroptionlist}{pctexwin}
+\listxadd{\@packagecoloroptionlist}{pctexhp}
+\listxadd{\@packagecoloroptionlist}{pctex32}
+\listxadd{\@packagecoloroptionlist}{truetex}
+\listxadd{\@packagecoloroptionlist}{tcidvi}
+\listxadd{\@packagecoloroptionlist}{vtex}
+\listxadd{\@packagecoloroptionlist}{dvipsnames}
+\listxadd{\@packagecoloroptionlist}{nodvipsnames}
+\listxadd{\@packagecoloroptionlist}{usenames}
 \DeclareOptionX*{
-   \PassOptionsToPackage{\CurrentOption}{color}
-   \PassOptionsToPackage{\CurrentOption}{xcolor}
+  \ifinlist{\CurrentOption}{\@packagecoloroptionlist}{\PassOptionsToPackage{\CurrentOption}{color}}{}
+  \PassOptionsToPackage{\CurrentOption}{xcolor}
 }
 \ExecuteOptionsX{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptionsX
