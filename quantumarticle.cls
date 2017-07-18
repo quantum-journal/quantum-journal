@@ -1155,10 +1155,9 @@
 \newcommand{\fntext}[1][]{} %author footnotes
 
 % set default options for hyperref to make links more pretty
-\ifunpublished%
 \PassOptionsToPackage{colorlinks=true,hyperindex}{hyperref}
-\else%
-\PassOptionsToPackage{colorlinks=true,allcolors=quantumviolet,hyperindex}{hyperref}
+\ifunpublished\else%
+\PassOptionsToPackage{allcolors=quantumviolet}{hyperref}
 \fi%
 \ifnum\pdfoutput=0
 \else
