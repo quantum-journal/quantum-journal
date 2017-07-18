@@ -23,6 +23,7 @@
               [2017/03/17 v3.0
                class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \RequirePackage{xkeyval}
+\RequirePackage{etoolbox}
 \newcommand\@ptsize{}
 \newif\if@restonecol
 \newif\if@titlepage
@@ -162,8 +163,8 @@
 \DeclareOptionX{runinaddress}{}
 \DeclareOptionX{superscriptaddress}{}
 \DeclareOptionX{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \string\documetnclass{} command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
-\newif\ifpublished\publishedfalse
-\DeclareOptionX{published}{\publishedtrue}
+\newif\ifunpublished\unpublishedfalse
+\DeclareOptionX{unpublished}{\unpublishedtrue}
 \newif\ifaccepted\acceptedfalse
 \DeclareOptionX{accepted}[]{\def\@accepteddate{#1}\acceptedtrue}
 \newif\ifrevtexcompatibility
@@ -219,7 +220,6 @@
 \ExecuteOptionsX{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptionsX
 
-\RequirePackage{etoolbox}
 \input{size1\@ptsize.clo}
 
 %enable the blacklisting of packages by patching the \usepackage command
@@ -835,8 +835,8 @@
 \renewcommand{\headrule}{}
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
-\fancyfoot[C]{\sffamily\textcolor{quantumviolet}{\thepage}}
-\ifaccepted\fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}\else\fancyfoot[L]{}\fi
+\fancyfoot[C]{\sffamily\ifunpublished\else\textcolor{quantumviolet}\fi{\thepage}}
+\ifaccepted\ifunpublished\fancyfoot[L]{}\else\fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}\fi\else\fancyfoot[L]{}\fi
 %\fancyfoot[R]{\sffamily\textcolor{quantumviolet}{\footnotesize foor}}
 \pagenumbering{arabic}
 \if@twoside
@@ -894,7 +894,16 @@
 
 %title
 \def\@printtitle{%
-  {\Huge\href{http://quantum-journal.org/?s=\detokenize\expandafter{\@title}}{%
+  {\Huge%
+    \ifunpublished%
+    \begin{minipage}{1.0\linewidth}%
+        \begingroup%
+        \ifallowfontchageintitle\else\def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{} Please remove all such commands from your \string\title{}. If you really really have to change the font for some part of the title you can allow this by giving the option allowfontchageintitle}{}}\fi%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
+        \@title%
+        \endgroup%
+    \end{minipage}
+    \else%
+    \href{http://quantum-journal.org/?s=\detokenize\expandafter{\@title}}{%
       \begin{minipage}{1.0\linewidth}%
         \color{quantumviolet}{%
           \begingroup%
@@ -903,6 +912,7 @@
           \endgroup%
         }%
       \end{minipage}}%
+    \fi%
   }%
 }
 %renew \title to allow for and ignore an optional argument
@@ -1144,8 +1154,12 @@
 \newcommand{\cortext}[1][]{} %ignore corresponding author information
 \newcommand{\fntext}[1][]{} %author footnotes
 
-%set default options for hyperref to make links more pretty
+% set default options for hyperref to make links more pretty
+\ifunpublished%
+\PassOptionsToPackage{colorlinks=true,hyperindex}{hyperref}
+\else%
 \PassOptionsToPackage{colorlinks=true,allcolors=quantumviolet,hyperindex}{hyperref}
+\fi%
 \ifnum\pdfoutput=0
 \else
 \PassOptionsToPackage{breaklinks=true}{hyperref}
