@@ -1154,6 +1154,8 @@
         \fill[shift={($(current bounding box.south east)+(0.16\@eQ+1.93*\@cw-\@w,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.2] ($(1.2\@rl,0)$) -- ($(1.93\@cw,0)-(\@w,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=184,in=-4] ($(0.97\@cw,1.05\@w)+(0,0)$) -- ++($(0,-1.05\@w)+(0,\@ch)$) -- ++($(-\@w,0)$) -- ++($(0,-\@ch)+(0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
         \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {m};
       }}}
+  \else
+  \DeclareRobustCommand{\Quantum}{Quantum}
   \fi
 }
 \newcommand{\ead}[1]{} %ignore email addresses given with the ead command
