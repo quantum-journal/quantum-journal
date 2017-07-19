@@ -23,6 +23,7 @@
               [2017/03/17 v3.0
                class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \RequirePackage{xkeyval}
+\RequirePackage{etoolbox}
 \newcommand\@ptsize{}
 \newif\if@restonecol
 \newif\if@titlepage
@@ -165,7 +166,7 @@
 \newif\ifunpublished\unpublishedfalse
 \DeclareOptionX{unpublished}{\unpublishedtrue}
 \newif\ifaccepted\acceptedfalse
-\DeclareOptionX{accepted}[]{\def\@accepteddate{#1}\acceptedtrue}
+\DeclareOptionX{accepted}[]{\ifstrempty{#1}{}{\def\@accepteddate{#1}}\acceptedtrue\unpublishedfalse}
 \newif\ifrevtexcompatibility
 \revtexcompatibilityfalse
 \DeclareOptionX{aps}{\revtexcompatibilitytrue}
@@ -183,8 +184,6 @@
 \ProcessOptionsX
 
 \input{size1\@ptsize.clo}
-
-\RequirePackage{etoolbox}
 
 %enable the blacklisting of packages by patching the \usepackage command
 \csdef{@packageblacklist}{}
@@ -218,7 +217,7 @@
 \AtBeginDocument{
   % avoid bitmap fonts by loading lmodern or at least checking for cm-super
   \IfFileExists{lmodern.sty}{
-    \@ifpackageloaded{lmodern}{}{\RequirePackage{lmodern}}
+    \RequirePackage{lmodern}
   }{
     \IfFileExists{type1ec.sty}{}{
       \PackageError{quantumarticle}{Either the lmodern or the cm-super package are required by quantumarticle in order to produce high quality pdf output.}{Please install the lmodern package, or, if this is not possible, the cm-super package.}
@@ -226,11 +225,11 @@
   }
   % Define a revtex-style openone symbol
   \IfFileExists{bbm.sty}{
-    \@ifpackageloaded{bbm}{}{\RequirePackage{bbm}}
+    \RequirePackage{bbm}
     \DeclareRobustCommand\openone{\mathbbm{1}}
   }{
     \IfFileExists{dsfont.sty}{
-      \@ifpackageloaded{dsfont}{}{\RequirePackage{dsfont}}
+      \RequirePackage{dsfont}
       \DeclareRobustCommand\openone{\mathds{1}}
     }{
       % This uses a similar technique to {revtex4-1}'s openone,
@@ -239,7 +238,7 @@
       \DeclareRobustCommand\openone{{\mbox{\small1}\mkern-5.5mu1}}
     }
   }
-  \@ifpackageloaded{xcolor}{}{\RequirePackage{xcolor}}
+  \RequirePackage{xcolor}
   \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
   \definecolor{quantumgray}{HTML}{555555} %Quantum gray
 }
@@ -808,11 +807,33 @@
 \else
 \fancyfoot[C]{\sffamily\ifunpublished{\thepage}\else\textcolor{quantumviolet}{\thepage}\fi}
 \fi
-\ifaccepted\ifunpublished
-\fancyfoot[L]{}
-\else
+
+% validate the date format to be YYYY-MM-DD
+\AtBeginDocument{
+  \ifcsdef{@accepteddate}{%
+    \if@xstring%
+    \RequirePackage{xstring}
+    \def\@dateerror{\ClassError{quantumarticle}{The date in the accepted option must be given in the format YYYY-MM-DD}{}}
+    % test that we have two -s
+    \IfSubStr[2]{\@accepteddate}{-}{}{\@dateerror}
+    \IfSubStr[3]{\@accepteddate}{-}{\@dateerror}{}
+    \StrBefore[1]{\@accepteddate}{-}[\@accepteddateyear]
+    \StrBetween[1,2]{\@accepteddate}{-}{-}[\@accepteddatemonth]
+    \StrBehind[2]{\@accepteddate}{-}[\@accepteddateday]
+    \IfDecimal{\@accepteddateyear}{}{\@dateerror}
+    \IfDecimal{\@accepteddatemonth}{}{\@dateerror}
+    \IfDecimal{\@accepteddateday}{}{\@dateerror}
+    \StrLen{\@accepteddateyear}[\@accepteddateyearlength]
+    \StrLen{\@accepteddatemonth}[\@accepteddatemonthlength]
+    \StrLen{\@accepteddateday}[\@accepteddatedaylength]
+    \ifnumcomp{\@accepteddateyearlength}{>}{3}{}{\@dateerror}
+    \ifnumcomp{\@accepteddatemonthlength}{=}{2}{}{\@dateerror}
+    \ifnumcomp{\@accepteddatedaylength}{=}{2}{}{\@dateerror}
+    \fi%
+  }{}
+}
+\ifaccepted
 \fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}
-\fi
 \else
 \fancyfoot[L]{}
 \fi
@@ -1066,10 +1087,10 @@
 
 \AtBeginDocument{
   \if@xstring
-  \@ifpackageloaded{xstring}{}{\RequirePackage{xstring}}
+  \RequirePackage{xstring}
   \fi
   \if@tikz
-  \@ifpackageloaded{tikz}{}{\RequirePackage{tikz}}
+  \RequirePackage{tikz}
   \usetikzlibrary{calc}
   \newlength{\@eQ}%Capital Q height
   \newlength{\@w}%line width
@@ -1153,8 +1174,7 @@
 \PassOptionsToPackage{doi=true}{biblatex}
 
 \AtBeginDocument{%
-  \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}%
-
+  \RequirePackage{hyperref}%
   \ifnum\pdfoutput=0
   \ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex)}{Without this, hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
   \fi
@@ -1179,9 +1199,9 @@
 \providecommand{\keywords}{}
 \renewcommand{\keywords}[1]{\def\@keywords{#1}}
 
-\ifamsfonts\@ifpackageloaded{amsfonts}{}{\RequirePackage{amsfonts}}\fi
-\ifamssymb\@ifpackageloaded{amssymb}{}{\RequirePackage{amssymb}}\fi
-\ifamsmath\@ifpackageloaded{amsmath}{}{\RequirePackage{amsmath}}\fi
+\ifamsfonts\RequirePackage{amsfonts}\fi
+\ifamssymb\RequirePackage{amssymb}\fi
+\ifamsmath\RequirePackage{amsmath}\fi
 
 \ifrevtexcompatibility
 
@@ -1231,10 +1251,10 @@
   }
 }
 
+\PassOptionsToPackage{font={small,sf}}{caption}
+
 \AtEndPreamble{
-  \ltx@ifpackageloaded{caption}{}{%
-    \RequirePackage[font={small,sf}]{caption}
-  }
+    \RequirePackage{caption}
 }
 
 \@blacklistpackage[You are not supposed to load custom font packages such as]{berasans}
