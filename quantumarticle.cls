@@ -1155,6 +1155,7 @@
         \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {m};
       }}}
   \else
+  \ClassWarning{quantumarticle}{The tikz package could not be found and the \string\Quantum command will not produce the Quantum logo, but fall back to outputting simply the text Quantum.}
   \DeclareRobustCommand{\Quantum}{Quantum}
   \fi
 }
