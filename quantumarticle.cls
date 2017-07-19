@@ -833,7 +833,8 @@
   }{}
 }
 \ifaccepted
-\fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}
+\fancyfoot[L]{\usebox{\@quantumacceptedbox}}
+%\fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}
 \else
 \fancyfoot[L]{}
 \fi
@@ -1157,6 +1158,11 @@
   \else
   \ClassWarning{quantumarticle}{The tikz package could not be found and the \string\Quantum command will not produce the Quantum logo, but fall back to outputting simply the text Quantum.}
   \DeclareRobustCommand{\Quantum}{Quantum}
+  \fi
+
+  \ifaccepted
+  \newsavebox\@quantumacceptedbox
+  \savebox\@quantumacceptedbox{\textcolor{quantumviolet}{ \sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}
   \fi
 }
 \newcommand{\ead}[1]{} %ignore email addresses given with the ead command
