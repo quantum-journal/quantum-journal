@@ -44,20 +44,7 @@ In \texttt{onecolumn} format or with a dedicated \texttt{titlepage}, this should
 Note that clicking the title performs a search for that title on \href{http://quantum-journal.org}{quantum-journal.org}.
 In this way readers can easily verify whether a work using the quantumarticle class was actually published in Quantum.
 
-\section{Sectioning and equations}
-Sections, subsections, subsubsections, and paragraphs should be typeset with the standard LaTeX commands.
-You can use use the standard commands for equations.
-For multi-line equations \texttt{align} is \href{http://tex.stackexchange.com/questions/196/eqnarray-vs-align}{preferable} over \texttt{eqnarray}.
-\begin{align}
-  \label{emc}
-  E &= m\,c^2\\
-  a^2 + b^2 &= c^2\\
-  H\,|\psi\rangle &= E\,|\psi\rangle\\
-  (\openone \otimes A)\,(B \otimes \openone) &= A \otimes B
-\end{align}
-Whether you prefer to refer to equations as Eq.~\eqref{emc}, Equation~\ref{emc}, or just \eqref{emc} is up to you, but please be consistent and use the \texttt{\textbackslash{}eqref\{\dots\}} command instead of writing \texttt{(\textbackslash{}ref\{\dots\})}.
-
-\subsection{Figures}
+\section{Figures}
 \begin{figure}[t]
   \centering
   \begin{tikzpicture}
@@ -69,11 +56,24 @@ Whether you prefer to refer to equations as Eq.~\eqref{emc}, Equation~\ref{emc},
     The same applies for tables, boxes, and other floating elements.}
   \label{fig:figure1}
 \end{figure}
-
 See Fig.~\ref{fig:figure1} for an example of how to include figures.
 Feel free to place them at the top or bottom of the page, or in the middle of a paragraph as you see fit.
 Try to place them on the same page as the text referring to them.
 A figure on the first page can help readers remember and recognize your work more easily.
+
+\section{Sectioning and equations}
+Sections, subsections, subsubsections, and paragraphs should be typeset with the standard LaTeX commands.
+You can use the standard commands for equations.
+For multi-line equations \texttt{align} is \href{http://tex.stackexchange.com/questions/196/eqnarray-vs-align}{preferable} over \texttt{eqnarray}.
+\begin{align}
+  \label{emc}
+  E &= m\,c^2\\
+  a^2 + b^2 &= c^2\\
+  H\,|\psi\rangle &= E\,|\psi\rangle\\
+  (\openone \otimes A)\,(B \otimes \openone) &= A \otimes B
+\end{align}
+Whether you prefer to refer to equations as Eq.~\eqref{emc}, Equation~\ref{emc}, or just \eqref{emc} is up to you, but please be consistent and use the \texttt{\textbackslash{}eqref\{\dots\}} command instead of writing \texttt{(\textbackslash{}ref\{\dots\})}.
+As a curtest for your readers and referees please suppress equation numbers only if there is a valid reason to do so to not make in unnecessarily difficult to refer to individual results and steps in derivations. 
 
 \subsection{Citations and footnotes}
 \label{sec:subsec1}
@@ -145,7 +145,7 @@ The only two requirements are that citations must uniquely identify the cited wo
 
 Footnotes\footnote{Only use footnotes when appropriate.} appear in the bottom of the page.
 
-\section{Unpublished and accepted manuscripts}
+\section{Unpublished and accepted works}
 This class supports the \texttt{unpublished} option which disables all Quantum related branding such as the logo and color as well as the hyperlink in the title.
 It can be used for works not yet accepted in Quantum or such that are not intended for submission to Quantum.
 On the contrary, by giving the \texttt{accepted=YYYY-MM-DD} option, with \texttt{YYYY-MM-DD} the acceptance date, the note ``Accepted in Quantum YYYY-MM-DD, click title to verify'' can be added to the bottom of each page to clearly mark works that have been accepted in Quantum. 
@@ -221,6 +221,6 @@ You are free to change this in case it is more appropriate for your article, but
 If you want your appendices to appear in \texttt{onecolumn} mode but the rest of the document in \texttt{twocolumn} mode, you can insert the command \texttt{\textbackslash{}onecolumn\textbackslash{}newpage} before \texttt{\textbackslash{}appendix}.   
 
 \section{Problems and Bugs}
-In case you encounter problems using the article class please consider opening a bug report in our bug-tracker under \href{https://github.com/cgogolin/quantum-journal/issues}{https://github.com/cgogolin/quantum-journal/issues} or contact us via email under \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org}.
+In case you encounter problems using the quantumarticle class please consider opening a bug report in our bug-tracker under \href{https://github.com/cgogolin/quantum-journal/issues}{https://github.com/cgogolin/quantum-journal/issues} or contact us via email under \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org}.
 
 \end{document}
