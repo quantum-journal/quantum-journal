@@ -162,7 +162,6 @@
 \DeclareOptionX{unsortedaddress}{}
 \DeclareOptionX{runinaddress}{}
 \DeclareOptionX{superscriptaddress}{}
-\DeclareOptionX{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \string\documetnclass{} command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
 \newif\ifunpublished\unpublishedfalse
 \DeclareOptionX{unpublished}{\unpublishedtrue}
 \newif\ifaccepted\acceptedfalse
