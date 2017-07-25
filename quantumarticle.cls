@@ -20,33 +20,34 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2017/03/17 v3.0
+              [2017/03/17 v4.0
                class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \RequirePackage{xkeyval}
+\RequirePackage{etoolbox}
 \newcommand\@ptsize{}
 \newif\if@restonecol
 \newif\if@titlepage
 \@titlepagefalse
 \if@compatibility\else
-\DeclareOption{a4paper}
+\DeclareOptionX{a4paper}
    {\setlength\paperheight {297mm}%
     \setlength\paperwidth  {210mm}}
-\DeclareOption{a5paper}
+\DeclareOptionX{a5paper}
    {\setlength\paperheight {210mm}%
     \setlength\paperwidth  {148mm}}
-\DeclareOption{b5paper}
+\DeclareOptionX{b5paper}
    {\setlength\paperheight {250mm}%
     \setlength\paperwidth  {176mm}}
-\DeclareOption{letterpaper}
+\DeclareOptionX{letterpaper}
    {\setlength\paperheight {11in}%
     \setlength\paperwidth  {8.5in}}
-\DeclareOption{legalpaper}
+\DeclareOptionX{legalpaper}
    {\setlength\paperheight {14in}%
     \setlength\paperwidth  {8.5in}}
-\DeclareOption{executivepaper}
+\DeclareOptionX{executivepaper}
    {\setlength\paperheight {10.5in}%
     \setlength\paperwidth  {7.25in}}
-\DeclareOption{landscape}
+\DeclareOptionX{landscape}
    {\setlength\@tempdima   {\paperheight}%
     \setlength\paperheight {\paperwidth}%
     \setlength\paperwidth  {\@tempdima}}
@@ -54,29 +55,29 @@
 \if@compatibility
   \renewcommand\@ptsize{0}
 \else
-\DeclareOption{10pt}{\renewcommand\@ptsize{0}}
+\DeclareOptionX{10pt}{\renewcommand\@ptsize{0}}
 \fi
-\DeclareOption{11pt}{\renewcommand\@ptsize{1}}
-\DeclareOption{12pt}{\renewcommand\@ptsize{2}}
+\DeclareOptionX{11pt}{\renewcommand\@ptsize{1}}
+\DeclareOptionX{12pt}{\renewcommand\@ptsize{2}}
 \if@compatibility\else
-\DeclareOption{oneside}{\@twosidefalse \@mparswitchfalse}
+\DeclareOptionX{oneside}{\@twosidefalse \@mparswitchfalse}
 \fi
-\DeclareOption{twoside}{\@twosidetrue  \@mparswitchtrue}
-\DeclareOption{draft}{\setlength\overfullrule{5pt}}
+\DeclareOptionX{twoside}{\@twosidetrue  \@mparswitchtrue}
+\DeclareOptionX{draft}{\setlength\overfullrule{5pt}}
 \if@compatibility\else
-\DeclareOption{final}{\setlength\overfullrule{0pt}}
+\DeclareOptionX{final}{\setlength\overfullrule{0pt}}
 \fi
-\DeclareOption{titlepage}{\@titlepagetrue}
+\DeclareOptionX{titlepage}{\@titlepagetrue}
 \if@compatibility\else
-\DeclareOption{notitlepage}{\@titlepagefalse}
+\DeclareOptionX{notitlepage}{\@titlepagefalse}
 \fi
 \if@compatibility\else
-\DeclareOption{onecolumn}{\@twocolumnfalse}
+\DeclareOptionX{onecolumn}{\@twocolumnfalse}
 \fi
-\DeclareOption{twocolumn}{\@twocolumntrue}
-\DeclareOption{leqno}{\input{leqno.clo}}
-\DeclareOption{fleqn}{\input{fleqn.clo}}
-\DeclareOption{openbib}{%
+\DeclareOptionX{twocolumn}{\@twocolumntrue}
+\DeclareOptionX{leqno}{\input{leqno.clo}}
+\DeclareOptionX{fleqn}{\input{fleqn.clo}}
+\DeclareOptionX{openbib}{%
   \AtEndOfPackage{%
    \renewcommand\@openbib@code{%
       \advance\leftmargin\bibindent
@@ -87,111 +88,100 @@
    \renewcommand\newblock{\par}}%
 }
 %declare some dummy options for compatibility
-\DeclareOption{checkin}{}
-\DeclareOption{preprint}{}
-\DeclareOption{reprint}{}
-\DeclareOption{manuscript}{}
-\DeclareOption{noshowpacs}{}
-\DeclareOption{showpacs}{}
-\DeclareOption{showkeys}{}
-\DeclareOption{noshowkeys}{}
-\DeclareOption{balancelastpage}{}
-\DeclareOption{nobalancelastpage}{}
-\DeclareOption{nopreprintnumbers}{}
-\DeclareOption{preprintnumbers}{}
-\DeclareOption{hyperref}{}
-\DeclareOption{bibnotes}{}
-\DeclareOption{nobibnotes}{}
-\DeclareOption{footinbib}{}
-\DeclareOption{nofootinbib}{}
-\DeclareOption{altaffilletter}{}
-\DeclareOption{altaffilsymbol}{}
-\DeclareOption{superbib}{}
-\DeclareOption{citeautoscript}{}
-\DeclareOption{longbibliography}{}
-\DeclareOption{nolongbibliography}{}
-\DeclareOption{eprint}{}
-\DeclareOption{noeprint}{}
-\DeclareOption{author-year}{}
-\DeclareOption{numerical}{}
-\DeclareOption{galley}{}
-\DeclareOption{raggedbottom}{}
-\DeclareOption{tightenlines}{}
-\DeclareOption{lengthcheck}{}
-\DeclareOption{reprint}{}
-\DeclareOption{eqsecnum}{}
-\DeclareOption{secnumarabic}{}
-\DeclareOption{fleqn}{}
-\DeclareOption{floats}{}
-\DeclareOption{stfloats}{}
-\DeclareOption{endfloats}{}
-\DeclareOption{endfloats*}{}
-\DeclareOption{osa}{}
-\DeclareOption{osameet}{}
-\DeclareOption{opex}{}
-\DeclareOption{tops}{}
-\DeclareOption{josa}{}
+\DeclareOptionX{checkin}{}
+\DeclareOptionX{preprint}{}
+\DeclareOptionX{reprint}{}
+\DeclareOptionX{manuscript}{}
+\DeclareOptionX{noshowpacs}{}
+\DeclareOptionX{showpacs}{}
+\DeclareOptionX{showkeys}{}
+\DeclareOptionX{noshowkeys}{}
+\DeclareOptionX{balancelastpage}{}
+\DeclareOptionX{nobalancelastpage}{}
+\DeclareOptionX{nopreprintnumbers}{}
+\DeclareOptionX{preprintnumbers}{}
+\DeclareOptionX{hyperref}{}
+\DeclareOptionX{bibnotes}{}
+\DeclareOptionX{nobibnotes}{}
+\DeclareOptionX{footinbib}{}
+\DeclareOptionX{nofootinbib}{}
+\DeclareOptionX{altaffilletter}{}
+\DeclareOptionX{altaffilsymbol}{}
+\DeclareOptionX{superbib}{}
+\DeclareOptionX{citeautoscript}{}
+\DeclareOptionX{longbibliography}{}
+\DeclareOptionX{nolongbibliography}{}
+\DeclareOptionX{eprint}{}
+\DeclareOptionX{noeprint}{}
+\DeclareOptionX{author-year}{}
+\DeclareOptionX{numerical}{}
+\DeclareOptionX{galley}{}
+\DeclareOptionX{raggedbottom}{}
+\DeclareOptionX{tightenlines}{}
+\DeclareOptionX{lengthcheck}{}
+\DeclareOptionX{reprint}{}
+\DeclareOptionX{eqsecnum}{}
+\DeclareOptionX{secnumarabic}{}
+\DeclareOptionX{fleqn}{}
+\DeclareOptionX{floats}{}
+\DeclareOptionX{stfloats}{}
+\DeclareOptionX{endfloats}{}
+\DeclareOptionX{endfloats*}{}
+\DeclareOptionX{osa}{}
+\DeclareOptionX{osameet}{}
+\DeclareOptionX{opex}{}
+\DeclareOptionX{tops}{}
+\DeclareOptionX{josa}{}
 \newif\ifamsfonts
 \amsfontsfalse
-\DeclareOption{amsfonts}{\amsfontstrue}%
-\DeclareOption{noamsfonts}{}
+\DeclareOptionX{amsfonts}{\amsfontstrue}%
+\DeclareOptionX{noamsfonts}{}
 \newif\ifamssymb
 \amssymbfalse
-\DeclareOption{amssymb}{\amssymbtrue}%
-\DeclareOption{amssymbol}{\amssymbtrue}%
-\DeclareOption{noamssymb}{}
+\DeclareOptionX{amssymb}{\amssymbtrue}%
+\DeclareOptionX{amssymbol}{\amssymbtrue}%
+\DeclareOptionX{noamssymb}{}
 \newif\ifamsmath
 \amsmathfalse
-\DeclareOption{amsmath}{\amsmathtrue}%
-\DeclareOption{noamsmath}{}
-\DeclareOption{byrevtex}{}
-\DeclareOption{floatfix}{}
-\DeclareOption{nofloatfix}{}
-\DeclareOption{ltxgridinfo}{}
-\DeclareOption{outputdebug}{}
-\DeclareOption{raggedfooter}{}
-\DeclareOption{noraggedfooter}{}
-\DeclareOption{frontmatterverbose}{}
-\DeclareOption{linenumbers}{}
-\DeclareOption{nomerge}{}
-\DeclareOption{hypertext}{}
-\DeclareOption{frontmatterverbose}{}
-\DeclareOption{inactive}{}
-\DeclareOption{groupedaddress}{}
-\DeclareOption{unsortedaddress}{}
-\DeclareOption{runinaddress}{}
-\DeclareOption{superscriptaddress}{}
-\DeclareOption{table}{\ClassError{quantumarticle}{The `table` option is not supported, please remove it from the \string\documetnclass{} command}{The `table` option breaks certain aspects of amsmath (https://github.com/cgogolin/quantum-journal/issues/16), please remove it from the \textbackslash{}documetnclass command.}}
-\newif\ifpublished\publishedfalse
-\DeclareOption{published}{\publishedtrue}
+\DeclareOptionX{amsmath}{\amsmathtrue}%
+\DeclareOptionX{noamsmath}{}
+\DeclareOptionX{byrevtex}{}
+\DeclareOptionX{floatfix}{}
+\DeclareOptionX{nofloatfix}{}
+\DeclareOptionX{ltxgridinfo}{}
+\DeclareOptionX{outputdebug}{}
+\DeclareOptionX{raggedfooter}{}
+\DeclareOptionX{noraggedfooter}{}
+\DeclareOptionX{frontmatterverbose}{}
+\DeclareOptionX{linenumbers}{}
+\DeclareOptionX{nomerge}{}
+\DeclareOptionX{hypertext}{}
+\DeclareOptionX{frontmatterverbose}{}
+\DeclareOptionX{inactive}{}
+\DeclareOptionX{groupedaddress}{}
+\DeclareOptionX{unsortedaddress}{}
+\DeclareOptionX{runinaddress}{}
+\DeclareOptionX{superscriptaddress}{}
+\newif\ifunpublished\unpublishedfalse
+\DeclareOptionX{unpublished}{\unpublishedtrue}
 \newif\ifaccepted\acceptedfalse
-%\DeclareOption{accepted}{\acceptedtrue}
-\DeclareOptionX{accepted}[]{\def\@accepteddate{#1}\acceptedtrue}
+\DeclareOptionX{accepted}[]{\ifstrempty{#1}{}{\def\@accepteddate{#1}}\acceptedtrue\unpublishedfalse}
 \newif\ifrevtexcompatibility
 \revtexcompatibilityfalse
-\DeclareOption{aps}{\revtexcompatibilitytrue}
-\DeclareOption{pra}{\revtexcompatibilitytrue}
-\DeclareOption{prb}{\revtexcompatibilitytrue}
-\DeclareOption{pre}{\revtexcompatibilitytrue}
-\DeclareOption{prl}{\revtexcompatibilitytrue}
-\DeclareOption{prx}{\revtexcompatibilitytrue}
-\DeclareOption{aip}{\revtexcompatibilitytrue}
+\DeclareOptionX{aps}{\revtexcompatibilitytrue}
+\DeclareOptionX{pra}{\revtexcompatibilitytrue}
+\DeclareOptionX{prb}{\revtexcompatibilitytrue}
+\DeclareOptionX{pre}{\revtexcompatibilitytrue}
+\DeclareOptionX{prl}{\revtexcompatibilitytrue}
+\DeclareOptionX{prx}{\revtexcompatibilitytrue}
+\DeclareOptionX{aip}{\revtexcompatibilitytrue}
 \newif\ifallowfontchageintitle
 \allowfontchageintitlefalse
-\DeclareOption{allowfontchageintitle}{\allowfontchageintitletrue}
+\DeclareOptionX{allowfontchageintitle}{\allowfontchageintitletrue}
 
-% we are loading xcolor below, then subsequently loading color with non trivial options in the document results in the error
-% ERROR: LaTeX Error: Option clash for package color.
-% with the suggested solution to add the options to the \documentclass command so that they are passed on when the documentclass loads color. Passing on of options to color or xcolor, however doesn't work automatically. So we simply pass all unknown options on to color and xcolor to make this fix proposed by latex actually work
-\DeclareOption*{
-   \PassOptionsToPackage{\CurrentOption}{color}
-   \PassOptionsToPackage{\CurrentOption}{xcolor}
-}
-\ExecuteOptions{a4paper,10pt,oneside,twocolumn,notitlepage,final}
-\ProcessOptions
+\ExecuteOptionsX{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptionsX
 
-\RequirePackage{etoolbox}
 \input{size1\@ptsize.clo}
 
 %enable the blacklisting of packages by patching the \usepackage command
@@ -209,7 +199,11 @@
 }
 \@blacklistpackage{titlesec}
 
+\if@twocolumn
 \RequirePackage[margin=2cm,bottom=3cm]{geometry}
+\else
+\RequirePackage[margin=3cm,bottom=3cm]{geometry}
+\fi
 \@blacklistpackage{geometry}
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
@@ -222,7 +216,7 @@
 \AtBeginDocument{
   % avoid bitmap fonts by loading lmodern or at least checking for cm-super
   \IfFileExists{lmodern.sty}{
-    \@ifpackageloaded{lmodern}{}{\RequirePackage{lmodern}}
+    \RequirePackage{lmodern}
   }{
     \IfFileExists{type1ec.sty}{}{
       \PackageError{quantumarticle}{Either the lmodern or the cm-super package are required by quantumarticle in order to produce high quality pdf output.}{Please install the lmodern package, or, if this is not possible, the cm-super package.}
@@ -230,11 +224,11 @@
   }
   % Define a revtex-style openone symbol
   \IfFileExists{bbm.sty}{
-    \@ifpackageloaded{bbm}{}{\RequirePackage{bbm}}
+    \RequirePackage{bbm}
     \DeclareRobustCommand\openone{\mathbbm{1}}
   }{
     \IfFileExists{dsfont.sty}{
-      \@ifpackageloaded{dsfont}{}{\RequirePackage{dsfont}}
+      \RequirePackage{dsfont}
       \DeclareRobustCommand\openone{\mathds{1}}
     }{
       % This uses a similar technique to {revtex4-1}'s openone,
@@ -243,7 +237,7 @@
       \DeclareRobustCommand\openone{{\mbox{\small1}\mkern-5.5mu1}}
     }
   }
-  \@ifpackageloaded{xcolor}{}{\RequirePackage{xcolor}}
+  \RequirePackage{xcolor}
   \definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
   \definecolor{quantumgray}{HTML}{555555} %Quantum gray
 }
@@ -807,9 +801,41 @@
 \renewcommand{\headrule}{}
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
-\fancyfoot[C]{\sffamily\textcolor{quantumviolet}{\thepage}}
-\ifaccepted\fancyfoot[L]{\textcolor{quantumviolet}{\sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}\else\fancyfoot[L]{}\fi
-%\fancyfoot[R]{\sffamily\textcolor{quantumviolet}{\footnotesize foor}}
+\ifaccepted
+\fancyfoot[R]{\sffamily\ifunpublished{\thepage}\else\textcolor{quantumviolet}{\thepage}\fi}
+\else
+\fancyfoot[C]{\sffamily\ifunpublished{\thepage}\else\textcolor{quantumviolet}{\thepage}\fi}
+\fi
+
+% validate the date format to be YYYY-MM-DD
+\AtBeginDocument{
+  \ifcsdef{@accepteddate}{%
+    \if@xstring%
+    \RequirePackage{xstring}
+    \def\@dateerror{\ClassError{quantumarticle}{The date in the accepted option must be given in the format YYYY-MM-DD}{}}
+    % test that we have two -s
+    \IfSubStr[2]{\@accepteddate}{-}{}{\@dateerror}
+    \IfSubStr[3]{\@accepteddate}{-}{\@dateerror}{}
+    \StrBefore[1]{\@accepteddate}{-}[\@accepteddateyear]
+    \StrBetween[1,2]{\@accepteddate}{-}{-}[\@accepteddatemonth]
+    \StrBehind[2]{\@accepteddate}{-}[\@accepteddateday]
+    \IfDecimal{\@accepteddateyear}{}{\@dateerror}
+    \IfDecimal{\@accepteddatemonth}{}{\@dateerror}
+    \IfDecimal{\@accepteddateday}{}{\@dateerror}
+    \StrLen{\@accepteddateyear}[\@accepteddateyearlength]
+    \StrLen{\@accepteddatemonth}[\@accepteddatemonthlength]
+    \StrLen{\@accepteddateday}[\@accepteddatedaylength]
+    \ifnumcomp{\@accepteddateyearlength}{>}{3}{}{\@dateerror}
+    \ifnumcomp{\@accepteddatemonthlength}{=}{2}{}{\@dateerror}
+    \ifnumcomp{\@accepteddatedaylength}{=}{2}{}{\@dateerror}
+    \fi%
+  }{}
+}
+\ifaccepted
+\fancyfoot[L]{\usebox{\@quantumacceptedbox}}
+\else
+\fancyfoot[L]{}
+\fi
 \pagenumbering{arabic}
 \if@twoside
 \else
@@ -866,7 +892,18 @@
 
 %title
 \def\@printtitle{%
-  {\Huge\href{http://quantum-journal.org/?s=\detokenize\expandafter{\@title}}{%
+  {\Huge%
+    \ifunpublished%
+    \begin{minipage}{1.0\linewidth}%
+        \begingroup%
+        \ifallowfontchageintitle\else\def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{} Please remove all such commands from your \string\title{}. If you really really have to change the font for some part of the title you can allow this by giving the option allowfontchageintitle}{}}\fi%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
+        \@title%
+        \endgroup%
+    \end{minipage}
+    \else%
+    \edef\@titleexpanded{\detokenize\expandafter{\@title}}%
+    \if@xstring\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode\else\gdef\@titleforurl{\@titleexpanded}\fi%
+    \href{http://quantum-journal.org/?s=\@titleforurl}{%
       \begin{minipage}{1.0\linewidth}%
         \color{quantumviolet}{%
           \begingroup%
@@ -875,6 +912,7 @@
           \endgroup%
         }%
       \end{minipage}}%
+    \fi%
   }%
 }
 %renew \title to allow for and ignore an optional argument
@@ -914,7 +952,9 @@
   \boolfalse{@startnewauthorgroup}
 }
 \def\@@spaceafter#1{#1 }
-\def\@printauthor#1#2{\ifcsdef{author#1orcid}{\href{https://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@spaceafter}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
+\def\@@@comma{\def\@@@comma{,}}
+\def\@@commaspacebefore#1{\@@@comma{}#1}
+\def\@printauthor#1#2{\def\footnote{\ClassError{quantumarticle}{You cannot put a \string\footnote{} command inside the argument of \string\author}{}}\ifcsdef{author#1orcid}{\href{https://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@commaspacebefore}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
 \def\@printauthors{%
   \newcounter{@authornum}%
   \large\forlistloop{\stepcounter{@authornum}%
@@ -1043,10 +1083,15 @@
 
 \newif\if@tikz
 \IfFileExists{tikz.sty}{\@tikztrue}{\@tikzfalse}
+\newif\if@xstring
+\IfFileExists{xstring.sty}{\@xstringtrue}{\@xstringfalse}
 
 \AtBeginDocument{
+  \if@xstring
+  \RequirePackage{xstring}
+  \fi
   \if@tikz
-  \@ifpackageloaded{tikz}{}{\RequirePackage{tikz}}
+  \RequirePackage{tikz}
   \usetikzlibrary{calc}
   \newlength{\@eQ}%Capital Q height
   \newlength{\@w}%line width
@@ -1110,14 +1155,25 @@
         \fill[shift={($(current bounding box.south east)+(0.16\@eQ+1.93*\@cw-\@w,\@ch)$)},rotate=180] (0,\@ch) -- (0,\@rl) to[out=-90,in=180,looseness=1.2] ($(1.2\@rl,0)$) -- ($(1.93\@cw,0)-(\@w,0)$) -- ++(0,\@ch) -- ++(-\@w,0) -- ++($(0,-\@ch) + (0,1.05\@w)$) to[out=184,in=-4] ($(0.97\@cw,1.05\@w)+(0,0)$) -- ++($(0,-1.05\@w)+(0,\@ch)$) -- ++($(-\@w,0)$) -- ++($(0,-\@ch)+(0,1.05\@w)$) to[out=182,in=-90,looseness=1.04] ($(\@w,\@rl)$) -- (\@w,\@ch) --cycle;
         \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {m};
       }}}
+  \else
+  \ClassWarning{quantumarticle}{The tikz package could not be found and the \string\Quantum command will not produce the Quantum logo, but fall back to outputting simply the text Quantum.}
+  \DeclareRobustCommand{\Quantum}{Quantum}
+  \fi
+
+  \ifaccepted
+  \newsavebox\@quantumacceptedbox
+  \savebox\@quantumacceptedbox{\textcolor{quantumviolet}{ \sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}
   \fi
 }
 \newcommand{\ead}[1]{} %ignore email addresses given with the ead command
 \newcommand{\cortext}[1][]{} %ignore corresponding author information
 \newcommand{\fntext}[1][]{} %author footnotes
 
-%set default options for hyperref to make links more pretty
-\PassOptionsToPackage{colorlinks=true,allcolors=quantumviolet,hyperindex}{hyperref}
+% set default options for hyperref to make links more pretty
+\PassOptionsToPackage{colorlinks=true,hyperindex}{hyperref}
+\ifunpublished\else%
+\PassOptionsToPackage{allcolors=quantumviolet}{hyperref}
+\fi%
 \ifnum\pdfoutput=0
 \else
 \PassOptionsToPackage{breaklinks=true}{hyperref}
@@ -1127,8 +1183,7 @@
 \PassOptionsToPackage{doi=true}{biblatex}
 
 \AtBeginDocument{%
-  \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}%
-
+  \RequirePackage{hyperref}%
   \ifnum\pdfoutput=0
   \ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex)}{Without this, hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
   \fi
@@ -1153,9 +1208,9 @@
 \providecommand{\keywords}{}
 \renewcommand{\keywords}[1]{\def\@keywords{#1}}
 
-\ifamsfonts\@ifpackageloaded{amsfonts}{}{\RequirePackage{amsfonts}}\fi
-\ifamssymb\@ifpackageloaded{amssymb}{}{\RequirePackage{amssymb}}\fi
-\ifamsmath\@ifpackageloaded{amsmath}{}{\RequirePackage{amsmath}}\fi
+\ifamsfonts\RequirePackage{amsfonts}\fi
+\ifamssymb\RequirePackage{amssymb}\fi
+\ifamsmath\RequirePackage{amsmath}\fi
 
 \ifrevtexcompatibility
 
@@ -1205,10 +1260,10 @@
   }
 }
 
+\PassOptionsToPackage{font={small,sf}}{caption}
+
 \AtEndPreamble{
-  \ltx@ifpackageloaded{caption}{}{%
-    \RequirePackage[font={small,sf}]{caption}
-  }
+    \RequirePackage{caption}
 }
 
 \@blacklistpackage[You are not supposed to load custom font packages such as]{berasans}
