@@ -20,7 +20,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2017/03/17 v3.0
+              [2017/03/17 v4.0
                class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
