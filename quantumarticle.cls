@@ -20,7 +20,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2017/03/17 v4.0
+              [2017/03/17 v4.1
                class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
@@ -242,14 +242,20 @@
   \definecolor{quantumgray}{HTML}{555555} %Quantum gray
 }
 
+\RequirePackage{ltxcmds}
+
 \let\origif@twocolumn\if@twocolumn
 \def\class@name{ltxutil}%get rid of "You should define the class name before reading in this package. Using default" warning from ltxutils which is loaded by ltxgrid
+\if@twocolumn
 \RequirePackage{ltxgrid}%ltxgrid should be loaded before etoolbox, otherwise terrible things can happen: http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend?noredirect=1#comment843815_343856 but if this is actually done, even more terrible things happen, so we partially repair what ltxgrid messes up below...
-\let\if@twocolumn\origif@twocolumn
-\let\col@number\@colnum
 \newcommand{\twocolumn}[1][]{#1\twocolumngrid}
 \newcommand{\onecolumn}{\onecolumngrid}
+\fi
+\let\if@twocolumn\origif@twocolumn
 
+\let\col@number\@colnum
+
+\ltx@ifpackageloaded{ltxgrid}{}{
 %repair what ltxutils has destroyed (see http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend) 
 \patchcmd\enddocument
   {\deadcycles}
@@ -263,7 +269,8 @@
        \let\AfterEndDocument\@firstofone
        \@afterenddocumenthook
        \etb@@end}}}
-
+}
+ 
 \setcounter{topnumber}{2}
 \renewcommand\topfraction{.7}
 \setcounter{bottomnumber}{1}
@@ -717,7 +724,6 @@
 
 \newdimen\bibindent
 \setlength\bibindent{1.5em}
-\RequirePackage{ltxcmds}
 \newenvironment{thebibliography}[1]
 {%
   \makeatletter%
