@@ -1200,9 +1200,27 @@
   \savebox\@quantumacceptedbox{\textcolor{quantumviolet}{ \sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}
   \fi
 }
-\newcommand{\ead}[1]{} %ignore email addresses given with the ead command
-\newcommand{\cortext}[1][]{} %ignore corresponding author information
-\newcommand{\fntext}[1][]{} %author footnotes
+%elsearticle style extra header information
+\newcommand{\ead}[2][]{
+  \ifstrempty{#1}{
+    \email{#2}
+  }{
+    \if@xstring
+    \IfStrEq{#1}{url}{\homepage{#2}}{\email{#2}}
+    \else
+    \email{#2}
+    \fi
+  }
+}
+\AtEndPreamble{
+  \providecommand{\@elsearticlecommandsnotsupportederror}{\ClassError{quantumarticle}{The elsearticle style \string\cortext{}, \string\corref{}, \string\fntext{}, \string\fnref{}, \string\tnotetext{}, and \string\tnoteref{} commands are not supported. Please refrain from using title footnotes and use the \string\tahnks{} command for author footnotes instead.}{}}
+  \providecommand{\cortext}[2][]{\@elsearticlecommandsnotsupportederror} %corresponding author information
+  \providecommand{\corref}[1]{\@elsearticlecommandsnotsupportederror} %corresponding author information reference
+  \providecommand{\fntext}[2][]{\@elsearticlecommandsnotsupportederror} %author footnote
+  \providecommand{\fnref}[1]{\@elsearticlecommandsnotsupportederror} %author footnot reference
+  \providecommand{\tnotetext}[2][]{\@elsearticlecommandsnotsupportederror} %title footnote
+  \providecommand{\tnoteref}[1]{\@elsearticlecommandsnotsupportederror} %title footnote reference
+}
 
 % set default options for hyperref to make links more pretty
 \PassOptionsToPackage{colorlinks=true,hyperindex}{hyperref}
