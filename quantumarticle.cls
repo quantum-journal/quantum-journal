@@ -898,13 +898,10 @@
 
 %title
 \def\@printtitle{%
-  {\Huge%
+  {%
     \ifunpublished%
     \begin{minipage}{1.0\linewidth}%
-        \begingroup%
-        \ifallowfontchageintitle\else\def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{} Please remove all such commands from your \string\title{}. If you really really have to change the font for some part of the title you can allow this by giving the option allowfontchageintitle}{}}\fi%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
-        \@title%
-        \endgroup%
+      \@printtitletextwithappropriatefontsize%
     \end{minipage}
     \else%
     \edef\@titleexpanded{\detokenize\expandafter{\@title}}%
@@ -912,15 +909,47 @@
     \href{http://quantum-journal.org/?s=\@titleforurl}{%
       \begin{minipage}{1.0\linewidth}%
         \color{quantumviolet}{%
-          \begingroup%
-          \ifallowfontchageintitle\else\def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{} Please remove all such commands from your \string\title{}. If you really really have to change the font for some part of the title you can allow this by giving the option allowfontchageintitle}{}}\fi%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
-          \@title%
-          \endgroup%
+          \@printtitletextwithappropriatefontsize%
         }%
       \end{minipage}}%
     \fi%
   }%
 }
+% In the macro below we compute the appropriate font size of the title.
+% We use \Huge if the title fits on one line and \huge if it extends over more
+% than one line in font size \Huge
+\def\@titleatfontsize#1{%
+  \begingroup%
+  #1%
+  \raggedright%
+  \ifallowfontchageintitle\else\def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{} Please remove all such commands from your \string\title{}. If you really really have to change the font for some part of the title you can allow this by giving the option allowfontchageintitle}{}}\fi%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
+  \@title%
+  \endgroup%
+}%
+\def\@printtitletextwithappropriatefontsize{%
+  \newsavebox{\@titelsaveboxHuge}%
+  \savebox{\@titelsaveboxHuge}{%
+    \parbox[b]{\linewidth}{%
+      \@titleatfontsize{\Huge}%
+    }%
+  }%
+  \newsavebox{\@titelsaveboxHugeoneline}%
+  \savebox{\@titelsaveboxHugeoneline}{%
+    \@titleatfontsize{\Huge}%
+  }%
+  \newsavebox{\@titelsaveboxhhuge}%
+  \savebox{\@titelsaveboxhhuge}{%
+    \parbox[b]{\linewidth}{%
+      \@titleatfontsize{\huge}%
+    }%
+  }%
+  \ifdim\ht\@titelsaveboxHuge>\ht\@titelsaveboxHugeoneline%
+  \usebox{\@titelsaveboxhhuge}% using huge because \the\ht\@titelsaveboxHuge{} is larger than \the\ht\@titelsaveboxHugeoneline{}
+  \else%
+  \usebox{\@titelsaveboxHuge}% using Huge because \the\ht\@titelsaveboxHuge{} is not larger than \the\ht\@titelsaveboxHugeoneline{}
+  \fi%
+}
+
 %renew \title to allow for and ignore an optional argument
 \renewcommand{\title}[2][]{\gdef\@title{#2}}
 % author handling
