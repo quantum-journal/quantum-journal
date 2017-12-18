@@ -119,6 +119,9 @@ For DOI linking to work, the BibTeX file must contain the \texttt{doi} field as 
   doi = {10.22331/idonotexist},
 }
 \end{verbatim}
+Several authors had problems because of unicode characters in their BibTeX files.
+Be advised that \href{http://wiki.lyx.org/BibTeX/Tips}{BibTeX does not support unicode characters}.
+All special characters must be input via their respective LaTeX commands.
 
 If you are using BibTeX, you can load the \texttt{natbib} package by putting
 \begin{verbatim}
@@ -245,7 +248,6 @@ Alternatively you can use a format similar to that of the \texttt{authblk} packa
 
 \section{First section of the appendix}
 Quantum allows the usage of appendices.
-Appendices should appearer after the main References section.
 
 \subsection{Subsection}
 Ideally, the command \texttt{\textbackslash{}appendix} should be put before the appendices to get appropriate section numbering.
@@ -259,6 +261,8 @@ You are free to change this in case it is more appropriate for your article, but
 If you want your appendices to appear in \texttt{onecolumn} mode but the rest of the document in \texttt{twocolumn} mode, you can insert the command \texttt{\textbackslash{}onecolumn\textbackslash{}newpage} before \texttt{\textbackslash{}appendix}.   
 
 \section{Problems and Bugs}
-In case you encounter problems using the quantumarticle class please consider opening a bug report in our bug-tracker under \href{https://github.com/cgogolin/quantum-journal/issues}{https://github.com/cgogolin/quantum-journal/issues} or contact us via email under \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org}.
+In case you encounter problems using the quantumarticle class please analyses the error message carefully and look for help online, \href{http://tex.stackexchange.com/}{http://tex.stackexchange.com/} is an excellent resource.
+If you cannot resolve a problem please opening a bug report in our bug-tracker under \href{https://github.com/cgogolin/quantum-journal/issues}{https://github.com/cgogolin/quantum-journal/issues} or contact us via email under \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org}.
+In any case we need the full source of the document that produces the problem and the log file showing the error to help you.
 
 \end{document}
