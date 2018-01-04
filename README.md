@@ -4,7 +4,7 @@
 
 ## Installation and usage
 
-To use the `quantumarticle` document class with LaTeX simply start your documment with the line:
+To use the `quantumarticle` document class with LaTeX simply start your document with the line:
 
 ```latex
 \documentclass[your options]{quantumarticle}
@@ -25,13 +25,13 @@ Before you can do this however, you must install `quantumarticle.cls`. You have 
 
 2. To manually install `quantumarticle`, copy `quantumarticle.cls` to `texmf/tex/latex/quantumarticle` within your home directory (under Linux, macOS, and OS X `~/`, or under Windows typically `C:\Users\[your username]`) and run `texhash` (TeX Live) or `initexmf --update-fndb` (MiKTeX).
 
-3. Alternatively you can use `quantumarticle.cls` without installing it by simply putting it in the same folder as your main LaTeX source file. This can be the most convenient option if you are working on a manuscript together with collaborators that do not want to install `quantumarticle.cls` and are exchaning the source files of your manuscript via email or cloud storage services. When you upload your manuscript to the arXiv you will anyway have to include `quantumarticle.cls` along with other source files.
+3. Alternatively you can use `quantumarticle.cls` without installing it by simply putting it in the same folder as your main LaTeX source file. This can be the most convenient option if you are working on a manuscript together with collaborators that do not want to install `quantumarticle.cls` and are exchanging the source files of your manuscript via email or cloud storage services. When you upload your manuscript to the arXiv you will anyway have to include `quantumarticle.cls` along with other source files.
 
-4. Finally, you can use `quantumarticle.cls` without even downloading it at all on the collaborative writing platform [overleaf](https://www.overleaf.com/) by starting you project from the `quantumarticle` [template](https://www.overleaf.com/latex/templates/template-for-submission-to-quantum-journal/gsjgyhxrtrzy) as well as with the [ShareLaTeX](https://www.sharelatex.com/project) online LaTeX editor by using the `quantumarticle` [template](https://www.sharelatex.com/templates/5851932b93a02abc513710f3) there.
+4. Finally, you can use `quantumarticle.cls` without even downloading it at all on the collaborative writing platform [overleaf](https://www.overleaf.com/) by starting your project from the `quantumarticle` [template](https://www.overleaf.com/latex/templates/template-for-submission-to-quantum-journal/gsjgyhxrtrzy) as well as with the [ShareLaTeX](https://www.sharelatex.com/project) online LaTeX editor by using the `quantumarticle` [template](https://www.sharelatex.com/templates/5851932b93a02abc513710f3) there.
 
 ## Dependencies
 
-`quantumarticle.cls` should work with any reasonably recent LaTeX distribution. It further requires the following packages: `xkeyval`, `etoolbox`, `geometry`, `xcolor`, `fancyhdr`, `tikz`, `hyperref`, ltxgrid and ltxcmds (often distributed along with retex, in texlive for example as part of `texlive-publishers`), as well as at least either `lmodern` or `type1ec`. We recoomend to have `natbib` and at least one of `bbm` or `dsfont` installed. All of these should be included in the full install variant of your LaTeX distribution (for example `texlive-full`).
+`quantumarticle.cls` should work with any reasonably recent LaTeX distribution. It further requires the following packages: `xkeyval`, `etoolbox`, `geometry`, `xcolor`, `fancyhdr`, `tikz`, `hyperref`, ltxgrid and ltxcmds (often distributed along with revtex, in texlive for example as part of `texlive-publishers`), as well as at least either `lmodern` or `type1ec`. We recommend to have `natbib` and at least one of `bbm` or `dsfont` installed. All of these should be included in the full install variant of your LaTeX distribution (for example `texlive-full`).
 
 ## Compatibility
 
