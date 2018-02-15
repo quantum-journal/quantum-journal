@@ -909,7 +909,7 @@
     \else%
     \edef\@titleexpanded{\detokenize\expandafter{\@title}}%
     \if@xstring\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode\else\gdef\@titleforurl{\@titleexpanded}\fi%
-    \href{http://quantum-journal.org/?s=\@titleforurl}{%
+    \href{http://quantum-journal.org/?s=\@titleforurl\&reason=title-click}{%
       \begin{minipage}{1.0\linewidth}%
         \color{quantumviolet}{%
           \@printtitletextwithappropriatefontsize%
