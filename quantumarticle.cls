@@ -20,7 +20,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2017/03/17 v4.0
+              [2017/03/17 v4.1
                class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
@@ -178,6 +178,9 @@
 \newif\ifallowfontchageintitle
 \allowfontchageintitlefalse
 \DeclareOptionX{allowfontchageintitle}{\allowfontchageintitletrue}
+\newif\ifnopdfoutputerror
+\nopdfoutputerrortrue
+\DeclareOptionX{nopdfoutputerror}{\nopdfoutputerrorfalse}%
 
 \ExecuteOptionsX{a4paper,10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptionsX
@@ -242,14 +245,20 @@
   \definecolor{quantumgray}{HTML}{555555} %Quantum gray
 }
 
+\RequirePackage{ltxcmds}
+
 \let\origif@twocolumn\if@twocolumn
 \def\class@name{ltxutil}%get rid of "You should define the class name before reading in this package. Using default" warning from ltxutils which is loaded by ltxgrid
+\if@twocolumn
 \RequirePackage{ltxgrid}%ltxgrid should be loaded before etoolbox, otherwise terrible things can happen: http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend?noredirect=1#comment843815_343856 but if this is actually done, even more terrible things happen, so we partially repair what ltxgrid messes up below...
-\let\if@twocolumn\origif@twocolumn
-\let\col@number\@colnum
 \newcommand{\twocolumn}[1][]{#1\twocolumngrid}
 \newcommand{\onecolumn}{\onecolumngrid}
+\fi
+\let\if@twocolumn\origif@twocolumn
 
+\let\col@number\@colnum
+
+\ltx@ifpackageloaded{ltxgrid}{}{
 %repair what ltxutils has destroyed (see http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend) 
 \patchcmd\enddocument
   {\deadcycles}
@@ -263,7 +272,8 @@
        \let\AfterEndDocument\@firstofone
        \@afterenddocumenthook
        \etb@@end}}}
-
+}
+ 
 \setcounter{topnumber}{2}
 \renewcommand\topfraction{.7}
 \setcounter{bottomnumber}{1}
@@ -717,7 +727,6 @@
 
 \newdimen\bibindent
 \setlength\bibindent{1.5em}
-\RequirePackage{ltxcmds}
 \newenvironment{thebibliography}[1]
 {%
   \makeatletter%
@@ -892,29 +901,58 @@
 
 %title
 \def\@printtitle{%
-  {\Huge%
+  {%
     \ifunpublished%
     \begin{minipage}{1.0\linewidth}%
-        \begingroup%
-        \ifallowfontchageintitle\else\def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{} Please remove all such commands from your \string\title{}. If you really really have to change the font for some part of the title you can allow this by giving the option allowfontchageintitle}{}}\fi%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
-        \@title%
-        \endgroup%
+      \@printtitletextwithappropriatefontsize%
     \end{minipage}
     \else%
     \edef\@titleexpanded{\detokenize\expandafter{\@title}}%
     \if@xstring\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode\else\gdef\@titleforurl{\@titleexpanded}\fi%
-    \href{http://quantum-journal.org/?s=\@titleforurl}{%
+    \href{http://quantum-journal.org/?s=\@titleforurl\&reason=title-click}{%
       \begin{minipage}{1.0\linewidth}%
         \color{quantumviolet}{%
-          \begingroup%
-          \ifallowfontchageintitle\else\def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{} Please remove all such commands from your \string\title{}. If you really really have to change the font for some part of the title you can allow this by giving the option allowfontchageintitle}{}}\fi%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
-          \@title%
-          \endgroup%
+          \@printtitletextwithappropriatefontsize%
         }%
       \end{minipage}}%
     \fi%
   }%
 }
+% In the macro below we compute the appropriate font size of the title.
+% We use \Huge if the title fits on one line and \huge if it extends over more
+% than one line in font size \Huge
+\def\@titleatfontsize#1{%
+  \begingroup%
+  #1%
+  \raggedright%
+  \ifallowfontchageintitle\else\def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{} Please remove all such commands from your \string\title{}. If you really really have to change the font for some part of the title you can allow this by giving the option allowfontchageintitle}{}}\fi%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
+  \@title%
+  \endgroup%
+}%
+\def\@printtitletextwithappropriatefontsize{%
+  \newsavebox{\@titelsaveboxHuge}%
+  \savebox{\@titelsaveboxHuge}{%
+    \parbox[b]{\linewidth}{%
+      \@titleatfontsize{\Huge}%
+    }%
+  }%
+  \newsavebox{\@titelsaveboxHugeoneline}%
+  \savebox{\@titelsaveboxHugeoneline}{%
+    \@titleatfontsize{\Huge}%
+  }%
+  \newsavebox{\@titelsaveboxhhuge}%
+  \savebox{\@titelsaveboxhhuge}{%
+    \parbox[b]{\linewidth}{%
+      \@titleatfontsize{\huge}%
+    }%
+  }%
+  \ifdim\ht\@titelsaveboxHuge>\ht\@titelsaveboxHugeoneline%
+  \usebox{\@titelsaveboxhhuge}% using huge because \the\ht\@titelsaveboxHuge{} is larger than \the\ht\@titelsaveboxHugeoneline{}
+  \else%
+  \usebox{\@titelsaveboxHuge}% using Huge because \the\ht\@titelsaveboxHuge{} is not larger than \the\ht\@titelsaveboxHugeoneline{}
+  \fi%
+}
+
 %renew \title to allow for and ignore an optional argument
 \renewcommand{\title}[2][]{\gdef\@title{#2}}
 % author handling
@@ -1165,9 +1203,27 @@
   \savebox\@quantumacceptedbox{\textcolor{quantumviolet}{ \sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}
   \fi
 }
-\newcommand{\ead}[1]{} %ignore email addresses given with the ead command
-\newcommand{\cortext}[1][]{} %ignore corresponding author information
-\newcommand{\fntext}[1][]{} %author footnotes
+%elsearticle style extra header information
+\newcommand{\ead}[2][]{
+  \ifstrempty{#1}{
+    \email{#2}
+  }{
+    \if@xstring
+    \IfStrEq{#1}{url}{\homepage{#2}}{\email{#2}}
+    \else
+    \email{#2}
+    \fi
+  }
+}
+\AtEndPreamble{
+  \providecommand{\@elsearticlecommandsnotsupportederror}{\ClassError{quantumarticle}{The elsearticle style \string\cortext{}, \string\corref{}, \string\fntext{}, \string\fnref{}, \string\tnotetext{}, and \string\tnoteref{} commands are not supported. Please refrain from using title footnotes and use the \string\tahnks{} command for author footnotes instead.}{}}
+  \providecommand{\cortext}[2][]{\@elsearticlecommandsnotsupportederror} %corresponding author information
+  \providecommand{\corref}[1]{\@elsearticlecommandsnotsupportederror} %corresponding author information reference
+  \providecommand{\fntext}[2][]{\@elsearticlecommandsnotsupportederror} %author footnote
+  \providecommand{\fnref}[1]{\@elsearticlecommandsnotsupportederror} %author footnot reference
+  \providecommand{\tnotetext}[2][]{\@elsearticlecommandsnotsupportederror} %title footnote
+  \providecommand{\tnoteref}[1]{\@elsearticlecommandsnotsupportederror} %title footnote reference
+}
 
 % set default options for hyperref to make links more pretty
 \PassOptionsToPackage{colorlinks=true,hyperindex}{hyperref}
@@ -1184,8 +1240,10 @@
 
 \AtBeginDocument{%
   \RequirePackage{hyperref}%
+  \ifnopdfoutputerror
   \ifnum\pdfoutput=0
-  \ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex)}{Without this, hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
+  \ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex). Without this, the arXiv compiles your document with latex instead of pdflatex and hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information. If you still want to use standard latex (for example because you depend on psfrag) instead of pdflatex despite this problem, you can disable this error by giving the nopdfoutputerror option to quantumarticle. In this case please check carefully that the links in your document, especially in the bibliography work properly.}{}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
+  \fi
   \fi
 
   \@ifpackageloaded{natbib}{%
