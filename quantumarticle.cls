@@ -3,7 +3,7 @@
 %% it provides the quantumarticle class for typesetting articles in
 %% Quantum - the open journal for quantum science
 %%
-%% Copyright 2016,2017
+%% Copyright 2016,2017,2018
 %% Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
 %% (http://quantum-journal.org/about/)
 %% 
