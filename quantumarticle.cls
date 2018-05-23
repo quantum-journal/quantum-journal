@@ -1056,7 +1056,7 @@
   \xifinlist{\detokenize{#1}}{\affiliations}{}{\stepcounter{@affiliationcounter}\listxadd{\affiliations}{\detokenize{#1}}\csxdef{affiliation\detokenize{#1}number}{\the@affiliationcounter{}}}%
   \forlistloop{\@addaffiliation{\csname affiliation\detokenize{#1}number\endcsname}}{\@authorgroup}%
 }
-\def\@printaffiliation#1#2{\ifnumcomp{\the@affiliationcounter}{>}{1}{\llap{\textsuperscript{#1}}}{}\csname #2\endcsname\ifnumcomp{#1}{<}{\the@affiliationcounter}{\\}{}}
+\def\@printaffiliation#1#2{\ifnumcomp{\the@affiliationcounter}{>}{1}{\llap{\textsuperscript{#1}}}{}\csname #2\endcsname\ifnumcomp{#1}{<}{\the@affiliationcounter}{\newline}{}}
 \def\@printaffiliations{%
   \ifcsdef{affiliations}{}{\csdef{affiliations}{}}%
   \newcounter{@affiliationnum}%
