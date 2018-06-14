@@ -20,7 +20,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
-              [2017/03/17 v4.1
+              [2018/06/14 v4.2
                class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
@@ -1056,7 +1056,7 @@
   \xifinlist{\detokenize{#1}}{\affiliations}{}{\stepcounter{@affiliationcounter}\listxadd{\affiliations}{\detokenize{#1}}\csxdef{affiliation\detokenize{#1}number}{\the@affiliationcounter{}}}%
   \forlistloop{\@addaffiliation{\csname affiliation\detokenize{#1}number\endcsname}}{\@authorgroup}%
 }
-\def\@printaffiliation#1#2{\ifnumcomp{\the@affiliationcounter}{>}{1}{\llap{\textsuperscript{#1}}}{}\csname #2\endcsname\ifnumcomp{#1}{<}{\the@affiliationcounter}{\\}{}}
+\def\@printaffiliation#1#2{\ifnumcomp{\the@affiliationcounter}{>}{1}{\llap{\textsuperscript{#1}}}{}\csname #2\endcsname\ifnumcomp{#1}{<}{\the@affiliationcounter}{\newline}{}}
 \def\@printaffiliations{%
   \ifcsdef{affiliations}{}{\csdef{affiliations}{}}%
   \newcounter{@affiliationnum}%
