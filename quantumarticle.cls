@@ -258,7 +258,7 @@
 
 \let\col@number\@colnum
 
-\ltx@ifpackageloaded{ltxgrid}{}{
+\ltx@ifpackageloaded{ltxgrid}{
 %repair what ltxutils has destroyed (see http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend) 
 \patchcmd\enddocument
   {\deadcycles}
@@ -272,7 +272,7 @@
        \let\AfterEndDocument\@firstofone
        \@afterenddocumenthook
        \etb@@end}}}
-}
+}{}
  
 \setcounter{topnumber}{2}
 \renewcommand\topfraction{.7}
