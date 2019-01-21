@@ -87,6 +87,11 @@
       }%
    \renewcommand\newblock{\par}}%
 }
+%remind people not to use \today on the arxiv
+\newbool{allowtoday}
+\boolfalse{allowtoday}
+\DeclareOptionX{allowtoday}{\booltrue{allowtoday}}
+
 %declare some dummy options for compatibility
 \DeclareOptionX{checkin}{}
 \DeclareOptionX{preprint}{}
@@ -216,7 +221,23 @@
 \@medpenalty  151
 \@highpenalty 301
 
-\AtBeginDocument{
+\AfterEndPreamble{
+	% avoid use of today	
+	\ifcsdef{today}
+	{
+		\ifbool{allowtoday}
+		{
+			\let\oldtoday\today
+			\renewcommand*{\today}{\oldtoday\ClassWarning{quantumarticle}{If you intend to upload your paper to the arxiv, please replace any use of today with the publishing date}{}}
+		} % else
+		{	
+			\renewcommand*{\today}{\ClassError{quantumarticle}{Use of the today macro should be omitted in papers that are to be uploaded to the arxiv. If you don't intend to upload your paper to the arxiv use the class option allowtoday}{}}
+		}
+	}
+	{}	
+}
+
+\AtBeginDocument{  
   % avoid bitmap fonts by loading lmodern or at least checking for cm-super
   \IfFileExists{lmodern.sty}{
     \RequirePackage{lmodern}
@@ -464,11 +485,11 @@
 \newcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {1.5ex \@plus .2ex}%
-                                     {\normalfont\normalsize\sffamily}}
+                                     {\normalfont\normalsize\bfseries}}
 \newcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
                                     {3.25ex \@plus1ex \@minus.2ex}%
                                     {-1em}%
-                                    {\normalfont\normalsize\bfseries}}
+                                    {\normalfont\normalsize\sffamily}}
 \newcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
                                        {3.25ex \@plus1ex \@minus .2ex}%
                                        {-1em}%
