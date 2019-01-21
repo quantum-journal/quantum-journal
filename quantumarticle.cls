@@ -431,7 +431,7 @@
   \sffamily
   \null
   \let \footnote \thanks
-    \noindent\@printtitle
+    \noindent{\hyphenpenalty=10000 \@printtitle}
     \vskip 1.5em%
     \noindent\@printauthors
     \vskip 1em%
