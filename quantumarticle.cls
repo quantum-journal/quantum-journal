@@ -28,25 +28,39 @@
 \newif\if@restonecol
 \newif\if@titlepage
 \@titlepagefalse
+
+
+% Throw an error if no paper size is specified
+% Defaulting to a4paper gives inconsistent behaviour when submitting to the arxiv
+\newbool{papersizespecified}
+\boolfalse{papersizespecified}
+
 \if@compatibility\else
 \DeclareOptionX{a4paper}
    {\setlength\paperheight {297mm}%
-    \setlength\paperwidth  {210mm}}
+    \setlength\paperwidth  {210mm}
+	\booltrue{papersizespecified}}
 \DeclareOptionX{a5paper}
    {\setlength\paperheight {210mm}%
-    \setlength\paperwidth  {148mm}}
+    \setlength\paperwidth  {148mm}
+    \booltrue{papersizespecified}}
 \DeclareOptionX{b5paper}
    {\setlength\paperheight {250mm}%
-    \setlength\paperwidth  {176mm}}
+    \setlength\paperwidth  {176mm}
+    \booltrue{papersizespecified}}
 \DeclareOptionX{letterpaper}
    {\setlength\paperheight {11in}%
-    \setlength\paperwidth  {8.5in}}
+    \setlength\paperwidth  {8.5in}
+    \booltrue{papersizespecified}}
 \DeclareOptionX{legalpaper}
    {\setlength\paperheight {14in}%
-    \setlength\paperwidth  {8.5in}}
+    \setlength\paperwidth  {8.5in}
+    \booltrue{papersizespecified}}
 \DeclareOptionX{executivepaper}
    {\setlength\paperheight {10.5in}%
-    \setlength\paperwidth  {7.25in}}
+    \setlength\paperwidth  {7.25in}
+    \booltrue{papersizespecified}}
+
 \DeclareOptionX{landscape}
    {\setlength\@tempdima   {\paperheight}%
     \setlength\paperheight {\paperwidth}%
@@ -87,6 +101,7 @@
       }%
    \renewcommand\newblock{\par}}%
 }
+
 %remind people not to use \today on the arxiv
 \newbool{allowtoday}
 \boolfalse{allowtoday}
@@ -187,8 +202,17 @@
 \nopdfoutputerrortrue
 \DeclareOptionX{nopdfoutputerror}{\nopdfoutputerrorfalse}%
 
-\ExecuteOptionsX{a4paper,10pt,oneside,twocolumn,notitlepage,final}
+\ExecuteOptionsX{10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptionsX
+
+\ifbool{papersizespecified}
+{
+} % else
+{	
+	\setlength\paperheight {297mm}%
+	\setlength\paperwidth  {210mm}
+	\ClassError{quantumarticle}{ Please specify a paper size. Available options: a4paper, a5paper, b5paper, letterpaper, legalpaper, executivepaper }{}
+}
 
 \input{size1\@ptsize.clo}
 
