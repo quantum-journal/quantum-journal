@@ -252,7 +252,7 @@
 		\ifbool{allowtoday}
 		{
 			\let\oldtoday\today
-			\renewcommand*{\today}{\oldtoday\ClassWarning{quantumarticle}{If you intend to upload your paper to the arxiv, please replace any use of today with the publishing date}{}}
+			\renewcommand*{\today}{\oldtoday\ClassWarning{quantumarticle}{If you intend to upload your manuscript to the arXiv, please manually replace any use of \string\today with the upload date. The arXiv typesets manuscripts on-demand, thus the output of \string\today will change over time}{}}
 		} % else
 		{	
 			\renewcommand*{\today}{\ClassError{quantumarticle}{Use of the today macro should be omitted in papers that are to be uploaded to the arxiv. If you don't intend to upload your paper to the arxiv use the class option allowtoday}{}}
