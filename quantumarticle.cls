@@ -255,7 +255,7 @@
 			\renewcommand*{\today}{\oldtoday\ClassWarning{quantumarticle}{If you intend to upload your manuscript to the arXiv, please manually replace any use of \string\today with the upload date. The arXiv typesets manuscripts on-demand, thus the output of \string\today will change over time}{}}
 		} % else
 		{	
-			\renewcommand*{\today}{\ClassError{quantumarticle}{Use of the today macro should be omitted in papers that are to be uploaded to the arxiv. If you don't intend to upload your paper to the arxiv use the class option allowtoday}{}}
+			\renewcommand*{\today}{\ClassError{quantumarticle}{Use of the today macro should be avoided in manuscripts that are to be uploaded to the arXiv. If you do not intend to upload your manuscript to the arXiv, please use the class option allowtoday to allow the usage of \string\today}{}}
 		}
 	}
 	{}	
