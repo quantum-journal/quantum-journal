@@ -25,6 +25,7 @@
 \affiliation{ICFO-Institut de Ciencies Fotoniques, The Barcelona Institute of Science and Technology, 08860 Castelldefels (Barcelona), Spain}
 \author{Marcus Huber}
 \affiliation{Institute for Quantum Optics \& Quantum Information (IQOQI), Austrian Academy of Sciences, Boltzmanngasse 3, Vienna A-1090, Austria}
+\author{Johannes J. Meyer}
 
 \maketitle
 
@@ -73,7 +74,7 @@ For multi-line equations \texttt{align} is \href{http://tex.stackexchange.com/qu
   (\openone \otimes A)\,(B \otimes \openone) &= A \otimes B
 \end{align}
 Whether you prefer to refer to equations as Eq.~\eqref{emc}, Equation~\ref{emc}, or just \eqref{emc} is up to you, but please be consistent and use the \texttt{\textbackslash{}eqref\{\dots\}} command instead of writing \texttt{(\textbackslash{}ref\{\dots\})}.
-As a curtest for your readers and referees please suppress equation numbers only if there is a valid reason to do so to not make in unnecessarily difficult to refer to individual results and steps in derivations. 
+As a courtesy for your readers and referees please suppress equation numbers only if there is a valid reason to do so to not make it unnecessarily difficult to refer to individual results and steps in derivations. 
 
 \paragraph{Paragraphs}
 The paragraph is the smallest unit of sectioning.
@@ -90,7 +91,7 @@ Citations to other works should appear in the References section at the end of t
   Important: As Quantum is a member of Crossref, all references to works that have a DOI must be hyperlinked according to the DOI. Those links must start with \texttt{https://doi.org/} (preferred), or \texttt{http://dx.doi.org/}. Direct links to the website of the publisher are not sufficient.
 \end{theorem}
 
-This can be achieved in several ways, depending on how you format your bibliography.
+This can be achieved in several ways, depending on how you are formating your bibliography.
 Suppose the DOI of an article \cite{examplecitation} that you want to cite is \texttt{10.22331/idonotexist}.
 If you are formating your bibliography manually, you can cite this work using the following in your \texttt{thebibliography} environment:
 \begin{verbatim}
@@ -148,7 +149,7 @@ where appropriate.
 You then have to upload the .bbl file along with the other source files when submitting to the arXiv.
 Due to incompatibilities between different LaTeX version we unfortunately can not recommend this option until the arXiv has updated its LaTeX system \cite{biblatexsubmittingtothearxiv}.
 
-The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declared a suitable field format to make it a hyperlink.
+The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declares a suitable field format to make it a hyperlink.
 Due to issues with \texttt{biber} we recommend to use the \texttt{bibtex} backend of \texttt{biblatex}.
 
 More information on how to get DOI links in your document can be found on StackExchange \cite{howtogetdoilinksinbibliography,automaticallyaddingdoifieldstoahandmadebibliography}.
@@ -162,8 +163,8 @@ In oder to get correct line breaks within links, please add the line
 within the first 5 lines of your main LaTeX file as suggested by the arXiv \cite{arxivpdfoutput}.
 
 \section{Unpublished and accepted works}
-This class supports the \texttt{unpublished} option which disables all Quantum related branding such as the logo and color as well as the hyperlink in the title.
-It can be used for works not yet accepted in Quantum or such that are not intended for submission to Quantum.
+This class supports the \texttt{unpublished} option which disables all Quantum related branding such as the logo, color, and hyperlink in the title.
+It can be used for works not yet accepted in Quantum or not even intended for submission to Quantum.
 On the contrary, by giving the \texttt{accepted=YYYY-MM-DD} option, with \texttt{YYYY-MM-DD} the acceptance date, the note ``Accepted in Quantum YYYY-MM-DD, click title to verify'' can be added to the bottom of each page to clearly mark works that have been accepted in Quantum. 
 
 \section{Summary section}
@@ -190,7 +191,7 @@ In \texttt{onecolumn} mode, the \texttt{widetext} environment has no effect.
 |\mathrm{AME}(n=6,q=5)\rangle=\sum_{i,j,k=0}^4 |i,j,k,i+j+k,i+2j+3k,i+3j+4k\rangle
   \end{equation}
 \end{widetext}
-To enabled this feature in \texttt{twocolumn} mode, \texttt{quantumarticle} relies on the package \texttt{ltxgrid}.
+To enable this feature in \texttt{twocolumn} mode, \texttt{quantumarticle} relies on the package \texttt{ltxgrid}.
 Unfortunately this package has a bug that leads to a sub-optimal placement of extremely long footnotes.
 
 \section{Title information}
@@ -251,7 +252,7 @@ Quantum allows the usage of appendices.
 
 \subsection{Subsection}
 Ideally, the command \texttt{\textbackslash{}appendix} should be put before the appendices to get appropriate section numbering.
-The appendices are then numbered alphabetic, with numeric (sub)subsection numbering.
+The appendices are then numbered alphabetically, with numeric (sub)subsection numbering.
 Equations continue to be numbered sequentially.
 \begin{equation}
   A \neq B
@@ -261,7 +262,7 @@ You are free to change this in case it is more appropriate for your article, but
 If you want your appendices to appear in \texttt{onecolumn} mode but the rest of the document in \texttt{twocolumn} mode, you can insert the command \texttt{\textbackslash{}onecolumn\textbackslash{}newpage} before \texttt{\textbackslash{}appendix}.   
 
 \section{Problems and Bugs}
-In case you encounter problems using the quantumarticle class please analyze the error message carefully and look for help online, \href{http://tex.stackexchange.com/}{http://tex.stackexchange.com/} is an excellent resource.
+In case you encounter problems using the quantumarticle class please analyze the error message carefully and look for help online; \href{http://tex.stackexchange.com/}{http://tex.stackexchange.com/} is an excellent resource.
 If you cannot resolve a problem, please open a bug report in our bug-tracker under \href{https://github.com/cgogolin/quantum-journal/issues}{https://github.com/cgogolin/quantum-journal/issues}.
 You can also contact us via email under \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org}, but it may take significantly longer to get a response.
 In any case, we need the full source of a document that produces the problem and the log file showing the error to help you.
