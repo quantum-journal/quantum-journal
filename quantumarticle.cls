@@ -219,6 +219,19 @@
 \togglefalse{allowtoday}
 \DeclareOptionX{allowtoday}{\toggletrue{allowtoday}}
 
+\DeclareOptionX{noarxiv}
+{
+	% Sets a4paper, allowfontchangeintitle, allowtoday, nopdfoutputerror and unpublished
+	\setlength\paperheight{297mm}%
+	\setlength\paperwidth{210mm}
+	\toggletrue{papersizespecified}
+	
+	\toggletrue{allowfontchangeintitle}
+	\toggletrue{allowtoday}
+	\toggletrue{nopdfoutputerror}
+	\toggletrue{unpublished}
+}
+
 \ExecuteOptionsX{10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptionsX
 
@@ -1381,7 +1394,7 @@
 \ifnumequal{\pdfoutput}{0}
 	{}
 	{\PassOptionsToPackage{breaklinks=true}{hyperref}}
-
+	
 %enable DOIs if biblatex is used by default
 \PassOptionsToPackage{doi=true}{biblatex}
 
