@@ -25,7 +25,7 @@
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
 
-\newcommand\@ptsize{}
+\newcommand*\@ptsize{}
 
 \newtoggle{restonecol}
 \newtoggle{titlepage}
@@ -79,9 +79,9 @@
 	\setlength\paperwidth  {\@tempdima}
 }
 
-\DeclareOptionX{10pt}{\renewcommand\@ptsize{0}}
-\DeclareOptionX{11pt}{\renewcommand\@ptsize{1}}
-\DeclareOptionX{12pt}{\renewcommand\@ptsize{2}}
+\DeclareOptionX{10pt}{\renewcommand*\@ptsize{0}}
+\DeclareOptionX{11pt}{\renewcommand*\@ptsize{1}}
+\DeclareOptionX{12pt}{\renewcommand*\@ptsize{2}}
 
 \DeclareOptionX{oneside}{\@twosidefalse \@mparswitchfalse}
 \DeclareOptionX{twoside}{\@twosidetrue  \@mparswitchtrue}
@@ -235,13 +235,13 @@
 
 %enable the blacklisting of packages by patching the \usepackage command
 \csdef{@packageblacklist}{}
-\newcommand{\@blacklistpackage}[2][]{
+\newcommand*{\@blacklistpackage}[2][]{
 	\listxadd{\@packageblacklist}{#2}%
 	\ifstrempty{#1}{}{\csdef{@packageblacklisterrormessage#2}{#1 \string\usepackage{#2}}}
 }
 
 \let\oldusepackage\usepackage
-\renewcommand{\usepackage}[2][]{
+\renewcommand*{\usepackage}[2][]{
 	\ifinlist{#2}{\@packageblacklist}{
 		\ifcsdef{@packageblacklisterrormessage#2}{
 			\ClassError{quantumarticle}{\csname @packageblacklisterrormessage#2\endcsname}{}}{}
@@ -259,7 +259,7 @@
 \@blacklistpackage{geometry}
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
-\renewcommand\baselinestretch{}
+\renewcommand*\baselinestretch{}
 \setlength\parskip{0\p@ \@plus \p@}
 \@lowpenalty   51
 \@medpenalty  151
@@ -316,8 +316,8 @@
 \def\class@name{ltxutil}%get rid of "You should define the class name before reading in this package. Using default" warning from ltxutils which is loaded by ltxgrid
 \if@twocolumn
 	\RequirePackage{ltxgrid}%ltxgrid should be loaded before etoolbox, otherwise terrible things can happen: http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend?noredirect=1#comment843815_343856 but if this is actually done, even more terrible things happen, so we partially repair what ltxgrid messes up below...
-	\newcommand{\twocolumn}[1][]{#1\twocolumngrid}
-	\newcommand{\onecolumn}{\onecolumngrid}
+	\newcommand*{\twocolumn}[1][]{#1\twocolumngrid}
+	\newcommand*{\onecolumn}{\onecolumngrid}
 \fi
 \let\if@twocolumn\origif@twocolumn
 
@@ -340,15 +340,15 @@
 }{}
 
 \setcounter{topnumber}{2}
-\renewcommand\topfraction{.7}
+\renewcommand*\topfraction{.7}
 \setcounter{bottomnumber}{1}
-\renewcommand\bottomfraction{.3}
+\renewcommand*\bottomfraction{.3}
 \setcounter{totalnumber}{3}
-\renewcommand\textfraction{.2}
-\renewcommand\floatpagefraction{.5}
+\renewcommand*\textfraction{.2}
+\renewcommand*\floatpagefraction{.5}
 \setcounter{dbltopnumber}{2}
-\renewcommand\dbltopfraction{.7}
-\renewcommand\dblfloatpagefraction{.5}
+\renewcommand*\dbltopfraction{.7}
+\renewcommand*\dblfloatpagefraction{.5}
 
 \if@twoside
 	\def\ps@headings{%
@@ -485,12 +485,12 @@
 \newcounter {subsubsection}[subsection]
 \newcounter {paragraph}[subsubsection]
 \newcounter {subparagraph}[paragraph]
-\renewcommand \thepart {\@Roman\c@part}
-\renewcommand \thesection {\@arabic\c@section}
-\renewcommand\thesubsection   {\thesection.\@arabic\c@subsection}
-\renewcommand\thesubsubsection{\thesubsection.\@arabic\c@subsubsection}
-\renewcommand\theparagraph    {\thesubsubsection.\@arabic\c@paragraph}
-\renewcommand\thesubparagraph {\theparagraph.\@arabic\c@subparagraph}
+\renewcommand*\thepart {\@Roman\c@part}
+\renewcommand*\thesection {\@arabic\c@section}
+\renewcommand*\thesubsection   {\thesection.\@arabic\c@subsection}
+\renewcommand*\thesubsubsection{\thesubsection.\@arabic\c@subsubsection}
+\renewcommand*\theparagraph    {\thesubsubsection.\@arabic\c@paragraph}
+\renewcommand*\thesubparagraph {\theparagraph.\@arabic\c@subparagraph}
 \newcommand\part{%
 	\if@noskipsec \leavevmode \fi
 	\par
@@ -528,27 +528,27 @@
 	\vskip 3ex
 	\@afterheading}
 
-\newcommand\section{\@startsection {section}{1}{\z@}%
+\newcommand*\section{\@startsection {section}{1}{\z@}%
   {-3.5ex \@plus -1ex \@minus -.2ex}%
   {2.3ex \@plus.2ex}%
   {\normalfont\Large\sffamily}}
 
-\newcommand\subsection{\@startsection{subsection}{2}{\z@}%
+\newcommand*\subsection{\@startsection{subsection}{2}{\z@}%
 	{-3.25ex\@plus -1ex \@minus -.2ex}%
 	{1.5ex \@plus .2ex}%
 	{\normalfont\large\sffamily}}
 
-\newcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+\newcommand*\subsubsection{\@startsection{subsubsection}{3}{\z@}%
 	{-3.25ex\@plus -1ex \@minus -.2ex}%
 	{1.5ex \@plus .2ex}%
 	{\normalfont\normalsize\sffamily}}
 
-\newcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+\newcommand*\paragraph{\@startsection{paragraph}{4}{\z@}%
 	{3.25ex \@plus1ex \@minus.2ex}%
 	{-1em}%
 	{\normalfont\normalsize\bfseries}}
 
-\newcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+\newcommand*\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
 	{3.25ex \@plus1ex \@minus .2ex}%
 	{-1em}%
 	{\normalfont\normalsize\bfseries}}
@@ -575,21 +575,21 @@
 \@beginparpenalty -\@lowpenalty
 \@endparpenalty   -\@lowpenalty
 \@itempenalty     -\@lowpenalty
-\renewcommand\theenumi{\@arabic\c@enumi}
-\renewcommand\theenumii{\@alph\c@enumii}
-\renewcommand\theenumiii{\@roman\c@enumiii}
-\renewcommand\theenumiv{\@Alph\c@enumiv}
-\newcommand\labelenumi{\theenumi.}
-\newcommand\labelenumii{(\theenumii)}
-\newcommand\labelenumiii{\theenumiii.}
-\newcommand\labelenumiv{\theenumiv.}
-\renewcommand\p@enumii{\theenumi}
-\renewcommand\p@enumiii{\theenumi(\theenumii)}
-\renewcommand\p@enumiv{\p@enumiii\theenumiii}
-\newcommand\labelitemi{\textbullet}
-\newcommand\labelitemii{\normalfont\bfseries \textendash}
-\newcommand\labelitemiii{\textasteriskcentered}
-\newcommand\labelitemiv{\textperiodcentered}
+\renewcommand*\theenumi{\@arabic\c@enumi}
+\renewcommand*\theenumii{\@alph\c@enumii}
+\renewcommand*\theenumiii{\@roman\c@enumiii}
+\renewcommand*\theenumiv{\@Alph\c@enumiv}
+\newcommand*\labelenumi{\theenumi.}
+\newcommand*\labelenumii{(\theenumii)}
+\newcommand*\labelenumiii{\theenumiii.}
+\newcommand*\labelenumiv{\theenumiv.}
+\renewcommand*\p@enumii{\theenumi}
+\renewcommand*\p@enumiii{\theenumi(\theenumii)}
+\renewcommand*\p@enumiv{\p@enumiii\theenumiii}
+\newcommand*\labelitemi{\textbullet}
+\newcommand*\labelitemii{\normalfont\bfseries \textendash}
+\newcommand*\labelitemiii{\textasteriskcentered}
+\newcommand*\labelitemiv{\textperiodcentered}
 \newenvironment{description}
 {\list{}{\labelwidth\z@ \itemindent-\leftmargin
 		\let\makelabel\descriptionlabel}}
@@ -664,7 +664,7 @@
 	\fi
 }
 
-\newcommand\appendix{\par
+\newcommand*\appendix{\par
 	\setcounter{section}{0}%
 	\setcounter{subsection}{0}%
 	\gdef\thesection{\@Alph\c@section}}
@@ -676,9 +676,9 @@
 \skip\@mpfootins = \skip\footins
 \setlength\fboxsep{3\p@}
 \setlength\fboxrule{.4\p@}
-\renewcommand \theequation {\@arabic\c@equation}
+\renewcommand*\theequation {\@arabic\c@equation}
 \newcounter{figure}
-\renewcommand \thefigure {\@arabic\c@figure}
+\renewcommand*\thefigure {\@arabic\c@figure}
 \def\fps@figure{tbp}
 \def\ftype@figure{1}
 \def\ext@figure{lof}
@@ -693,7 +693,7 @@
 {\end@dblfloat}
 
 \newcounter{table}
-\renewcommand\thetable{\@arabic\c@table}
+\renewcommand*\thetable{\@arabic\c@table}
 \def\fps@table{tbp}
 \def\ftype@table{2}
 \def\ext@table{lot}
@@ -732,9 +732,9 @@
 \DeclareRobustCommand*\cal{\@fontswitch\relax\mathcal}
 \DeclareRobustCommand*\mit{\@fontswitch\relax\mathnormal}
 
-\newcommand\@pnumwidth{1.55em}
-\newcommand\@tocrmarg{2.55em}
-\newcommand\@dotsep{4.5}
+\newcommand*\@pnumwidth{1.55em}
+\newcommand*\@tocrmarg{2.55em}
+\newcommand*\@dotsep{4.5}
 \setcounter{tocdepth}{3}
 
 % We use a trick from Ivan Andrus (http://stackoverflow.com/a/2785740)
@@ -806,7 +806,7 @@
 \let\l@table\l@figure
 % Declare a new \acknowledgements command for {revtex4-1}
 % compatability.
-\newcommand{\acknowledgmentsname}{Acknowledgments}
+\newcommand*{\acknowledgmentsname}{Acknowledgments}
 \newcommand{\acknowledgments}[1]{%
 	\section*{\acknowledgmentsname}%
 	#1%
@@ -835,7 +835,7 @@
 		\@openbib@code
 		\usecounter{enumiv}%
 		\let\p@enumiv\@empty
-		\renewcommand\theenumiv{\@arabic\c@enumiv}}%
+		\renewcommand*\theenumiv{\@arabic\c@enumiv}}%
 	\sloppy
 	\clubpenalty4000
 	\@clubpenalty \clubpenalty
@@ -876,26 +876,26 @@
 \newcommand\subsubitem{\@idxitem \hspace*{30\p@}}
 \newcommand\indexspace{\par \vskip 10\p@ \@plus5\p@ \@minus3\p@\relax}
 
-\renewcommand\footnoterule{%
+\renewcommand*\footnoterule{%
 	\kern-3\p@
 	\hrule\@width.4\columnwidth
 	\kern2.6\p@}
 
-\newcommand\@makefntext[1]{%
+\newcommand*\@makefntext[1]{%
 \parindent 1em%
 \noindent
 \hb@xt@1.8em{\hss\@makefnmark}#1}
 
-\newcommand\contentsname{Contents}
-\newcommand\listfigurename{List of Figures}
-\newcommand\listtablename{List of Tables}
-\newcommand\refname{References}
-\newcommand\indexname{Index}
-\newcommand\figurename{Figure}
-\newcommand\tablename{Table}
-\newcommand\partname{Part}
-\newcommand\appendixname{Appendix}
-\newcommand\abstractname{Abstract}
+\newcommand*\contentsname{Contents}
+\newcommand*\listfigurename{List of Figures}
+\newcommand*\listtablename{List of Tables}
+\newcommand*\refname{References}
+\newcommand*\indexname{Index}
+\newcommand*\figurename{Figure}
+\newcommand*\tablename{Table}
+\newcommand*\partname{Part}
+\newcommand*\appendixname{Appendix}
+\newcommand*\abstractname{Abstract}
 
 \def\today{\ifcase\month\or
 		January\or February\or March\or April\or May\or June\or
