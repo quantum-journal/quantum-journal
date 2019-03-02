@@ -66,7 +66,6 @@ A figure on the first page can help readers remember and recognize your work mor
 \section{Sectioning and equations}
 Sections, subsections, subsubsections, and paragraphs should be typeset with the standard LaTeX commands.
 You can use the standard commands for equations.
-For multi-line equations \texttt{align} is \href{http://tex.stackexchange.com/questions/196/eqnarray-vs-align}{preferable} over \texttt{eqnarray}.
 \begin{align}
   \label{emc}
   E &= m\,c^2\\
@@ -74,8 +73,11 @@ For multi-line equations \texttt{align} is \href{http://tex.stackexchange.com/qu
   H\,|\psi\rangle &= E\,|\psi\rangle\\
   (\openone \otimes A)\,(B \otimes \openone) &= A \otimes B
 \end{align}
+For multi-line equations \texttt{align} is \href{http://tex.stackexchange.com/questions/196/eqnarray-vs-align}{preferable} over \texttt{eqnarray}.
+Please refrain from using the latter.
+For complex equations you may want to consider using the \texttt{IEEEeqnarray} environment from the \texttt{IEEEtrantools} package.
 Whether you prefer to refer to equations as Eq.~\eqref{emc}, Equation~\ref{emc}, or just \eqref{emc} is up to you, but please be consistent and use the \texttt{\textbackslash{}eqref\{\dots\}} command instead of writing \texttt{(\textbackslash{}ref\{\dots\})}.
-As a courtesy for your readers and referees please suppress equation numbers only if there is a valid reason to do so to not make it unnecessarily difficult to refer to individual results and steps in derivations. 
+As a courtesy for your readers and referees please suppress equation numbers only if there is a specific reason to do so, to not make it unnecessarily difficult to refer to individual results and steps in derivations.
 
 \paragraph{Paragraphs}
 The paragraph is the smallest unit of sectioning.
