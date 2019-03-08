@@ -790,7 +790,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\makeatletter%
 	\ltx@ifpackageloaded{natbib}{}{%
 		\ltx@ifpackageloaded{biblatex}{
-			\ClassWarning{quantumarticle}{Unfortunately the quantumarticle can not recommend the use of biblatex due to incompatibilities between locally installed versions of biblatex and the version used by the arXiv.}%
+			\ClassWarning{quantumarticle}{Unfortunately quantumarticle cannot recommend the use of BibLaTeX due to incompatibilities between locally installed versions of BibLaTeX and the version used by the arXiv.}%
 		}{%
 			\ClassWarning{quantumarticle}{The quantumarticle class recommends generating the bibliography from a BibTeX file containing DOIs with natbib in order to ensure the generation of DOI hyperlinks}%
 		}%
