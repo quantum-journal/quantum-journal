@@ -21,7 +21,7 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{quantumarticle}
 [2018/06/14 v4.2
-	class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
+class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
 
@@ -228,7 +228,7 @@
 {
 	\setlength\paperheight {297mm}%
 	\setlength\paperwidth  {210mm}
-	\ClassError{quantumarticle}{ Please specify a paper size. Available options: a4paper, a5paper, b5paper, letterpaper, legalpaper, executivepaper }{}
+	\ClassError{quantumarticle}{Please specify a paper size. Available options: a4paper, a5paper, b5paper, letterpaper, legalpaper, executivepaper}{}
 }
 
 \input{size1\@ptsize.clo}
