@@ -250,11 +250,9 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 
 \@blacklistpackage{titlesec}
 
-\if@twocolumn
-	\RequirePackage[margin=2cm,bottom=3cm]{geometry}
-\else
-	\RequirePackage[margin=3cm,bottom=3cm]{geometry}
-\fi
+\ifbool{@twocolumn}
+	{\RequirePackage[margin=2cm,bottom=3cm]{geometry}}
+	{\RequirePackage[margin=3cm,bottom=3cm]{geometry}}
 
 \@blacklistpackage{geometry}
 \setlength\lineskip{1\p@}
@@ -350,36 +348,30 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \renewcommand*\dbltopfraction{.7}
 \renewcommand*\dblfloatpagefraction{.5}
 
-\if@twoside
+\ifbool{@twoside}{
 	\def\ps@headings{%
-	\let\@oddfoot\@empty\let\@evenfoot\@empty
-	\def\@evenhead{\thepage\hfil\slshape\leftmark}%
-	\def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
-	\let\@mkboth\markboth
-	\def\sectionmark##1{%
-	\markboth {\MakeUppercase{%
-			\ifnum \c@secnumdepth >\z@
-				\thesection\quad
-			\fi
-			##1}}{}}%
-	\def\subsectionmark##1{%
-	\markright {%
-		\ifnum \c@secnumdepth >\@ne
-			\thesubsection\quad
-		\fi
-		##1}}}
-\else
+		\let\@oddfoot\@empty\let\@evenfoot\@empty
+		\def\@evenhead{\thepage\hfil\slshape\leftmark}%
+		\def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
+		\let\@mkboth\markboth
+		\def\sectionmark##1{%
+			\markboth {\MakeUppercase{%
+					\ifnumgreater{\c@secnumdepth}{\z@}{\thesection\quad}{}
+					##1}}{}}%
+		\def\subsectionmark##1{%
+			\markright {%
+				\ifnumgreater{\c@secnumdepth}{\@ne}{\thesubsection\quad}{}
+				##1}}}%
+	}{
 	\def\ps@headings{%
-	\let\@oddfoot\@empty
-	\def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
-	\let\@mkboth\markboth
-	\def\sectionmark##1{%
-	\markright {\MakeUppercase{%
-			\ifnum \c@secnumdepth >\m@ne
-				\thesection\quad
-			\fi
-			##1}}}}
-\fi
+		\let\@oddfoot\@empty
+		\def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
+		\let\@mkboth\markboth
+		\def\sectionmark##1{%
+			\markright {\MakeUppercase{%
+					\ifnumgreater{\c@secnumdepth}{\m@ne}{\thesection\quad}{}
+					##1}}}}%
+}
 
 \def\ps@myheadings{%
 	\let\@oddfoot\@empty\let\@evenfoot\@empty
@@ -426,16 +418,10 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\long\def\@makefntext##1{\parindent 1em\noindent
 	\hb@xt@1.8em{%
 	\hss\@textsuperscript{\normalfont\@thefnmark}}##1}%
-	\if@twocolumn
-		\ifnum \col@number=\@ne
-			\@maketitle
-		\else
-			\twocolumn[\@maketitle]%
-		\fi
-	\else
-		\global\@topnum\z@   % Prevents figures from going at top of page.
-		\@maketitle
-	\fi
+	\ifbool{@twocolumn}
+		{\ifnumequal{\col@number}{\@ne}{\@maketitle}{\twocolumn[\@maketitle]}}
+		{\global\@topnum\z@   % Prevents figures from going at top of page.
+		 \@maketitle}
 	\thispagestyle{fancy}%\@thanks
 	\endgroup
 	\setcounter{footnote}{0}%
@@ -492,26 +478,20 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \renewcommand*\theparagraph    {\thesubsubsection.\@arabic\c@paragraph}
 \renewcommand*\thesubparagraph {\theparagraph.\@arabic\c@subparagraph}
 \newcommand\part{%
-	\if@noskipsec \leavevmode \fi
+	\ifbool{@noskipsec}{\leavevmode}{}
 	\par
 	\addvspace{4ex}%
 	\boolfalse{@afterindent}
 	\secdef\@part\@spart}
 
 \def\@part[#1]#2{%
-\ifnum \c@secnumdepth >\m@ne
-	\refstepcounter{part}%
-	\addcontentsline{toc}{part}{\thepart\hspace{1em}#1}%
-\else
-	\addcontentsline{toc}{part}{#1}%
-\fi
+\ifnumgreater{\c@secnumdepth}{\m@ne}
+	{\refstepcounter{part}\addcontentsline{toc}{part}{\thepart\hspace{1em}#1}}
+	{\addcontentsline{toc}{part}{#1}}
 {\parindent \z@ \raggedright
 \interlinepenalty \@M
 \normalfont
-\ifnum \c@secnumdepth >\m@ne
-	\Large\bfseries \partname\nobreakspace\thepart
-	\par\nobreak
-\fi
+\ifnumgreater{\c@secnumdepth}{\m@ne}{\Large\bfseries \partname\nobreakspace\thepart\par\nobreak}{}
 \huge \bfseries #2%
 \markboth{}{}\par}%
 \nobreak
@@ -553,22 +533,19 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	{-1em}%
 	{\normalfont\normalsize\bfseries}}
 
-\if@twocolumn
-	\setlength\leftmargini  {2em}
-\else
-	\setlength\leftmargini  {2.5em}
-\fi
+\ifbool{@twocolumn}{\setlength\leftmargini{2em}}{\setlength\leftmargini{2.5em}}
 \leftmargin  \leftmargini
 \setlength\leftmarginii  {2.2em}
 \setlength\leftmarginiii {1.87em}
 \setlength\leftmarginiv  {1.7em}
-\if@twocolumn
+
+\ifbool{@twocolumn}{
 	\setlength\leftmarginv  {.5em}
 	\setlength\leftmarginvi {.5em}
-\else
+}{
 	\setlength\leftmarginv  {1em}
 	\setlength\leftmarginvi {1em}
-\fi
+}
 \setlength  \labelsep  {.5em}
 \setlength  \labelwidth{\leftmargini}
 \addtolength\labelwidth{-\labelsep}
@@ -600,7 +577,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \iftoggle{@titlepage}
 {
 	\newenvironment{abstract}{%
-		\ifx\maketitle\relax{}\else\maketitle\fi
+		\ifdefempty{\maketitle}{\relax{}}{\maketitle}
 		\titlepage
 		\null\vfil
 		\thispagestyle{empty}%
@@ -610,16 +587,14 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 			\@endparpenalty\@M
 		\end{center}}%
 	{\par\vfil\null\newpage\endtitlepage}
-}
-{
+}{
 	\newenvironment{abstract}{%
-		\ifx\maketitle\relax{}\else\maketitle\fi
-		\if@twocolumn
-			\bf
-		\else
-			\vskip 1em \quotation
-		\fi}
-	{\if@twocolumn\else\endquotation\vskip 2em\fi}
+		\ifdefempty{\maketitle}{\relax{}}{\maketitle}
+		\ifbool{@twocolumn}{\bf}{\vskip 1em \quotation}%
+	}
+	{
+		\ifbool{@twocolumn}{}{\endquotation\vskip 2em}
+	}
 }
 
 \newenvironment{verse}
@@ -647,21 +622,16 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 
 \newenvironment{titlepage}
 {%
-	\if@twocolumn
-		\toggletrue{@restonecol}\onecolumn\newpage
-	\else
-		\togglefalse{@restonecol}\newpage
-	\fi
+	\ifbool{@twocolumn}
+		{\toggletrue{@restonecol}\onecolumn\newpage}
+		{\togglefalse{@restonecol}\newpage}
 	\thispagestyle{empty}%
 	\setcounter{page}\@ne
-}%
-{
+}{%
 	\iftoggle{@restonecol}
 		{\twocolumn}
 		{\newpage}
-	\if@twoside\else
-		\setcounter{page}\@ne
-	\fi
+	\ifbool{@twoside}{}{\setcounter{page}\@ne}
 }
 
 \newcommand*\appendix{\par
@@ -714,12 +684,10 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \long\def\@makecaption#1#2{%
 	\vskip\abovecaptionskip
 	\sbox\@tempboxa{#1: #2}%
-	\ifdim \wd\@tempboxa >\hsize
-		#1: #2\par
-	\else
-		\global\boolfalse{@minipage}
-		\hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
-	\fi
+	\ifdimgreater{\wd\@tempboxa}{\hsize}
+		{#1: #2\par}
+		{\global\boolfalse{@minipage}
+		\hb@xt@\hsize{\hfil\box\@tempboxa\hfil}}%
 	\vskip\belowcaptionskip}
 
 \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
@@ -753,8 +721,8 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\@starttoc{toc}%
 }
 
-\newcommand*\l@part[2]{%
-	\ifnum \c@tocdepth >-2\relax
+\newcommand*\l@part[2]{%	
+	\ifnumgreater{\c@tocdepth}{-2}{\relax
 		\addpenalty\@secpenalty
 		\addvspace{2.25em \@plus\p@}%
 		\setlength\@tempdima{3em}%
@@ -765,10 +733,11 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 			\large \bfseries #1\hfil \hb@xt@\@pnumwidth{\hss #2}}\par
 		\nobreak
 		\endgroup
-	\fi}
+	}{}%
+}
 
 \newcommand*\l@section[2]{%
-	\ifnum \c@tocdepth >\z@
+	\ifnumgreater{\c@tocdepth}{\z@}{
 		\addpenalty\@secpenalty
 		\addvspace{1.0em \@plus\p@}%
 		\setlength\@tempdima{1.5em}%
@@ -780,7 +749,8 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 		\hskip -\leftskip
 		#1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
 		\endgroup
-	\fi}
+	}{}%
+}
 
 \newcommand*\l@subsection{\@dottedtocline{2}{1.5em}{2.3em}}
 \newcommand*\l@subsubsection{\@dottedtocline{3}{3.8em}{3.2em}}
@@ -850,12 +820,8 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \newcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
 \let\@openbib@code\@empty
 
-\newenvironment{theindex}
-{\if@twocolumn
-		\togglefalse{@restonecol}
-	\else
-		\toggletrue{@restonecol}
-	\fi
+\newenvironment{theindex}{%
+	\ifbool{@twocolumn}{\togglefalse{@restonecol}}{\toggletrue{@restonecol}}
 	\twocolumn[\section*{\indexname}]%
 	\@mkboth{\MakeUppercase\indexname}%
 	{\MakeUppercase\indexname}%
@@ -949,17 +915,14 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	{\fancyfoot[L]{}}
 
 \pagenumbering{arabic}
-\if@twoside
-\else
-	\raggedbottom
-\fi
-\if@twocolumn
-	\twocolumn
-	\sloppy
+\ifbool{@twoside}{}{\raggedbottom}
+\ifbool{@twocolumn}{
+	\twocolumn 
+	\sloppy 
 	\flushbottom
-\else
+}{
 	\onecolumn
-\fi
+}
 
 %the following is mostly taken from revtex4-1 (see https://www.ctan.org/pkg/revtex4-1)
 \ifbool{@twocolumn}{
@@ -1059,11 +1022,11 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 			\@titleatfontsize{\huge}%
 		}%
 	}%
-	\ifdim\ht\@titelsaveboxHuge>\ht\@titelsaveboxHugeoneline%
-		\usebox{\@titelsaveboxhhuge}% using huge because \the\ht\@titelsaveboxHuge{} is larger than \the\ht\@titelsaveboxHugeoneline{}
-	\else%
-		\usebox{\@titelsaveboxHuge}% using Huge because \the\ht\@titelsaveboxHuge{} is not larger than \the\ht\@titelsaveboxHugeoneline{}
-	\fi%
+	\ifdimgreater{\ht\@titelsaveboxHuge}{\ht\@titelsaveboxHugeoneline}
+	{\usebox{\@titelsaveboxhhuge}% using huge because \the\ht\@titelsaveboxHuge{} is larger than \the\ht\@titelsaveboxHugeoneline{}
+	}
+	{\usebox{\@titelsaveboxHuge}% using Huge because \the\ht\@titelsaveboxHuge{} is not larger than \the\ht\@titelsaveboxHugeoneline{}
+	}
 }
 
 %renew \title to allow for and ignore an optional argument
@@ -1116,11 +1079,9 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 				%      \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
 				\iftoggle{@titlepage}
 					{\hsize\dimexpr \linewidth\relax \@parboxrestore}%
-					{\if@twocolumn%
-						\hsize\dimexpr 0.5\linewidth-0.5\columnsep\relax \@parboxrestore%
-					\else%
-						\hsize\dimexpr \linewidth\relax \@parboxrestore%
-					\fi%
+					{\ifbool{@twocolumn}
+						{\hsize\dimexpr 0.5\linewidth-0.5\columnsep\relax \@parboxrestore}
+						{\hsize\dimexpr \linewidth\relax \@parboxrestore}%
 					}
 				% \flushleft%
 				% \baselineskip=0pt%
