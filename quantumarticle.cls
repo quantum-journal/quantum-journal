@@ -83,8 +83,8 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \DeclareOptionX{11pt}{\renewcommand*\@ptsize{1}}
 \DeclareOptionX{12pt}{\renewcommand*\@ptsize{2}}
 
-\DeclareOptionX{oneside}{\@twosidefalse \@mparswitchfalse}
-\DeclareOptionX{twoside}{\@twosidetrue  \@mparswitchtrue}
+\DeclareOptionX{oneside}{\boolfalse{@twoside}\boolfalse{@mparswitch}}
+\DeclareOptionX{twoside}{\booltrue{@twoside}\booltrue{@mparswitch}}
 
 \DeclareOptionX{draft}{\setlength\overfullrule{5pt}}
 \DeclareOptionX{final}{\setlength\overfullrule{0pt}}
@@ -92,8 +92,8 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \DeclareOptionX{titlepage}{\toggletrue{@titlepage}}
 \DeclareOptionX{notitlepage}{\togglefalse{@titlepage}}
 
-\DeclareOptionX{onecolumn}{\@twocolumnfalse}	
-\DeclareOptionX{twocolumn}{\@twocolumntrue}
+\DeclareOptionX{onecolumn}{\boolfalse{@twocolumn}}	
+\DeclareOptionX{twocolumn}{\booltrue{@twocolumn}}
 
 \DeclareOptionX{leqno}{\input{leqno.clo}}
 \DeclareOptionX{fleqn}{\input{fleqn.clo}}
@@ -495,7 +495,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\if@noskipsec \leavevmode \fi
 	\par
 	\addvspace{4ex}%
-	\@afterindentfalse
+	\boolfalse{@afterindent}
 	\secdef\@part\@spart}
 
 \def\@part[#1]#2{%
@@ -717,7 +717,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\ifdim \wd\@tempboxa >\hsize
 		#1: #2\par
 	\else
-		\global \@minipagefalse
+		\global\boolfalse{@minipage}
 		\hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
 	\fi
 	\vskip\belowcaptionskip}
@@ -962,7 +962,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \fi
 
 %the following is mostly taken from revtex4-1 (see https://www.ctan.org/pkg/revtex4-1)
-\if@twocolumn
+\ifbool{@twocolumn}{
 	\newbox\widetext@top
 	\newbox\widetext@bot
 	\newenvironment{widetext}{%
@@ -994,12 +994,12 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 		\dimen@\ht\widetext@bot\advance\dimen@\dp\widetext@bot
 		\cleaders\box\widetext@bot\vskip\dimen@
 		\vskip8.5\p@
-		\twocolumngrid\global\@ignoretrue
-		\@endpetrue
+		\twocolumngrid\global\booltrue{@ignore}
+		\booltrue{@endpe}
 	}%
-\else
+}{
 	\newenvironment{widetext}{}{}
-\fi
+}
 
 
 %title
