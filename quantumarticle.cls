@@ -1433,6 +1433,39 @@
 {
 	\PassOptionsToPackage{numbers}{natbib}
 	\PassOptionsToPackage{sort&compress}{natbib}
+	
+	\providecommand{\ao}{Appl.\  Opt.}
+	\providecommand{\ap}{Appl.\  Phys.}
+	\providecommand{\apl}{Appl.\ Phys.\ Lett.}
+	\providecommand{\apj}{Astrophys.\ J.}
+	\providecommand{\bell}{Bell Syst.\ Tech.\ J.}
+	\providecommand{\jqe}{IEEE J.\ Quantum Electron.}
+	\providecommand{\assp}{IEEE Trans.\ Acoust.\ Speech Signal Process.}
+	\providecommand{\aprop}{IEEE Trans.\ Antennas Propag.}
+	\providecommand{\mtt}{IEEE Trans.\ Microwave Theory Tech.}
+	\providecommand{\iovs}{Invest.\ Ophthalmol.\ Vis.\ Sci.}
+	\providecommand{\jcp}{J.\ Chem.\ Phys.}
+	\providecommand{\jmo}{J.\ Mod.\ Opt.}
+	\providecommand{\josa}{J.\ Opt.\ Soc.\ Am.}
+	\providecommand{\josaa}{J.\ Opt.\ Soc.\ Am.\ A}
+	\providecommand{\josab}{J.\ Opt.\ Soc.\ Am.\ B}
+	\providecommand{\jpp}{J.\ Phys.\ (Paris)}
+	\providecommand{\nat}{Nature (London)}
+	\providecommand{\oc}{Opt.\ Commun.}
+	\providecommand{\ol}{Opt.\ Lett.}
+	\providecommand{\pl}{Phys.\ Lett.}
+	\providecommand{\pra}{Phys.\ Rev.\ A}
+	\providecommand{\prb}{Phys.\ Rev.\ B}
+	\providecommand{\prc}{Phys.\ Rev.\ C}
+	\providecommand{\prd}{Phys.\ Rev.\ D}
+	\providecommand{\pre}{Phys.\ Rev.\ E}
+	\providecommand{\prl}{Phys.\ Rev.\ Lett.}
+	\providecommand{\rmp}{Rev.\ Mod.\ Phys.}
+	\providecommand{\pspie}{Proc.\ Soc.\ Photo-Opt.\ Instrum.\ Eng.}
+	\providecommand{\sjqe}{Sov.\ J.\ Quantum Electron.}
+	\providecommand{\vr}{Vision Res.}	
+	
+	\newenvironment{ruledtabular}{\ClassWarning{quantumarticle}{The quantumarticle class does not support the ruledtabular environment. Consider using the booktabs package for tables and the table* environment for tables that span two columns.}}{}
 
 	\AtBeginDocument{%
 		\providecommand{\pacs}[1]{}
