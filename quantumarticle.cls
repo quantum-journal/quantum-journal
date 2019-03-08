@@ -27,50 +27,50 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 
 \newcommand*\@ptsize{}
 
-\newtoggle{restonecol}
-\newtoggle{titlepage}
-\togglefalse{titlepage}
+\newtoggle{@restonecol}
+\newtoggle{@titlepage}
+\togglefalse{@titlepage}
 
 % Throw an error if no paper size is specified
 % Defaulting to a4paper gives inconsistent behaviour when submitting to the arxiv
-\newtoggle{papersizespecified}
-\togglefalse{papersizespecified}
+\newtoggle{@papersizespecified}
+\togglefalse{@papersizespecified}
 
 \DeclareOptionX{a4paper}
 {
 	\setlength\paperheight{297mm}%
 	\setlength\paperwidth{210mm}
-	\toggletrue{papersizespecified}
+	\toggletrue{@papersizespecified}
 }
 \DeclareOptionX{a5paper}
 {
 	\setlength\paperheight {210mm}%
 	\setlength\paperwidth  {148mm}
-	\toggletrue{papersizespecified}
+	\toggletrue{@papersizespecified}
 }
 \DeclareOptionX{b5paper}
 {
 	\setlength\paperheight {250mm}%
 	\setlength\paperwidth  {176mm}
-	\toggletrue{papersizespecified}
+	\toggletrue{@papersizespecified}
 }
 \DeclareOptionX{letterpaper}
 {
 	\setlength\paperheight {11in}%
 	\setlength\paperwidth  {8.5in}
-	\toggletrue{papersizespecified}
+	\toggletrue{@papersizespecified}
 }
 \DeclareOptionX{legalpaper}
 {
 	\setlength\paperheight {14in}%
 	\setlength\paperwidth  {8.5in}
-	\toggletrue{papersizespecified}
+	\toggletrue{@papersizespecified}
 }
 \DeclareOptionX{executivepaper}
 {
 	\setlength\paperheight {10.5in}%
 	\setlength\paperwidth  {7.25in}
-	\toggletrue{papersizespecified}
+	\toggletrue{@papersizespecified}
 }
 \DeclareOptionX{landscape}
 {
@@ -89,8 +89,8 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \DeclareOptionX{draft}{\setlength\overfullrule{5pt}}
 \DeclareOptionX{final}{\setlength\overfullrule{0pt}}
 
-\DeclareOptionX{titlepage}{\toggletrue{titlepage}}
-\DeclareOptionX{notitlepage}{\togglefalse{titlepage}}
+\DeclareOptionX{titlepage}{\toggletrue{@titlepage}}
+\DeclareOptionX{notitlepage}{\togglefalse{@titlepage}}
 
 \DeclareOptionX{onecolumn}{\@twocolumnfalse}	
 \DeclareOptionX{twocolumn}{\@twocolumntrue}
@@ -154,20 +154,20 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \DeclareOptionX{tops}{}
 \DeclareOptionX{josa}{}
 
-\newtoggle{amsfonts}
-\togglefalse{amsfonts}
-\DeclareOptionX{amsfonts}{\toggletrue{amsfonts}}%{\amsfontstrue}%
+\newtoggle{@amsfonts}
+\togglefalse{@amsfonts}
+\DeclareOptionX{amsfonts}{\toggletrue{@amsfonts}}
 \DeclareOptionX{noamsfonts}{}
 
-\newtoggle{amssymb}
-\togglefalse{amssymb}
-\DeclareOptionX{amssymb}{\toggletrue{amssymb}}%{\amssymbtrue}%
-\DeclareOptionX{amssymbol}{\toggletrue{amssymb}}%{\amssymbtrue}%
+\newtoggle{@amssymb}
+\togglefalse{@amssymb}
+\DeclareOptionX{amssymb}{\toggletrue{@amssymb}}
+\DeclareOptionX{amssymbol}{\toggletrue{@amssymb}}
 \DeclareOptionX{noamssymb}{}
 
-\newtoggle{amsmath}
-\togglefalse{amsmath}
-\DeclareOptionX{amsmath}{\toggletrue{amsmath}}%{\amsmathtrue}%
+\newtoggle{@amsmath}
+\togglefalse{@amsmath}
+\DeclareOptionX{amsmath}{\toggletrue{@amsmath}}
 \DeclareOptionX{noamsmath}{}
 
 \DeclareOptionX{byrevtex}{}
@@ -188,41 +188,41 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \DeclareOptionX{runinaddress}{}
 \DeclareOptionX{superscriptaddress}{}
 
-\newtoggle{unpublished}
-\togglefalse{unpublished}
-\DeclareOptionX{unpublished}{\toggletrue{unpublished}}
+\newtoggle{@unpublished}
+\togglefalse{@unpublished}
+\DeclareOptionX{unpublished}{\toggletrue{@unpublished}}
 
-\newtoggle{accepted}
-\togglefalse{accepted}
-\DeclareOptionX{accepted}[]{\ifstrempty{#1}{}{\def\@accepteddate{#1}}\toggletrue{accepted}\togglefalse{unpublished}}
+\newtoggle{@accepted}
+\togglefalse{@accepted}
+\DeclareOptionX{accepted}[]{\ifstrempty{#1}{}{\def\@accepteddate{#1}}\toggletrue{@accepted}\togglefalse{@unpublished}}
 
-\newtoggle{revtexcompatibility}
-\togglefalse{revtexcompatibility}
-\DeclareOptionX{aps}{\toggletrue{revtexcompatibility}}
-\DeclareOptionX{pra}{\toggletrue{revtexcompatibility}}
-\DeclareOptionX{prb}{\toggletrue{revtexcompatibility}}
-\DeclareOptionX{pre}{\toggletrue{revtexcompatibility}}
-\DeclareOptionX{prl}{\toggletrue{revtexcompatibility}}
-\DeclareOptionX{prx}{\toggletrue{revtexcompatibility}}
-\DeclareOptionX{aip}{\toggletrue{revtexcompatibility}}
+\newtoggle{@revtexcompatibility}
+\togglefalse{@revtexcompatibility}
+\DeclareOptionX{aps}{\toggletrue{@revtexcompatibility}}
+\DeclareOptionX{pra}{\toggletrue{@revtexcompatibility}}
+\DeclareOptionX{prb}{\toggletrue{@revtexcompatibility}}
+\DeclareOptionX{pre}{\toggletrue{@revtexcompatibility}}
+\DeclareOptionX{prl}{\toggletrue{@revtexcompatibility}}
+\DeclareOptionX{prx}{\toggletrue{@revtexcompatibility}}
+\DeclareOptionX{aip}{\toggletrue{@revtexcompatibility}}
 
-\newtoggle{allowfontchangeintitle}
-\togglefalse{allowfontchangeintitle}
-\DeclareOptionX{allowfontchangeintitle}{\toggletrue{allowfontchangeintitle}}
+\newtoggle{@allowfontchangeintitle}
+\togglefalse{@allowfontchangeintitle}
+\DeclareOptionX{allowfontchangeintitle}{\toggletrue{@allowfontchangeintitle}}
 
-\newtoggle{nopdfoutputerror}
-\togglefalse{nopdfoutputerror}
-\DeclareOptionX{nopdfoutputerror}{\toggletrue{nopdfoutputerror}}
+\newtoggle{@nopdfoutputerror}
+\togglefalse{@nopdfoutputerror}
+\DeclareOptionX{nopdfoutputerror}{\toggletrue{@nopdfoutputerror}}
 
 %remind people not to use \today on the arxiv
-\newtoggle{allowtoday}
-\togglefalse{allowtoday}
-\DeclareOptionX{allowtoday}{\toggletrue{allowtoday}}
+\newtoggle{@allowtoday}
+\togglefalse{@allowtoday}
+\DeclareOptionX{allowtoday}{\toggletrue{@allowtoday}}
 
 \ExecuteOptionsX{10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptionsX
 
-\iftoggle{papersizespecified}
+\iftoggle{@papersizespecified}
 {
 }
 {
@@ -269,7 +269,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	% avoid use of today	
 	\ifcsdef{today}
 	{
-		\iftoggle{allowtoday}
+		\iftoggle{@allowtoday}
 		{
 			\let\oldtoday\today
 			\renewcommand*{\today}{\oldtoday\ClassWarning{quantumarticle}{If you intend to upload your manuscript to the arXiv, please manually replace any use of \string\today with the upload date. The arXiv typesets manuscripts on-demand, thus the output of \string\today will change over time}{}}
@@ -390,7 +390,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\let\subsectionmark\@gobble
 }
 
-\iftoggle{titlepage}
+\iftoggle{@titlepage}
 {
 	\newcommand\maketitle{\begin{titlepage}%
 		%  \let\footnotesize\small
@@ -597,7 +597,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \newcommand*\descriptionlabel[1]{\hspace\labelsep
 	\normalfont\bfseries #1}
 
-\iftoggle{titlepage}
+\iftoggle{@titlepage}
 {
 	\newenvironment{abstract}{%
 		\ifx\maketitle\relax{}\else\maketitle\fi
@@ -648,15 +648,15 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \newenvironment{titlepage}
 {%
 	\if@twocolumn
-		\toggletrue{restonecol}\onecolumn\newpage
+		\toggletrue{@restonecol}\onecolumn\newpage
 	\else
-		\togglefalse{restonecol}\newpage
+		\togglefalse{@restonecol}\newpage
 	\fi
 	\thispagestyle{empty}%
 	\setcounter{page}\@ne
 }%
 {
-	\iftoggle{restonecol}
+	\iftoggle{@restonecol}
 		{\twocolumn}
 		{\newpage}
 	\if@twoside\else
@@ -852,9 +852,9 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 
 \newenvironment{theindex}
 {\if@twocolumn
-		\togglefalse{restonecol}
+		\togglefalse{@restonecol}
 	\else
-		\toggletrue{restonecol}
+		\toggletrue{@restonecol}
 	\fi
 	\twocolumn[\section*{\indexname}]%
 	\@mkboth{\MakeUppercase\indexname}%
@@ -866,7 +866,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\let\item\@idxitem%
 }
 {
-	\iftoggle{restonecol}
+	\iftoggle{@restonecol}
 		{\onecolumn}
 		{\clearpage}
 }
@@ -910,16 +910,16 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \renewcommand{\headrule}{}
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
-\iftoggle{accepted}
-{\fancyfoot[R]{\sffamily\iftoggle{unpublished}{\thepage}{\textcolor{quantumviolet}{\thepage}}}}
-{\fancyfoot[C]{\sffamily\iftoggle{unpublished}{\thepage}{\textcolor{quantumviolet}{\thepage}}}}
+\iftoggle{@accepted}
+{\fancyfoot[R]{\sffamily\iftoggle{@unpublished}{\thepage}{\textcolor{quantumviolet}{\thepage}}}}
+{\fancyfoot[C]{\sffamily\iftoggle{@unpublished}{\thepage}{\textcolor{quantumviolet}{\thepage}}}}
 
 
 % validate the date format to be YYYY-MM-DD
 \AtBeginDocument{
 	\ifcsdef{@accepteddate}
 	{%
-		\iftoggle{xstring}
+		\iftoggle{@xstring}
 			{%
 				\RequirePackage{xstring}
 				\def\@dateerror{\ClassError{quantumarticle}{The date in the accepted option must be given in the format YYYY-MM-DD}{}}
@@ -944,7 +944,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	{}
 }
 
-\iftoggle{accepted}
+\iftoggle{@accepted}
 	{\fancyfoot[L]{\usebox{\@quantumacceptedbox}}}
 	{\fancyfoot[L]{}}
 
@@ -1005,7 +1005,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 %title
 \def\@printtitle{%
 	{%
-			\iftoggle{unpublished}
+			\iftoggle{@unpublished}
 			{%
 				\begin{minipage}{1.0\linewidth}%
 					\@printtitletextwithappropriatefontsize%
@@ -1013,7 +1013,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 			}
 			{%
 				\edef\@titleexpanded{\detokenize\expandafter{\@title}}%
-				\iftoggle{xstring}
+				\iftoggle{@xstring}
 					{\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode}
 					{\gdef\@titleforurl{\@titleexpanded}}%
 				%\if@xstring\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode\else\gdef\@titleforurl{\@titleexpanded}\fi%
@@ -1033,7 +1033,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	#1%
 	\begingroup%
 	\raggedright%
-	\iftoggle{allowfontchangeintitle}
+	\iftoggle{@allowfontchangeintitle}
 		{}
 		{%
 			\def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{} Please remove all such commands from your \string\title{}. If you really really have to change the font for some part of the title you can allow this by giving the option allowfontchangeintitle}{}}%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
@@ -1114,7 +1114,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 				%      \interlinepenalty\interfootnotelinepenalty
 				%      \splittopskip\footnotesep
 				%      \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
-				\iftoggle{titlepage}
+				\iftoggle{@titlepage}
 					{\hsize\dimexpr \linewidth\relax \@parboxrestore}%
 					{\if@twocolumn%
 						\hsize\dimexpr 0.5\linewidth-0.5\columnsep\relax \@parboxrestore%
@@ -1263,17 +1263,17 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\csdef{author#2orcid}{#1}%
 }
 
-\newtoggle{tikz}
-\IfFileExists{tikz.sty}{\toggletrue{tikz}}{\togglefalse{tikz}}
+\newtoggle{@tikz}
+\IfFileExists{tikz.sty}{\toggletrue{@tikz}}{\togglefalse{@tikz}}
 
-\newtoggle{xstring}
-\IfFileExists{xstring.sty}{\toggletrue{xstring}}{\togglefalse{xstring}}
+\newtoggle{@xstring}
+\IfFileExists{xstring.sty}{\toggletrue{@xstring}}{\togglefalse{@xstring}}
 
 \AtBeginDocument{
-	\iftoggle{xstring}
+	\iftoggle{@xstring}
 		{\RequirePackage{xstring}}
 		{}
-	\iftoggle{tikz}
+	\iftoggle{@tikz}
 	{%
 		\RequirePackage{tikz}
 		\usetikzlibrary{calc}
@@ -1345,7 +1345,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 		\DeclareRobustCommand{\Quantum}{Quantum}
 	}
 
-	\iftoggle{accepted}
+	\iftoggle{@accepted}
 		{%
 			\newsavebox\@quantumacceptedbox
 			\savebox\@quantumacceptedbox{\textcolor{quantumviolet}{ \sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}}
@@ -1356,7 +1356,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\ifstrempty{#1}{
 		\email{#2}
 	}{
-		\iftoggle{xstring}
+		\iftoggle{@xstring}
 			{\IfStrEq{#1}{url}{\homepage{#2}}{\email{#2}}}
 			{email{#2}}
 	}
@@ -1374,7 +1374,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 % set default options for hyperref to make links more pretty
 \PassOptionsToPackage{colorlinks=true,hyperindex}{hyperref}
 
-\iftoggle{unpublished}
+\iftoggle{@unpublished}
 	{}
 	{\PassOptionsToPackage{allcolors=quantumviolet}{hyperref}}
 
@@ -1388,7 +1388,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \AtBeginDocument{%
 	\RequirePackage{hyperref}%
 	
-	\iftoggle{nopdfoutputerror}
+	\iftoggle{@nopdfoutputerror}
 	{%
 	}
 	{	
@@ -1419,17 +1419,17 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \providecommand{\keywords}{}
 \renewcommand{\keywords}[1]{\def\@keywords{#1}}
 
-\iftoggle{amsfonts}
+\iftoggle{@amsfonts}
 	{\RequirePackage{amsfonts}}
 	{}
-\iftoggle{amssymb}
+\iftoggle{@amssymb}
 	{\RequirePackage{amssymb}}
 	{}
-\iftoggle{amsmath}
+\iftoggle{@amsmath}
 	{\RequirePackage{amsmath}}
 	{}
 
-\iftoggle{revtexcompatibility}
+\iftoggle{@revtexcompatibility}
 {
 	\PassOptionsToPackage{numbers}{natbib}
 	\PassOptionsToPackage{sort&compress}{natbib}
