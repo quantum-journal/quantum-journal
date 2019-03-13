@@ -49,10 +49,7 @@ In this way readers can easily verify whether a work using the quantumarticle cl
 \section{Figures}
 \begin{figure}[t]
   \centering
-  \begin{tikzpicture}
-    \draw (-4,-2.5) rectangle (4,2.5);
-    \node[rotate=20] {\color{quantumviolet}\Huge\Quantum};
-  \end{tikzpicture}
+  \includegraphics{example-plot.pdf}
   \caption{Every figure must have an informative caption and a number.
     The caption can be placed above, below, or to the side of the figure, as you see fit.
     The same applies for tables, boxes, and other floating elements.}
@@ -167,6 +164,9 @@ within the first 5 lines of your main LaTeX file as suggested by the arXiv \cite
 This class supports the \texttt{unpublished} option which disables all Quantum related branding such as the logo, color, and hyperlink in the title.
 It can be used for works not yet accepted in Quantum or not even intended for submission to Quantum.
 On the contrary, by giving the \texttt{accepted=YYYY-MM-DD} option, with \texttt{YYYY-MM-DD} the acceptance date, the note ``Accepted in Quantum YYYY-MM-DD, click title to verify'' can be added to the bottom of each page to clearly mark works that have been accepted in Quantum. 
+
+\section{Plots}\label{sec:plots}
+Quantum offers a Jupyter notebook with plotting functionality that is tailored to the quantumarticle document class that can be found in the GitHub repository.
 
 \section{Summary section}
 Longer articles should include a section that, early on, explains the main results, their limitations, and assumptions.
