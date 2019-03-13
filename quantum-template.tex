@@ -52,7 +52,8 @@ In this way readers can easily verify whether a work using the quantumarticle cl
   \includegraphics{example-plot.pdf}
   \caption{Every figure must have an informative caption and a number.
     The caption can be placed above, below, or to the side of the figure, as you see fit.
-    The same applies for tables, boxes, and other floating elements.}
+    The same applies for tables, boxes, and other floating elements. 
+    Quantum provides a Jupyter notebook to create plots that integrate seamlessly with \texttt{quantumarticle}, described in Section \ref{sec:plots}.}
   \label{fig:figure1}
 \end{figure}
 See Fig.~\ref{fig:figure1} for an example of how to include figures.
@@ -166,7 +167,9 @@ It can be used for works not yet accepted in Quantum or not even intended for su
 On the contrary, by giving the \texttt{accepted=YYYY-MM-DD} option, with \texttt{YYYY-MM-DD} the acceptance date, the note ``Accepted in Quantum YYYY-MM-DD, click title to verify'' can be added to the bottom of each page to clearly mark works that have been accepted in Quantum. 
 
 \section{Plots}\label{sec:plots}
-Quantum offers a Jupyter notebook with plotting functionality that is tailored to the quantumarticle document class that can be found in the GitHub repository.
+Quantum provides a Jupyter notebook based on the widely used library \texttt{matplotlib} that greatly simplifies the creation of plots that integrate seamlessly with the \texttt{quantumarticle} class. This is intended as a service to the authors and is \textit{not} mandatory. The notebook can be found in the \href{https://github.com/quantum-journal/quantum-journal}{GitHub repository}. The Python notebook relies. It only requires the author to specify font size and paper format that were passed as options to \texttt{quantumarticle}.
+
+We strongly encourage authors to use a lossless vector format for their submissions, \textit{e.g.}\ Pdf or Pgf. 
 
 \section{Summary section}
 Longer articles should include a section that, early on, explains the main results, their limitations, and assumptions.
