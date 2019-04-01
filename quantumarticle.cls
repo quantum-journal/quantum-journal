@@ -221,15 +221,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 
 \DeclareOptionX{noarxiv}
 {
-	% Sets a4paper, allowfontchangeintitle, allowtoday, nopdfoutputerror and unpublished
-	\setlength\paperheight{297mm}%
-	\setlength\paperwidth{210mm}
-	\toggletrue{@papersizespecified}
-	
-	\toggletrue{@allowfontchangeintitle}
-	\toggletrue{@allowtoday}
-	\toggletrue{@nopdfoutputerror}
-	\toggletrue{@unpublished}
+	\ExecuteOptionsX{a4paper,allowtoday,allowfontchangeintitle,nopdfoutputerror,unpublished}
 }
 
 
