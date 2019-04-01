@@ -49,13 +49,11 @@ In this way readers can easily verify whether a work using the quantumarticle cl
 \section{Figures}
 \begin{figure}[t]
   \centering
-  \begin{tikzpicture}
-    \draw (-4,-2.5) rectangle (4,2.5);
-    \node[rotate=20] {\color{quantumviolet}\Huge\Quantum};
-  \end{tikzpicture}
+  \includegraphics{example-plot.pdf}
   \caption{Every figure must have an informative caption and a number.
     The caption can be placed above, below, or to the side of the figure, as you see fit.
-    The same applies for tables, boxes, and other floating elements.
+    The same applies for tables, boxes, and other floating elements. 
+    Quantum provides a Jupyter notebook to create plots that integrate seamlessly with \texttt{quantumarticle}, described in Section \ref{sec:plots}.}
     Figures spanning multiple columns can by typeset with the usual \texttt{figure*} environment.}
   \label{fig:figure1}
 \end{figure}
@@ -170,6 +168,11 @@ within the first 5 lines of your main LaTeX file as suggested by the arXiv \cite
 This class supports the \texttt{unpublished} option which disables all Quantum related branding such as the logo, color, and hyperlink in the title.
 It can be used for works not yet accepted in Quantum or not even intended for submission to Quantum.
 On the contrary, by giving the \texttt{accepted=YYYY-MM-DD} option, with \texttt{YYYY-MM-DD} the acceptance date, the note ``Accepted in Quantum YYYY-MM-DD, click title to verify'' can be added to the bottom of each page to clearly mark works that have been accepted in Quantum. 
+
+\section{Plots}\label{sec:plots}
+Quantum provides a \href{https://jupyter.org/}{Jupyter notebook} based on the widely used \href{https://matplotlib.org/}{matplotlib} library that greatly simplifies the creation of plots that integrate seamlessly with the \texttt{quantumarticle} class. This is intended as a service to the authors, is \textit{not} mandatory, and currently in beta stage. You can \href{https://github.com/quantum-journal/quantum-journal/blob/quantum-plots/quantum-plots.ipynb}{preview} and download the \href{https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-plots.ipynb}{quantum-plots.ipynb} notebook and accompanying \href{https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-plots.mplstyle}{quantum-plots.mplstyle} file from the \href{https://github.com/quantum-journal/quantum-journal}{quantumarticle GitHub repository}. You only need to specify the font size and paper format that were passed as options to \texttt{quantumarticle} to get plots with fitting font sizes.
+
+We strongly encourage authors to use the PDF format for their submissions.
 
 \section{Summary section}
 Longer articles should include a section that, early on, explains the main results, their limitations, and assumptions.
