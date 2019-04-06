@@ -218,10 +218,12 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \newtoggle{@allowtoday}
 \togglefalse{@allowtoday}
 \DeclareOptionX{allowtoday}{\toggletrue{@allowtoday}}
-
+\newtoggle{@allowpapersizeunspecified}
+\togglefalse{@allowpapersizeunspecified}
+\DeclareOptionX{allowpapersizeunspecified}{\toggletrue{@allowpapersizeunspecified}}
 \DeclareOptionX{noarxiv}
 {
-	\ExecuteOptionsX{a4paper,allowtoday,allowfontchangeintitle,nopdfoutputerror,unpublished}
+	\ExecuteOptionsX{allowpapersizeunspecified,allowtoday,allowfontchangeintitle,nopdfoutputerror,unpublished}
 }
 
 
@@ -232,9 +234,11 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 {
 }
 {
-	\setlength\paperheight {297mm}%
-	\setlength\paperwidth  {210mm}
-	\ClassError{quantumarticle}{Please specify a paper size. Available options: a4paper, a5paper, b5paper, letterpaper, legalpaper, executivepaper}{}
+  \iftoggle{@allowpapersizeunspecified}
+  {}
+  {
+    \ClassError{quantumarticle}{Please specify a paper size explicitly, because otherwise the paper size when compiling on the arXiv can deviate from the paper size when compiling locally and this can cause problems, especially with line-breaking and figure placement. The available options are: a4paper, a5paper, b5paper, letterpaper, legalpaper, executivepaper. The preferred paper size is a4paper.}{}
+  }
 }
 
 \input{size1\@ptsize.clo}
