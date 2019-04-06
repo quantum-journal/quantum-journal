@@ -1362,18 +1362,18 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\iftoggle{@nopdfoutputerror}
 	{%
 	}
-	{	
-		\ifcsdef{pdfoutput}
-		{
-			\ifnumequal{\pdfoutput}{0}
-			{%
-				\ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex). Without this, the arXiv compiles your document with latex instead of pdflatex and hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information. If you still want to use standard latex (for example because you depend on psfrag) instead of pdflatex despite this problem, you can disable this error by giving the nopdfoutputerror option to quantumarticle. In this case please check carefully that the links in your document, especially in the bibliography work properly.}{}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
-			}
-			{}
+	{
+          \def\@pdfoutputerror{\ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex). Without this, the arXiv compiles your document with latex instead of pdflatex and hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information. If you still want to use standard latex (for example because you depend on psfrag) instead of pdflatex despite this problem, you can disable this error by giving the nopdfoutputerror option to quantumarticle. In this case please check carefully that the links in your document, especially in the bibliography work properly.}{}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
+          }
+		\ifcsdef{pdfoutput}%
+		{%
+			\ifnumequal{\pdfoutput}{1}
+                        {}
+                        {\@pdfoutputerror}%
 		}
-		{
-			\ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex). Without this, the arXiv compiles your document with latex instead of pdflatex and hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information. If you still want to use standard latex (for example because you depend on psfrag) instead of pdflatex despite this problem, you can disable this error by giving the nopdfoutputerror option to quantumarticle. In this case please check carefully that the links in your document, especially in the bibliography work properly.}{}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
-		}		
+		{%
+                        \@pdfoutputerror%
+		}
 	}
 
 	\@ifpackageloaded{natbib}{%
