@@ -218,9 +218,14 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \newtoggle{@allowtoday}
 \togglefalse{@allowtoday}
 \DeclareOptionX{allowtoday}{\toggletrue{@allowtoday}}
+
 \newtoggle{@allowpapersizeunspecified}
 \togglefalse{@allowpapersizeunspecified}
 \DeclareOptionX{allowpapersizeunspecified}{\toggletrue{@allowpapersizeunspecified}}
+
+% set date to be empty as a default, otherwise latex will fill it with \@today which triggers the allowtoday error
+\date{}
+
 \DeclareOptionX{noarxiv}
 {
 	\ExecuteOptionsX{allowpapersizeunspecified,allowtoday,allowfontchangeintitle,nopdfoutputerror,unpublished}
@@ -459,7 +464,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\vskip 1em%
 	\noindent\@printaffiliations
 	\vskip 0em%
-	\noindent{\footnotesize\color{quantumgray}\@date}
+	\ifdefempty{\@date}{}{\noindent{\footnotesize\color{quantumgray}\@date}}%
 	\par
 	\vskip 1.5em
 	\makeatletter%
