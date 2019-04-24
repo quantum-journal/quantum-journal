@@ -13,8 +13,8 @@
 
 \begin{document}
 
-\title{Template demonstrating the quantumarticle class}
-\date{January 21, 2019}
+\title{Template demonstrating the quantumarticle document class}
+
 \author{Lídia del Rio}
 \affiliation{Institute for Theoretical Physics, ETH Zurich, Switzerland}
 \author{Christian Gogolin}
@@ -36,15 +36,19 @@
   Both can be combined with the \texttt{titlepage} option to obtain a format with dedicated title and abstract pages that are not included in the page count.
   This format can be more suitable for long articles.
   The \texttt{abstract} environment can appear both before and after the \texttt{\textbackslash{}maketitle} command and calling \texttt{\textbackslash{}maketitle} is optional, as long as there is an \texttt{abstract}.
-  Both \texttt{abstract} and \texttt{\textbackslash{}maketitle} however must be placed after all other \texttt{\textbackslash{}author}, \texttt{\textbackslash{}affiliation}, etc.\ commands.
+  Both \texttt{abstract} and \texttt{\textbackslash{}maketitle} however must be placed after all other \texttt{\textbackslash{}author}, \texttt{\textbackslash{}affiliation}, etc.\ commands, see also Section~\ref{sec:title-information}.
   If you provide the ORCID number of an author by using the \texttt{\textbackslash{}orcid} command, the author name becomes a link to their page on \href{http://orcid.org/}{orcid.org}. 
 \end{abstract}
 
-In the \texttt{twocolumn} layout and without the \texttt{titlepage} option there can be a paragraph directly following the abstract before the first section.
+In the \texttt{twocolumn} layout and without the \texttt{titlepage} option a paragraph without a previous section title may directly following the abstract.
 In \texttt{onecolumn} format or with a dedicated \texttt{titlepage}, this should be avoided.
 
 Note that clicking the title performs a search for that title on \href{http://quantum-journal.org}{quantum-journal.org}.
-In this way readers can easily verify whether a work using the quantumarticle class was actually published in Quantum.
+In this way readers can easily verify whether a work using the \texttt{quantumarticle} class was actually published in Quantum.
+If you would like to use \texttt{quantumarticle} for manuscripts not yet accepted in Quantum, or not even intended for submission to Quantum, please use the \texttt{unpublished} option to switch off all Quantum related branding and the hyperlink in the title.
+By default, this class also performs various checks to make sure the manuscript will compile well on the arXiv.
+If you do not intend to submit your manuscript to Quantum or the arXiv, you can switch off these checks with the \texttt{noarixv} option.
+On the contrary, by giving the \texttt{accepted=YYYY-MM-DD} option, with \texttt{YYYY-MM-DD} the acceptance date, the note ``Accepted in Quantum YYYY-MM-DD, click title to verify'' can be added to the bottom of each page to clearly mark works that have been accepted in Quantum. 
 
 \section{Figures}
 \begin{figure}[t]
@@ -105,8 +109,8 @@ If you are formating your bibliography manually, you can cite this work using th
 \end{verbatim}
 
 \begin{theorem}[One citation per bibitem]
-  Important: If you formating your bibliography manually, please do not group multiple citations into one \texttt{\textbackslash{}bibitem}.
-  It is not nice for your readers and it screws up our automatic extraction of citations and creates superfluous manual work.
+  Important: If you are formating your bibliography manually, please do not group multiple citations into one \texttt{\textbackslash{}bibitem}.
+  Having to search through multiple references to find the cited result makes your work less accessible for authors and grouping references can screw up our automatic extraction of citations.
 \end{theorem}
 
 We encourage the use of BibTeX to generate your bibliography from the BibTeX meta-data provided by publishers.
@@ -149,7 +153,7 @@ to the preamble of your document and then output the bibliography with
 \end{verbatim}
 where appropriate.
 You then have to upload the .bbl file along with the other source files when submitting to the arXiv.
-Due to incompatibilities between different LaTeX version we unfortunately can not recommend this option until the arXiv has updated its LaTeX system \cite{biblatexsubmittingtothearxiv}.
+Due to incompatibilities between different LaTeX version we unfortunately cannot recommend this option \cite{biblatexsubmittingtothearxiv}.
 
 The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declares a suitable field format to make it a hyperlink.
 Due to issues with \texttt{biber} we recommend to use the \texttt{bibtex} backend of \texttt{biblatex}.
@@ -158,22 +162,23 @@ More information on how to get DOI links in your document can be found on StackE
 Feel free to change the appearance of citations in any way you like by using a different \texttt{bibliographystyle} or via the advanced mechanisms provided by BibLaTeX.
 The only two requirements are that citations must uniquely identify the cited work and that they must contain a DOI hyperlink whenever possible.
 
-In oder to get correct line breaks within links, please add the line 
+\begin{theorem}[Use \texttt{\textbackslash pdfoutput=1}]
+  In oder to get correct line breaks within hyperlinks and to make sure the arXiv produces a PDF as output, please add the line 
 \begin{verbatim}
 \pdfoutput=1
 \end{verbatim}
-within the first 5 lines of your main LaTeX file as suggested by the arXiv \cite{arxivpdfoutput}.
+  within the first 5 lines of your main LaTeX file, as suggested by the arXiv \cite{arxivpdfoutput}.
+\end{theorem}
 
-\section{Unpublished and accepted works}
-This class supports the \texttt{unpublished} option which disables all Quantum related branding such as the logo, color, and hyperlink in the title.
-It should be used for works not yet accepted in Quantum or not even intended for submission to Quantum.
-This class also supports the \texttt{noarixv} option. It can be used if you do not intend to use the template for submission to Quantum and the arXiv. If \texttt{noarxiv} is set, other compilers besides PdfLaTeX can be used.
-On the contrary, by giving the \texttt{accepted=YYYY-MM-DD} option, with \texttt{YYYY-MM-DD} the acceptance date, the note ``Accepted in Quantum YYYY-MM-DD, click title to verify'' can be added to the bottom of each page to clearly mark works that have been accepted in Quantum. 
+\section{Plots}
+\label{sec:plots}
+Quantum provides a \href{https://jupyter.org/}{Jupyter notebook} based on the widely used \href{https://matplotlib.org/}{matplotlib} library that greatly simplifies the creation of plots that integrate seamlessly with the \texttt{quantumarticle} class. This is intended as a service to the authors, is \textit{not} mandatory, and currently in beta stage. You can \href{https://github.com/quantum-journal/quantum-journal/blob/quantum-plots/quantum-plots.ipynb}{preview} and download the \href{https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-plots.ipynb}{quantum-plots.ipynb} notebook and accompanying \href{https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-plots.mplstyle}{quantum-plots.mplstyle} file from the \href{https://github.com/quantum-journal/quantum-journal}{quantumarticle GitHub repository}. You only need to specify the font size and paper format that were passed as options to \texttt{quantumarticle} to get plots with fitting font sizes and dimensions.
+We strongly encourage authors to use the vector based PDF format for plots.
 
-\section{Plots}\label{sec:plots}
-Quantum provides a \href{https://jupyter.org/}{Jupyter notebook} based on the widely used \href{https://matplotlib.org/}{matplotlib} library that greatly simplifies the creation of plots that integrate seamlessly with the \texttt{quantumarticle} class. This is intended as a service to the authors, is \textit{not} mandatory, and currently in beta stage. You can \href{https://github.com/quantum-journal/quantum-journal/blob/quantum-plots/quantum-plots.ipynb}{preview} and download the \href{https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-plots.ipynb}{quantum-plots.ipynb} notebook and accompanying \href{https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-plots.mplstyle}{quantum-plots.mplstyle} file from the \href{https://github.com/quantum-journal/quantum-journal}{quantumarticle GitHub repository}. You only need to specify the font size and paper format that were passed as options to \texttt{quantumarticle} to get plots with fitting font sizes.
-
-We strongly encourage authors to use the PDF format for their submissions.
+\begin{theorem}[Be mindful of the colorblind]
+  About 4\% of the worlds population are affected by some form of color vision deficiency or color blindness.
+  Please make sure that your plots and figures can still be understood when printed in gray scale and avoid the simultaneous use of red and green, as the inability to distinguish these two colors is the most widespread form of color vision deficiency.
+\end{theorem}
 
 \section{Summary section}
 Longer articles should include a section that, early on, explains the main results, their limitations, and assumptions.
@@ -203,6 +208,7 @@ To enable this feature in \texttt{twocolumn} mode, \texttt{quantumarticle} relie
 Unfortunately this package has a bug that leads to a sub-optimal placement of extremely long footnotes.
 
 \section{Title information}
+\label{sec:title-information}
 You can provide information on authors and affiliations in the common format also used by \texttt{revtex}:
 \begin{verbatim}
 \title{Title}
