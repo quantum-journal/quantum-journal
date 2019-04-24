@@ -1318,7 +1318,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\iftoggle{@accepted}
 		{%
 			\newsavebox\@quantumacceptedbox
-			\savebox\@quantumacceptedbox{\textcolor{quantumviolet}{ \sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify}}}
+			\savebox\@quantumacceptedbox{\textcolor{quantumviolet}{ \sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify. Published under CC-BY 4.0.}}}
 		{}
 }
 %elsearticle style extra header information
