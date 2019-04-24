@@ -991,11 +991,10 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 					{\gdef\@titleforurl{\@titleexpanded}}%
 				%\if@xstring\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode\else\gdef\@titleforurl{\@titleexpanded}\fi%
 				\href{http://quantum-journal.org/?s=\@titleforurl\&reason=title-click}{%
-					\begin{minipage}{1.0\linewidth}%
 						\color{quantumviolet}{%
 							\@printtitletextwithappropriatefontsize%
 						}%
-					\end{minipage}}%
+                                              }%
 			}
 		}%
 }
@@ -1033,9 +1032,9 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 		}%
 	}%
 	\ifdimgreater{\ht\@titelsaveboxHuge}{\ht\@titelsaveboxHugeoneline}
-	{\usebox{\@titelsaveboxhhuge}% using huge because \the\ht\@titelsaveboxHuge{} is larger than \the\ht\@titelsaveboxHugeoneline{}
+	{\@titleatfontsize{\huge}%\usebox{\@titelsaveboxhhuge}% using huge because \the\ht\@titelsaveboxHuge{} is larger than \the\ht\@titelsaveboxHugeoneline{}
 	}
-	{\usebox{\@titelsaveboxHuge}% using Huge because \the\ht\@titelsaveboxHuge{} is not larger than \the\ht\@titelsaveboxHugeoneline{}
+	{\@titleatfontsize{\Huge}% using Huge because \the\ht\@titelsaveboxHuge{} is not larger than \the\ht\@titelsaveboxHugeoneline{}
 	}
 }
 
