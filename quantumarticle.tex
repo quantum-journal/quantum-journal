@@ -1,0 +1,30 @@
+\documentclass[a4paper,noarxiv,onecolumn,11pt]{quantumarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+
+\usepackage{lipsum}
+
+\newcommand{\DescribeOption}[2]{
+	\paragraph{\texttt{#1}} #2
+}
+
+\begin{document}
+	\title{Documentation of quantumarticle.cls}
+	\maketitle
+	
+	\tableofcontents
+	
+	\section{Introduction}
+	
+	\section{Package options}
+	
+	\subsection{Document setup}
+	
+	\DescribeOption{a4paper}{
+		Sets the paper size to A4.
+	}
+	\DescribeOption{10pt}{\lipsum[1]}
+	
+	\section{Further information}
+\end{document}
