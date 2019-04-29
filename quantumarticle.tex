@@ -1,13 +1,46 @@
-\documentclass[a4paper,noarxiv,onecolumn,11pt]{quantumarticle}
+\documentclass[a4paper,noarxiv,onecolumn]{quantumarticle}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 
 \usepackage{lipsum}
+\usepackage{mdframed}
+\usepackage{booktabs}
+\usepackage{longtable}
 
-\newcommand{\DescribeOption}[2]{
-	\paragraph{\texttt{#1}} #2
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+
+\newcommand*{\ditto}{--- \raisebox{-0.5ex}{''} ---}
+
+\newenvironment{options}
+	{\medskip\noindent\begin{longtable}{p{.20\columnwidth}p{.744\columnwidth}}
+	%\toprule
+	\textsf{Option} & \textsf{Description} \\
+	\midrule
+	}
+	{\bottomrule\end{longtable}}
+
+\newcommand{\option}[2]{
+	\small\texttt{#1} & {\small#2} \\
 }
+
+\newcommand{\compatibilityoption}[2]{
+	\small\texttt{\textcolor{quantumgray}{#1}} & \small\textcolor{quantumgray}{#2} \\
+}
+
+%\newenvironment{options}
+%{\begin{mdframed}}
+%	{\end{mdframed}}
+%
+%\newcommand{\option}[2]{
+%	\noindent
+%	\begin{minipage}[t]{.18\columnwidth}
+%		\small\texttt{#1}
+%	\end{minipage}
+%	\begin{minipage}[t]{.82\columnwidth}
+%		\small#2
+%	\end{minipage}
+%}
 
 \begin{document}
 	\title{Documentation of quantumarticle.cls}
@@ -21,10 +54,214 @@
 	
 	\subsection{Document setup}
 	
-	\DescribeOption{a4paper}{
-		Sets the paper size to A4.
-	}
-	\DescribeOption{10pt}{\lipsum[1]}
+	\subsubsection{Document format}
+	The document class does not specify a default document format, an error is raised if none is specified.
 	
+	\begin{options}
+		\option{a4paper}{
+			Sets the paper size to A4.
+		}
+		\option{a5paper}{
+			Sets the paper size to A5.
+		}
+		\option{b5paper}{
+			Sets the paper size to B5.
+		}
+		\option{letterpaper}{
+			Sets the paper size to letter. \todo{official name}
+		}
+		\option{legalpaper}{
+			Sets the paper size to legal. \todo{official name}
+		}
+		\option{executivepaper}{
+			Sets the paper size to executive. \todo{official name}
+		}
+	\end{options}
+
+	\subsubsection{Orientation}
+	The default orientation is portrait. 
+	
+	\begin{options}
+		\option{landscape}{
+			Sets the orientation of the document to landscape.
+		}
+	\end{options}
+
+	\subsubsection{Fontsize}
+	The default fontsize is 10pt.
+	
+	\begin{options}
+		\option{10pt}{
+			Sets the normal fontsize to 10pt.
+		}
+		\option{11pt}{
+			Sets the normal fontsize to 11pt.
+		}
+		\option{12pt}{
+			Sets the normal fontsize to 12pt.
+		}
+	\end{options}
+
+	\subsubsection{Sides}
+	The default siding is oneside \todo{better word than siding}.
+	
+	\begin{options}
+		\option{oneside}{
+			Prepares the document as onesided.
+		}
+		\option{twoside}{
+			Prepares the document as twosided.
+		}
+	\end{options}
+
+	\subsubsection{Titlepage}
+	By default, the document class is typset with no extra titlepage.
+	
+	\begin{options}
+		\option{titlepage}{
+			Displays the title on a separate titlepage.
+		}
+		\compatibilityoption{notitlepage}{
+			Displays the title on the same page as the text.
+		}
+	\end{options}
+
+	\subsection{Style options}
+	
+	\subsubsection{Equations}
+	By default, equations are typset centered, with equation numbers on the right. \todo{Clear fleqn behaviour} 
+	
+	\begin{options}
+		\option{fleqn}{
+			Display equations left aligned.
+		}
+		\option{leqno}{
+			Display equation numbers to the left of the equation.
+		}
+	\end{options}
+
+	\subsubsection{Bibliography}
+	
+	\begin{options}
+		\option{openbib}{
+			\todo{Find out what openbib does.}
+		}
+	\end{options}
+
+	\subsection{Pre-loaded packages}
+	The document class only loads packages necessary for its operation, such as \texttt{geometry} or \texttt{hyperref}. For compatibility reasons, there are also commands that load certain widely used classes for the user.
+	
+	\begin{options}
+		\option{amsfonts}{
+			Load the package \texttt{amsfonts}.
+		}
+		\compatibilityoption{noamsfonts}{
+			Don't load the package \texttt{amsfonts}.
+		}
+		\option{amssymb}{
+			Load the package \texttt{amssymb}.
+		}
+		\option{amssymbol}{
+			\ditto
+		}
+		\compatibilityoption{noamssymb}{
+			Don't load the package \texttt{amssymb}.
+		}
+		\option{amsmath}{
+			Load the package \texttt{amsmath}.
+		}
+		\compatibilityoption{noamsmath}{
+			Don't load the package \texttt{amsmath}.
+		}
+	\end{options}
+
+	\subsection{Publication}
+	By default, all documents that are created with the \texttt{quantumarticle} documentclass are treated as possible submissions to Quantum. 
+	
+	\begin{options}
+		\option{accepted=YYYY-MM-DD}{
+			Adds the note 'Accepted in Quantum YYYY-MM-DD' to the document.
+		}
+		\option{unpublished}{
+			Intended for works that are not published in Quantum. Disables all Quantum-related branding.
+		}
+		\option{noarxiv}{
+			Intended for works that are not meant to be uploaded to the arXiv. Disables all arXiv-related sanity checks in the document. This option also sets \texttt{unpublished}.
+		}
+	\end{options}
+
+	\subsection{Compatibility}
+	The \texttt{quantumarticle} class aims to be maximally compatible with documents that were previously typset with other document classes. For this reason, a lot of options are present for the sole purpose of compatibility but don't have an effect on how your document will be typset. These include:
+	
+	\begin{options}
+		\compatibilityoption{checkin}{No effect.}
+		\compatibilityoption{preprint}{\ditto}
+		\compatibilityoption{reprint}{\ditto}
+		\compatibilityoption{manuscript}{\ditto}
+		\compatibilityoption{noshowpacs}{\ditto}
+		\compatibilityoption{showpacs}{\ditto}
+		\compatibilityoption{showkeys}{\ditto}
+		\compatibilityoption{noshowkeys}{\ditto}
+		\compatibilityoption{balancelastpage}{\ditto}
+		\compatibilityoption{nobalancelastpage}{\ditto}
+		\compatibilityoption{nopreprintnumbers}{\ditto}
+		\compatibilityoption{preprintnumbers}{\ditto}
+		\compatibilityoption{hyperref}{\ditto}
+		\compatibilityoption{bibnotes}{\ditto}
+		\compatibilityoption{nobibnotes}{\ditto}
+		\compatibilityoption{footinbib}{\ditto}
+		\compatibilityoption{nofootinbib}{\ditto}
+		\compatibilityoption{altaffilletter}{\ditto}
+		\compatibilityoption{altaffilsymbol}{\ditto}
+		\compatibilityoption{superbib}{\ditto}
+		\compatibilityoption{citeautoscript}{\ditto}
+		\compatibilityoption{longbibliography}{\ditto}
+		\compatibilityoption{nolongbibliography}{\ditto}
+		\compatibilityoption{eprint}{\ditto}
+		\compatibilityoption{noeprint}{\ditto}
+		\compatibilityoption{author-year}{\ditto}
+		\compatibilityoption{numerical}{\ditto}
+		\compatibilityoption{galley}{\ditto}
+		\compatibilityoption{raggedbottom}{\ditto}
+		\compatibilityoption{tightenlines}{\ditto}
+		\compatibilityoption{lengthcheck}{\ditto}
+		\compatibilityoption{reprint}{\ditto}
+		\compatibilityoption{eqsecnum}{\ditto}
+		\compatibilityoption{secnumarabic}{\ditto}
+		\compatibilityoption{floats}{\ditto}
+		\compatibilityoption{stfloats}{\ditto}
+		\compatibilityoption{endfloats}{\ditto}
+		\compatibilityoption{endfloats*}{\ditto}
+		\compatibilityoption{osa}{\ditto}
+		\compatibilityoption{osameet}{\ditto}
+		\compatibilityoption{opex}{\ditto}
+		\compatibilityoption{tops}{\ditto}
+		\compatibilityoption{josa}{\ditto}
+		\compatibilityoption{byrevtex}{\ditto}
+		\compatibilityoption{floatfix}{\ditto}
+		\compatibilityoption{nofloatfix}{\ditto}
+		\compatibilityoption{ltxgridinfo}{\ditto}
+		\compatibilityoption{outputdebug}{\ditto}
+		\compatibilityoption{raggedfooter}{\ditto}
+		\compatibilityoption{noraggedfooter}{\ditto}
+		\compatibilityoption{frontmatterverbose}{\ditto}
+		\compatibilityoption{linenumbers}{\ditto}
+		\compatibilityoption{nomerge}{\ditto}
+		\compatibilityoption{hypertext}{\ditto}
+		\compatibilityoption{frontmatterverbose}{\ditto}
+		\compatibilityoption{inactive}{\ditto}
+		\compatibilityoption{groupedaddress}{\ditto}
+		\compatibilityoption{unsortedaddress}{\ditto}
+		\compatibilityoption{runinaddress}{\ditto}
+		\compatibilityoption{superscriptaddress}{\ditto}
+		\compatibilityoption{aps}{Triggers revtex compatibility mode}
+		\compatibilityoption{pra}{\ditto}
+		\compatibilityoption{prb}{\ditto}
+		\compatibilityoption{pre}{\ditto}
+		\compatibilityoption{prl}{\ditto}
+		\compatibilityoption{prx}{\ditto}
+		\compatibilityoption{aip}{\ditto}
+	\end{options}
+		
 	\section{Further information}
 \end{document}
