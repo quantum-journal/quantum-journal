@@ -143,7 +143,6 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \DeclareOptionX{reprint}{}
 \DeclareOptionX{eqsecnum}{}
 \DeclareOptionX{secnumarabic}{}
-\DeclareOptionX{fleqn}{}
 \DeclareOptionX{floats}{}
 \DeclareOptionX{stfloats}{}
 \DeclareOptionX{endfloats}{}
