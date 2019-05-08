@@ -245,7 +245,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 
 \input{size1\@ptsize.clo}
 
-%enable the blacklisting of packages by patching the \usepackage command
+%we patch the \usepackage command to enable the blacklisting of packages and to throw an error if \pdfoutput=1 was not included in the document before the first usepackage
 \csdef{@packageblacklist}{}
 \newcommand*{\@blacklistpackage}[2][]{
 	\listxadd{\@packageblacklist}{#2}%
@@ -254,10 +254,26 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 
 \let\oldusepackage\usepackage
 \renewcommand*{\usepackage}[2][]{
-	\ifinlist{#2}{\@packageblacklist}{
-		\ifcsdef{@packageblacklisterrormessage#2}{
-			\ClassError{quantumarticle}{\csname @packageblacklisterrormessage#2\endcsname}{}}{}
-	}{\oldusepackage[#1]{#2}}
+  \iftoggle{@nopdfoutputerror}
+  {%
+  }
+  {
+    \def\@pdfoutputerror{\ClassError{quantumarticle}{As suggested by the arXiv (https://arxiv.org/help/submit_tex), please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file and before the first \string\usepackage command. Without this, the arXiv compiles your document with latex instead of pdflatex and hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information. If you still want to use standard latex (for example because you depend on psfrag) instead of pdflatex despite this problem, you can disable this error by giving the nopdfoutputerror option to quantumarticle. In this case please check carefully that the links in the version of your document typeset on the arXiv, especially those in the bibliography, work properly}{}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
+    }
+    \ifcsdef{pdfoutput}%
+    {%
+      \ifnumequal{\pdfoutput}{1}
+      {}
+      {\@pdfoutputerror}%
+    }
+    {%
+      \@pdfoutputerror%
+    }
+  } 
+  \ifinlist{#2}{\@packageblacklist}{
+    \ifcsdef{@packageblacklisterrormessage#2}{
+      \ClassError{quantumarticle}{\csname @packageblacklisterrormessage#2\endcsname}{}}{}
+  }{\oldusepackage[#1]{#2}}
 }
 
 \@blacklistpackage{titlesec}
@@ -1358,7 +1374,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 {	
 	\ifnumequal{\pdfoutput}{0}
 	{}
-	{\PassOptionsToPackage{breaklinks=true}{hyperref}}
+	{\PassOptionsToPackage{breaklinks=true}{hyperref}}%setting this option produces a warning if \pdfoutput=0
 }
 {}
 
@@ -1366,24 +1382,8 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \PassOptionsToPackage{doi=true}{biblatex}
 
 \AtBeginDocument{%
-	\RequirePackage{hyperref}%
-	
-	\iftoggle{@nopdfoutputerror}
-	{%
-	}
-	{
-          \def\@pdfoutputerror{\ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex). Without this, the arXiv compiles your document with latex instead of pdflatex and hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information. If you still want to use standard latex (for example because you depend on psfrag) instead of pdflatex despite this problem, you can disable this error by giving the nopdfoutputerror option to quantumarticle. In this case please check carefully that the links in your document, especially in the bibliography work properly}{}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
-          }
-		\ifcsdef{pdfoutput}%
-		{%
-			\ifnumequal{\pdfoutput}{1}
-                        {}
-                        {\@pdfoutputerror}%
-		}
-		{%
-                        \@pdfoutputerror%
-		}
-	}
+
+	\RequirePackage{hyperref}%	
 
 	\@ifpackageloaded{natbib}{%
 		\setlength{\bibsep}{0pt plus 0.3ex}
@@ -1547,6 +1547,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \@blacklistpackage[You are not supposed to load custom font packages such as]{times}
 \@blacklistpackage[You are not supposed to load custom font packages such as]{yfonts}
 
+\iftoggle{@nopdfoutputerror}{}{\pdfoutput=0} %Set \pdfoutput=0 so that we can check later during \usepackage whether the authors did put \pdfoutput=1 into their document, bit only if the nopdfoutputerror was not given
 \endinput
 %%
 %% End of file `quantumarticle.cls'.
