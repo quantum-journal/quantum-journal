@@ -29,7 +29,7 @@
 }
 
 \newcommand{\defaultoption}[2]{
-\small\texttt{\textcolor{blue}{#1}} & \small\textcolor{blue}{#2} \\
+\small\texttt{#1 (*)} & {\small #2} \\
 }
 
 %\newenvironment{options}
@@ -46,15 +46,21 @@
 %	\end{minipage}
 %}
 
+
 \begin{document}
 	\title{Documentation of quantumarticle.cls}
 	\maketitle
 	
 	\tableofcontents
 	
+	\clearpage
+	
 	\section{Introduction}
 	
 	\section{Package options}
+	The quantumarticle document class provides a multitude of package options that change the appearance of the final document to the liking of the user. 
+	
+	Default options that need not be given are marked with \texttt{(*)}. Options that are only provided for compatibility reasons and that will not alter the typesetting of the document are written in gray font.
 	
 	\subsection{Document setup}
 	
@@ -63,27 +69,27 @@
 	
 	\begin{options}
 		\option{a4paper}{
-			Sets the paper size to A4.
+			Sets the paper size to ISO A4.
 		}
 		\option{a5paper}{
-			Sets the paper size to A5.
+			Sets the paper size to ISO A5.
 		}
 		\option{b5paper}{
-			Sets the paper size to B5.
+			Sets the paper size to ISO B5.
 		}
 		\option{letterpaper}{
-			Sets the paper size to letter. \todo{official name}
+			Sets the paper size to ANSI Letter.
 		}
 		\option{legalpaper}{
-			Sets the paper size to legal. \todo{official name}
+			Sets the paper size to ANSI Legal.
 		}
 		\option{executivepaper}{
-			Sets the paper size to executive. \todo{official name}
+			Sets the paper size to ANSI Executive.
 		}
 	\end{options}
 
 	\subsubsection{Orientation}
-	The default orientation is portrait. 
+	By default, the orientation is portrait. 
 	
 	\begin{options}
 		\option{landscape}{
@@ -92,7 +98,7 @@
 	\end{options}
 
 	\subsubsection{Fontsize}
-	The default fontsize is 10pt.
+	By default, the fontsize is 10pt.
 	
 	\begin{options}
 		\defaultoption{10pt}{
@@ -107,7 +113,7 @@
 	\end{options}
 
 	\subsubsection{Sides}
-	The default siding is oneside \todo{better word than siding}.
+	By default, the setting is oneside.
 	
 	\begin{options}
 		\defaultoption{oneside}{
@@ -165,7 +171,7 @@
 	\end{options}
 
 	\subsection{Pre-loaded packages}
-	The document class only loads packages necessary for its operation, such as \texttt{geometry} or \texttt{hyperref}. For compatibility reasons, there are also commands that load certain widely used classes for the user.
+	The document class only loads packages necessary for its operation, such as \texttt{geometry} or \texttt{hyperref}. For compatibility reasons, there are commands that load certain widely used classes for the user.
 	
 	\begin{options}
 		\option{amsfonts}{
@@ -279,5 +285,15 @@
 		\compatibilityoption{aip}{\ditto}
 	\end{options}
 		
-	\section{Further information}
+	\section{Contributing}
+	In case you encounter problems using the article class please consider opening a bug report in our bug-tracker on GitHub. You can also contact us via email under \texttt{latex@quantum-journal.org}, but it may take significantly longer to get a response. In any case we need the full source of a document that produces the problem and the log file showing the error to help you.
+	
+	Improvements submitted as pull requests against the development branch are very much appreciated!
+	
+	\section{Copyright}
+	Copyright 2019 Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften (\url{http://quantum-journal.org/about/}).
+	
+	The document class \texttt{quantumarticle} is derived from \texttt{article} available from \url{https://www.ctan.org/pkg/article}.
+	
+	It may be distributed and/or modified under the conditions of the LaTeX Project Public License, either version 1.3c of this license or (at your option) any later version. The latest version of this license is in \url{http://www.latex-project.org/lppl.txt} and version 1.3c or later is part of all distributions of \LaTeX version 2005/12/01 or later.
 \end{document}
