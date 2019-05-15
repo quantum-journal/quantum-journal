@@ -28,6 +28,10 @@
 	\small\texttt{\textcolor{quantumgray}{#1}} & \small\textcolor{quantumgray}{#2} \\
 }
 
+\newcommand{\defaultoption}[2]{
+\small\texttt{\textcolor{blue}{#1}} & \small\textcolor{blue}{#2} \\
+}
+
 %\newenvironment{options}
 %{\begin{mdframed}}
 %	{\end{mdframed}}
@@ -91,7 +95,7 @@
 	The default fontsize is 10pt.
 	
 	\begin{options}
-		\option{10pt}{
+		\defaultoption{10pt}{
 			Sets the normal fontsize to 10pt.
 		}
 		\option{11pt}{
@@ -106,7 +110,7 @@
 	The default siding is oneside \todo{better word than siding}.
 	
 	\begin{options}
-		\option{oneside}{
+		\defaultoption{oneside}{
 			Prepares the document as onesided.
 		}
 		\option{twoside}{
@@ -124,6 +128,18 @@
 		\compatibilityoption{notitlepage}{
 			Displays the title on the same page as the text.
 		}
+	\end{options}
+
+	\subsubsection{Draft}
+	By default, the document class is typset as final.
+	
+	\begin{options}
+	\option{draft}{
+		Marks the document as a draft.
+	}
+	\defaultoption{final}{
+		Does not mark the document as a draft.
+	}
 	\end{options}
 
 	\subsection{Style options}
