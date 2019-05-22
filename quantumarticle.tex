@@ -56,15 +56,122 @@
 	\clearpage
 	
 	\section{Introduction}
-	The quantumarticle document class is suggested for papers that are gonna be submitted to Quantum -- the open journal of quantum science. It is based on the widely used article document class and designed to allow a seamless transition from documents typeset with article, revtex and elsarticle document classes. 
+	The quantumarticle document class is suggested for papers that will be submitted to Quantum -- the open journal of quantum science. It is based on the widely used article document class and designed to allow a seamless transition from documents typeset with article, revtex and elsarticle document classes. 
 	
 	\section{Typesetting documents}
 	
-	\subsection{title}
+	\subsection{Recommended structure}	
 	
-	\subsection{Figures}
+	\subsection{Sectioning}
+	Sections, subsections, subsubsections, and paragraphs should be typeset with the standard LaTeX commands. The paragraph is the smallest unit of sectioning. Feel free to end the paragraph title with a full stop if you find this appropriate.
 	
-	\subsection{Tables}
+	\subsection{Equations}	
+	You can use the standard commands for equations. For multi-line equations \texttt{align} is preferable over \texttt{eqnarray}, please refrain from using the latter.	For complex equations you may want to consider using the \texttt{IEEEeqnarray} environment from the \texttt{IEEEtrantools} package.
+	
+	How you refer to equations is up to you, but please be consistent and use the \texttt{\textbackslash{}eqref\{\dots\}} command instead of writing \texttt{(\textbackslash{}ref\{\dots\})}.
+	
+	As a courtesy for your readers and referees, please suppress equation numbers only if there is a specific reason to do so, to not make it unnecessarily difficult to refer to individual results and steps in derivations.
+	
+	\subsection{Floats}	
+	Every floating element must have an informative caption and a number. The caption can be placed above, below, or to the side of the figure, as you see fit.
+	
+	Feel free to place them at the top or bottom of the page, or in the middle of a paragraph as you see fit. Try to place them on the same page as the text referring to them. A figure on the first page can help readers remember and recognize your work more easily.
+	
+	\subsubsection{Figures}
+	Figures are typset using the standard \texttt{figure} environment for single-column figures and \texttt{figure*} for multi-column figures. 
+	
+	\subsubsection{Tables}
+	\todo{Do we support table / table*?}
+	
+	\subsection{Plots}
+	Quantum provides a Jupyter notebook to create plots that integrate seamlessly with \texttt{quantumarticle}.
+	
+	\subsection{Footnotes}
+	Footnotes are typset using the \texttt{footnote} command. They will appear in the bottom of the page. Please do only use footnotes when appropriate and do not mix footnotes with references.
+	
+	\subsection{References}	
+	Citations to other works should appear in the References section at the end of the work.
+	
+	\begin{theorem}[DOI links are required]
+		Important: As Quantum is a member of Crossref, all references to works that have a DOI must be hyperlinked according to the DOI. Those links must start with \texttt{https://doi.org/} (preferred), or \texttt{http://dx.doi.org/}. Direct links to the website of the publisher are not sufficient.
+	\end{theorem}
+	
+	This can be achieved in several ways, depending on how you are formatting your bibliography.
+	Suppose the DOI of an article \cite{examplecitation} that you want to cite is \texttt{10.22331/idonotexist}.
+	If you are formatting your bibliography manually, you can cite this work using the following in your \texttt{thebibliography} environment:
+	\begin{verbatim}
+	\bibitem{examplecitation}
+	Name Surname,
+	\href{https://doi.org/10.22331/
+	idonotexist}{Quantum
+	\textbf{123}, 123456 (1916).}
+	\end{verbatim}
+	
+	\begin{theorem}[One citation per bibitem]
+		Important: If you are formatting your bibliography manually, please do not group multiple citations into one \texttt{\textbackslash{}bibitem}.
+		Having to search through multiple references to find the cited result makes your work less accessible for authors and grouping references can screw up our automatic extraction of citations.
+	\end{theorem}
+	
+	We encourage the use of BibTeX to generate your bibliography from the BibTeX meta-data provided by publishers.
+	For DOI linking to work, the BibTeX file must contain the \texttt{doi} field as for example in:
+	\begin{verbatim}
+	@article{examplecitation,
+	author = {Surname, Name},
+	title = {Title},
+	journal = {Quantum},
+	volume = {123},
+	page = {123456},
+	year = {1916},
+	doi = {10.22331/idonotexist},
+	}
+	\end{verbatim}
+	Several authors had problems because of Unicode characters in their BibTeX files.
+	Be advised that \href{http://wiki.lyx.org/BibTeX/Tips}{BibTeX does not support Unicode characters}.
+	All special characters must be input via their respective LaTeX commands.
+	
+	If you are using BibTeX, you can load the \texttt{natbib} package by putting
+	\begin{verbatim}
+	\usepackage[numbers,sort&compress]{natbib}
+	\end{verbatim}
+	in the preamble of your document and then use the \texttt{plainnat} citation style by including your BibTeX bibliography \texttt{mybibliography.bib} where you want the bibliography to appear as follows:
+	\begin{verbatim}
+	\bibliographystyle{plainnat}
+	\bibliography{mybibliography}
+	\end{verbatim}
+	The quantumarticle class automatically detects that the \texttt{natbib} package was loaded and redefines the \texttt{\textbackslash{}doi} command to create hyperlinks.
+	This is likely the easiest option if you are converting from another document class.
+	
+	If you want to used BibLaTeX, you can instead add
+	\begin{verbatim}
+	\usepackage[backend=bibtex]{biblatex}
+	\addbibresource{mybibliography.bib}
+	\end{verbatim}
+	to the preamble of your document and then output the bibliography with
+	\begin{verbatim}
+	\printbibliography
+	\end{verbatim}
+	where appropriate.
+	You then have to upload the .bbl file along with the other source files when submitting to the arXiv.
+	Due to incompatibilities between different LaTeX version we unfortunately cannot recommend this option \cite{biblatexsubmittingtothearxiv}.
+	
+	The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declares a suitable field format to make it a hyperlink.
+	Due to issues with \texttt{biber} we recommend to use the \texttt{bibtex} backend of \texttt{biblatex}.
+	
+	More information on how to get DOI links in your document can be found on StackExchange \cite{howtogetdoilinksinbibliography,automaticallyaddingdoifieldstoahandmadebibliography}.
+	Feel free to change the appearance of citations in any way you like by using a different \texttt{bibliographystyle} or via the advanced mechanisms provided by BibLaTeX.
+	The only two requirements are that citations must uniquely identify the cited work and that they must contain a DOI hyperlink whenever possible.
+	
+	\begin{theorem}[Use \texttt{\textbackslash pdfoutput=1}]
+		In order to get correct line breaks within hyperlinks and to make sure the arXiv produces a PDF as output, please add the line 
+		\begin{verbatim}
+		\pdfoutput=1
+		\end{verbatim}
+		within the first 5 lines of your main LaTeX file, as suggested by the arXiv \cite{arxivpdfoutput}.
+	\end{theorem}
+	
+	\subsection{Appendix}
+	
+	\subsection{Recommended packages}
 	
 	\section{Package options}
 	The quantumarticle document class provides a multitude of package options that change the appearance of the final document to the liking of the user. 
