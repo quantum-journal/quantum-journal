@@ -58,9 +58,51 @@
 	\section{Introduction}
 	The quantumarticle document class is suggested for papers that will be submitted to Quantum -- the open journal of quantum science. It is based on the widely used article document class and designed to allow a seamless transition from documents typeset with article, revtex and elsarticle document classes. 
 	
+	As Quantum is an arXiv overlay journal, all papers have to be submitted to the arXiv. To make this submission process as user-friendly as possible, the quantumarticle document class contains some arXiv-specific checks that can be deactivated via the option \texttt{noarxiv}.
+	
+	\section{Important quirks}
+	
+	\subsection{pdfoutput}
+	In order to get correct line breaks within hyperlinks and to make sure the arXiv produces a PDF as output, please add the line 
+	\begin{verbatim}
+	\pdfoutput=1
+	\end{verbatim}
+	within the first 5 lines of your main LaTeX file, \href{https://arxiv.org/help/submit_tex}{as suggested by the arXiv}. By default, the quantumarticle document class will enforce that \texttt{pdfoutput} is set to 1. This can be deactivated via the option \texttt{nopdfoutputerror}.
+	
 	\section{Typesetting documents}
 	
 	\subsection{Recommended structure}	
+	
+	\paragraph{Summary section}
+	Longer articles should include a section that, early on, explains the main results, their limitations, and assumptions.
+	This section can be used to, for example, present the main theorem, or provide a summary of the results for a wider audience.
+	
+	\section{Title information}
+	You can provide information on authors and affiliations in the common format also used by \texttt{revtex}:
+	\begin{verbatim}
+	\title{Title}
+	\author{Author 1}
+	\author{Author 2}
+	\affiliation{Affiliation 1}
+	\author{Author 3}
+	\affiliation{Affiliation 2}
+	\author{Author 4}
+	\affiliation{Affiliation 1}
+	\affiliation{Affiliation 3}
+	\end{verbatim}
+	In this example affiliation 1 will be associated with authors 1, 2, and 4, affiliation 2 with author 3 and affiliation 3 with author 4.
+	Repeated affiliations are automatically recognized and typeset in \texttt{superscriptaddress} style.
+	Alternatively you can use a format similar to that of the \texttt{authblk} package and the \texttt{elsarticle} document class to specify the same affiliation relations as follows:
+	\begin{verbatim}
+	\title{Title}
+	\author[1]{Author 1}
+	\author[1]{Author 2}
+	\author[2]{Author 3}
+	\author[1,3]{Author 4}
+	\affil[1]{Affiliation 1}
+	\affil[2]{Affiliation 1}
+	\affil[3]{Affiliation 1}
+	\end{verbatim}
 	
 	\subsection{Sectioning}
 	Sections, subsections, subsubsections, and paragraphs should be typeset with the standard LaTeX commands. The paragraph is the smallest unit of sectioning. Feel free to end the paragraph title with a full stop if you find this appropriate.
@@ -71,6 +113,11 @@
 	How you refer to equations is up to you, but please be consistent and use the \texttt{\textbackslash{}eqref\{\dots\}} command instead of writing \texttt{(\textbackslash{}ref\{\dots\})}.
 	
 	As a courtesy for your readers and referees, please suppress equation numbers only if there is a specific reason to do so, to not make it unnecessarily difficult to refer to individual results and steps in derivations.
+	
+	Very wide equations can be shown expanding over both columns using the \texttt{widetext} environment.
+	In \texttt{onecolumn} mode, the \texttt{widetext} environment has no effect.
+	To enable this feature in \texttt{twocolumn} mode, \texttt{quantumarticle} relies on the package \texttt{ltxgrid}.
+	Unfortunately this package has a bug that leads to a sub-optimal placement of extremely long footnotes.
 	
 	\subsection{Floats}	
 	Every floating element must have an informative caption and a number. The caption can be placed above, below, or to the side of the figure, as you see fit.
@@ -87,18 +134,15 @@
 	Quantum provides a Jupyter notebook to create plots that integrate seamlessly with \texttt{quantumarticle}.
 	
 	\subsection{Footnotes}
-	Footnotes are typset using the \texttt{footnote} command. They will appear in the bottom of the page. Please do only use footnotes when appropriate and do not mix footnotes with references.
+	Footnotes are typeset using the \texttt{footnote} command. They will appear in the bottom of the page. Please do only use footnotes when appropriate and do not mix footnotes with references.
 	
 	\subsection{References}	
 	Citations to other works should appear in the References section at the end of the work.
 	
-	\begin{theorem}[DOI links are required]
-		Important: As Quantum is a member of Crossref, all references to works that have a DOI must be hyperlinked according to the DOI. Those links must start with \texttt{https://doi.org/} (preferred), or \texttt{http://dx.doi.org/}. Direct links to the website of the publisher are not sufficient.
-	\end{theorem}
+	\paragraph{Important:} As Quantum is a member of Crossref, all references to works that have a DOI \emph{must} be hyperlinked according to the DOI. Those links must start with \texttt{https://doi.org/} (preferred), or \texttt{http://dx.doi.org/}. Direct links to the website of the publisher are not sufficient. This can be achieved in several ways, depending on how you are formatting your bibliography.
 	
-	This can be achieved in several ways, depending on how you are formatting your bibliography.
-	Suppose the DOI of an article \cite{examplecitation} that you want to cite is \texttt{10.22331/idonotexist}.
-	If you are formatting your bibliography manually, you can cite this work using the following in your \texttt{thebibliography} environment:
+	\subsubsection{Manual bibliography}
+	Suppose the DOI of an article that you want to cite is \texttt{10.22331/idonotexist}. If you are formatting your bibliography manually, you can cite this work using the following in your \texttt{thebibliography} environment:
 	\begin{verbatim}
 	\bibitem{examplecitation}
 	Name Surname,
@@ -107,11 +151,10 @@
 	\textbf{123}, 123456 (1916).}
 	\end{verbatim}
 	
-	\begin{theorem}[One citation per bibitem]
-		Important: If you are formatting your bibliography manually, please do not group multiple citations into one \texttt{\textbackslash{}bibitem}.
-		Having to search through multiple references to find the cited result makes your work less accessible for authors and grouping references can screw up our automatic extraction of citations.
-	\end{theorem}
+	\paragraph{Important:} If you are formatting your bibliography manually, please do not group multiple citations into one \texttt{\textbackslash{}bibitem}.
+	Having to search through multiple references to find the cited result makes your work less accessible for authors and grouping references can screw up our automatic extraction of citations.
 	
+	\subsubsection{BibTeX bibliography}
 	We encourage the use of BibTeX to generate your bibliography from the BibTeX meta-data provided by publishers.
 	For DOI linking to work, the BibTeX file must contain the \texttt{doi} field as for example in:
 	\begin{verbatim}
@@ -129,6 +172,7 @@
 	Be advised that \href{http://wiki.lyx.org/BibTeX/Tips}{BibTeX does not support Unicode characters}.
 	All special characters must be input via their respective LaTeX commands.
 	
+	\paragraph{natbib}
 	If you are using BibTeX, you can load the \texttt{natbib} package by putting
 	\begin{verbatim}
 	\usepackage[numbers,sort&compress]{natbib}
@@ -141,7 +185,8 @@
 	The quantumarticle class automatically detects that the \texttt{natbib} package was loaded and redefines the \texttt{\textbackslash{}doi} command to create hyperlinks.
 	This is likely the easiest option if you are converting from another document class.
 	
-	If you want to used BibLaTeX, you can instead add
+	\paragraph{BibLaTeX}
+	If you want to use BibLaTeX, you can instead add
 	\begin{verbatim}
 	\usepackage[backend=bibtex]{biblatex}
 	\addbibresource{mybibliography.bib}
@@ -157,21 +202,27 @@
 	The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declares a suitable field format to make it a hyperlink.
 	Due to issues with \texttt{biber} we recommend to use the \texttt{bibtex} backend of \texttt{biblatex}.
 	
-	More information on how to get DOI links in your document can be found on StackExchange \cite{howtogetdoilinksinbibliography,automaticallyaddingdoifieldstoahandmadebibliography}.
 	Feel free to change the appearance of citations in any way you like by using a different \texttt{bibliographystyle} or via the advanced mechanisms provided by BibLaTeX.
 	The only two requirements are that citations must uniquely identify the cited work and that they must contain a DOI hyperlink whenever possible.
 	
-	\begin{theorem}[Use \texttt{\textbackslash pdfoutput=1}]
-		In order to get correct line breaks within hyperlinks and to make sure the arXiv produces a PDF as output, please add the line 
-		\begin{verbatim}
-		\pdfoutput=1
-		\end{verbatim}
-		within the first 5 lines of your main LaTeX file, as suggested by the arXiv \cite{arxivpdfoutput}.
-	\end{theorem}
-	
 	\subsection{Appendix}
+	Quantum allows the usage of appendices. Ideally, the command \texttt{\textbackslash{}appendix} should be put before the appendices to get appropriate section numbering. The appendices are then numbered alphabetically, with numeric (sub)subsection numbering.
+	Equations continue to be numbered sequentially.
+	You are free to change this in case it is more appropriate for your article, but a consistent and unambiguous numbering of sections and equations must be ensured.
+	
+	If you want your appendices to appear in \texttt{onecolumn} mode but the rest of the document in \texttt{twocolumn} mode, you can insert the command \texttt{\textbackslash{}onecolumn\textbackslash{}newpage} before \texttt{\textbackslash{}appendix}.   
 	
 	\subsection{Recommended packages}
+	Quantum encourages you to load the following extra packages:
+	\begin{verbatim}
+	\usepackage[utf8]{inputenc}
+	\usepackage[english]{babel}
+	\usepackage[T1]{fontenc}
+	\usepackage{amsmath}
+	\usepackage{hyperref}
+	\end{verbatim}
+	If you do not load the \texttt{hyperref} package, quantumarticle automatically loads it for you.
+	Packages that change font settings, such as \texttt{times} or \texttt{helvet} should be avoided.
 	
 	\section{Package options}
 	The quantumarticle document class provides a multitude of package options that change the appearance of the final document to the liking of the user. 
