@@ -47,7 +47,7 @@
 .LINK
     http://quantum-journal.org
 .LINK
-    https://github.com/cgogolin/quantum-journal
+    https://github.com/quantum-journal/quantum-journal
 .PARAMETER CTAN
     If present, this script will also build a ZIP archive suitable
     for uploading {quantumarticle} to CTAN.
