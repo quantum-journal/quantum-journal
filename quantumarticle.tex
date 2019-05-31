@@ -13,7 +13,7 @@
 \newcommand*{\ditto}{--- \raisebox{-0.5ex}{''} ---}
 
 \newenvironment{options}
-	{\medskip\noindent\begin{longtable}{p{.20\columnwidth}p{.744\columnwidth}}
+	{\medskip\noindent\begin{longtable}{p{.25\columnwidth}p{.694\columnwidth}}
 	%\toprule
 	\textsf{Option} & \textsf{Description} \\
 	\midrule
@@ -25,11 +25,23 @@
 }
 
 \newcommand{\compatibilityoption}[2]{
-	\small\texttt{\textcolor{quantumgray}{#1}} & \small\textcolor{quantumgray}{#2} \\
+	\small\texttt{#1 (C)} & {\small #2} \\
 }
 
 \newcommand{\defaultoption}[2]{
-\small\texttt{#1 (*)} & {\small #2} \\
+\small\texttt{#1 (default)} & {\small #2} \\
+}
+
+\newenvironment{commands}
+{\medskip\noindent\begin{longtable}{p{.20\columnwidth}p{.744\columnwidth}}
+		%\toprule
+		\textsf{Command} & \textsf{Description} \\
+		\midrule
+	}
+	{\bottomrule\end{longtable}}
+
+\newcommand{\command}[2]{
+	\small\texttt{#1} & {\small#2} \\
 }
 
 %\newenvironment{options}
@@ -72,15 +84,22 @@
 	\section{Typesetting documents}
 	
 	\subsection{Recommended structure}	
+	In the \texttt{twocolumn} layout and without the \texttt{titlepage} option a paragraph without a previous section title may directly follow the abstract.
+	In \texttt{onecolumn} format or with a dedicated \texttt{titlepage}, this should be avoided.
 	
 	\paragraph{Summary section}
 	Longer articles should include a section that, early on, explains the main results, their limitations, and assumptions.
 	This section can be used to, for example, present the main theorem, or provide a summary of the results for a wider audience.
 	
-	\section{Title information}
+	\subsection{Title information}
+	The title of the document is given via the common \texttt{title} command. Note that clicking the title performs a search for that title on \href{http://quantum-journal.org}{quantum-journal.org}.
+	In this way readers can easily verify whether a work using the \texttt{quantumarticle} class was actually published in Quantum. By giving the \texttt{accepted=YYYY-MM-DD} option, with \texttt{YYYY-MM-DD} the acceptance date, the note ``Accepted in Quantum YYYY-MM-DD, click title to verify'' can be added to the bottom of each page to clearly mark works that have been accepted in Quantum. 	
+	
+	You should call \texttt{\textbackslash{}maketitle} before your running text starts.
+	
+	\subsubsection{Authors and affiliations}
 	You can provide information on authors and affiliations in the common format also used by \texttt{revtex}:
 	\begin{verbatim}
-	\title{Title}
 	\author{Author 1}
 	\author{Author 2}
 	\affiliation{Affiliation 1}
@@ -94,7 +113,6 @@
 	Repeated affiliations are automatically recognized and typeset in \texttt{superscriptaddress} style.
 	Alternatively you can use a format similar to that of the \texttt{authblk} package and the \texttt{elsarticle} document class to specify the same affiliation relations as follows:
 	\begin{verbatim}
-	\title{Title}
 	\author[1]{Author 1}
 	\author[1]{Author 2}
 	\author[2]{Author 3}
@@ -103,6 +121,34 @@
 	\affil[2]{Affiliation 1}
 	\affil[3]{Affiliation 1}
 	\end{verbatim}
+	
+	\subsubsection{Other author related information}
+	The quantumarticle document class supports further commands that are author specific:
+	\begin{commands}
+		\command{email}{%
+			E-Mail address of the author, displayed in the bottom of the page.
+		}
+	
+		\command{homepage}{%
+			Homepage of the author, displayed in the bottom of the page.
+		}
+	
+		\command{thanks}{%
+			Additional text that is displayed in the bottom of the page.
+		}
+	
+		\command{orcid}{%
+			If the ORCiD of the author is given, his name will become a link to his ORCiD profile.
+		}
+	\end{commands}
+	
+	\subsection{Abstract}
+	The abstract is typeset using the common \texttt{abstract} environment. In the standard, \texttt{twocolumn}, layout the abstract is typeset as a bold face first paragraph.
+	In \texttt{onecolumn} layout the abstract is placed above the text.
+	Both can be combined with the \texttt{titlepage} option to obtain a format with dedicated title and abstract pages that are not included in the page count.
+	This format can be more suitable for long articles.
+	The \texttt{abstract} environment can appear both before and after the \texttt{\textbackslash{}maketitle} command and calling \texttt{\textbackslash{}maketitle} is optional, as long as there is an \texttt{abstract}.
+	Both \texttt{abstract} and \texttt{\textbackslash{}maketitle} however must be placed after all other \texttt{\textbackslash{}author}, \texttt{\textbackslash{}affiliation}, etc.\ commands.
 	
 	\subsection{Sectioning}
 	Sections, subsections, subsubsections, and paragraphs should be typeset with the standard LaTeX commands. The paragraph is the smallest unit of sectioning. Feel free to end the paragraph title with a full stop if you find this appropriate.
@@ -128,7 +174,7 @@
 	Figures are typset using the standard \texttt{figure} environment for single-column figures and \texttt{figure*} for multi-column figures. 
 	
 	\subsubsection{Tables}
-	\todo{Do we support table / table*?}
+	Tables are typset using the standard \texttt{table} environment for single-column tables and \texttt{table*} for multi-column tables. 
 	
 	\subsection{Plots}
 	Quantum provides a Jupyter notebook to create plots that integrate seamlessly with \texttt{quantumarticle}.
@@ -227,7 +273,7 @@
 	\section{Package options}
 	The quantumarticle document class provides a multitude of package options that change the appearance of the final document to the liking of the user. 
 	
-	Default options that need not be given are marked with \texttt{(*)}. Options that are only provided for compatibility reasons and that will not alter the typesetting of the document are written in gray font.
+	Default options that need not be given are marked with \texttt{(default)}. Options that are only provided for compatibility reasons and that will not alter the typesetting of the document are marked with \texttt{(C)}.
 	
 	\subsection{Document setup}
 	
@@ -235,22 +281,22 @@
 	The document class does not specify a default document format, an error is raised if none is specified.
 	
 	\begin{options}
-		\option{a4paper}{
+		\option{a4paper}{%
 			Sets the paper size to ISO A4.
 		}
-		\option{a5paper}{
+		\option{a5paper}{%
 			Sets the paper size to ISO A5.
 		}
-		\option{b5paper}{
+		\option{b5paper}{%
 			Sets the paper size to ISO B5.
 		}
-		\option{letterpaper}{
+		\option{letterpaper}{%
 			Sets the paper size to ANSI Letter.
 		}
-		\option{legalpaper}{
+		\option{legalpaper}{%
 			Sets the paper size to ANSI Legal.
 		}
-		\option{executivepaper}{
+		\option{executivepaper}{%
 			Sets the paper size to ANSI Executive.
 		}
 	\end{options}
@@ -259,7 +305,7 @@
 	By default, the orientation is portrait. 
 	
 	\begin{options}
-		\option{landscape}{
+		\option{landscape}{%
 			Sets the orientation of the document to landscape.
 		}
 	\end{options}
@@ -268,13 +314,13 @@
 	By default, the fontsize is 10pt.
 	
 	\begin{options}
-		\defaultoption{10pt}{
+		\defaultoption{10pt}{%
 			Sets the normal fontsize to 10pt.
 		}
-		\option{11pt}{
+		\option{11pt}{%
 			Sets the normal fontsize to 11pt.
 		}
-		\option{12pt}{
+		\option{12pt}{%
 			Sets the normal fontsize to 12pt.
 		}
 	\end{options}
@@ -283,11 +329,11 @@
 	By default, the setting is oneside.
 	
 	\begin{options}
-		\defaultoption{oneside}{
-			Prepares the document as onesided.
+		\defaultoption{oneside}{%
+			Prepares the document onesided.
 		}
-		\option{twoside}{
-			Prepares the document as twosided.
+		\option{twoside}{%
+			Prepares the document twosided.
 		}
 	\end{options}
 
@@ -295,10 +341,10 @@
 	By default, the document class is typset with no extra titlepage.
 	
 	\begin{options}
-		\option{titlepage}{
+		\option{titlepage}{%
 			Displays the title on a separate titlepage.
 		}
-		\compatibilityoption{notitlepage}{
+		\compatibilityoption{notitlepage}{%
 			Displays the title on the same page as the text.
 		}
 	\end{options}
@@ -307,10 +353,10 @@
 	By default, the document class is typset as final.
 	
 	\begin{options}
-	\option{draft}{
+	\option{draft}{%
 		Marks the document as a draft.
 	}
-	\defaultoption{final}{
+	\defaultoption{final}{%
 		Does not mark the document as a draft.
 	}
 	\end{options}
@@ -318,13 +364,13 @@
 	\subsection{Style options}
 	
 	\subsubsection{Equations}
-	By default, equations are typset centered, with equation numbers on the right. \todo{Clear fleqn behaviour} 
+	By default, equations are typset centered, with equation numbers on the right.
 	
 	\begin{options}
-		\option{fleqn}{
+		\option{fleqn}{%
 			Display equations left aligned.
 		}
-		\option{leqno}{
+		\option{leqno}{%
 			Display equation numbers to the left of the equation.
 		}
 	\end{options}
@@ -332,8 +378,8 @@
 	\subsubsection{Bibliography}
 	
 	\begin{options}
-		\option{openbib}{
-			\todo{Find out what openbib does.}
+		\option{openbib}{%
+			Display elements of bibliography entries on separate lines, \href{https://tex.stackexchange.com/questions/56628/custom-references-page-with-additional-line-breaks}{see here}.
 		}
 	\end{options}
 
@@ -341,25 +387,25 @@
 	The document class only loads packages necessary for its operation, such as \texttt{geometry} or \texttt{hyperref}. For compatibility reasons, there are commands that load certain widely used classes for the user.
 	
 	\begin{options}
-		\option{amsfonts}{
+		\option{amsfonts}{%
 			Load the package \texttt{amsfonts}.
 		}
-		\compatibilityoption{noamsfonts}{
+		\compatibilityoption{noamsfonts}{%
 			Don't load the package \texttt{amsfonts}.
 		}
-		\option{amssymb}{
+		\option{amssymb}{%
 			Load the package \texttt{amssymb}.
 		}
-		\option{amssymbol}{
+		\option{amssymbol}{%
 			\ditto
 		}
-		\compatibilityoption{noamssymb}{
+		\compatibilityoption{noamssymb}{%
 			Don't load the package \texttt{amssymb}.
 		}
-		\option{amsmath}{
+		\option{amsmath}{%
 			Load the package \texttt{amsmath}.
 		}
-		\compatibilityoption{noamsmath}{
+		\compatibilityoption{noamsmath}{%
 			Don't load the package \texttt{amsmath}.
 		}
 	\end{options}
@@ -368,13 +414,13 @@
 	By default, all documents that are created with the \texttt{quantumarticle} documentclass are treated as possible submissions to Quantum. 
 	
 	\begin{options}
-		\option{accepted=YYYY-MM-DD}{
+		\option{accepted=YYYY-MM-DD}{%
 			Adds the note 'Accepted in Quantum YYYY-MM-DD' to the document.
 		}
-		\option{unpublished}{
+		\option{unpublished}{%
 			Intended for works that are not published in Quantum. Disables all Quantum-related branding.
 		}
-		\option{noarxiv}{
+		\option{noarxiv}{%
 			Intended for works that are not meant to be uploaded to the arXiv. Disables all arXiv-related sanity checks in the document. This option also sets \texttt{unpublished}.
 		}
 	\end{options}
