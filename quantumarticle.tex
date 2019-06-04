@@ -68,21 +68,25 @@
 	\clearpage
 	
 	\section{Introduction}
-	The quantumarticle document class is suggested for papers that will be submitted to Quantum -- the open journal of quantum science. It is based on the widely used article document class and designed to allow a seamless transition from documents typeset with article, revtex and elsarticle document classes. 
+	The quantumarticle document class is the preferred document class for papers that will be submitted to \href{https://quantum-journal.org/}{Quantum -- the open journal of quantum science}. It is based on the widely used \texttt{article} document class and designed to allow a seamless transition from documents typeset with \texttt{article}, \texttt{revtex4-1} and the \texttt{elsarticle} document classes. 
 	
-	As Quantum is an arXiv overlay journal, all papers have to be submitted to the arXiv. To make this submission process as user-friendly as possible, the quantumarticle document class contains some arXiv-specific checks that can be deactivated via the option \texttt{noarxiv}.
-	
-	\section{Important quirks}
-	
-	\subsection{pdfoutput}
-	In order to get correct line breaks within hyperlinks and to make sure the arXiv produces a PDF as output, please add the line 
+	As Quantum is an arXiv overlay journal, all papers have to be submitted to the arXiv. To make this submission process as user-friendly as possible, the quantumarticle document class implements a number of arXiv-specific checks, which however can be deactivated via the option \texttt{noarxiv}.
+
+        An example for this is a check that is meant to make sure that the arXiv produces a PDF file and that hyperlinks are correctly broken across multiple lines.
+        To ensure this, the arXiv \href{https://arxiv.org/help/submit_tex}{recommends} putting 
 	\begin{verbatim}
 	\pdfoutput=1
 	\end{verbatim}
-	within the first 5 lines of your main LaTeX file, \href{https://arxiv.org/help/submit_tex}{as suggested by the arXiv}. By default, the quantumarticle document class will enforce that \texttt{pdfoutput} is set to 1. This can be deactivated via the option \texttt{nopdfoutputerror}.
-	
+	within the first 5 lines of your main LaTeX file. By default, the quantumarticle document class will throw an error if this line is missing. Just like other similar checks, this can be deactivated by means of the \texttt{noarxiv} option, or only this specific check can be deactivated via the option \texttt{nopdfoutputerror}.
+
+        Giving the \texttt{noarxiv} option also disables a number of other features of quantum article and removes any Quantum related branding from the document. Authors who would like to keep the checks active but still use this document class for manuscripts not intended for submission to Quantum and therefore without Quantum branding can use the \texttt{unpublished} option.
+
+        One feature deactivated by both \texttt{unpublished} and \texttt{noarxiv} for example, is the ``title click feature'' of quantumarticle. As this document class can be used for arbitrary documents, Quantum implements a feature where readers can, by clicking on the title of a manuscript, verify whether this manuscript was actually published by Quantum. Obviously this is an unwanted feature in any manuscript not accepted in Quantum and it can thus be deactivated with the \texttt{unpublished} option.
+        
 	\section{Typesetting documents}
-	
+
+        The following are guidelines for the usage of the quantumarticle document class for manuscripts to be submitted to or accepted in Quantum. A detailed description of the functionality and options of the document class follow in Section~\ref{sec:options}   
+        
 	\subsection{Recommended structure}	
 	In the \texttt{twocolumn} layout and without the \texttt{titlepage} option a paragraph without a previous section title may directly follow the abstract.
 	In \texttt{onecolumn} format or with a dedicated \texttt{titlepage}, this should be avoided.
@@ -243,7 +247,7 @@
 	\end{verbatim}
 	where appropriate.
 	You then have to upload the .bbl file along with the other source files when submitting to the arXiv.
-	Due to incompatibilities between different LaTeX version we unfortunately cannot recommend this option \cite{biblatexsubmittingtothearxiv}.
+	Due to incompatibilities between different BibLaTeX versions we unfortunately cannot recommend this option.
 	
 	The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declares a suitable field format to make it a hyperlink.
 	Due to issues with \texttt{biber} we recommend to use the \texttt{bibtex} backend of \texttt{biblatex}.
@@ -271,14 +275,13 @@
 	Packages that change font settings, such as \texttt{times} or \texttt{helvet} should be avoided.
 	
 	\section{Package options}
-	The quantumarticle document class provides a multitude of package options that change the appearance of the final document to the liking of the user. 
-	
-	Default options that need not be given are marked with \texttt{(default)}. Options that are only provided for compatibility reasons and that will not alter the typesetting of the document are marked with \texttt{(C)}.
+        \label{sec:options}
+	The quantumarticle document class provides a multitude of package options that change the appearance of the final document to the liking of the user. Default options that need not be given are marked with \texttt{(default)}. Options that are only provided for compatibility reasons and that will not alter the typesetting of the document are marked with \texttt{(C)}.
 	
 	\subsection{Document setup}
 	
 	\subsubsection{Document format}
-	The document class does not specify a default document format, an error is raised if none is specified.
+	The document class does not specify a default paper size and an error is raised if none is specified. The reason for this is that different LaTeX compilers and localizations can cause paper sizes to vary between setups and this can lead to unexpected results when multiple authors collaborate on a document and the final typesetting is performed by a third party, such as the arXiv.   
 	
 	\begin{options}
 		\option{a4paper}{%
@@ -384,7 +387,7 @@
 	\end{options}
 
 	\subsection{Pre-loaded packages}
-	The document class only loads packages necessary for its operation, such as \texttt{geometry} or \texttt{hyperref}. For compatibility reasons, there are commands that load certain widely used classes for the user.
+	The document class only loads packages necessary for its operation, such as \texttt{geometry} or \texttt{hyperref}. For compatibility reasons, there are commands that load certain widely used packages for the user.
 	
 	\begin{options}
 		\option{amsfonts}{%
@@ -426,7 +429,7 @@
 	\end{options}
 
 	\subsection{Compatibility}
-	The \texttt{quantumarticle} class aims to be maximally compatible with documents that were previously typset with other document classes. For this reason, a lot of options are present for the sole purpose of compatibility but don't have an effect on how your document will be typset. These include:
+	The \texttt{quantumarticle} class aims to be maximally compatible with documents that were previously typset with other document classes. For this reason, a number of options are present for the sole purpose of compatibility but do not have any effect on how your document will be typset. These include:
 	
 	\begin{options}
 		\compatibilityoption{checkin}{No effect.}
@@ -499,9 +502,9 @@
 	\end{options}
 		
 	\section{Contributing}
-	In case you encounter problems using the article class please consider opening a bug report in our bug-tracker on GitHub. You can also contact us via email under \texttt{latex@quantum-journal.org}, but it may take significantly longer to get a response. In any case we need the full source of a document that produces the problem and the log file showing the error to help you.
+	In case you encounter problems using the article class please consider opening a bug report in our \href{https://github.com/quantum-journal/quantum-journal/issues}{bug-tracker on GitHub}. You can also contact us via email under \texttt{latex@quantum-journal.org}, but it may take significantly longer to get a response. In any case we need the full source of a document that produces the problem and the log file showing the error to help you.
 	
-	Improvements submitted as pull requests against the development branch are very much appreciated!
+	Improvements submitted as pull requests against the \href{https://github.com/quantum-journal/quantum-journal/tree/develop}{develop} branch are very much appreciated!
 	
 	\section{Copyright}
 	Copyright 2019 Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften (\url{http://quantum-journal.org/about/}).
