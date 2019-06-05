@@ -143,7 +143,7 @@ in the preamble of your document and then use the \texttt{plainnat} citation sty
 The quantumarticle class automatically detects that the \texttt{natbib} package was loaded and redefines the \texttt{\textbackslash{}doi} command to create hyperlinks.
 This is likely the easiest option if you are converting from another document class.
 
-If you want to used BibLaTeX, you can instead add
+If you want to use BibLaTeX, you can instead add
 \begin{verbatim}
 \usepackage[backend=bibtex]{biblatex}
 \addbibresource{mybibliography.bib}
@@ -154,7 +154,7 @@ to the preamble of your document and then output the bibliography with
 \end{verbatim}
 where appropriate.
 You then have to upload the .bbl file along with the other source files when submitting to the arXiv.
-Due to incompatibilities between different LaTeX version we unfortunately cannot recommend this option \cite{biblatexsubmittingtothearxiv}.
+Due to incompatibilities between different BibLaTeX versions we unfortunately cannot recommend this option \cite{biblatexsubmittingtothearxiv}.
 
 The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declares a suitable field format to make it a hyperlink.
 Due to issues with \texttt{biber} we recommend to use the \texttt{bibtex} backend of \texttt{biblatex}.
@@ -224,7 +224,7 @@ You can provide information on authors and affiliations in the common format als
 \end{verbatim}
 In this example affiliation 1 will be associated with authors 1, 2, and 4, affiliation 2 with author 3 and affiliation 3 with author 4.
 Repeated affiliations are automatically recognized and typeset in \texttt{superscriptaddress} style.
-Alternatively you can use a format similar to that of the \texttt{authblk} package and the \texttt{elsearticle} document class to specify the same affiliation relations as follows:
+Alternatively you can use a format similar to that of the \texttt{authblk} package and the \texttt{elsarticle} document class to specify the same affiliation relations as follows:
 \begin{verbatim}
 \title{Title}
 \author[1]{Author 1}
