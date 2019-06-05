@@ -31,8 +31,6 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \newtoggle{@titlepage}
 \togglefalse{@titlepage}
 
-% Throw an error if no paper size is specified
-% Defaulting to a4paper gives inconsistent behaviour when submitting to the arxiv
 \newtoggle{@papersizespecified}
 \togglefalse{@papersizespecified}
 
@@ -143,7 +141,6 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \DeclareOptionX{reprint}{}
 \DeclareOptionX{eqsecnum}{}
 \DeclareOptionX{secnumarabic}{}
-\DeclareOptionX{fleqn}{}
 \DeclareOptionX{floats}{}
 \DeclareOptionX{stfloats}{}
 \DeclareOptionX{endfloats}{}
@@ -222,23 +219,28 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 % set date to be empty as a default, otherwise latex will fill it with \@today which triggers the allowtoday error
 \date{}
 
-
+\newtoggle{@noarxiv}
+\togglefalse{@noarxiv}
 \DeclareOptionX{noarxiv}
 {
-	\ExecuteOptionsX{a4paper,allowtoday,allowfontchangeintitle,nopdfoutputerror,unpublished}
+  \ExecuteOptionsX{a4paper,allowtoday,allowfontchangeintitle,nopdfoutputerror,unpublished}
+  \toggletrue{@noarxiv}
 }
 
 
 \ExecuteOptionsX{10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptionsX
-
+% Throw an error if no paper size was manually specified
+% Simply defaulting to a4paper gives inconsistent behaviour when submitting to the arXiv as the arXiv seems to sometimes set a4paper and sometimes letterpaper, maybe depending on the geographic region of the submitter? 
 \iftoggle{@papersizespecified}
 {
 }
 {
 	\setlength\paperheight {297mm}%
-	\setlength\paperwidth  {210mm}
-	\ClassError{quantumarticle}{Please specify a paper size. Available options: a4paper, a5paper, b5paper, letterpaper, legalpaper, executivepaper}{}
+	\setlength\paperwidth  {210mm}%
+        \iftoggle{@noarxiv}{}{%
+          \ClassError{quantumarticle}{Please explicitly specify a paper size. Available options: a4paper, a5paper, b5paper, letterpaper, legalpaper, executivepaper. Not specifying a paper size can lead to inconsistent behavior when the manuscript is typeset by the arXiv. This error can be turned off by giving the noarxiv class option}{}
+        }%
 }
 
 \input{size1\@ptsize.clo}
@@ -280,10 +282,10 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 		\iftoggle{@allowtoday}
 		{
 			\let\oldtoday\today
-			\renewcommand*{\today}{\oldtoday\ClassWarning{quantumarticle}{If you intend to upload your manuscript to the arXiv, please manually replace any use of \string\today with the upload date. The arXiv typesets manuscripts on-demand, thus the output of \string\today will change over time}{}}
+			\renewcommand*{\today}{\oldtoday\ClassWarning{quantumarticle}{If you intend to upload your manuscript to the arXiv, please manually replace any use of \string\today with the upload date. The arXiv typesets manuscripts on-demand, thus the output of \string\today may change over time}{}}
 		} % else
 		{
-			\renewcommand*{\today}{\ClassError{quantumarticle}{Use of the today macro should be avoided in manuscripts that are to be uploaded to the arXiv. If you do not intend to upload your manuscript to the arXiv, please use the class option allowtoday to allow the usage of \string\today}{}}
+			\renewcommand*{\today}{\ClassError{quantumarticle}{If you intend to upload your manuscript to the arXiv, please manually replace any use of \string\today with the upload date. The arXiv typesets manuscripts on-demand, thus the output of \string\today may change over time. If you do not intend to upload your manuscript to the arXiv, you may use the class option noarxiv or turn off this error by means of the allowtoday option}{}}
 		}
 	}
 	{}
@@ -294,9 +296,11 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\IfFileExists{lmodern.sty}{
 		\RequirePackage{lmodern}
 	}{
-		\IfFileExists{type1ec.sty}{}{
-			\PackageError{quantumarticle}{Either the lmodern or the cm-super package are required by quantumarticle in order to produce high quality pdf output.}{Please install the lmodern package, or, if this is not possible, the cm-super package.}
-		}
+          \IfFileExists{type1ec.sty}{}{
+            \iftoggle{@noarxiv}{}{%
+              \ClassError{quantumarticle}{Either the lmodern or the cm-super package are required by quantumarticle in order to produce high quality pdf output. Please install the lmodern package, or, if this is not possible, the cm-super package. You can turn off this error message by giving the noarxiv class option}{}
+            }
+          }
 	}
 	% Define a revtex-style openone symbol
 	\IfFileExists{bbm.sty}{
@@ -797,31 +801,33 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 
 \newenvironment{thebibliography}[1]
 {%
-	\makeatletter%
-	\ltx@ifpackageloaded{natbib}{}{%
-		\ltx@ifpackageloaded{biblatex}{
-			\ClassWarning{quantumarticle}{Unfortunately quantumarticle cannot recommend the use of BibLaTeX due to incompatibilities between locally installed versions of BibLaTeX and the version used by the arXiv.}%
-		}{%
-			\ClassWarning{quantumarticle}{The quantumarticle class recommends generating the bibliography from a BibTeX file containing DOIs with natbib in order to ensure the generation of DOI hyperlinks}%
-		}%
-	}%
-	\makeatother%
-	\section*{\refname}%
-	\@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
-	\list{\@biblabel{\@arabic\c@enumiv}}%
-	{\settowidth\labelwidth{\@biblabel{#1}}%
-		\leftmargin\labelwidth
-		\advance\leftmargin\labelsep
-		\@openbib@code
-		\usecounter{enumiv}%
-		\let\p@enumiv\@empty
-		\renewcommand*\theenumiv{\@arabic\c@enumiv}}%
-	\sloppy
-	\clubpenalty4000
-	\@clubpenalty \clubpenalty
-	\widowpenalty4000%
-	\sfcode`\.\@m
-	\setlength{\itemsep}{0pt plus 0.3ex}
+  \makeatletter%
+  \iftoggle{@noarxiv}{}{%
+    \ltx@ifpackageloaded{natbib}{}{%
+      \ltx@ifpackageloaded{biblatex}{
+        \ClassWarning{quantumarticle}{Unfortunately quantumarticle cannot recommend the use of BibLaTeX due to incompatibilities between locally installed versions of BibLaTeX and the version used by the arXiv.}%
+      }{%
+        \ClassWarning{quantumarticle}{The quantumarticle class recommends generating the bibliography from a BibTeX file containing DOIs with natbib in order to ensure the generation of DOI hyperlinks}%
+      }%
+    }%
+  }%
+  \makeatother%
+  \section*{\refname}%
+  \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+  \list{\@biblabel{\@arabic\c@enumiv}}%
+  {\settowidth\labelwidth{\@biblabel{#1}}%
+    \leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \@openbib@code
+    \usecounter{enumiv}%
+    \let\p@enumiv\@empty
+    \renewcommand*\theenumiv{\@arabic\c@enumiv}}%
+  \sloppy
+  \clubpenalty4000
+  \@clubpenalty \clubpenalty
+  \widowpenalty4000%
+  \sfcode`\.\@m
+  \setlength{\itemsep}{0pt plus 0.3ex}
 }
 {\def\@noitemerr
 	{\@latex@warning{Empty `thebibliography' environment}}%
@@ -1008,7 +1014,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\iftoggle{@allowfontchangeintitle}
 		{}
 		{%
-			\def\selectfont{\ClassError{quantumarticle}{You are not allowed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{} Please remove all such commands from your \string\title{}. If you really really have to change the font for some part of the title you can allow this by giving the option allowfontchangeintitle}{}}%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
+			\def\selectfont{\ClassError{quantumarticle}{When submitting to Quantum, you are not supposed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{}. Please remove all such commands from your \string\title{}. If you really have to change the font for some part of the title you can turn off this error by giving the option allowfontchangeintitle}{}}%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
 		}%
 	\@title%
 	\endgroup%
@@ -1077,7 +1083,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \def\@@spaceafter#1{#1 }
 \def\@@@comma{\def\@@@comma{,}}
 \def\@@commaspacebefore#1{\@@@comma{}#1}
-\def\@printauthor#1#2{\def\footnote{\ClassError{quantumarticle}{You cannot put a \string\footnote{} command inside the argument of \string\author}{}}\ifcsdef{author#1orcid}{\href{https://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@commaspacebefore}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
+\def\@printauthor#1#2{\def\footnote{\ClassError{quantumarticle}{You must not put a \string\footnote{} command inside the argument of \string\author}{}}\ifcsdef{author#1orcid}{\href{https://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@commaspacebefore}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
 \def\@printauthors{%
 	\newcounter{@authornum}%
 	\large\forlistloop{\stepcounter{@authornum}%
@@ -1332,7 +1338,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	}
 }
 \AtEndPreamble{
-	\providecommand{\@elsearticlecommandsnotsupportederror}{\ClassError{quantumarticle}{The elsearticle style \string\cortext{}, \string\corref{}, \string\fntext{}, \string\fnref{}, \string\tnotetext{}, and \string\tnoteref{} commands are not supported. Please refrain from using title footnotes and use the \string\tahnks{} command for author footnotes instead.}{}}
+	\providecommand{\@elsearticlecommandsnotsupportederror}{\ClassError{quantumarticle}{The elsearticle style \string\cortext{}, \string\corref{}, \string\fntext{}, \string\fnref{}, \string\tnotetext{}, and \string\tnoteref{} commands are not supported by quantumarticle. Please refrain from using footnotes in the title part of your document and use the \string\tahnks{} command for author footnotes instead.}{}}
 	\providecommand{\cortext}[2][]{\@elsearticlecommandsnotsupportederror} %corresponding author information
 	\providecommand{\corref}[1]{\@elsearticlecommandsnotsupportederror} %corresponding author information reference
 	\providecommand{\fntext}[2][]{\@elsearticlecommandsnotsupportederror} %author footnote
@@ -1366,7 +1372,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	{%
 	}
 	{
-          \def\@pdfoutputerror{\ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex). Without this, the arXiv compiles your document with latex instead of pdflatex and hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information. If you still want to use standard latex (for example because you depend on psfrag) instead of pdflatex despite this problem, you can disable this error by giving the nopdfoutputerror option to quantumarticle. In this case please check carefully that the links in your document, especially in the bibliography work properly.}{}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
+          \def\@pdfoutputerror{\ClassError{quantumarticle}{Please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file as suggested by the arXiv (https://arxiv.org/help/submit_tex). Without this, the arXiv compiles your document with latex instead of pdflatex and hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information. If you still want to use standard latex (for example because you depend on psfrag) instead of pdflatex despite this problem, you can disable this error by giving the nopdfoutputerror option to quantumarticle. In this case please check carefully that the links in your document, especially in the bibliography work properly}{}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
           }
 		\ifcsdef{pdfoutput}%
 		{%
@@ -1443,9 +1449,8 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\providecommand{\rmp}{Rev.\ Mod.\ Phys.}
 	\providecommand{\pspie}{Proc.\ Soc.\ Photo-Opt.\ Instrum.\ Eng.}
 	\providecommand{\sjqe}{Sov.\ J.\ Quantum Electron.}
-	\providecommand{\vr}{Vision Res.}	
-	
-	\newenvironment{ruledtabular}{\ClassWarning{quantumarticle}{The quantumarticle class does not support the ruledtabular environment. Consider using the booktabs package for tables and the table* environment for tables that span two columns.}}{}
+	\providecommand{\vr}{Vision Res.}
+	\newenvironment{ruledtabular}{\ClassError{quantumarticle}{The quantumarticle class does not support the ruledtabular environment. Consider using the booktabs package for tables and the table* environment for tables that span two columns.}{}}{}
 
 	\AtBeginDocument{%
 		\providecommand{\pacs}[1]{}
