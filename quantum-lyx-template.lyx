@@ -6,24 +6,18 @@
 \origin unavailable
 \textclass quantumarticle
 \begin_preamble
-%\pdfoutput=1 
-% Above declared indirectly through Graphics driver in Document Class; 
-% if that doesn't work, manually put this into first five lines 
-% of the TeX file after the “\documentclass” declaration.
-
-%\usepackage[utf8]{inputenc} % put into Language
+\usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-%\usepackage[T1]{fontenc} % put into Language
+\usepackage[T1]{fontenc}
 %\usepackage{amsmath} % added in Math Options
 %\usepackage{hyperref} % added already
 
-% No need for these
-%\usepackage{tikz}
-%\usepackage{lipsum}
+\usepackage{tikz}
+\usepackage{lipsum}
 
 %\newtheorem{theorem}{Theorem} % added in Modules
 \end_preamble
-\options a4paper,twocolumn,11pt,accepted=2017-05-09,nopdfoutputerror
+\options a4paper,twocolumn,11pt,accepted=2017-05-09
 \use_default_options true
 \begin_modules
 theorems-std
@@ -31,8 +25,8 @@ theorems-std
 \maintain_unincluded_children false
 \language english
 \language_package none
-\inputencoding utf8
-\fontencoding global
+\inputencoding default
+\fontencoding default
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -45,9 +39,10 @@ theorems-std
 \font_tt_scale 100 100
 \use_microtype false
 \use_dash_ligatures true
-\graphics pdftex
+\graphics default
 \default_output_format pdf2
-\output_sync 0
+\output_sync 1
+\output_sync_macro "\pdfoutput=1"
 \bibtex_command default
 \index_command default
 \paperfontsize default
@@ -113,7 +108,7 @@ theorems-std
 status open
 
 \begin_layout Plain Layout
-Observations from my Windows 8 + MiKTeX 2.9 + LyX 2.3.2-2 setup:
+Observations from my Windows 10 Pro + MiKTeX 2.9 + LyX 2.3.2-2 setup:
 \end_layout
 
 \begin_layout Itemize
@@ -165,59 +160,10 @@ File -> Export
 \end_layout
 
 \begin_layout Itemize
-I could not find a way to automatically put 
-\begin_inset Quotes eld
-\end_inset
-
 
 \backslash
-pdfoutput=1
-\begin_inset Quotes erd
-\end_inset
-
- in the first five lines of the TeX file output by LyX, as recommended by
- arXiv.
- Thus, the error thrown by Quantum needs to be turned off via the 
-\begin_inset Quotes eld
-\end_inset
-
-nopdfoutputerror
-\begin_inset Quotes erd
-\end_inset
-
- option.
- It may be that the wrong compiler is picked as a result, i.e., LaTeX instead
- of PDFLaTeX.
- (I've tried to make sure this doesn't happen by putting the option 
-\begin_inset Quotes eld
-\end_inset
-
-pdftex
-\begin_inset Quotes erd
-\end_inset
-
- for the graphicx package.) If this occurs, then one needs to manually put
- 
-\begin_inset Quotes eld
-\end_inset
-
-
-\backslash
-pdfoutput=1
-\begin_inset Quotes erd
-\end_inset
-
- right under the 
-\begin_inset Quotes eld
-\end_inset
-
-
-\backslash
-documentclass
-\begin_inset Quotes erd
-\end_inset
-
- line in the TeX file, before uploading to arXiv.
+pdfoutput=1 is put on the first line of the exported TeX file using "Custom
+ macro" in `Documents Settings --> Formats`.
 \end_layout
 
 \begin_layout Itemize
@@ -298,7 +244,20 @@ Template demonstrating the quantumarticle document class
 \end_layout
 
 \begin_layout Author
-Lídia del Rio
+L
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'{i}
+\end_layout
+
+\end_inset
+
+dia del Rio
 \end_layout
 
 \begin_layout Affiliation

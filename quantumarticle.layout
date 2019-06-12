@@ -18,8 +18,8 @@ Style Title
 End
 
 Style Author
-    Category        FrontMatter
-    Align           Left
+    Category      FrontMatter
+    Align         Left
     TextFont
       Family      Sans
     EndFont
@@ -36,7 +36,7 @@ Style Affiliation
     ParSkip         0.4
     AlignPossible   Left
     TextFont
-      Family      Sans
+      Family        Sans
     EndFont
 
     # Declare a label for this layout.
