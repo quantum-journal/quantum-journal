@@ -6,6 +6,7 @@
 \origin unavailable
 \textclass quantumarticle
 \begin_preamble
+% The LyX template is a beta feature and the text of quantum-lyx-template.tex generated through the LyX file might not be in sync with the TeX template quantum-template.tex.
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
@@ -108,7 +109,21 @@ theorems-std
 status open
 
 \begin_layout Plain Layout
-Observations from my Windows 10 Pro + MiKTeX 2.9 + LyX 2.3.2-2 setup:
+The LyX template is a beta feature and the text of quantum-lyx-template.tex
+ generated through the LyX file might not be in sync with the TeX template
+ quantum-template.tex.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+The following observations were made with Windows 10 Pro + MiKTeX 2.9 + LyX
+ 2.3.2-2:
 \end_layout
 
 \begin_layout Itemize
