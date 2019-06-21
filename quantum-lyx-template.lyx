@@ -1,0 +1,1589 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass quantumarticle
+\begin_preamble
+% The LyX template is a beta feature and the text of quantum-lyx-template.tex generated through the LyX file might not be in sync with the TeX template quantum-template.tex.
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage{amsmath} % added in Math Options
+%\usepackage{hyperref} % added already
+
+\usepackage{tikz}
+\usepackage{lipsum}
+
+%\newtheorem{theorem}{Theorem} % added in Modules
+\end_preamble
+\options a4paper,twocolumn,11pt,accepted=2017-05-09
+\use_default_options true
+\begin_modules
+theorems-std
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding default
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf2
+\output_sync 1
+\output_sync_macro "\pdfoutput=1"
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\id}{\openone}
+{\mathbb{I}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The LyX template is a beta feature and the text of quantum-lyx-template.tex
+ generated through the LyX file might not be in sync with the TeX template
+ quantum-template.tex.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+The following observations were made with Windows 10 Pro + MiKTeX 2.9 + LyX
+ 2.3.2-2:
+\end_layout
+
+\begin_layout Itemize
+Paper size (
+\begin_inset Quotes eld
+\end_inset
+
+a4paper
+\begin_inset Quotes erd
+\end_inset
+
+ by default) needs to be specified in the 
+\begin_inset Quotes eld
+\end_inset
+
+Document Class
+\begin_inset Quotes erd
+\end_inset
+
+ part of the 
+\begin_inset Quotes eld
+\end_inset
+
+Document -> Settings
+\begin_inset Quotes erd
+\end_inset
+
+ menu.
+\end_layout
+
+\begin_layout Itemize
+When exporting to TeX, pick the 
+\begin_inset Quotes eld
+\end_inset
+
+LaTeX (pdflatex)
+\begin_inset Quotes erd
+\end_inset
+
+ option in 
+\begin_inset Quotes eld
+\end_inset
+
+File -> Export
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\backslash
+pdfoutput=1 is put on the first line of the exported TeX file using "Custom
+ macro" in `Documents Settings --> Formats`.
+\end_layout
+
+\begin_layout Itemize
+Directory where the quantumarticle.cls should be put for MiKTeX:
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+C:
+\backslash
+Users
+\backslash
+$USERNAME
+\backslash
+AppData
+\backslash
+Local
+\backslash
+Programs
+\backslash
+MiKTeX 2.9
+\backslash
+tex
+\backslash
+latex
+\backslash
+quantumarticle
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Directory where this LyX layout should be:
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+C:
+\backslash
+Users
+\backslash
+USERNAME
+\backslash
+AppData
+\backslash
+Roaming
+\backslash
+LyX2.3
+\backslash
+layouts
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Directory where article.layout file that this depends on is:
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+C:
+\backslash
+Program Files (x86)
+\backslash
+LyX 2.3
+\backslash
+Resources
+\backslash
+layouts
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Template demonstrating the quantumarticle document class
+\end_layout
+
+\begin_layout Author
+L
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'{i}
+\end_layout
+
+\end_inset
+
+dia del Rio
+\end_layout
+
+\begin_layout Affiliation
+Institute for Theoretical Physics, ETH Zurich, Switzerland
+\end_layout
+
+\begin_layout Author
+Christian Gogolin
+\end_layout
+
+\begin_layout Email
+latex@quantum-journal.org
+\end_layout
+
+\begin_layout URL
+http://quantum-journal.org
+\end_layout
+
+\begin_layout ORCID
+0000-0003-0290-4698
+\end_layout
+
+\begin_layout Thanks
+You can use the 
+\begin_inset Formula $\texttt{\textbackslash email}$
+\end_inset
+
+, 
+\begin_inset Formula $\texttt{\textbackslash homepage}$
+\end_inset
+
+, and 
+\begin_inset Formula $\texttt{\textbackslash thanks}$
+\end_inset
+
+ commands to add additional information for the preceding 
+\begin_inset Formula $\texttt{\textbackslash author}$
+\end_inset
+
+.
+ If applicable, this can also be used to indicate that a work has previously
+ been published in conference proceedings.
+\end_layout
+
+\begin_layout Affiliation
+Covestro Deutschland AG, Kaiser-Wilhelm-Allee 60, 51373 Leverkusen, Germany
+\end_layout
+
+\begin_layout Author
+Marcus Huber
+\end_layout
+
+\begin_layout Affiliation
+Institute for Quantum Optics & Quantum Information (IQOQI), Austrian Academy
+ of Sciences, Boltzmanngasse 3, Vienna A-1090, Austria
+\end_layout
+
+\begin_layout Author
+Christopher Granade
+\end_layout
+
+\begin_layout Affiliation
+Microsoft Research, Quantum Architectures and Computation Group, Redmond,
+ Washington 98052, USA
+\end_layout
+
+\begin_layout Author
+Johannes J.
+ Meyer
+\end_layout
+
+\begin_layout ORCID
+0000-0003-1533-8015
+\end_layout
+
+\begin_layout Abstract
+In the standard, 
+\begin_inset Formula $\texttt{twocolumn}$
+\end_inset
+
+, layout the abstract is typeset as a bold face first paragraph.
+ Quantum also supports a 
+\begin_inset Formula $\texttt{onecolumn}$
+\end_inset
+
+ layout with the abstract above the text.
+ Both can be combined with the 
+\begin_inset Formula $\texttt{titlepage}$
+\end_inset
+
+ option to obtain a format with dedicated title and abstract pages that
+ are not included in the page count.
+ This format can be more suitable for long articles.
+ The 
+\begin_inset Formula $\texttt{abstract}$
+\end_inset
+
+ environment can appear both before and after the 
+\begin_inset Formula $\texttt{\textbackslash maketitle}$
+\end_inset
+
+ command and calling 
+\begin_inset Formula $\texttt{\textbackslash maketitle}$
+\end_inset
+
+ is optional, as long as there is an 
+\begin_inset Formula $\texttt{abstract}$
+\end_inset
+
+.
+ Both 
+\begin_inset Formula $\texttt{abstract}$
+\end_inset
+
+ and 
+\begin_inset Formula $\texttt{\textbackslash maketitle}$
+\end_inset
+
+ however must be placed after all other 
+\begin_inset Formula $\texttt{\textbackslash author}$
+\end_inset
+
+, 
+\begin_inset Formula $\texttt{\textbackslash affiliation}$
+\end_inset
+
+, etc.
+\begin_inset space ~
+\end_inset
+
+commands, see also Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:title-information"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ If you provide the ORCID number of an author by using the 
+\begin_inset Formula $\texttt{\textbackslash orcid}$
+\end_inset
+
+ command, the author name becomes a link to their page on 
+\begin_inset CommandInset href
+LatexCommand href
+name "orcid.org"
+target "http://orcid.org/ "
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In the 
+\begin_inset Formula $\texttt{twocolumn}$
+\end_inset
+
+ layout and without the 
+\begin_inset Formula $\texttt{titlepage}$
+\end_inset
+
+ option there can be a paragraph directly following the abstract before
+ the first section.
+ In 
+\begin_inset Formula $\texttt{onecolumn}$
+\end_inset
+
+ format or with a dedicated 
+\begin_inset Formula $\texttt{titlepage}$
+\end_inset
+
+, this should be avoided.
+\end_layout
+
+\begin_layout Standard
+Note that clicking the title performs a search for that title on 
+\begin_inset CommandInset href
+LatexCommand href
+name "quantum-journal.org"
+target "http://quantum-journal.org"
+literal "false"
+
+\end_inset
+
+.
+ In this way readers can easily verify whether a work using the quantumarticle
+ class was actually published in Quantum.
+ If you would like to use 
+\begin_inset Formula $\texttt{quantumarticle}$
+\end_inset
+
+ for manuscripts not yet accepted in Quantum, or not even intended for submissio
+n to Quantum, please use the 
+\begin_inset Formula $\texttt{unpublished}$
+\end_inset
+
+ option to switch off all Quantum related branding and the hyperlink in
+ the title.
+ By default, this class also performs various checks to make sure the manuscript
+ will compile well on the arXiv.
+ If you do not intend to submit your manuscript to Quantum or the arXiv,
+ you can switch off these checks with the 
+\begin_inset Formula $\texttt{noarxiv}$
+\end_inset
+
+ option.
+ On the contrary, by giving the 
+\begin_inset Formula $\texttt{accepted=YYYY-MM-DD}$
+\end_inset
+
+ option, with 
+\begin_inset Formula $\texttt{YYYY-MM-DD}$
+\end_inset
+
+ the acceptance date, the note ``Accepted in Quantum YYYY-MM-DD, click title
+ to verify'' can be added to the bottom of each page to clearly mark works
+ that have been accepted in Quantum.
+\end_layout
+
+\begin_layout Section
+Figures
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename example-plot.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figure1"
+
+\end_inset
+
+Every figure must have an informative caption and a number.
+ The caption can be placed above, below, or to the side of the figure, as
+ you see fit.
+ The same applies for tables, boxes, and other floating elements.
+ Quantum provides a Jupyter notebook to create plots that integrate seamlessly
+ with 
+\begin_inset Formula $\texttt{quantumarticle}$
+\end_inset
+
+, described in Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:plots"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Figures spanning multiple columns can by typeset with the usual 
+\begin_inset Formula $\texttt{figure*}$
+\end_inset
+
+ environment.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+See Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figure1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for an example of how to include figures.
+ Feel free to place them at the top or bottom of the page, or in the middle
+ of a paragraph as you see fit.
+ Try to place them on the same page as the text referring to them.
+ A figure on the first page can help readers remember and recognize your
+ work more easily.
+\end_layout
+
+\begin_layout Section
+Sectioning and equations
+\end_layout
+
+\begin_layout Standard
+Sections, subsections, subsubsections, and paragraphs should be typeset
+ with the standard LaTeX commands.
+ You can use the standard commands for equations.
+\begin_inset Formula 
+\begin{align}
+E & =m\,c^{2}\label{eq:emc}\\
+a^{2}+b^{2} & =c^{2}\\
+H\,|\psi\rangle & =E\,|\psi\rangle\\
+(\id\otimes A)\,(B\otimes\id) & =A\otimes B
+\end{align}
+
+\end_inset
+
+For multi-line equations 
+\begin_inset Formula $\texttt{align}$
+\end_inset
+
+ is 
+\begin_inset CommandInset href
+LatexCommand href
+name "preferable"
+target "http://tex.stackexchange.com/questions/196/eqnarray-vs-align"
+literal "false"
+
+\end_inset
+
+ over 
+\begin_inset Formula $\texttt{eqnarray}$
+\end_inset
+
+.
+ Please refrain from using the latter.
+ For complex equations you may want to consider using the 
+\begin_inset Formula $\texttt{IEEEeqnarray}$
+\end_inset
+
+ environment from the 
+\begin_inset Formula $\texttt{IEEEtrantools}$
+\end_inset
+
+ package.
+ Whether you prefer to refer to equations as Eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:emc"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, Equation
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:emc"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, or just 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:emc"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is up to you, but please be consistent and use the 
+\begin_inset Formula $\texttt{\textbackslash eqref\{\dots\}}$
+\end_inset
+
+ command instead of writing 
+\begin_inset Formula $\texttt{(\textbackslash ref\{\dots\})}$
+\end_inset
+
+.
+ As a courtesy for your readers and referees, please suppress equation numbers
+ only if there is a specific reason to do so, to not make it unnecessarily
+ difficult to refer to individual results and steps in derivations.
+\end_layout
+
+\begin_layout Paragraph
+Paragraphs
+\end_layout
+
+\begin_layout Standard
+The paragraph is the smallest unit of sectioning.
+ Feel free to end the paragraph title with a full stop if you find this
+ appropriate.
+\end_layout
+
+\begin_layout Subsection
+References and footnotes
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:subsec1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Footnotes
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Only use footnotes when appropriate.
+\end_layout
+
+\end_inset
+
+ appear in the bottom of the page.
+ Please do not mix them with your references.
+\end_layout
+
+\begin_layout Standard
+Citations to other works should appear in the References section at the
+ end of the work.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Theorem style is slightly different than the TeX style.
+ A space can be added so that theorem text starts on the next line.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[DOI links are required]
+\backslash
+ 
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+ Important: As Quantum is a member of Crossref, all references to works
+ that have a DOI must be hyperlinked according to the DOI.
+ Those links must start with 
+\begin_inset Formula $\texttt{https://doi.org/}$
+\end_inset
+
+ (preferred), or 
+\begin_inset Formula $\texttt{http://dx.doi.org/}$
+\end_inset
+
+.
+ Direct links to the website of the publisher are not sufficient.
+\end_layout
+
+\begin_layout Standard
+This can be achieved in several ways, depending on how you are formatting
+ your bibliography.
+ Suppose the DOI of an article 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "examplecitation"
+literal "false"
+
+\end_inset
+
+ that you want to cite is 
+\begin_inset Formula $\texttt{10.22331/idonotexist}$
+\end_inset
+
+.
+ If you are formating your bibliography manually, you can cite this work
+ using the following in your 
+\begin_inset Formula $\texttt{thebibliography}$
+\end_inset
+
+ environment:
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+bibitem{examplecitation}   
+\end_layout
+
+\begin_layout Verbatim
+  Name Surname,   
+\end_layout
+
+\begin_layout Verbatim
+  
+\backslash
+href{https://doi.org/10.22331/         
+\end_layout
+
+\begin_layout Verbatim
+      idonotexist}{Quantum         
+\end_layout
+
+\begin_layout Verbatim
+      
+\backslash
+textbf{123}, 123456 (1916).}
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[{
+\backslash
+bf One citation per bibitem}]
+\backslash
+ 
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+Important: If you are formatting your bibliography manually, please do not
+ group multiple citations into one 
+\begin_inset Formula $\texttt{\textbackslash bibitem}$
+\end_inset
+
+.
+ Having to search through multiple references to find the cited result makes
+ your work less accessible for authors and grouping references can screw
+ up our automatic extraction of citations.
+\end_layout
+
+\begin_layout Standard
+We encourage the use of BibTeX to generate your bibliography from the BibTeX
+ meta-data provided by publishers.
+ For DOI linking to work, the BibTeX file must contain the 
+\begin_inset Formula $\texttt{doi}$
+\end_inset
+
+ field as for example in:
+\end_layout
+
+\begin_layout Verbatim
+@article{examplecitation,   
+\end_layout
+
+\begin_layout Verbatim
+ author = {Surname, Name},   
+\end_layout
+
+\begin_layout Verbatim
+ title = {Title},   
+\end_layout
+
+\begin_layout Verbatim
+ journal = {Quantum},   
+\end_layout
+
+\begin_layout Verbatim
+ volume = {123},   
+\end_layout
+
+\begin_layout Verbatim
+ page = {123456},   
+\end_layout
+
+\begin_layout Verbatim
+ year = {1916},  
+\end_layout
+
+\begin_layout Verbatim
+ doi = {10.22331/idonotexist}, 
+\end_layout
+
+\begin_layout Verbatim
+}
+\end_layout
+
+\begin_layout Standard
+Several authors had problems because of Unicode characters in their BibTeX
+ files.
+ Be advised that 
+\begin_inset CommandInset href
+LatexCommand href
+name "BibTeX does not support Unicode characters"
+target "http://wiki.lyx.org/BibTeX/Tips"
+literal "false"
+
+\end_inset
+
+.
+ All special characters must be input via their respective LaTeX commands.
+\end_layout
+
+\begin_layout Standard
+If you are using BibTeX, you can load the 
+\begin_inset Formula $\texttt{natbib}$
+\end_inset
+
+ package by putting
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+usepackage[numbers,sort&compress]{natbib}
+\end_layout
+
+\begin_layout Standard
+in the preamble of your document and then use the 
+\begin_inset Formula $\texttt{plainnat}$
+\end_inset
+
+ citation style by including your BibTeX bibliography 
+\begin_inset Formula $\texttt{mybibliography.bib}$
+\end_inset
+
+ where you want the bibliography to appear as follows:
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+bibliographystyle{plainnat} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+bibliography{mybibliography}
+\end_layout
+
+\begin_layout Standard
+The quantumarticle class automatically detects that the 
+\begin_inset Formula $\texttt{natbib}$
+\end_inset
+
+ package was loaded and redefines the 
+\begin_inset Formula $\texttt{\textbackslash doi}$
+\end_inset
+
+ command to create hyperlinks.
+ This is likely the easiest option if you are converting from another document
+ class.
+\end_layout
+
+\begin_layout Standard
+If you want to used BibLaTeX, you can instead add
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+usepackage[backend=bibtex]{biblatex} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+addbibresource{mybibliography.bib}
+\end_layout
+
+\begin_layout Standard
+to the preamble of your document and then output the bibliography with
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+printbibliography
+\end_layout
+
+\begin_layout Standard
+where appropriate.
+ You then have to upload the .bbl file along with the other source files
+ when submitting to the arXiv.
+ Due to incompatibilities between different LaTeX version we unfortunately
+ cannot recommend this option 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "biblatexsubmittingtothearxiv"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The quantumarticle class automatically detects that the 
+\begin_inset Formula $\texttt{biblatex}$
+\end_inset
+
+ package was loaded, sets the default option 
+\begin_inset Formula $\texttt{doi=true}$
+\end_inset
+
+ to include the DOI in the bibliography, and declares a suitable field format
+ to make it a hyperlink.
+ Due to issues with 
+\begin_inset Formula $\texttt{biber}$
+\end_inset
+
+ we recommend to use the 
+\begin_inset Formula $\texttt{bibtex}$
+\end_inset
+
+ backend of 
+\begin_inset Formula $\texttt{biblatex}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+More information on how to get DOI links in your document can be found on
+ StackExchange 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "howtogetdoilinksinbibliography,automaticallyaddingdoifieldstoahandmadebibliography"
+literal "false"
+
+\end_inset
+
+.
+ Feel free to change the appearance of citations in any way you like by
+ using a different 
+\begin_inset Formula $\texttt{bibliographystyle}$
+\end_inset
+
+ or via the advanced mechanisms provided by BibLaTeX.
+ The only two requirements are that citations must uniquely identify the
+ cited work and that they must contain a DOI hyperlink whenever possible.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Use 
+\backslash
+texttt{
+\backslash
+textbackslash pdfoutput=1}]
+\end_layout
+
+\end_inset
+
+In order to get correct line breaks within hyperlinks and to make sure the
+ arXiv produces a PDF as output, please add the line
+\end_layout
+
+\begin_deeper
+\begin_layout Verbatim
+
+\backslash
+pdfoutput=1
+\end_layout
+
+\end_deeper
+\begin_layout Theorem
+within the first 5 lines of your main LaTeX file, as suggested by the arXiv
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "arxivpdfoutput"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Verbatim
+
+\end_layout
+
+\begin_layout Section
+Plots
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:plots"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Quantum provides a 
+\begin_inset CommandInset href
+LatexCommand href
+name "Jupyter notebook"
+target "https://jupyter.org/"
+literal "false"
+
+\end_inset
+
+ based on the widely used 
+\begin_inset CommandInset href
+LatexCommand href
+name "matplotlib"
+target "https://matplotlib.org/"
+literal "false"
+
+\end_inset
+
+ library that greatly simplifies the creation of plots that integrate seamlessly
+ with the 
+\begin_inset Formula $\texttt{quantumarticle}$
+\end_inset
+
+ document class.
+ This is intended as a service to the authors, is 
+\shape italic
+not
+\shape default
+ mandatory, and currently in beta stage.
+ You can download the 
+\begin_inset CommandInset href
+LatexCommand href
+name "quantum-plots.ipynb"
+target "https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-plots.ipynb"
+literal "false"
+
+\end_inset
+
+ notebook and accompanying 
+\begin_inset CommandInset href
+LatexCommand href
+name "quantum-plots.mplstyle"
+target "https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-plots.mplstyle"
+literal "false"
+
+\end_inset
+
+ file from the 
+\begin_inset CommandInset href
+LatexCommand href
+name "quantumarticle GitHub repository"
+target "https://github.com/quantum-journal/quantum-journal"
+literal "false"
+
+\end_inset
+
+.
+ You only need to specify the font size and paper format that were passed
+ as options to 
+\begin_inset Formula $\texttt{quantumarticle}$
+\end_inset
+
+ to get plots with fitting font sizes and dimensions.
+ We strongly encourage authors to use the vector based PDF format for plots.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Be mindful of the colorblind]
+\end_layout
+
+\end_inset
+
+About 4% of the worlds population are affected by some form of color vision
+ deficiency or color blindness.
+ Please make sure that your plots and figures can still be understood when
+ printed in gray scale and avoid the simultaneous use of red and green,
+ as the inability to distinguish these two colors is the most widespread
+ form of color vision deficiency.
+\end_layout
+
+\begin_layout Section
+Summary section
+\end_layout
+
+\begin_layout Standard
+Longer articles should include a section that, early on, explains the main
+ results, their limitations, and assumptions.
+ This section can be used to, for example, present the main theorem, or
+ provide a summary of the results for a wider audience.
+\end_layout
+
+\begin_layout Section
+Extra packages
+\end_layout
+
+\begin_layout Standard
+Quantum encourages you to load the following extra packages:
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+usepackage[utf8]{inputenc} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+usepackage[english]{babel} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+usepackage[T1]{fontenc} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+usepackage{amsmath} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+usepackage{hyperref}
+\end_layout
+
+\begin_layout Standard
+If you do not load the 
+\begin_inset Formula $\texttt{hyperref}$
+\end_inset
+
+ package, quantumarticle automatically loads it for you.
+ Packages that change font settings, such as 
+\begin_inset Formula $\texttt{times}$
+\end_inset
+
+ or 
+\begin_inset Formula $\texttt{helvet}$
+\end_inset
+
+ should be avoided.
+\end_layout
+
+\begin_layout Section
+Wide equations
+\end_layout
+
+\begin_layout Standard
+Very wide equations can be shown expanding over both columns using the 
+\begin_inset Formula $\texttt{widetext}$
+\end_inset
+
+ environment.
+ In 
+\begin_inset Formula $\texttt{onecolumn}$
+\end_inset
+
+ mode, the 
+\begin_inset Formula $\texttt{widetext}$
+\end_inset
+
+ environment has no effect.
+\end_layout
+
+\begin_layout Wide Text
+\begin_inset Formula 
+\begin{equation}
+|\mathrm{AME}(n=6,q=5)\rangle=\sum_{i,j,k=0}^{4}|i,j,k,i+j+k,i+2j+3k,i+3j+4k\rangle
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Indent here different from tex file.
+\end_layout
+
+\end_inset
+
+To enable this feature in 
+\begin_inset Formula $\texttt{twocolumn}$
+\end_inset
+
+ mode, 
+\begin_inset Formula $\texttt{quantumarticle}$
+\end_inset
+
+ relies on the package 
+\begin_inset Formula $\texttt{ltxgrid}$
+\end_inset
+
+.
+ Unfortunately this package has a bug that leads to a sub-optimal placement
+ of extremely long footnotes.
+\end_layout
+
+\begin_layout Section
+Title information
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:title-information"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+You can provide information on authors and affiliations in the common format
+ also used by 
+\begin_inset Formula $\texttt{revtex}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+title{Title} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+author{Author 1} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+author{Author 2} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+affiliation{Affiliation 1} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+author{Author 3} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+affiliation{Affiliation 2} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+author{Author 4} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+affiliation{Affiliation 1} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+affiliation{Affiliation 3}
+\end_layout
+
+\begin_layout Standard
+In this example affiliation 1 will be associated with authors 1, 2, and
+ 4, affiliation 2 with author 3 and affiliation 3 with author 4.
+ Repeated affiliations are automatically recognized and typeset in 
+\begin_inset Formula $\texttt{superscriptaddress}$
+\end_inset
+
+ style.
+ Alternatively you can use a format similar to that of the 
+\begin_inset Formula $\texttt{authblk}$
+\end_inset
+
+ package and the 
+\begin_inset Formula $\texttt{elsearticle}$
+\end_inset
+
+ document class to specify the same affiliation relations as follows:
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Not implemented in LyX, would have to manually enter LaTeX code for this.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+title{Title} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+author[1]{Author 1} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+author[1]{Author 2} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+author[2]{Author 3} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+author[1,3]{Author 4} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+affil[1]{Affiliation 1} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+affil[2]{Affiliation 1} 
+\end_layout
+
+\begin_layout Verbatim
+
+\backslash
+affil[3]{Affiliation 1}
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "examplecitation"
+literal "false"
+
+\end_inset
+
+Name Surname, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{https://doi.org/10.22331/ idonotexist}{Quantum 
+\backslash
+textbf{123}, 123456 (1916)}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "biblatexsubmittingtothearxiv"
+literal "false"
+
+\end_inset
+
+StackExchange discussion on 
+\begin_inset CommandInset href
+LatexCommand href
+name "``Biblatex: submitting to the arXiv'' (2017-01-10)"
+target "http://tex.stackexchange.com/questions/26990/biblatex-submitting-to-the-arxiv"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "arxivpdfoutput"
+literal "false"
+
+\end_inset
+
+Help article published by the arXiv on 
+\begin_inset CommandInset href
+LatexCommand href
+name "``Considerations for TeX Submissions'' (2017-01-10)"
+target "https://arxiv.org/help/submit_tex"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "howtogetdoilinksinbibliography"
+literal "false"
+
+\end_inset
+
+StackExchange discussion on 
+\begin_inset CommandInset href
+LatexCommand href
+name "``How to get DOI links in bibliography'' (2016-11-18)"
+target "http://tex.stackexchange.com/questions/3802/how-to-get-doi-links-in-bibliography"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "automaticallyaddingdoifieldstoahandmadebibliography"
+literal "false"
+
+\end_inset
+
+StackExchange discussion on 
+\begin_inset CommandInset href
+LatexCommand href
+name "``Automatically adding DOI fields to a hand-made bibliography'' (2016-11-18)"
+target "http://tex.stackexchange.com/questions/6810/automatically-adding-doi-fields-to-a-hand-made-bibliography"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

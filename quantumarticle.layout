@@ -1,0 +1,169 @@
+#% Do not delete the line below; configure depends on this      
+#  \DeclareLaTeXClass[quantumarticle]{Quantum Article}
+#  \DeclareCategory{Articles}
+## Victor V. Albert <valbert4@gmail.com>, 
+## helped by layout by Christopher Granade
+
+# Read the definitions from article.layout
+Input article.layout
+
+###### CHANGING STYLE OF ARTICLE FRONT MATTER ######
+
+Style Title
+    Align Left
+    TextFont
+      Color       Purple
+      Family      Sans
+    EndFont
+End
+
+Style Author
+    Category      FrontMatter
+    Align         Left
+    TextFont
+      Family      Sans
+    EndFont
+End
+
+###### ADDING MORE FRONT MATTER ######
+
+Style Affiliation
+    Category        FrontMatter
+    Margin          Dynamic
+    LatexType       Command
+    LatexName       affiliation
+    InTitle         1
+    ParSkip         0.4
+    AlignPossible   Left
+    TextFont
+      Family        Sans
+    EndFont
+
+    # Declare a label for this layout.
+    LabelType       Static
+    LabelSep        M
+    LabelString     "Affiliation:"
+    LabelFont
+      Color         Green
+      Series        Bold
+      Family        Sans
+    EndFont
+End
+
+Style Email
+	CopyStyle		Affiliation
+	LatexName		email
+	LabelString		"Email:"
+	Argument 1
+	  LabelString	"Email Option|s"
+	  Tooltip		"Optional argument to the email command"
+	EndArgument
+	PassThru		1
+    TextFont
+      Family        Sans
+    EndFont
+End
+
+Style URL
+	CopyStyle		Email
+	LatexName		homepage
+	LabelString		"URL:"
+	Argument 1
+	  LabelString	"Author URL Option"
+	  Tooltip		"Optional argument to the homepage command"
+	EndArgument
+	PassThru		1
+End
+
+Style ORCID
+	CopyStyle		Email
+	LatexName		orcid
+	LabelString		"ORCID:"
+	Argument 1
+	  LabelString	"Author ORCID identifier"
+	  Tooltip		"Optional argument to the orcid command"
+	EndArgument
+	PassThru		1
+End
+
+Style Thanks
+	CopyStyle		Email
+	LatexName		thanks
+	LabelString		"Thanks:"
+	Argument 1
+	  LabelString	"Author additional information"
+	  Tooltip		"Optional argument to the thanks command"
+	EndArgument
+	PassThru		1
+End
+
+###### CHANGING STYLE OF ARTICLE SECTIONING ######
+
+Style Section
+    Align                   Left
+    LabelType               Static
+    LabelCounter            section
+    LabelString             "\arabic{section}"
+    LabelStringAppendix     "Appendix \Alph{section}"
+    TocLevel                1
+    LabelFont
+      Family                Sans
+    EndFont
+    TextFont
+      Family                Sans
+    EndFont
+End
+
+Style Subsection
+    Align                   Left
+    LabelType               Static
+    LabelCounter            subsection
+    LabelString             "\arabic{section}.\arabic{subsection}"
+    LabelStringAppendix     "Appendix \Alph{section}.\arabic{subsection}"
+    TocLevel                2
+    LabelFont
+      Family                Sans
+    EndFont
+    TextFont
+      Family                Sans
+    EndFont
+End
+
+Style Paragraph
+    Align           Left
+    Font
+      Shape         Italic
+    EndFont
+End
+
+###### SPECIALS ######
+
+Style Wide_Text
+	CopyStyle		Standard
+	Category		Specials
+	LatexName		widetext
+	LatexType		environment
+End
+
+###### ADDITIONAL BACK MATTER ######
+
+Style Acknowledgments
+	CopyStyle		Standard
+	Category		BackMatter
+	LatexType		Environment
+	LatexName		acknowledgments
+	LabelType		Centered
+	LabelString		"acknowledgments"
+	LabelBottomSep	0.5
+	LabelFont
+	  Family        Sans
+	  Size			Larger
+	EndFont
+	TopSep			0.7
+End
+
+###### NOT COVERED BY QUANTUM ARTICLE ######
+
+NoStyle Subparagraph
+NoStyle Subparagraph*
+NoStyle Right_Address
