@@ -63,16 +63,16 @@ In addition, this document class come bundled with two new extras (currently in 
 * improved compatibility with frequently used latey document classes
 * improved/added options for using this documentclass for manuscripts not intended for submission to Quantum
 * use https in links when possible
-* prevent usage of the \today makro in \date to avoid changing dates in documents when they are re-compiled on the arXiv
-* enforce \pdfoutput=1 (as recommended by the arXiv) to prevent problems with multi-line hyper links
+* prevent usage of the `\today` makro in `\date` to avoid changing dates in documents when they are re-compiled on the arXiv
+* enforce that users put `\pdfoutput=1` (as recommended by the arXiv) to prevent problems with multi-line hyper links
 * improved error messages
 * fxed a bug that lead to the title not beeing centered with the titlepage option
 
 ## Contributors
 
-Developed by: Christian Gogolin, Christopher Granade, Johannes J. Meyer, Victor V. Albert
+Developed by: Christian Gogolin, Christopher Granade, Johannes J. Meyer, and Victor V. Albert
 
-With contributions from: Shahnawaz Ahmed, Andrey Rakhubovsky, liantze, Abhinav Deshpande
+With contributions from: Shahnawaz Ahmed, Andrey Rakhubovsky, liantze, and Abhinav Deshpande
 
 ## Contributing
 
