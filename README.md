@@ -2,9 +2,14 @@
 
 # LaTeX document class for Quantum
 
-`quantumarticle` is the document class for typsetting articles in Quantum.
+This is version 5.0 of `quantumarticle`, the document class for typsetting articles in Quantum - the open journal for quantum science.
 
 [Click here](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.cls) to download the latest stable version.
+
+[More information](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-template.pdf) on using quantumarticle and on typesetting manuscripts for Quantum can be found in the accompanying template.
+
+[Documentation](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.pdf) of all class options is also provided. 
+
 
 ## Installation and usage
 
@@ -41,6 +46,29 @@ Before you can do this however, you must make `quantumarticle.cls` accessible to
 
 The `quantumarticle` class tries to be **maximally compatible** with existing document classes, such as, `article`, `revtex`, `iopart`, and `elsarticle`. It supports all standard options, like `twocolumn`, `onecolumn`, `titlepage`, as well as the standard syntax for defining the title page with the `\author`, `\address`, and `\affiliation` commands and the `abstract` environment.
 
+## Beta features
+
+In addition, this document class come bundled with two new extras (currently in beta phase):
+
+1. The quantum-plots.ipynb Jupyter notebook and matplotlib style for effortlessly producing professional looking plots in python.
+
+2. The quantum-lyx-template.lyx LxY style, which allow you to generate the LaTeX source of your quantumarticle manuscript with the LyX document processor.
+
+## Changelog
+
+# New in v5.0:
+
+* foo
+* bar
+
+## Contributors
+
+Developed by: Christian Gogolin, Christopher Granade, Johannes J. Meyer, Victor V. Albert
+
+With smaller contributions from:
+
+Shahnawaz Ahmed, Andrey Rakhubovsky, liantze, Abhinav Deshpande
+
 ## Contributing
 
 In case you encounter problems using the article class please consider opening a bug report in our [bug-tracker on github](https://github.com/cgogolin/quantum-journal/issues).
@@ -51,7 +79,7 @@ Improvements submitted as pull requests against the `development` branch are ver
 
 ## Copyright
 
-Copyright 2017
+Copyright 2017, 2018, 2019
 Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
 (http://quantum-journal.org/about/)
 
