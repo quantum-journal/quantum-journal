@@ -5,7 +5,7 @@
 %%
 %% Copyright 2016,2017,2018
 %% Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
-%% (http://quantum-journal.org/about/)
+%% (https://quantum-journal.org/about/)
 %% 
 %% It is derived from `article.cls' available from
 %% https://www.ctan.org/pkg/article
@@ -19,9 +19,10 @@
 %% version 2005/12/01 or later.
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\def\quantumarticleversion{5.0}
 \ProvidesClass{quantumarticle}
-[2018/06/14 v4.2
-class for Quantum - the open journal for quantum science (http://quantum-journal.org)]
+[2018/07/09 v\quantumarticleversion
+class for Quantum - the open journal for quantum science (https://quantum-journal.org)]
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
 
@@ -258,7 +259,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
   {%
   }
   {
-    \def\@pdfoutputerror{\ClassError{quantumarticle}{As suggested by the arXiv (https://arxiv.org/help/submit_tex), please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file and before the first \string\usepackage command. Without this, the arXiv compiles your document with latex instead of pdflatex and hyperlinks in the bibliography broken over several lines will not work properly. See http://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information. If you still want to use standard latex (for example because you depend on psfrag) instead of pdflatex despite this problem, you can disable this error by giving the nopdfoutputerror option to quantumarticle. In this case please check carefully that the links in the version of your document typeset on the arXiv, especially those in the bibliography, work properly}{}%see also http://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
+    \def\@pdfoutputerror{\ClassError{quantumarticle}{As suggested by the arXiv (https://arxiv.org/help/submit_tex), please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file and before the first \string\usepackage command. Without this, the arXiv compiles your document with latex instead of pdflatex and hyperlinks in the bibliography broken over several lines will not work properly. See https://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information. If you still want to use standard latex (for example because you depend on psfrag) instead of pdflatex despite this problem, you can disable this error by giving the nopdfoutputerror option to quantumarticle. In this case please check carefully that the links in the version of your document typeset on the arXiv, especially those in the bibliography, work properly}{}%see also https://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
     }
     \ifcsdef{pdfoutput}%
     {%
@@ -343,7 +344,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \let\origif@twocolumn\if@twocolumn
 \def\class@name{ltxutil}%get rid of "You should define the class name before reading in this package. Using default" warning from ltxutils which is loaded by ltxgrid
 \if@twocolumn
-	\RequirePackage{ltxgrid}%ltxgrid should be loaded before etoolbox, otherwise terrible things can happen: http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend?noredirect=1#comment843815_343856 but if this is actually done, even more terrible things happen, so we partially repair what ltxgrid messes up below...
+	\RequirePackage{ltxgrid}%ltxgrid should be loaded before etoolbox, otherwise terrible things can happen: https://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend?noredirect=1#comment843815_343856 but if this is actually done, even more terrible things happen, so we partially repair what ltxgrid messes up below...
 	\newcommand*{\twocolumn}[1][]{#1\twocolumngrid}
 	\newcommand*{\onecolumn}{\onecolumngrid}
 \fi
@@ -352,7 +353,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \let\col@number\@colnum
 
 \ltx@ifpackageloaded{ltxgrid}{
-	%repair what ltxutils has destroyed (see http://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend) 
+	%repair what ltxutils has destroyed (see https://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend) 
 	\patchcmd\enddocument
 	{\deadcycles}
 	{\let\AfterEndDocument\@firstofone
@@ -735,7 +736,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 \newcommand*\@dotsep{4.5}
 \setcounter{tocdepth}{3}
 
-% We use a trick from Ivan Andrus (http://stackoverflow.com/a/2785740)
+% We use a trick from Ivan Andrus (https://stackoverflow.com/a/2785740)
 % to hide the "\section*{Contents}" command from the table of contents
 % to avoid getting an ugly duplication of the Contents header inside
 % the table itself.
@@ -1012,7 +1013,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 					{\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode}
 					{\gdef\@titleforurl{\@titleexpanded}}%
 				%\if@xstring\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode\else\gdef\@titleforurl{\@titleexpanded}\fi%
-				\href{http://quantum-journal.org/?s=\@titleforurl\&reason=title-click}{%
+				\href{https://quantum-journal.org/?s=\@titleforurl\&reason=title-click}{%
 						\color{quantumviolet}{%
 							\@printtitletextwithappropriatefontsize%
 						}%
@@ -1030,7 +1031,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 	\iftoggle{@allowfontchangeintitle}
 		{}
 		{%
-			\def\selectfont{\ClassError{quantumarticle}{When submitting to Quantum, you are not supposed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{}. Please remove all such commands from your \string\title{}. If you really have to change the font for some part of the title you can turn off this error by giving the option allowfontchangeintitle}{}}%solution from http://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
+			\def\selectfont{\ClassError{quantumarticle}{When submitting to Quantum, you are not supposed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{}. Please remove all such commands from your \string\title{}. If you really have to change the font for some part of the title you can turn off this error by giving the option allowfontchangeintitle}{}}%solution from https://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
 		}%
 	\@title%
 	\endgroup%
@@ -1120,7 +1121,7 @@ class for Quantum - the open journal for quantum science (http://quantum-journal
 			}}{}%
 		\@printauthor\the@authornum}{\@authors}%
 }
-\def\@@addcommabetween#1{#1, }%this adds an ugly extra comma at the end but the variant below is not expandable and therefore leads to ugly warnings: http://tex.stackexchange.com/questions/50978/macro-to-extract-typeset-plain-text-from-a-command
+\def\@@addcommabetween#1{#1, }%this adds an ugly extra comma at the end but the variant below is not expandable and therefore leads to ugly warnings: https://tex.stackexchange.com/questions/50978/macro-to-extract-typeset-plain-text-from-a-command
 %\def\@@addcommabetween#1{\ifdef{\firstauthoronly}{, }{\def\firstauthoronly{\empty}}#1}
 \def\@authorsonly{\forlistloop{\@@addcommabetween}{\@authors}}
 % affiliation handling
