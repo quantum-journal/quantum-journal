@@ -2,7 +2,7 @@
 
 # LaTeX document class for Quantum
 
-This is version 5.0 of `quantumarticle`, the document class for typsetting articles in Quantum - the open journal for quantum science.
+This is version 5.0 of `quantumarticle`, the document class for typesetting articles in Quantum - the open journal for quantum science.
 
 [Click here](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.cls) to download the latest stable version.
 
@@ -40,7 +40,7 @@ Before you can do this however, you must make `quantumarticle.cls` accessible to
 
 ## Dependencies
 
-`quantumarticle.cls` should work with any reasonably recent LaTeX distribution. It further requires the following packages: `xkeyval`, `etoolbox`, `geometry`, `xcolor`, `fancyhdr`, `tikz`, `hyperref`, ltxgrid and ltxcmds (often distributed along with revtex, in texlive for example as part of `texlive-publishers`), as well as at least either `lmodern` or `type1ec`. We recommend to have `natbib` and at least one of `bbm` or `dsfont` installed. All of these should be included in the full install variant of your LaTeX distribution (for example `texlive-full`).
+`quantumarticle.cls` should work with any reasonably recent LaTeX distribution. It further requires the following packages: `xkeyval`, `etoolbox`, `geometry`, `xcolor`, `fancyhdr`, `tikz`, `hyperref`, `ltxgrid` and `ltxcmds` (often distributed along with revtex, in texlive for example as part of `texlive-publishers`), as well as at least either `lmodern` or `type1ec`. We recommend to have `natbib` and at least one of `bbm` or `dsfont` installed. All of these should be included in the full install variant of your LaTeX distribution (for example `texlive-full`).
 
 ## Compatibility
 
@@ -60,13 +60,19 @@ In addition, this document class come bundled with two new extras (currently in 
 
 * force users to specify a paper size to prevent unexpected behavior
 * option processing is now done exclusively by means of xkeyval
-* improved compatibility with frequently used latey document classes
-* improved/added options for using this documentclass for manuscripts not intended for submission to Quantum
+* improved compatibility with frequently used LaTeX document classes
+* improved/added options for using this document class for manuscripts not intended for submission to Quantum
+* documents not intended for submission to Quantum can now be compiled with compilers different from PdfLaTeX (e.g. LuaLaTeX)
 * use https in links when possible
-* prevent usage of the `\today` makro in `\date` to avoid changing dates in documents when they are re-compiled on the arXiv
+* prevent usage of the `\today` macro in `\date` to avoid changing dates in documents when they are re-compiled on the arXiv
 * enforce that users put `\pdfoutput=1` (as recommended by the arXiv) to prevent problems with multi-line hyper links
 * improved error messages
-* fxed a bug that lead to the title not beeing centered with the titlepage option
+* fixed a bug that lead to the title not being centered with the `titlepage` option
+* fixed various bugs in option processing
+* the document class is now documented in `quantumarticle.pdf`
+* introduced the plotting notebook `quantum-plots.ipynb` as a beta feature
+* introduced the LyX template `quantum-lyx-template.lyx` as a beta feature
+
 
 ## Contributors
 
@@ -76,11 +82,11 @@ With contributions from: Shahnawaz Ahmed, Andrey Rakhubovsky, liantze, and Abhin
 
 ## Contributing
 
-In case you encounter problems using the article class please consider opening a bug report in our [bug-tracker on github](https://github.com/cgogolin/quantum-journal/issues).
+In case you encounter problems using the article class please consider opening a bug report in our [bug-tracker on GitHub](https://github.com/quantum-journal/quantum-journal/issues).
 You can also contact us via email under latex@quantum-journal.org, but it may take significantly longer to get a response.
 In any case we need the full source of a document that produces the problem and the log file showing the error to help you.
 
-Improvements submitted as pull requests against the `development` branch are very much appreciated!
+Improvements submitted as pull requests against the `develop` branch are very much appreciated!
 
 ## Copyright
 
