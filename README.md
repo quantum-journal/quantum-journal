@@ -36,7 +36,7 @@ Before you can do this however, you must make `quantumarticle.cls` accessible to
 
 3. To manually install `quantumarticle`, you can either clone this git repository or download `quantumarticle.cls` directly via [this link](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.cls) and then copy the `quantumarticle.cls` file to `texmf/tex/latex/quantumarticle` within your home directory (under Linux, macOS, and OS X `~/`, or under Windows typically `C:\Users\[your username]`) and run `texhash` (TeX Live) or `initexmf --update-fndb` (MiKTeX).
 
-4. Finally, you can use `quantumarticle.cls` without even downloading it at all on the collaborative writing platform [overleaf](https://www.overleaf.com/) by starting your project from the `quantumarticle` [template](https://www.overleaf.com/latex/templates/template-for-submission-to-quantum-journal/gsjgyhxrtrzy) as well as with the [ShareLaTeX](https://www.sharelatex.com/project) online LaTeX editor by using the `quantumarticle` [template](https://www.sharelatex.com/templates/5912bce26aad110026f11697) there.
+4. Finally, you can use `quantumarticle.cls` without even downloading it at all on the collaborative writing platform [overleaf](https://www.overleaf.com/) by starting your project from the `quantumarticle` [template](https://www.overleaf.com/latex/templates/template-for-submission-to-quantum-journal/gsjgyhxrtrzy).
 
 ## Dependencies
 
@@ -52,7 +52,7 @@ In addition, this document class come bundled with two new extras (currently in 
 
 1. The quantum-plots.ipynb Jupyter notebook and matplotlib style for effortlessly producing professional looking plots in python.
 
-2. The quantum-lyx-template.lyx LxY style, which allow you to generate the LaTeX source of your quantumarticle manuscript with the LyX document processor.
+2. The quantum-lyx-template.lyx LxY layout, which allow you to generate the LaTeX source of your quantumarticle manuscript with the LyX document processor.
 
 ## Changelog
 
@@ -68,6 +68,7 @@ In addition, this document class come bundled with two new extras (currently in 
 * enforce that users put `\pdfoutput=1` (as recommended by the arXiv) to prevent problems with multi-line hyper links
 * improved error messages
 * fixed a bug that lead to the title not being centered with the `titlepage` option
+* better layout of titles 
 * fixed various bugs in option processing
 * the document class is now documented in `quantumarticle.pdf`
 * introduced the plotting notebook `quantum-plots.ipynb` as a beta feature
