@@ -47,7 +47,7 @@
 .LINK
     http://quantum-journal.org
 .LINK
-    https://github.com/cgogolin/quantum-journal
+    https://github.com/quantum-journal/quantum-journal
 .PARAMETER CTAN
     If present, this script will also build a ZIP archive suitable
     for uploading {quantumarticle} to CTAN.
@@ -215,5 +215,5 @@ if ($CTAN) {
     #endregion
 
     # Once we have PoShTeX, we can then directly invoke Export-CTANArchive.
-    Export-CTANArchive -ArchiveLayout Simple quantumarticle.cls, quantum-template.pdf, quantum-template.tex, README.md, install.sh, install.ps1
+    Export-CTANArchive -ArchiveLayout Simple quantumarticle.cls, quantum-template.pdf, quantum-template.tex, README.md, quantumarticle.tex, quantumarticle.pdf
 }
