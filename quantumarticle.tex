@@ -1,0 +1,512 @@
+\documentclass[a4paper,noarxiv,onecolumn]{quantumarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+
+\usepackage{lipsum}
+\usepackage{mdframed}
+\usepackage{booktabs}
+\usepackage{longtable}
+
+\newcommand*{\ditto}{--- \raisebox{-0.5ex}{''} ---}
+
+\newenvironment{options}
+	{\medskip\noindent\begin{longtable}{p{.25\columnwidth}p{.694\columnwidth}}
+	%\toprule
+	\textsf{Option} & \textsf{Description} \\
+	\midrule
+	}
+	{\bottomrule\end{longtable}}
+
+\newcommand{\option}[2]{
+	\small\texttt{#1} & {\small#2} \\
+}
+
+\newcommand{\compatibilityoption}[2]{
+	\small\texttt{#1 (C)} & {\small #2} \\
+}
+
+\newcommand{\defaultoption}[2]{
+\small\texttt{#1 (default)} & {\small #2} \\
+}
+
+\newenvironment{commands}
+{\medskip\noindent\begin{longtable}{p{.20\columnwidth}p{.744\columnwidth}}
+		%\toprule
+		\textsf{Command} & \textsf{Description} \\
+		\midrule
+	}
+	{\bottomrule\end{longtable}}
+
+\newcommand{\command}[2]{
+	\small\texttt{#1} & {\small#2} \\
+}
+
+%\newenvironment{options}
+%{\begin{mdframed}}
+%	{\end{mdframed}}
+%
+%\newcommand{\option}[2]{
+%	\noindent
+%	\begin{minipage}[t]{.18\columnwidth}
+%		\small\texttt{#1}
+%	\end{minipage}
+%	\begin{minipage}[t]{.82\columnwidth}
+%		\small#2
+%	\end{minipage}
+%}
+
+
+\begin{document}
+	\title{Documentation of quantumarticle.cls v\quantumarticleversion}
+	\maketitle
+	
+	\tableofcontents
+	
+	\clearpage
+	
+	\section{Introduction}
+	The quantumarticle document class is the preferred document class for papers that will be submitted to \href{https://quantum-journal.org/}{Quantum -- the open journal of quantum science}. It is based on the widely used \texttt{article} document class and designed to allow a seamless transition from documents typeset with \texttt{article}, \texttt{revtex4-1} and the \texttt{elsarticle} document classes. 
+	
+	As Quantum is an arXiv overlay journal, all papers have to be submitted to the arXiv. To make this submission process as user-friendly as possible, the quantumarticle document class implements a number of arXiv-specific checks, which however can be deactivated via the option \texttt{noarxiv}.
+
+        An example for this is a check that is meant to make sure that the arXiv produces a PDF file and that hyperlinks are correctly broken across multiple lines.
+        To ensure this, the arXiv \href{https://arxiv.org/help/submit_tex}{recommends} putting 
+	\begin{verbatim}
+	\pdfoutput=1
+	\end{verbatim}
+	within the first 5 lines of your main LaTeX file. By default, the quantumarticle document class will throw an error if this line is missing. Just like other similar checks, this can be deactivated by means of the \texttt{noarxiv} option, or only this specific check can be deactivated via the option \texttt{nopdfoutputerror}.
+
+        Giving the \texttt{noarxiv} option also disables a number of other features of quantum article and removes any Quantum related branding from the document. Authors who would like to keep the checks active but still use this document class for manuscripts not intended for submission to Quantum and therefore without Quantum branding can use the \texttt{unpublished} option.
+
+        One feature deactivated by both \texttt{unpublished} and \texttt{noarxiv} for example, is the ``title click feature'' of quantumarticle. As this document class can be used for arbitrary documents, Quantum implements a feature where readers can, by clicking on the title of a manuscript, verify whether this manuscript was actually published by Quantum. Obviously this is an unwanted feature in any manuscript not accepted in Quantum and it can thus be deactivated with the \texttt{unpublished} option.
+        
+	\section{Typesetting documents}
+
+        The following are guidelines for the usage of the quantumarticle document class for manuscripts to be submitted to or accepted in Quantum. A detailed description of the functionality and options of the document class follow in Section~\ref{sec:options}.
+        
+	\subsection{Recommendations on structure}	
+	In the \texttt{twocolumn} layout and without the \texttt{titlepage} option a paragraph without a previous section title may directly follow the abstract.
+	In \texttt{onecolumn} format or with a dedicated \texttt{titlepage}, this should be avoided.
+	
+	Longer articles should include a section that, early on, explains the main results, their limitations, and assumptions.
+	This section can be used to, for example, present the main theorem, or provide a summary of the results for a wider audience.
+	
+	\subsection{Title information}
+	The title of the document is given via the common \texttt{title} command. Note that clicking the title performs a search for that title on \href{http://quantum-journal.org}{quantum-journal.org}.
+	In this way readers can easily verify whether a work using the \texttt{quantumarticle} class was actually published in Quantum. By giving the \texttt{accepted=YYYY-MM-DD} option, with \texttt{YYYY-MM-DD} the acceptance date, the note ``Accepted in Quantum YYYY-MM-DD, click title to verify'' can be added to the bottom of each page to clearly mark works that have been accepted in Quantum. 	
+	
+	You should call \texttt{\textbackslash{}maketitle} before your running text starts.
+	
+	\subsubsection{Authors and affiliations}
+	You can provide information on authors and affiliations in the common format also used by \texttt{revtex}:
+	\begin{verbatim}
+	\author{Author 1}
+	\author{Author 2}
+	\affiliation{Affiliation 1}
+	\author{Author 3}
+	\affiliation{Affiliation 2}
+	\author{Author 4}
+	\affiliation{Affiliation 1}
+	\affiliation{Affiliation 3}
+	\end{verbatim}
+	In this example affiliation 1 will be associated with authors 1, 2, and 4, affiliation 2 with author 3 and affiliation 3 with author 4.
+	Repeated affiliations are automatically recognized and typeset in \texttt{superscriptaddress} style.
+	Alternatively you can use a format similar to that of the \texttt{authblk} package and the \texttt{elsarticle} document class to specify the same affiliation relations as follows:
+	\begin{verbatim}
+	\author[1]{Author 1}
+	\author[1]{Author 2}
+	\author[2]{Author 3}
+	\author[1,3]{Author 4}
+	\affil[1]{Affiliation 1}
+	\affil[2]{Affiliation 1}
+	\affil[3]{Affiliation 1}
+	\end{verbatim}
+	
+	\subsubsection{Other author related information}
+	The quantumarticle document class supports further commands that are author specific:
+	\begin{commands}
+		\command{email}{%
+			E-Mail address of the author, displayed in the bottom of the page.
+		}
+	
+		\command{homepage}{%
+			Homepage of the author, displayed in the bottom of the page.
+		}
+	
+		\command{thanks}{%
+			Additional text that is displayed in the bottom of the page.
+		}
+	
+		\command{orcid}{%
+			If the ORCiD of the author is given, his name will become a link to his ORCiD profile.
+		}
+	\end{commands}
+	
+	\subsection{Abstract}
+	The abstract is typeset using the common \texttt{abstract} environment. In the standard, \texttt{twocolumn}, layout the abstract is typeset as a bold face first paragraph.
+	In \texttt{onecolumn} layout the abstract is placed above the text.
+	Both can be combined with the \texttt{titlepage} option to obtain a format with dedicated title and abstract pages that are not included in the page count.
+	This format can be more suitable for long articles.
+	The \texttt{abstract} environment can appear both before and after the \texttt{\textbackslash{}maketitle} command and calling \texttt{\textbackslash{}maketitle} is optional, as long as there is an \texttt{abstract}.
+	Both \texttt{abstract} and \texttt{\textbackslash{}maketitle} however must be placed after all other \texttt{\textbackslash{}author}, \texttt{\textbackslash{}affiliation}, etc.\ commands.
+	
+	\subsection{Sectioning}
+	Sections, subsections, subsubsections, and paragraphs should be typeset with the standard LaTeX commands. The paragraph is the smallest unit of sectioning. Feel free to end the paragraph title with a full stop if you find this appropriate.
+	
+	\subsection{Equations}	
+	You can use the standard commands for equations. For multi-line equations \texttt{align} is preferable over \texttt{eqnarray}, please refrain from using the latter.	For complex equations you may want to consider using the \texttt{IEEEeqnarray} environment from the \texttt{IEEEtrantools} package.
+	
+	How you refer to equations is up to you, but please be consistent and use the \texttt{\textbackslash{}eqref\{\dots\}} command instead of writing \texttt{(\textbackslash{}ref\{\dots\})}.
+	
+	As a courtesy for your readers and referees, please suppress equation numbers only if there is a specific reason to do so, to not make it unnecessarily difficult to refer to individual results and steps in derivations.
+	
+	Very wide equations can be shown expanding over both columns using the \texttt{widetext} environment.
+	In \texttt{onecolumn} mode, the \texttt{widetext} environment has no effect.
+	To enable this feature in \texttt{twocolumn} mode, \texttt{quantumarticle} relies on the package \texttt{ltxgrid}.
+	Unfortunately this package has a bug that leads to a sub-optimal placement of extremely long footnotes.
+	
+	\subsection{Floats}	
+	Every floating element must have an informative caption and a number. The caption can be placed above, below, or to the side of the figure, as you see fit.
+	
+	Feel free to place them at the top or bottom of the page, or in the middle of a paragraph as you see fit. Try to place them on the same page as the text referring to them. A figure on the first page can help readers remember and recognize your work more easily.
+	
+	\subsubsection{Figures}
+	Figures are typeset using the standard \texttt{figure} environment for single-column figures and \texttt{figure*} for multi-column figures. 
+	
+	\subsubsection{Tables}
+	Tables are typeset using the standard \texttt{table} environment for single-column tables and \texttt{table*} for multi-column tables. 
+	
+	\subsection{Plots}
+	Quantum provides a Jupyter notebook to create plots that integrate seamlessly with \texttt{quantumarticle}.
+	
+	\subsection{Footnotes}
+	Footnotes are typeset using the \texttt{footnote} command. They will appear in the bottom of the page. Please do only use footnotes when appropriate and do not mix footnotes with references.
+	
+	\subsection{References}	
+	Citations to other works should appear in the References section at the end of the work.
+	
+	\paragraph{Important:} As Quantum is a member of Crossref, all references to works that have a DOI \emph{must} be hyperlinked according to the DOI. Those links must start with \texttt{https://doi.org/} (preferred), or \texttt{http://dx.doi.org/}. Direct links to the website of the publisher are not sufficient. This can be achieved in several ways, depending on how you are formatting your bibliography.
+	
+	\subsubsection{Manual bibliography}
+	Suppose the DOI of an article that you want to cite is \texttt{10.22331/idonotexist}. If you are formatting your bibliography manually, you can cite this work using the following in your \texttt{thebibliography} environment:
+	\begin{verbatim}
+	\bibitem{examplecitation}
+	Name Surname,
+	\href{https://doi.org/10.22331/
+	idonotexist}{Quantum
+	\textbf{123}, 123456 (1916).}
+	\end{verbatim}
+	
+	\paragraph{Important:} If you are formatting your bibliography manually, please do not group multiple citations into one \texttt{\textbackslash{}bibitem}.
+	Having to search through multiple references to find the cited result makes your work less accessible for authors and grouping references can screw up our automatic extraction of citations.
+	
+	\subsubsection{BibTeX bibliography}
+	We encourage the use of BibTeX to generate your bibliography from the BibTeX meta-data provided by publishers.
+	For DOI linking to work, the BibTeX file must contain the \texttt{doi} field as for example in:
+	\begin{verbatim}
+	@article{examplecitation,
+	author = {Surname, Name},
+	title = {Title},
+	journal = {Quantum},
+	volume = {123},
+	page = {123456},
+	year = {1916},
+	doi = {10.22331/idonotexist},
+	}
+	\end{verbatim}
+	Several authors had problems because of Unicode characters in their BibTeX files.
+	Be advised that \href{http://wiki.lyx.org/BibTeX/Tips}{BibTeX does not support Unicode characters}.
+	All special characters must be input via their respective LaTeX commands.
+	
+	\paragraph{natbib}
+	If you are using BibTeX, you can load the \texttt{natbib} package by putting
+	\begin{verbatim}
+	\usepackage[numbers,sort&compress]{natbib}
+	\end{verbatim}
+	in the preamble of your document and then use the \texttt{plainnat} citation style by including your BibTeX bibliography \texttt{mybibliography.bib} where you want the bibliography to appear as follows:
+	\begin{verbatim}
+	\bibliographystyle{plainnat}
+	\bibliography{mybibliography}
+	\end{verbatim}
+	The quantumarticle class automatically detects that the \texttt{natbib} package was loaded and redefines the \texttt{\textbackslash{}doi} command to create hyperlinks.
+	This is likely the easiest option if you are converting from another document class.
+	
+	\paragraph{BibLaTeX}
+	If you want to use BibLaTeX, you can instead add
+	\begin{verbatim}
+	\usepackage[backend=bibtex]{biblatex}
+	\addbibresource{mybibliography.bib}
+	\end{verbatim}
+	to the preamble of your document and then output the bibliography with
+	\begin{verbatim}
+	\printbibliography
+	\end{verbatim}
+	where appropriate.
+	You then have to upload the .bbl file along with the other source files when submitting to the arXiv.
+	Due to incompatibilities between different BibLaTeX versions we unfortunately cannot recommend this option.
+	
+	The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declares a suitable field format to make it a hyperlink.
+	Due to issues with \texttt{biber} we recommend to use the \texttt{bibtex} backend of \texttt{biblatex}.
+	
+	Feel free to change the appearance of citations in any way you like by using a different \texttt{bibliographystyle} or via the advanced mechanisms provided by BibLaTeX.
+	The only two requirements are that citations must uniquely identify the cited work and that they must contain a DOI hyperlink whenever possible.
+	
+	\subsection{Appendix}
+	Quantum allows the usage of appendices. Ideally, the command \texttt{\textbackslash{}appendix} should be put before the appendices to get appropriate section numbering. The appendices are then numbered alphabetically, with numeric (sub)subsection numbering.
+	Equations continue to be numbered sequentially.
+	You are free to change this in case it is more appropriate for your article, but a consistent and unambiguous numbering of sections and equations must be ensured.
+	
+	If you want your appendices to appear in \texttt{onecolumn} mode but the rest of the document in \texttt{twocolumn} mode, you can insert the command \texttt{\textbackslash{}onecolumn\textbackslash{}newpage} before \texttt{\textbackslash{}appendix}.   
+	
+	\subsection{Recommended packages}
+	Quantum encourages you to load the following extra packages:
+	\begin{verbatim}
+	\usepackage[utf8]{inputenc}
+	\usepackage[english]{babel}
+	\usepackage[T1]{fontenc}
+	\usepackage{amsmath}
+	\usepackage{hyperref}
+	\end{verbatim}
+	If you do not load the \texttt{hyperref} package, quantumarticle automatically loads it for you.
+	Packages that change font settings, such as \texttt{times} or \texttt{helvet} should be avoided.
+	
+	\section{Package options}
+        \label{sec:options}
+	The quantumarticle document class provides a multitude of package options that change the appearance of the final document to the liking of the user. Default options that need not be given are marked with \texttt{(default)}. Options that are only provided for compatibility reasons and that will not alter the typesetting of the document are marked with \texttt{(C)}.
+	
+	\subsection{Document setup}
+	
+	\subsubsection{Document format}
+	The document class does not specify a default paper size and an error is raised if none is specified. The reason for this is that different LaTeX compilers and localizations can cause paper sizes to vary between setups and this can lead to unexpected results when multiple authors collaborate on a document and the final typesetting is performed by a third party, such as the arXiv.   
+	
+	\begin{options}
+		\option{a4paper}{%
+			Sets the paper size to ISO A4.
+		}
+		\option{a5paper}{%
+			Sets the paper size to ISO A5.
+		}
+		\option{b5paper}{%
+			Sets the paper size to ISO B5.
+		}
+		\option{letterpaper}{%
+			Sets the paper size to ANSI Letter.
+		}
+		\option{legalpaper}{%
+			Sets the paper size to ANSI Legal.
+		}
+		\option{executivepaper}{%
+			Sets the paper size to ANSI Executive.
+		}
+	\end{options}
+
+	\subsubsection{Orientation}
+	By default, the orientation is portrait. 
+	
+	\begin{options}
+		\option{landscape}{%
+			Sets the orientation of the document to landscape.
+		}
+	\end{options}
+
+	\subsubsection{Fontsize}
+	By default, the fontsize is 10pt.
+	
+	\begin{options}
+		\defaultoption{10pt}{%
+			Sets the normal fontsize to 10pt.
+		}
+		\option{11pt}{%
+			Sets the normal fontsize to 11pt.
+		}
+		\option{12pt}{%
+			Sets the normal fontsize to 12pt.
+		}
+	\end{options}
+
+	\subsubsection{Sides}
+	By default, the setting is oneside.
+	
+	\begin{options}
+		\defaultoption{oneside}{%
+			Prepares the document onesided.
+		}
+		\option{twoside}{%
+			Prepares the document twosided.
+		}
+	\end{options}
+
+	\subsubsection{Titlepage}
+	By default, the document class is typeset with no extra titlepage.
+	
+	\begin{options}
+		\option{titlepage}{%
+			Displays the title on a separate titlepage.
+		}
+		\compatibilityoption{notitlepage}{%
+			Displays the title on the same page as the text.
+		}
+	\end{options}
+
+	\subsubsection{Draft}
+	By default, the document class is typeset as final.
+	
+	\begin{options}
+	\option{draft}{%
+		Marks the document as a draft.
+	}
+	\defaultoption{final}{%
+		Does not mark the document as a draft.
+	}
+	\end{options}
+
+	\subsection{Style options}
+	
+	\subsubsection{Equations}
+	By default, equations are typeset centered, with equation numbers on the right.
+	
+	\begin{options}
+		\option{fleqn}{%
+			Display equations left aligned.
+		}
+		\option{leqno}{%
+			Display equation numbers to the left of the equation.
+		}
+	\end{options}
+
+	\subsubsection{Bibliography}
+	
+	\begin{options}
+		\option{openbib}{%
+			Display elements of bibliography entries on separate lines, \href{https://tex.stackexchange.com/questions/56628/custom-references-page-with-additional-line-breaks}{see here}.
+		}
+	\end{options}
+
+	\subsection{Pre-loaded packages}
+	The document class only loads packages necessary for its operation, such as \texttt{geometry} or \texttt{hyperref}. For compatibility reasons, there are commands that load certain widely used packages for the user.
+	
+	\begin{options}
+		\option{amsfonts}{%
+			Load the package \texttt{amsfonts}.
+		}
+		\compatibilityoption{noamsfonts}{%
+			Don't load the package \texttt{amsfonts}.
+		}
+		\option{amssymb}{%
+			Load the package \texttt{amssymb}.
+		}
+		\option{amssymbol}{%
+			\ditto
+		}
+		\compatibilityoption{noamssymb}{%
+			Don't load the package \texttt{amssymb}.
+		}
+		\option{amsmath}{%
+			Load the package \texttt{amsmath}.
+		}
+		\compatibilityoption{noamsmath}{%
+			Don't load the package \texttt{amsmath}.
+		}
+	\end{options}
+
+	\subsection{Publication}
+	By default, all documents that are created with the \texttt{quantumarticle} document class are treated as possible submissions to Quantum. 
+	
+	\begin{options}
+		\option{accepted=YYYY-MM-DD}{%
+			Adds the note 'Accepted in Quantum YYYY-MM-DD' to the document.
+		}
+		\option{unpublished}{%
+			Intended for works that are not published in Quantum. Disables all Quantum-related branding.
+		}
+		\option{noarxiv}{%
+			Intended for works that are not meant to be uploaded to the arXiv. Disables all arXiv-related sanity checks in the document. This option also sets \texttt{unpublished}.
+		}
+	\end{options}
+
+	\subsection{Compatibility}
+	The \texttt{quantumarticle} class aims to be maximally compatible with documents that were previously typeset with other document classes. For this reason, a number of options are present for the sole purpose of compatibility but do not have any effect on how your document will be typeset These include:
+	
+	\begin{options}
+		\compatibilityoption{checkin}{No effect.}
+		\compatibilityoption{preprint}{\ditto}
+		\compatibilityoption{reprint}{\ditto}
+		\compatibilityoption{manuscript}{\ditto}
+		\compatibilityoption{noshowpacs}{\ditto}
+		\compatibilityoption{showpacs}{\ditto}
+		\compatibilityoption{showkeys}{\ditto}
+		\compatibilityoption{noshowkeys}{\ditto}
+		\compatibilityoption{balancelastpage}{\ditto}
+		\compatibilityoption{nobalancelastpage}{\ditto}
+		\compatibilityoption{nopreprintnumbers}{\ditto}
+		\compatibilityoption{preprintnumbers}{\ditto}
+		\compatibilityoption{hyperref}{\ditto}
+		\compatibilityoption{bibnotes}{\ditto}
+		\compatibilityoption{nobibnotes}{\ditto}
+		\compatibilityoption{footinbib}{\ditto}
+		\compatibilityoption{nofootinbib}{\ditto}
+		\compatibilityoption{altaffilletter}{\ditto}
+		\compatibilityoption{altaffilsymbol}{\ditto}
+		\compatibilityoption{superbib}{\ditto}
+		\compatibilityoption{citeautoscript}{\ditto}
+		\compatibilityoption{longbibliography}{\ditto}
+		\compatibilityoption{nolongbibliography}{\ditto}
+		\compatibilityoption{eprint}{\ditto}
+		\compatibilityoption{noeprint}{\ditto}
+		\compatibilityoption{author-year}{\ditto}
+		\compatibilityoption{numerical}{\ditto}
+		\compatibilityoption{galley}{\ditto}
+		\compatibilityoption{raggedbottom}{\ditto}
+		\compatibilityoption{tightenlines}{\ditto}
+		\compatibilityoption{lengthcheck}{\ditto}
+		\compatibilityoption{reprint}{\ditto}
+		\compatibilityoption{eqsecnum}{\ditto}
+		\compatibilityoption{secnumarabic}{\ditto}
+		\compatibilityoption{floats}{\ditto}
+		\compatibilityoption{stfloats}{\ditto}
+		\compatibilityoption{endfloats}{\ditto}
+		\compatibilityoption{endfloats*}{\ditto}
+		\compatibilityoption{osa}{\ditto}
+		\compatibilityoption{osameet}{\ditto}
+		\compatibilityoption{opex}{\ditto}
+		\compatibilityoption{tops}{\ditto}
+		\compatibilityoption{josa}{\ditto}
+		\compatibilityoption{byrevtex}{\ditto}
+		\compatibilityoption{floatfix}{\ditto}
+		\compatibilityoption{nofloatfix}{\ditto}
+		\compatibilityoption{ltxgridinfo}{\ditto}
+		\compatibilityoption{outputdebug}{\ditto}
+		\compatibilityoption{raggedfooter}{\ditto}
+		\compatibilityoption{noraggedfooter}{\ditto}
+		\compatibilityoption{frontmatterverbose}{\ditto}
+		\compatibilityoption{linenumbers}{\ditto}
+		\compatibilityoption{nomerge}{\ditto}
+		\compatibilityoption{hypertext}{\ditto}
+		\compatibilityoption{frontmatterverbose}{\ditto}
+		\compatibilityoption{inactive}{\ditto}
+		\compatibilityoption{groupedaddress}{\ditto}
+		\compatibilityoption{unsortedaddress}{\ditto}
+		\compatibilityoption{runinaddress}{\ditto}
+		\compatibilityoption{superscriptaddress}{\ditto}
+		\compatibilityoption{aps}{Triggers revtex compatibility mode}
+		\compatibilityoption{pra}{\ditto}
+		\compatibilityoption{prb}{\ditto}
+		\compatibilityoption{pre}{\ditto}
+		\compatibilityoption{prl}{\ditto}
+		\compatibilityoption{prx}{\ditto}
+		\compatibilityoption{aip}{\ditto}
+	\end{options}
+		
+	\section{Contributing}
+	In case you encounter problems using the article class please consider opening a bug report in our \href{https://github.com/quantum-journal/quantum-journal/issues}{bug-tracker on GitHub}. You can also contact us via email under \texttt{latex@quantum-journal.org}, but it may take significantly longer to get a response. In any case we need the full source of a document that produces the problem and the log file showing the error to help you.
+	
+	Improvements submitted as pull requests against the \href{https://github.com/quantum-journal/quantum-journal/tree/develop}{develop} branch are very much appreciated!
+	
+	\section{Copyright}
+	Copyright 2019 Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften (\url{http://quantum-journal.org/about/}).
+	
+	The document class \texttt{quantumarticle} is derived from \texttt{article} available from \url{https://www.ctan.org/pkg/article}.
+	
+	It may be distributed and/or modified under the conditions of the LaTeX Project Public License, either version 1.3c of this license or (at your option) any later version. The latest version of this license is in \url{http://www.latex-project.org/lppl.txt} and version 1.3c or later is part of all distributions of \LaTeX version 2005/12/01 or later.
+\end{document}

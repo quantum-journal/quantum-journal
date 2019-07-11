@@ -34,5 +34,6 @@ script:
     - mkdir _build
     - cd _build
     - cp ../quantum-template.tex .
+    - cp ../example-plot.pdf .
     - pdflatex -interaction=nonstopmode -halt-on-error quantum-template.tex
     - pdflatex -interaction=nonstopmode -halt-on-error quantum-template.tex

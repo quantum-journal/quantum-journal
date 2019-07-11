@@ -1,4 +1,4 @@
-\documentclass[a4paper,twocolumn,superscriptaddress,11pt,accepted=2017-05-09]{quantumarticle}
+\documentclass[a4paper,twocolumn,11pt,accepted=2017-05-09]{quantumarticle}
 \pdfoutput=1
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -13,19 +13,28 @@
 
 \begin{document}
 
-\title{Template demonstrating the quantumarticle class}
-\date{\today}
+\title{Template demonstrating the quantumarticle document class}
+
 \author{Lídia del Rio}
-\affiliation{Institute for Theoretical Physics, ETH Zurich, Switzerland}
+\affiliation{Institute for Theoretical Physics, ETH Zurich, 8093 Zurich, Switzerland}
+\orcid{0000-0002-2445-2701}
 \author{Christian Gogolin}
 \email{latex@quantum-journal.org}
 \homepage{http://quantum-journal.org}
 \orcid{0000-0003-0290-4698}
 \thanks{You can use the \texttt{\textbackslash{}email}, \texttt{\textbackslash{}homepage}, and \texttt{\textbackslash{}thanks} commands to add additional information for the preceding \texttt{\textbackslash{}author}. If applicable, this can also be used to indicate that a work has previously been published in conference proceedings.}
-\affiliation{ICFO-Institut de Ciencies Fotoniques, The Barcelona Institute of Science and Technology, 08860 Castelldefels (Barcelona), Spain}
+\affiliation{Covestro Deutschland AG, Kaiser-Wilhelm-Allee 60, 51373 Leverkusen, Germany}
 \author{Marcus Huber}
 \affiliation{Institute for Quantum Optics \& Quantum Information (IQOQI), Austrian Academy of Sciences, Boltzmanngasse 3, Vienna A-1090, Austria}
-
+\orcid{0000-0003-1985-4623}
+\author{Christopher Granade}
+\affiliation{Microsoft Research, Quantum Architectures and Computation Group, Redmond, WA 98052, USA}
+\author{Johannes Jakob Meyer}
+\affiliation{Dahlem Center for Complex Quantum Systems, Freie Universität Berlin, 14195 Berlin, Germany}
+\orcid{0000-0003-1533-8015}
+\author{Victor V. Albert}
+\affiliation{Institute for Quantum Information and Matter \& Walter Burke Institute for Theoretical Physics, Caltech, Pasadena, CA 91125, USA}
+\orcid{0000-0002-0335-9508}
 \maketitle
 
 \begin{abstract}
@@ -34,26 +43,29 @@
   Both can be combined with the \texttt{titlepage} option to obtain a format with dedicated title and abstract pages that are not included in the page count.
   This format can be more suitable for long articles.
   The \texttt{abstract} environment can appear both before and after the \texttt{\textbackslash{}maketitle} command and calling \texttt{\textbackslash{}maketitle} is optional, as long as there is an \texttt{abstract}.
-  Both \texttt{abstract} and \texttt{\textbackslash{}maketitle} however must be placed after all other \texttt{\textbackslash{}author}, \texttt{\textbackslash{}affiliation}, etc.\ commands.
+  Both \texttt{abstract} and \texttt{\textbackslash{}maketitle} however must be placed after all other \texttt{\textbackslash{}author}, \texttt{\textbackslash{}affiliation}, etc.\ commands, see also Section~\ref{sec:title-information}.
   If you provide the ORCID number of an author by using the \texttt{\textbackslash{}orcid} command, the author name becomes a link to their page on \href{http://orcid.org/}{orcid.org}. 
 \end{abstract}
 
-In the \texttt{twocolumn} layout and without the \texttt{titlepage} option there can be a paragraph directly following the abstract before the first section.
+In the \texttt{twocolumn} layout and without the \texttt{titlepage} option a paragraph without a previous section title may directly follow the abstract.
 In \texttt{onecolumn} format or with a dedicated \texttt{titlepage}, this should be avoided.
 
 Note that clicking the title performs a search for that title on \href{http://quantum-journal.org}{quantum-journal.org}.
-In this way readers can easily verify whether a work using the quantumarticle class was actually published in Quantum.
+In this way readers can easily verify whether a work using the \texttt{quantumarticle} class was actually published in Quantum.
+If you would like to use \texttt{quantumarticle} for manuscripts not yet accepted in Quantum, or not even intended for submission to Quantum, please use the \texttt{unpublished} option to switch off all Quantum related branding and the hyperlink in the title.
+By default, this class also performs various checks to make sure the manuscript will compile well on the arXiv.
+If you do not intend to submit your manuscript to Quantum or the arXiv, you can switch off these checks with the \texttt{noarxiv} option.
+On the contrary, by giving the \texttt{accepted=YYYY-MM-DD} option, with \texttt{YYYY-MM-DD} the acceptance date, the note ``Accepted in Quantum YYYY-MM-DD, click title to verify'' can be added to the bottom of each page to clearly mark works that have been accepted in Quantum. 
 
 \section{Figures}
 \begin{figure}[t]
   \centering
-  \begin{tikzpicture}
-    \draw (-4,-2.5) rectangle (4,2.5);
-    \node[rotate=20] {\color{quantumviolet}\Huge\Quantum};
-  \end{tikzpicture}
+  \includegraphics{example-plot.pdf}
   \caption{Every figure must have an informative caption and a number.
     The caption can be placed above, below, or to the side of the figure, as you see fit.
-    The same applies for tables, boxes, and other floating elements.}
+    The same applies for tables, boxes, and other floating elements. 
+    Quantum provides a Jupyter notebook to create plots that integrate seamlessly with \texttt{quantumarticle}, described in Section \ref{sec:plots}.
+    Figures spanning multiple columns can by typeset with the usual \texttt{figure*} environment.}
   \label{fig:figure1}
 \end{figure}
 See Fig.~\ref{fig:figure1} for an example of how to include figures.
@@ -64,7 +76,6 @@ A figure on the first page can help readers remember and recognize your work mor
 \section{Sectioning and equations}
 Sections, subsections, subsubsections, and paragraphs should be typeset with the standard LaTeX commands.
 You can use the standard commands for equations.
-For multi-line equations \texttt{align} is \href{http://tex.stackexchange.com/questions/196/eqnarray-vs-align}{preferable} over \texttt{eqnarray}.
 \begin{align}
   \label{emc}
   E &= m\,c^2\\
@@ -72,8 +83,11 @@ For multi-line equations \texttt{align} is \href{http://tex.stackexchange.com/qu
   H\,|\psi\rangle &= E\,|\psi\rangle\\
   (\openone \otimes A)\,(B \otimes \openone) &= A \otimes B
 \end{align}
+For multi-line equations \texttt{align} is \href{http://tex.stackexchange.com/questions/196/eqnarray-vs-align}{preferable} over \texttt{eqnarray}.
+Please refrain from using the latter.
+For complex equations you may want to consider using the \texttt{IEEEeqnarray} environment from the \texttt{IEEEtrantools} package.
 Whether you prefer to refer to equations as Eq.~\eqref{emc}, Equation~\ref{emc}, or just \eqref{emc} is up to you, but please be consistent and use the \texttt{\textbackslash{}eqref\{\dots\}} command instead of writing \texttt{(\textbackslash{}ref\{\dots\})}.
-As a curtest for your readers and referees please suppress equation numbers only if there is a valid reason to do so to not make in unnecessarily difficult to refer to individual results and steps in derivations. 
+As a courtesy for your readers and referees, please suppress equation numbers only if there is a specific reason to do so, to not make it unnecessarily difficult to refer to individual results and steps in derivations.
 
 \paragraph{Paragraphs}
 The paragraph is the smallest unit of sectioning.
@@ -90,9 +104,9 @@ Citations to other works should appear in the References section at the end of t
   Important: As Quantum is a member of Crossref, all references to works that have a DOI must be hyperlinked according to the DOI. Those links must start with \texttt{https://doi.org/} (preferred), or \texttt{http://dx.doi.org/}. Direct links to the website of the publisher are not sufficient.
 \end{theorem}
 
-This can be achieved in several ways, depending on how you format your bibliography.
+This can be achieved in several ways, depending on how you are formatting your bibliography.
 Suppose the DOI of an article \cite{examplecitation} that you want to cite is \texttt{10.22331/idonotexist}.
-If you are formating your bibliography manually, you can cite this work using the following in your \texttt{thebibliography} environment:
+If you are formatting your bibliography manually, you can cite this work using the following in your \texttt{thebibliography} environment:
 \begin{verbatim}
 \bibitem{examplecitation}
   Name Surname,
@@ -102,8 +116,8 @@ If you are formating your bibliography manually, you can cite this work using th
 \end{verbatim}
 
 \begin{theorem}[One citation per bibitem]
-  Important: If you formating your bibliography manually, please do not group multiple citations into one \texttt{\textbackslash{}bibitem}.
-  It is not nice for your readers and it screws up our automatic extraction of citations and creates superfluous manual work.
+  Important: If you are formatting your bibliography manually, please do not group multiple citations into one \texttt{\textbackslash{}bibitem}.
+  Having to search through multiple references to find the cited result makes your work less accessible for authors and grouping references can screw up our automatic extraction of citations.
 \end{theorem}
 
 We encourage the use of BibTeX to generate your bibliography from the BibTeX meta-data provided by publishers.
@@ -119,8 +133,8 @@ For DOI linking to work, the BibTeX file must contain the \texttt{doi} field as 
   doi = {10.22331/idonotexist},
 }
 \end{verbatim}
-Several authors had problems because of unicode characters in their BibTeX files.
-Be advised that \href{http://wiki.lyx.org/BibTeX/Tips}{BibTeX does not support unicode characters}.
+Several authors had problems because of Unicode characters in their BibTeX files.
+Be advised that \href{http://wiki.lyx.org/BibTeX/Tips}{BibTeX does not support Unicode characters}.
 All special characters must be input via their respective LaTeX commands.
 
 If you are using BibTeX, you can load the \texttt{natbib} package by putting
@@ -135,7 +149,7 @@ in the preamble of your document and then use the \texttt{plainnat} citation sty
 The quantumarticle class automatically detects that the \texttt{natbib} package was loaded and redefines the \texttt{\textbackslash{}doi} command to create hyperlinks.
 This is likely the easiest option if you are converting from another document class.
 
-If you want to used BibLaTeX, you can instead add
+If you want to use BibLaTeX, you can instead add
 \begin{verbatim}
 \usepackage[backend=bibtex]{biblatex}
 \addbibresource{mybibliography.bib}
@@ -146,29 +160,36 @@ to the preamble of your document and then output the bibliography with
 \end{verbatim}
 where appropriate.
 You then have to upload the .bbl file along with the other source files when submitting to the arXiv.
-Due to incompatibilities between different LaTeX version we unfortunately can not recommend this option until the arXiv has updated its LaTeX system \cite{biblatexsubmittingtothearxiv}.
+Due to incompatibilities between different BibLaTeX versions we unfortunately cannot recommend this option \cite{biblatexsubmittingtothearxiv}.
 
-The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declared a suitable field format to make it a hyperlink.
+The quantumarticle class automatically detects that the \texttt{biblatex} package was loaded, sets the default option \texttt{doi=true} to include the DOI in the bibliography, and declares a suitable field format to make it a hyperlink.
 Due to issues with \texttt{biber} we recommend to use the \texttt{bibtex} backend of \texttt{biblatex}.
 
 More information on how to get DOI links in your document can be found on StackExchange \cite{howtogetdoilinksinbibliography,automaticallyaddingdoifieldstoahandmadebibliography}.
 Feel free to change the appearance of citations in any way you like by using a different \texttt{bibliographystyle} or via the advanced mechanisms provided by BibLaTeX.
 The only two requirements are that citations must uniquely identify the cited work and that they must contain a DOI hyperlink whenever possible.
 
-In oder to get correct line breaks within links, please add the line 
+\begin{theorem}[Use \texttt{\textbackslash pdfoutput=1}]
+  In order to get correct line breaks within hyperlinks and to make sure the arXiv produces a PDF as output, please add the line 
 \begin{verbatim}
 \pdfoutput=1
 \end{verbatim}
-within the first 5 lines of your main LaTeX file as suggested by the arXiv \cite{arxivpdfoutput}.
+  within the first 5 lines of your main LaTeX file, as suggested by the arXiv \cite{arxivpdfoutput}.
+\end{theorem}
 
-\section{Unpublished and accepted works}
-This class supports the \texttt{unpublished} option which disables all Quantum related branding such as the logo and color as well as the hyperlink in the title.
-It can be used for works not yet accepted in Quantum or such that are not intended for submission to Quantum.
-On the contrary, by giving the \texttt{accepted=YYYY-MM-DD} option, with \texttt{YYYY-MM-DD} the acceptance date, the note ``Accepted in Quantum YYYY-MM-DD, click title to verify'' can be added to the bottom of each page to clearly mark works that have been accepted in Quantum. 
+\section{Plots}
+\label{sec:plots}
+Quantum provides a \href{https://jupyter.org/}{Jupyter notebook} based on the widely used \href{https://matplotlib.org/}{matplotlib} library that greatly simplifies the creation of plots that integrate seamlessly with the \texttt{quantumarticle} document class. This is intended as a service to the authors, is \textit{not} mandatory, and currently in beta stage. You can download the \href{https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-plots.ipynb}{quantum-plots.ipynb} notebook and accompanying \href{https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-plots.mplstyle}{quantum-plots.mplstyle} file from the \href{https://github.com/quantum-journal/quantum-journal}{quantumarticle GitHub repository}. You only need to specify the font size and paper format that were passed as options to \texttt{quantumarticle} to get plots with fitting font sizes and dimensions.
+We strongly encourage authors to use the vector based PDF format for plots.
+
+\begin{theorem}[Be mindful of the colorblind]
+  About 4\% of the worlds population are affected by some form of color vision deficiency or color blindness.
+  Please make sure that your plots and figures can still be understood when printed in gray scale and avoid the simultaneous use of red and green, as the inability to distinguish these two colors is the most widespread form of color vision deficiency.
+\end{theorem}
 
 \section{Summary section}
 Longer articles should include a section that, early on, explains the main results, their limitations, and assumptions.
-Depending on the target audience this section can be used to, for example, present the main theorem, or provide a summary of the results for a wider audience.
+This section can be used to, for example, present the main theorem, or provide a summary of the results for a wider audience.
 
 \section{Extra packages}
 Quantum encourages you to load the following extra packages:
@@ -190,10 +211,11 @@ In \texttt{onecolumn} mode, the \texttt{widetext} environment has no effect.
 |\mathrm{AME}(n=6,q=5)\rangle=\sum_{i,j,k=0}^4 |i,j,k,i+j+k,i+2j+3k,i+3j+4k\rangle
   \end{equation}
 \end{widetext}
-To enabled this feature in \texttt{twocolumn} mode, \texttt{quantumarticle} relies on the package \texttt{ltxgrid}.
+To enable this feature in \texttt{twocolumn} mode, \texttt{quantumarticle} relies on the package \texttt{ltxgrid}.
 Unfortunately this package has a bug that leads to a sub-optimal placement of extremely long footnotes.
 
 \section{Title information}
+\label{sec:title-information}
 You can provide information on authors and affiliations in the common format also used by \texttt{revtex}:
 \begin{verbatim}
 \title{Title}
@@ -208,7 +230,7 @@ You can provide information on authors and affiliations in the common format als
 \end{verbatim}
 In this example affiliation 1 will be associated with authors 1, 2, and 4, affiliation 2 with author 3 and affiliation 3 with author 4.
 Repeated affiliations are automatically recognized and typeset in \texttt{superscriptaddress} style.
-Alternatively you can use a format similar to that of the \texttt{authblk} package and the \texttt{elsearticle} document class to specify the same affiliation relations as follows:
+Alternatively you can use a format similar to that of the \texttt{authblk} package and the \texttt{elsarticle} document class to specify the same affiliation relations as follows:
 \begin{verbatim}
 \title{Title}
 \author[1]{Author 1}
@@ -219,6 +241,15 @@ Alternatively you can use a format similar to that of the \texttt{authblk} packa
 \affil[2]{Affiliation 1}
 \affil[3]{Affiliation 1}
 \end{verbatim}
+
+\section{LyX layout}
+\label{sec:lyx-layout}
+
+The quantumarticle document class comes bundled with a \href{https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-lyx-template.lyx}{LyX layout} that allows to typeset manuscripts with the LyX document processor instead of directly writing LaTeX code. Please be aware that this is a beta feature that might not receive the same level of support as the quantumarticle document class itself.   
+
+\section{Version}
+\label{sec:version}
+This is quantumarticle version v\quantumarticleversion.
 
 \bibliographystyle{plain}
 \begin{thebibliography}{9}
@@ -251,7 +282,7 @@ Quantum allows the usage of appendices.
 
 \subsection{Subsection}
 Ideally, the command \texttt{\textbackslash{}appendix} should be put before the appendices to get appropriate section numbering.
-The appendices are then numbered alphabetic, with numeric (sub)subsection numbering.
+The appendices are then numbered alphabetically, with numeric (sub)subsection numbering.
 Equations continue to be numbered sequentially.
 \begin{equation}
   A \neq B
@@ -261,9 +292,9 @@ You are free to change this in case it is more appropriate for your article, but
 If you want your appendices to appear in \texttt{onecolumn} mode but the rest of the document in \texttt{twocolumn} mode, you can insert the command \texttt{\textbackslash{}onecolumn\textbackslash{}newpage} before \texttt{\textbackslash{}appendix}.   
 
 \section{Problems and Bugs}
-In case you encounter problems using the quantumarticle class please analyses the error message carefully and look for help online, \href{http://tex.stackexchange.com/}{http://tex.stackexchange.com/} is an excellent resource.
-If you cannot resolve a problem, please opening a bug report in our bug-tracker under \href{https://github.com/cgogolin/quantum-journal/issues}{https://github.com/cgogolin/quantum-journal/issues}.
+In case you encounter problems using the quantumarticle class please analyze the error message carefully and look for help online; \href{http://tex.stackexchange.com/}{http://tex.stackexchange.com/} is an excellent resource.
+If you cannot resolve a problem, please open a bug report in our bug-tracker under \href{https://github.com/quantum-journal/quantum-journal/issues}{https://github.com/quantum-journal/quantum-journal/issues}.
 You can also contact us via email under \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org}, but it may take significantly longer to get a response.
-In any case we need the full source of a document that produces the problem and the log file showing the error to help you.
+In any case, we need the full source of a document that produces the problem and the log file showing the error to help you.
 
 \end{document}
