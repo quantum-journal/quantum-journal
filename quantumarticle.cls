@@ -474,7 +474,11 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\sffamily
 	\null
 	\let \footnote \thanks
-	\noindent{\hyphenpenalty=10000 \@printtitle}
+	\noindent%
+	\begin{minipage}{\textwidth}%
+          \iftoggle{@titlepage}{\centering}{}%
+          \noindent{\huge\hyphenpenalty=5000 \@printtitle\par}%
+        \end{minipage}%
 	\vskip 1.5em%
 	\noindent\@printauthors
 	\vskip 1em%
@@ -1001,24 +1005,21 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 %title
 \def\@printtitle{%
 	{%
-			\iftoggle{@unpublished}
+			\iftoggle{@unpublished}%
 			{%
-				\begin{minipage}{1.0\linewidth}%
-					\@printtitletextwithappropriatefontsize%
-				\end{minipage}
-			}
+				\@printtitletextwithappropriatefontsize%
+			}%
 			{%
 				\edef\@titleexpanded{\detokenize\expandafter{\@title}}%
-				\iftoggle{@xstring}
-					{\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode}
+				\iftoggle{@xstring}%
+					{\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode}%
 					{\gdef\@titleforurl{\@titleexpanded}}%
-				%\if@xstring\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode\else\gdef\@titleforurl{\@titleexpanded}\fi%
 				\href{https://quantum-journal.org/?s=\@titleforurl\&reason=title-click}{%
 						\color{quantumviolet}{%
-							\@printtitletextwithappropriatefontsize%
+                                                  \@printtitletextwithappropriatefontsize\unskip%
 						}%
                                               }%
-			}
+			}%
 		}%
 }
 % In the macro below we compute the appropriate font size of the title.
