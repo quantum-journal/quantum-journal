@@ -480,7 +480,9 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
           \noindent{\huge\hyphenpenalty=5000 \@printtitle\par}%
         \end{minipage}%
 	\vskip 1.5em%
-	\noindent\@printauthors
+	\iftoggle{@titlepage}{}{\begin{flushleft}}%
+		\noindent \@printauthors
+	\iftoggle{@titlepage}{}{\end{flushleft}}%
 	\vskip 1em%
 	\noindent\@printaffiliations
 	\vskip 0em%
@@ -1101,7 +1103,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \def\@@spaceafter#1{#1 }
 \def\@@@comma{\def\@@@comma{,}}
 \def\@@commaspacebefore#1{\@@@comma{}#1}
-\def\@printauthor#1#2{\def\footnote{\ClassError{quantumarticle}{You must not put a \string\footnote{} command inside the argument of \string\author}{}}\ifcsdef{author#1orcid}{\href{https://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@commaspacebefore}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
+\def\@printauthor#1#2{\def\footnote{\ClassError{quantumarticle}{You must not put a \string\footnote{} command inside the argument of \string\author}{}}\mbox{\ifcsdef{author#1orcid}{\href{https://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@commaspacebefore}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
 \def\@printauthors{%
 	\newcounter{@authornum}%
 	\large\forlistloop{\stepcounter{@authornum}%
