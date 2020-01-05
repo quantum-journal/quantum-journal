@@ -637,7 +637,7 @@ Sections, subsections, subsubsections, and paragraphs should be typeset
 E & =m\,c^{2}\label{eq:emc}\\
 a^{2}+b^{2} & =c^{2}\\
 H\,|\psi\rangle & =E\,|\psi\rangle\\
-(\id\otimes A)\,(B\otimes\id) & =A\otimes B
+(\id\otimes A)\,(B\otimes\id) & =B\otimes A
 \end{align}
 
 \end_inset
