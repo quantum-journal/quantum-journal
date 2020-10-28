@@ -3,7 +3,7 @@
 %% it provides the quantumarticle class for typesetting articles in
 %% Quantum - the open journal for quantum science
 %%
-%% Copyright 2016,2017,2018
+%% Copyright 2016,2017,2018,2019,2020
 %% Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
 %% (https://quantum-journal.org/about/)
 %% 
@@ -19,9 +19,9 @@
 %% version 2005/12/01 or later.
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\def\quantumarticleversion{5.0}
+\def\quantumarticleversion{5.1}
 \ProvidesClass{quantumarticle}
-[2018/07/11 v\quantumarticleversion
+[2020/10/27 v\quantumarticleversion
 class for Quantum - the open journal for quantum science (https://quantum-journal.org)]
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
