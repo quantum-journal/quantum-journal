@@ -81,7 +81,7 @@ You can use the standard commands for equations.
   E &= m\,c^2\\
   a^2 + b^2 &= c^2\\
   H\,|\psi\rangle &= E\,|\psi\rangle\\
-  (\openone \otimes A)\,(B \otimes \openone) &= A \otimes B
+  (\openone \otimes A)\,(B \otimes \openone) &= B \otimes A
 \end{align}
 For multi-line equations \texttt{align} is \href{http://tex.stackexchange.com/questions/196/eqnarray-vs-align}{preferable} over \texttt{eqnarray}.
 Please refrain from using the latter.
@@ -133,6 +133,8 @@ For DOI linking to work, the BibTeX file must contain the \texttt{doi} field as 
   doi = {10.22331/idonotexist},
 }
 \end{verbatim}
+As the arXiv does not run BibTeX for you, you \href{https://arxiv.org/help/submit_tex}{must include the .bbl file} that BibTeX creates alongside your .tex source files when submitting your work.
+
 Several authors had problems because of Unicode characters in their BibTeX files.
 Be advised that \href{http://wiki.lyx.org/BibTeX/Tips}{BibTeX does not support Unicode characters}.
 All special characters must be input via their respective LaTeX commands.

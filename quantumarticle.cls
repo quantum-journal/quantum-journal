@@ -3,7 +3,7 @@
 %% it provides the quantumarticle class for typesetting articles in
 %% Quantum - the open journal for quantum science
 %%
-%% Copyright 2016,2017,2018
+%% Copyright 2016,2017,2018,2019,2020
 %% Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
 %% (https://quantum-journal.org/about/)
 %% 
@@ -19,9 +19,9 @@
 %% version 2005/12/01 or later.
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\def\quantumarticleversion{5.0}
+\def\quantumarticleversion{5.1}
 \ProvidesClass{quantumarticle}
-[2018/07/11 v\quantumarticleversion
+[2020/10/27 v\quantumarticleversion
 class for Quantum - the open journal for quantum science (https://quantum-journal.org)]
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
@@ -353,6 +353,9 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \let\col@number\@colnum
 
 \ltx@ifpackageloaded{ltxgrid}{
+  \@ifpackagelater{ltxgrid}{2020/10/03}
+  {}% on 2020/10/03 ltxgrid 4.2e (or 4.2d?) was released, which not only fixes the bug we try to work around here but also the fix below causes an error from this version on. 
+  {
 	%repair what ltxutils has destroyed (see https://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend) 
 	\patchcmd\enddocument
 	{\deadcycles}
@@ -366,6 +369,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 				\let\AfterEndDocument\@firstofone
 				\@afterenddocumenthook
 				\etb@@end}}}
+  }
 }{}
 
 \setcounter{topnumber}{2}
@@ -480,7 +484,9 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
           \noindent{\huge\hyphenpenalty=5000 \@printtitle\par}%
         \end{minipage}%
 	\vskip 1.5em%
-	\noindent\@printauthors
+	\iftoggle{@titlepage}{}{\begin{flushleft}}%
+		\noindent \@printauthors
+	\iftoggle{@titlepage}{}{\end{flushleft}}%
 	\vskip 1em%
 	\noindent\@printaffiliations
 	\vskip 0em%
@@ -1101,7 +1107,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \def\@@spaceafter#1{#1 }
 \def\@@@comma{\def\@@@comma{,}}
 \def\@@commaspacebefore#1{\@@@comma{}#1}
-\def\@printauthor#1#2{\def\footnote{\ClassError{quantumarticle}{You must not put a \string\footnote{} command inside the argument of \string\author}{}}\ifcsdef{author#1orcid}{\href{https://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@commaspacebefore}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
+\def\@printauthor#1#2{\def\footnote{\ClassError{quantumarticle}{You must not put a \string\footnote{} command inside the argument of \string\author}{}}\mbox{\ifcsdef{author#1orcid}{\href{https://orcid.org/\csname author#1orcid\endcsname}{\color{black}#2}}{#2}}\ifnumcomp{\the@affiliationcounter}{>}{1}{\textsuperscript{\forlistcsloop{\@@commaspacebefore}{author#1affiliations}\unskip}}{}\ifnumcomp{#1}{<}{\the@authorcounter-1}{, }{\ifnumcomp{#1}{=}{\the@authorcounter-1}{\ifnumcomp{#1}{=}{1}{ and }{, and }}{}}}
 \def\@printauthors{%
 	\newcounter{@authornum}%
 	\large\forlistloop{\stepcounter{@authornum}%
