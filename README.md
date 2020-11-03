@@ -56,6 +56,13 @@ In addition, this document class come bundled with two new extras (currently in 
 
 ## Changelog
 
+### New in v5.1
+
+* fix for workaround in ltxgrid no longer being necessary and, on the contrary, causing an error under TeXLive 2020, with revtex/ltygrid 4.2e/4.2d
+* improved typesetting of authors if titlepage is used
+* added explanation for how to use BibTeX on the arXiv
+* fixed equations in template
+
 ### New in v5.0:
 
 * force users to specify a paper size to prevent unexpected behavior
@@ -91,7 +98,7 @@ Improvements submitted as pull requests against the `develop` branch are very mu
 
 ## Copyright
 
-Copyright 2017, 2018, 2019
+Copyright 2017, 2018, 2019, 2020
 Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
 (http://quantum-journal.org/about/)
 
