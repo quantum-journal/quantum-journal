@@ -38,6 +38,8 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \setlength\paperheight{297mm}%
 \setlength\paperwidth{210mm}
 
+\renewcommand*\@ptsize{1}
+
 \ProcessOptionsX
 
 \input{size1\@ptsize.clo}
@@ -537,7 +539,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \setlength\columnseprule{0\p@}
 \setlength{\footnotesep}{\baselineskip}
 \RequirePackage{fancyhdr}
-\@blacklistpackage{fancyhdr}
 \pagestyle{fancy}
 \renewcommand{\headrule}{}
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
@@ -673,7 +674,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \newcommand{\address}[2][]{\affiliation[#1]{#2}}
 
 %for compatibility with authblk
-\@blacklistpackage{authblk}
 \newcommand{\affil}[2][]{
 	\affiliation[#1]{#2}}
 \newcommand{\affiliation}[2][]{%
@@ -942,50 +942,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \AtEndPreamble{
 	\RequirePackage{caption}
 }
-
-\@blacklistpackage[You are not supposed to load custom font packages such as]{berasans}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{arev}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{avant}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{bera}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{bookman}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{cabin}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{chancery}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{charter}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{cmbright}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{concrete}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{courier}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{dejavu}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{droid}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{drm}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{ebgaramond}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{euler}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{fourier}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{fouriernc}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{gentium}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{helvet}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{inconsolata}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{kpfonts}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{lato}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{libertineotf}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{libertine}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{librebaskerville}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{lmodern}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{mathdesign}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{mathpazo}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{mathptmx}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{newcent}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{newtx}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{quattrocento}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{tgadventor}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{tgbonum}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{tgchorus}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{tgcursor}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{tgheros}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{tgpagella}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{tgschola}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{tgtermes}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{times}
-\@blacklistpackage[You are not supposed to load custom font packages such as]{yfonts}
 
 \endinput
 %%
