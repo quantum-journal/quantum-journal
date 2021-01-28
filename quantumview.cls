@@ -31,51 +31,12 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \newtoggle{@titlepage}
 \togglefalse{@titlepage}
 
-\newtoggle{@papersizespecified}
-\togglefalse{@papersizespecified}
+\newtoggle{@html}
+\togglefalse{@html}
+\DeclareOptionX{html}{\toggletrue{@html}}
 
-\DeclareOptionX{a4paper}
-{
-	\setlength\paperheight{297mm}%
-	\setlength\paperwidth{210mm}
-	\toggletrue{@papersizespecified}
-}
-\DeclareOptionX{a5paper}
-{
-	\setlength\paperheight {210mm}%
-	\setlength\paperwidth  {148mm}
-	\toggletrue{@papersizespecified}
-}
-\DeclareOptionX{b5paper}
-{
-	\setlength\paperheight {250mm}%
-	\setlength\paperwidth  {176mm}
-	\toggletrue{@papersizespecified}
-}
-\DeclareOptionX{letterpaper}
-{
-	\setlength\paperheight {11in}%
-	\setlength\paperwidth  {8.5in}
-	\toggletrue{@papersizespecified}
-}
-\DeclareOptionX{legalpaper}
-{
-	\setlength\paperheight {14in}%
-	\setlength\paperwidth  {8.5in}
-	\toggletrue{@papersizespecified}
-}
-\DeclareOptionX{executivepaper}
-{
-	\setlength\paperheight {10.5in}%
-	\setlength\paperwidth  {7.25in}
-	\toggletrue{@papersizespecified}
-}
-\DeclareOptionX{landscape}
-{
-	\setlength\@tempdima   {\paperheight}%
-	\setlength\paperheight {\paperwidth}%
-	\setlength\paperwidth  {\@tempdima}
-}
+\setlength\paperheight{297mm}%
+\setlength\paperwidth{210mm}
 
 \DeclareOptionX{10pt}{\renewcommand*\@ptsize{0}}
 \DeclareOptionX{11pt}{\renewcommand*\@ptsize{1}}
@@ -87,7 +48,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \DeclareOptionX{draft}{\setlength\overfullrule{5pt}}
 \DeclareOptionX{final}{\setlength\overfullrule{0pt}}
 
-\DeclareOptionX{titlepage}{\toggletrue{@titlepage}}
 \DeclareOptionX{notitlepage}{\togglefalse{@titlepage}}
 
 \DeclareOptionX{onecolumn}{\boolfalse{@twocolumn}}	
