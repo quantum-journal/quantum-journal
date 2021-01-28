@@ -52,19 +52,34 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\renewcommand{\textbf}[1]{\@tag{b}{#1}}
 	\renewcommand{\textsuperscript}[1]{\@tag{sup}{#1}}
 	\renewcommand{\textsubscript}[1]{\@tag{sub}{#1}}
+	\renewcommand{\cite}[1]{{\textbackslash}cite\{#1\}}
+	\renewcommand{\section}[#1]{\@tag{h1}{#1}\\ }
+	\renewcommand{\section*}[#1]{\section{#1}}
+	\renewcommand{\subsection}[#1]{\@tag{h2}{#1}\\ }
+	\renewcommand{\subsection*}[#1]{\subsection{#1}}
+	\renewcommand{\subsubsection}[#1]{\@tag{h3}{#1}\\ }
+	\renewcommand{\subsubsection*}[#1]{\subsubsection{#1}}
+	\renewcommand{\paragraph}[#1]{\@tag{b}{#1}}
+	\renewcommand{\paragraph*}[#1]{\paragraph{#1}}
+	\renewcommand{\subparagraph}[#1]{\@tag{i}{#1}}
+	\renewcommand{\subparagraph*}[#1]{\subparagraph{#1}}
+	\renewenvironment{\align}{\$\$\begin{verbatim}}{\$\$\end{verbatim}}
+	\renewenvironment{\align*}{\$\$\begin{verbatim}}{\$\$\end{verbatim}}
+	\renewenvironment{\equation}{\$\$\begin{verbatim}}{\$\$\end{verbatim}}
+	\renewenvironment{\equation*}{\$\$\begin{verbatim}}{\$\$\end{verbatim}}
+	\renewenvironment{\eqnarray}{\$\$\begin{verbatim}}{\$\$\end{verbatim}}
+	\renewenvironment{\eqnarray*}{\$\$\begin{verbatim}}{\$\$\end{verbatim}}
+	\renewenvironment{\itemize}{<ul>}{</ul>}
+	\renewenvironment{\enumerate}{<ol>}{</ol>}
 }
+
+\iftoggle{@html}{\renewcommand*\familydefault{\ttdefault}}{}
 
 \AtBeginDocument{
 	% avoid bitmap fonts by loading lmodern or at least checking for cm-super
 	\IfFileExists{lmodern.sty}{
 		\RequirePackage{lmodern}
-	}{
-          \IfFileExists{type1ec.sty}{}{
-            \iftoggle{@noarxiv}{}{%
-              \ClassError{quantumview}{Either the lmodern or the cm-super package are required by quantumview in order to produce high quality pdf output. Please install the lmodern package, or, if this is not possible, the cm-super package. You can turn off this error message by giving the noarxiv class option}{}
-            }
-          }
-	}
+	}{}
 	% Define a revtex-style openone symbol
 	\IfFileExists{bbm.sty}{
 		\RequirePackage{bbm}

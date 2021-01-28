@@ -5,9 +5,6 @@
 \usepackage{amsmath}
 \usepackage{hyperref}
 
-
-\newtheorem{theorem}{Theorem}
-
 \begin{document}
 
 \title{Template demonstrating the quantumview document class}
@@ -19,7 +16,30 @@
 
 \maketitle
 
-Lorem Ipsum. \emph{emphasis}, \textit{italic}, \textbf{bold}, \textsuperscript{superscript}, \textsubscript{subscript}, 
+\section{Section}
+\subsection{Subsection}
+\subsubsection{Subsubsection}
+\paragraph{Test}
+Lorem Ipsum. \emph{emphasis}, \textit{italic}, \textbf{bold}, \textsuperscript{superscript}, \textsubscript{subscript}, \cite{test}
+
+Equation:
+\begin{equation}
+    \int_a^b \mathrm{d}x = b-a
+\end{equation}
+Align:
+\begin{align}
+    \oint_C = \mathcal{Z}^2
+\end{align}
+Itemize:
+\begin{itemize}
+    \item Item 1
+    \item Item 2
+\end{itemize}
+Enumerate:
+\begin{enumerate}
+    \item Item 1
+    \item Item 2
+\end{enumerate}
 
 
 \end{document}
