@@ -44,6 +44,16 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 
 \input{size1\@ptsize.clo}
 
+\newcommand{\@tag}[2]{<#1>#2</#1>}
+
+\newcommand{\@redefinehtmlcommands}{
+	\renewcommand{\emph}[1]{\@tag{em}{#1}}
+	\renewcommand{\textit}[1]{\@tag{i}{#1}}
+	\renewcommand{\textbf}[1]{\@tag{b}{#1}}
+	\renewcommand{\textsuperscript}[1]{\@tag{sup}{#1}}
+	\renewcommand{\textsubscript}[1]{\@tag{sub}{#1}}
+}
+
 \AtBeginDocument{
 	% avoid bitmap fonts by loading lmodern or at least checking for cm-super
 	\IfFileExists{lmodern.sty}{
@@ -73,6 +83,9 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\RequirePackage{xcolor}
 	\definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
 	\definecolor{quantumgray}{HTML}{555555} %Quantum gray
+	\iftoggle{@html}{
+		\@redefinehtmlcommands
+	}{}
 }
 
 \setcounter{topnumber}{2}
