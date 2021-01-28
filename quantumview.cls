@@ -42,68 +42,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 
 \input{size1\@ptsize.clo}
 
-%we patch the \usepackage command to enable the blacklisting of packages and to throw an error if \pdfoutput=1 was not included in the document before the first usepackage
-\csdef{@packageblacklist}{}
-\newcommand*{\@blacklistpackage}[2][]{
-	\listxadd{\@packageblacklist}{#2}%
-	\ifstrempty{#1}{}{\csdef{@packageblacklisterrormessage#2}{#1 \string\usepackage{#2}}}
-}
-
-\let\oldusepackage\usepackage
-\renewcommand*{\usepackage}[2][]{
-  \iftoggle{@nopdfoutputerror}
-  {%
-  }
-  {
-    \def\@pdfoutputerror{\ClassError{quantumview}{As suggested by the arXiv (https://arxiv.org/help/submit_tex), please add \string\pdfoutput=1 within the first 5 lines of the preamble of your main LaTeX file and before the first \string\usepackage command. Without this, the arXiv compiles your document with latex instead of pdflatex and hyperlinks in the bibliography broken over several lines will not work properly. See https://tex.stackexchange.com/questions/182523/publishing-to-arxiv-with-hyperlinks for more information. If you still want to use standard latex (for example because you depend on psfrag) instead of pdflatex despite this problem, you can disable this error by giving the nopdfoutputerror option to quantumview. In this case please check carefully that the links in the version of your document typeset on the arXiv, especially those in the bibliography, work properly}{}%see also https://tex.stackexchange.com/questions/341466/latex-macros-in-classwarning-or-classerror for why \string is necessary
-    }
-    \ifcsdef{pdfoutput}%
-    {%
-      \ifnumequal{\pdfoutput}{1}
-      {}
-      {\@pdfoutputerror}%
-    }
-    {%
-      \@pdfoutputerror%
-    }
-  } 
-  \ifinlist{#2}{\@packageblacklist}{
-    \ifcsdef{@packageblacklisterrormessage#2}{
-      \ClassError{quantumview}{\csname @packageblacklisterrormessage#2\endcsname}{}}{}
-  }{\oldusepackage[#1]{#2}}
-}
-
-\@blacklistpackage{titlesec}
-
-\ifbool{@twocolumn}
-	{\RequirePackage[margin=2cm,bottom=3cm]{geometry}}
-	{\RequirePackage[margin=3cm,bottom=3cm]{geometry}}
-
-\@blacklistpackage{geometry}
-\setlength\lineskip{1\p@}
-\setlength\normallineskip{1\p@}
-\renewcommand*\baselinestretch{}
-\setlength\parskip{0\p@ \@plus \p@}
-\@lowpenalty   51
-\@medpenalty  151
-\@highpenalty 301
-
-\AfterEndPreamble{
-	% avoid use of today	
-	\ifcsdef{today}
-	{
-		\iftoggle{@allowtoday}
-		{
-			\let\oldtoday\today
-			\renewcommand*{\today}{\oldtoday\ClassWarning{quantumview}{If you intend to upload your manuscript to the arXiv, please manually replace any use of \string\today with the upload date. The arXiv typesets manuscripts on-demand, thus the output of \string\today may change over time}{}}
-		} % else
-		{
-			\renewcommand*{\today}{\ClassError{quantumview}{If you intend to upload your manuscript to the arXiv, please manually replace any use of \string\today with the upload date. The arXiv typesets manuscripts on-demand, thus the output of \string\today may change over time. If you do not intend to upload your manuscript to the arXiv, you may use the class option noarxiv or turn off this error by means of the allowtoday option}{}}
-		}
-	}
-	{}
-}
-
 \AtBeginDocument{
 	% avoid bitmap fonts by loading lmodern or at least checking for cm-super
 	\IfFileExists{lmodern.sty}{
@@ -135,39 +73,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\definecolor{quantumgray}{HTML}{555555} %Quantum gray
 }
 
-\RequirePackage{ltxcmds}
-
-\let\origif@twocolumn\if@twocolumn
-\def\class@name{ltxutil}%get rid of "You should define the class name before reading in this package. Using default" warning from ltxutils which is loaded by ltxgrid
-\if@twocolumn
-	\RequirePackage{ltxgrid}%ltxgrid should be loaded before etoolbox, otherwise terrible things can happen: https://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend?noredirect=1#comment843815_343856 but if this is actually done, even more terrible things happen, so we partially repair what ltxgrid messes up below...
-	\newcommand*{\twocolumn}[1][]{#1\twocolumngrid}
-	\newcommand*{\onecolumn}{\onecolumngrid}
-\fi
-\let\if@twocolumn\origif@twocolumn
-
-\let\col@number\@colnum
-
-\ltx@ifpackageloaded{ltxgrid}{
-  \@ifpackagelater{ltxgrid}{2020/10/03}
-  {}% on 2020/10/03 ltxgrid 4.2e (or 4.2d?) was released, which not only fixes the bug we try to work around here but also the fix below causes an error from this version on. 
-  {
-	%repair what ltxutils has destroyed (see https://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend) 
-	\patchcmd\enddocument
-	{\deadcycles}
-	{\let\AfterEndDocument\@firstofone
-		\@afterenddocumenthook
-		\deadcycles}
-	{}
-	{\AtEndDocument{%
-			\let\etb@@end\@@end
-			\def\@@end{%
-				\let\AfterEndDocument\@firstofone
-				\@afterenddocumenthook
-				\etb@@end}}}
-  }
-}{}
-
 \setcounter{topnumber}{2}
 \renewcommand*\topfraction{.7}
 \setcounter{bottomnumber}{1}
@@ -179,30 +84,14 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \renewcommand*\dbltopfraction{.7}
 \renewcommand*\dblfloatpagefraction{.5}
 
-\ifbool{@twoside}{
-	\def\ps@headings{%
-		\let\@oddfoot\@empty\let\@evenfoot\@empty
-		\def\@evenhead{\thepage\hfil\slshape\leftmark}%
-		\def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
-		\let\@mkboth\markboth
-		\def\sectionmark##1{%
-			\markboth {\MakeUppercase{%
-					\ifnumgreater{\c@secnumdepth}{\z@}{\thesection\quad}{}
-					##1}}{}}%
-		\def\subsectionmark##1{%
-			\markright {%
-				\ifnumgreater{\c@secnumdepth}{\@ne}{\thesubsection\quad}{}
-				##1}}}%
-	}{
-	\def\ps@headings{%
-		\let\@oddfoot\@empty
-		\def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
-		\let\@mkboth\markboth
-		\def\sectionmark##1{%
-			\markright {\MakeUppercase{%
-					\ifnumgreater{\c@secnumdepth}{\m@ne}{\thesection\quad}{}
-					##1}}}}%
-}
+\def\ps@headings{%
+\let\@oddfoot\@empty
+\def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
+\let\@mkboth\markboth
+\def\sectionmark##1{%
+	\markright {\MakeUppercase{%
+			\ifnumgreater{\c@secnumdepth}{\m@ne}{\thesection\quad}{}
+			##1}}}}%
 
 \def\ps@myheadings{%
 	\let\@oddfoot\@empty\let\@evenfoot\@empty
@@ -213,61 +102,32 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\let\subsectionmark\@gobble
 }
 
-\iftoggle{@titlepage}
-{
-	\newcommand\maketitle{\begin{titlepage}%
-		%  \let\footnotesize\small
-		\let\footnoterule\relax
-		\let \footnote \thanks
-		\null\vfil
-		\vskip 60\p@
-		\begin{center}%
-			\@maketitle
-		\end{center}\par
-		%  \@thanks
-		\vfil\null
-	\end{titlepage}%
-	\setcounter{footnote}{0}%
-	\global\let\thanks\relax
-	\global\let\maketitle\relax
-	\global\let\@maketitle\relax
-	%  \global\let\@thanks\@empty
-	%  \global\let\@author\@empty
-	%  \global\let\@date\@empty
-	%  \global\let\@title\@empty
-	\global\let\title\relax
-	\global\let\author\relax
-	\global\let\date\relax
-	\global\let\and\relax
-	}
-}
-{
-	\newcommand\maketitle{\par
-	\begingroup
-	\renewcommand\thefootnote{\@fnsymbol\c@footnote}%
-	\def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
-	\long\def\@makefntext##1{\parindent 1em\noindent
-	\hb@xt@1.8em{%
-	\hss\@textsuperscript{\normalfont\@thefnmark}}##1}%
-	\ifbool{@twocolumn}
-		{\ifnumequal{\col@number}{\@ne}{\@maketitle}{\twocolumn[\@maketitle]}}
-		{\global\@topnum\z@   % Prevents figures from going at top of page.
-		 \@maketitle}
-	\thispagestyle{fancy}%\@thanks
-	\endgroup
-	\setcounter{footnote}{0}%
-	\global\let\thanks\relax
-	\global\let\maketitle\relax
-	\global\let\@maketitle\relax
-	%  \global\let\@thanks\@empty
-	%  \global\let\@author\@empty
-	%  \global\let\@date\@empty
-	%  \global\let\@title\@empty
-	\global\let\title\relax
-	\global\let\author\relax
-	\global\let\date\relax
-	\global\let\and\relax
-	}
+
+\newcommand\maketitle{\par
+\begingroup
+\renewcommand\thefootnote{\@fnsymbol\c@footnote}%
+\def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
+\long\def\@makefntext##1{\parindent 1em\noindent
+\hb@xt@1.8em{%
+\hss\@textsuperscript{\normalfont\@thefnmark}}##1}%
+\ifbool{@twocolumn}
+	{\ifnumequal{\col@number}{\@ne}{\@maketitle}{\twocolumn[\@maketitle]}}
+	{\global\@topnum\z@   % Prevents figures from going at top of page.
+		\@maketitle}
+\thispagestyle{fancy}%\@thanks
+\endgroup
+\setcounter{footnote}{0}%
+\global\let\thanks\relax
+\global\let\maketitle\relax
+\global\let\@maketitle\relax
+%  \global\let\@thanks\@empty
+%  \global\let\@author\@empty
+%  \global\let\@date\@empty
+%  \global\let\@title\@empty
+\global\let\title\relax
+\global\let\author\relax
+\global\let\date\relax
+\global\let\and\relax
 }
 
 \def\@maketitle{%
@@ -370,19 +230,15 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	{-1em}%
 	{\normalfont\normalsize\bfseries}}
 
-\ifbool{@twocolumn}{\setlength\leftmargini{2em}}{\setlength\leftmargini{2.5em}}
+\setlength\leftmargini{2.5em}
 \leftmargin  \leftmargini
 \setlength\leftmarginii  {2.2em}
 \setlength\leftmarginiii {1.87em}
 \setlength\leftmarginiv  {1.7em}
 
-\ifbool{@twocolumn}{
-	\setlength\leftmarginv  {.5em}
-	\setlength\leftmarginvi {.5em}
-}{
-	\setlength\leftmarginv  {1em}
-	\setlength\leftmarginvi {1em}
-}
+\setlength\leftmarginv  {1em}
+\setlength\leftmarginvi {1em}
+
 \setlength  \labelsep  {.5em}
 \setlength  \labelwidth{\leftmargini}
 \addtolength\labelwidth{-\labelsep}
@@ -411,27 +267,12 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \newcommand*\descriptionlabel[1]{\hspace\labelsep
 	\normalfont\bfseries #1}
 
-\iftoggle{@titlepage}
+\newenvironment{abstract}{%
+	\ifdefempty{\maketitle}{\relax{}}{\maketitle}
+	\ifbool{@twocolumn}{\bf}{\vskip 1em \quotation}%
+}
 {
-	\newenvironment{abstract}{%
-		\ifdefempty{\maketitle}{\relax{}}{\maketitle}
-		\titlepage
-		\null\vfil
-		\thispagestyle{empty}%
-		\@beginparpenalty\@lowpenalty
-		\begin{center}%
-			\bfseries \abstractname
-			\@endparpenalty\@M
-		\end{center}}%
-	{\par\vfil\null\newpage\endtitlepage}
-}{
-	\newenvironment{abstract}{%
-		\ifdefempty{\maketitle}{\relax{}}{\maketitle}
-		\ifbool{@twocolumn}{\bf}{\vskip 1em \quotation}%
-	}
-	{
-		\ifbool{@twocolumn}{}{\endquotation\vskip 2em}
-	}
+	\ifbool{@twocolumn}{}{\endquotation\vskip 2em}
 }
 
 \newenvironment{verse}
@@ -456,20 +297,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 {\list{}{\rightmargin\leftmargin}%
 	\item\relax}
 {\endlist}
-
-\newenvironment{titlepage}
-{%
-	\ifbool{@twocolumn}
-		{\toggletrue{@restonecol}\onecolumn\newpage}
-		{\togglefalse{@restonecol}\newpage}
-	\thispagestyle{empty}%
-	\setcounter{page}\@ne
-}{%
-	\iftoggle{@restonecol}
-		{\twocolumn}
-		{\newpage}
-	\ifbool{@twoside}{}{\setcounter{page}\@ne}
-}
 
 \newcommand*\appendix{\par
 	\setcounter{section}{0}%
@@ -719,109 +546,22 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 {\fancyfoot[R]{\sffamily\iftoggle{@unpublished}{\thepage}{\textcolor{quantumviolet}{\thepage}}}}
 {\fancyfoot[C]{\sffamily\iftoggle{@unpublished}{\thepage}{\textcolor{quantumviolet}{\thepage}}}}
 
-
-% validate the date format to be YYYY-MM-DD
-\AtBeginDocument{
-	\ifcsdef{@accepteddate}
-	{%
-		\iftoggle{@xstring}
-			{%
-				\RequirePackage{xstring}
-				\def\@dateerror{\ClassError{quantumview}{The date in the accepted option must be given in the format YYYY-MM-DD}{}}
-				% test that we have two -s
-				\IfSubStr[2]{\@accepteddate}{-}{}{\@dateerror}
-				\IfSubStr[3]{\@accepteddate}{-}{\@dateerror}{}
-				\StrBefore[1]{\@accepteddate}{-}[\@accepteddateyear]
-				\StrBetween[1,2]{\@accepteddate}{-}{-}[\@accepteddatemonth]
-				\StrBehind[2]{\@accepteddate}{-}[\@accepteddateday]
-				\IfDecimal{\@accepteddateyear}{}{\@dateerror}
-				\IfDecimal{\@accepteddatemonth}{}{\@dateerror}
-				\IfDecimal{\@accepteddateday}{}{\@dateerror}
-				\StrLen{\@accepteddateyear}[\@accepteddateyearlength]
-				\StrLen{\@accepteddatemonth}[\@accepteddatemonthlength]
-				\StrLen{\@accepteddateday}[\@accepteddatedaylength]
-				\ifnumcomp{\@accepteddateyearlength}{>}{3}{}{\@dateerror}
-				\ifnumcomp{\@accepteddatemonthlength}{=}{2}{}{\@dateerror}
-				\ifnumcomp{\@accepteddatedaylength}{=}{2}{}{\@dateerror}%
-			}
-			{}
-	}
-	{}
-}
-
-\iftoggle{@accepted}
-	{\fancyfoot[L]{\usebox{\@quantumacceptedbox}}}
-	{\fancyfoot[L]{}}
-
 \pagenumbering{arabic}
-\ifbool{@twoside}{}{\raggedbottom}
-\ifbool{@twocolumn}{
-	\twocolumn 
-	\sloppy 
-	\flushbottom
-}{
-	\onecolumn
-}
-
-%the following is mostly taken from revtex4-1 (see https://www.ctan.org/pkg/revtex4-1)
-\ifbool{@twocolumn}{
-	\newbox\widetext@top
-	\newbox\widetext@bot
-	\newenvironment{widetext}{%
-		\par\ignorespaces
-		\setbox\widetext@top\vbox{%
-			\hb@xt@\hsize{%
-				{\color{quantumgray}%
-						\leaders\hrule\hfil
-						\vrule\@height6\p@}
-			}%
-		}%
-		\setbox\widetext@bot\hb@xt@\hsize{%
-			{\color{quantumgray}%
-					\vrule\@depth6\p@
-					\leaders\hrule\hfil}
-		}%
-		\onecolumngrid
-		\vskip10\p@
-		\dimen@\ht\widetext@top\advance\dimen@\dp\widetext@top
-		\cleaders\box\widetext@top\vskip\dimen@
-		\vskip6\p@
-		\prep@math@patch
-	}{%
-		\par
-		\vskip6\p@
-		\setbox\widetext@bot\vbox{%
-			\hb@xt@\hsize{\hfil\box\widetext@bot}%
-		}%
-		\dimen@\ht\widetext@bot\advance\dimen@\dp\widetext@bot
-		\cleaders\box\widetext@bot\vskip\dimen@
-		\vskip8.5\p@
-		\twocolumngrid\global\booltrue{@ignore}
-		\booltrue{@endpe}
-	}%
-}{
-	\newenvironment{widetext}{}{}
-}
-
+\raggedbottom
+\onecolumn
 
 %title
 \def\@printtitle{%
-	{%
-			\iftoggle{@unpublished}%
-			{%
-				\@printtitletextwithappropriatefontsize%
-			}%
-			{%
-				\edef\@titleexpanded{\detokenize\expandafter{\@title}}%
-				\iftoggle{@xstring}%
-					{\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode}%
-					{\gdef\@titleforurl{\@titleexpanded}}%
-				\href{https://quantum-journal.org/?s=\@titleforurl\&reason=title-click}{%
-						\color{quantumviolet}{%
-                                                  \@printtitletextwithappropriatefontsize\unskip%
-						}%
-                                              }%
-			}%
+	{%		
+		\edef\@titleexpanded{\detokenize\expandafter{\@title}}%
+		\iftoggle{@xstring}%
+			{\saveexploremode\exploregroups\StrSubstitute{\@titleexpanded}{ }{\%20}[\@titleforurl]\restoreexploremode}%
+			{\gdef\@titleforurl{\@titleexpanded}}%
+		\href{https://quantum-journal.org/?s=\@titleforurl\&reason=title-click}{%
+				\color{quantumviolet}{%
+											\@printtitletextwithappropriatefontsize\unskip%
+				}%
+										}%
 		}%
 }
 % In the macro below we compute the appropriate font size of the title.
@@ -831,11 +571,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	#1%
 	\begingroup%
 	\raggedright%
-	\iftoggle{@allowfontchangeintitle}
-		{}
-		{%
-			\def\selectfont{\ClassError{quantumview}{When submitting to Quantum, you are not supposed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{}. Please remove all such commands from your \string\title{}. If you really have to change the font for some part of the title you can turn off this error by giving the option allowfontchangeintitle}{}}%solution from https://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
-		}%
+	\def\selectfont{\ClassError{quantumview}{When submitting to Quantum, you are not supposed to use \string\textbf{}, \string\bf, \string\textit{} or other font formating commands inside \string\title{}. Please remove all such commands from your \string\title{}. If you really have to change the font for some part of the title you can turn off this error by giving the option allowfontchangeintitle}{}}%solution from https://tex.stackexchange.com/questions/347596/disallowing-textbf-it-sffamily-in-argument-of-macro-or-environment
 	\@title%
 	\endgroup%
 }%
@@ -1140,12 +876,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 		\ClassWarning{quantumview}{The tikz package could not be found and the \string\Quantum command will not produce the Quantum logo, but fall back to outputting simply the text Quantum.}
 		\DeclareRobustCommand{\Quantum}{Quantum}
 	}
-
-	\iftoggle{@accepted}
-		{%
-			\newsavebox\@quantumacceptedbox
-			\savebox\@quantumacceptedbox{\textcolor{quantumviolet}{ \sffamily\footnotesize Accepted in {\normalsize\Quantum}\ifcsdef{@accepteddate}{ \@accepteddate}{}, click title to verify. Published under CC-BY 4.0.}}}
-		{}
 }
 %elsearticle style extra header information
 \newcommand{\ead}[2][]{
@@ -1170,17 +900,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 % set default options for hyperref to make links more pretty
 \PassOptionsToPackage{colorlinks=true,hyperindex}{hyperref}
 
-\iftoggle{@unpublished}
-	{}
-	{\PassOptionsToPackage{allcolors=quantumviolet}{hyperref}}
-
-\ifcsdef{pdfoutput}
-{	
-	\ifnumequal{\pdfoutput}{0}
-	{}
-	{\PassOptionsToPackage{breaklinks=true}{hyperref}}%setting this option produces a warning if \pdfoutput=0
-}
-{}
+\PassOptionsToPackage{allcolors=quantumviolet}{hyperref}
 
 %enable DOIs if biblatex is used by default
 \PassOptionsToPackage{doi=true}{biblatex}
@@ -1208,90 +928,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \def\@keywords{}
 \providecommand{\keywords}{}
 \renewcommand{\keywords}[1]{\def\@keywords{#1}}
-
-\iftoggle{@amsfonts}
-	{\RequirePackage{amsfonts}}
-	{}
-\iftoggle{@amssymb}
-	{\RequirePackage{amssymb}}
-	{}
-\iftoggle{@amsmath}
-	{\RequirePackage{amsmath}}
-	{}
-
-\iftoggle{@revtexcompatibility}
-{
-	\PassOptionsToPackage{numbers}{natbib}
-	\PassOptionsToPackage{sort&compress}{natbib}
-	
-	\providecommand{\ao}{Appl.\  Opt.}
-	\providecommand{\ap}{Appl.\  Phys.}
-	\providecommand{\apl}{Appl.\ Phys.\ Lett.}
-	\providecommand{\apj}{Astrophys.\ J.}
-	\providecommand{\bell}{Bell Syst.\ Tech.\ J.}
-	\providecommand{\jqe}{IEEE J.\ Quantum Electron.}
-	\providecommand{\assp}{IEEE Trans.\ Acoust.\ Speech Signal Process.}
-	\providecommand{\aprop}{IEEE Trans.\ Antennas Propag.}
-	\providecommand{\mtt}{IEEE Trans.\ Microwave Theory Tech.}
-	\providecommand{\iovs}{Invest.\ Ophthalmol.\ Vis.\ Sci.}
-	\providecommand{\jcp}{J.\ Chem.\ Phys.}
-	\providecommand{\jmo}{J.\ Mod.\ Opt.}
-	\providecommand{\josa}{J.\ Opt.\ Soc.\ Am.}
-	\providecommand{\josaa}{J.\ Opt.\ Soc.\ Am.\ A}
-	\providecommand{\josab}{J.\ Opt.\ Soc.\ Am.\ B}
-	\providecommand{\jpp}{J.\ Phys.\ (Paris)}
-	\providecommand{\nat}{Nature (London)}
-	\providecommand{\oc}{Opt.\ Commun.}
-	\providecommand{\ol}{Opt.\ Lett.}
-	\providecommand{\pl}{Phys.\ Lett.}
-	\providecommand{\pra}{Phys.\ Rev.\ A}
-	\providecommand{\prb}{Phys.\ Rev.\ B}
-	\providecommand{\prc}{Phys.\ Rev.\ C}
-	\providecommand{\prd}{Phys.\ Rev.\ D}
-	\providecommand{\pre}{Phys.\ Rev.\ E}
-	\providecommand{\prl}{Phys.\ Rev.\ Lett.}
-	\providecommand{\rmp}{Rev.\ Mod.\ Phys.}
-	\providecommand{\pspie}{Proc.\ Soc.\ Photo-Opt.\ Instrum.\ Eng.}
-	\providecommand{\sjqe}{Sov.\ J.\ Quantum Electron.}
-	\providecommand{\vr}{Vision Res.}
-	\newenvironment{ruledtabular}{\ClassError{quantumview}{The quantumview class does not support the ruledtabular environment. Consider using the booktabs package for tables and the table* environment for tables that span two columns.}{}}{}
-
-	\AtBeginDocument{%
-		\providecommand{\pacs}[1]{}
-		\providecommand{\preprint}[1]{}
-		\providecommand{\volumeyear}[1]{}
-		\providecommand{\volumenumber}[1]{}
-		\providecommand{\issuenumber}[1]{}
-		\providecommand{\eid}[1]{}
-		\providecommand{\startpage}[1]{}
-		\def\endpage#1{\gdef\@endpage{#1}}
-	}
-
-	\AtEndPreamble{% in compatibility mode we load natbib, but only if biblatex has not been loaded. We have to do this AtEndPreamble because natbib can not be loaded AtBeginDocument
-		\@ifpackageloaded{biblatex}{}{%
-			\@ifpackageloaded{natbib}{}{%
-				\usepackage{natbib}
-			}%
-		}
-		\let\@recordedbibliographystyle\relax
-		\let\@origbibliographystyle\bibliographystyle
-		\renewcommand{\bibliographystyle}[1]{%
-			\@origbibliographystyle{#1}%
-			\gdef\@recordedbibliographystyle{#1}%
-		}
-		\let\@origbibliography\bibliography
-		\renewcommand{\bibliography}[1]{%
-			\ifx\@recordedbibliographystyle\relax\bibliographystyle{plainnat}\fi
-			\ltx@ifpackageloaded{natbib}{}{%
-				\ltx@ifpackageloaded{biblatex}{}{%
-					\ClassWarning{quantumview}{You are manually generating your bibliography. Please make sure that all references include DOI hyperlinks. quantumview recommends the use of BibTeX together with the natbib package for generating the bibliography.}}}%
-			\@origbibliography{#1}}
-		\providecommand\textcite[1]{\citet{#1}}
-		\providecommand\onlinecite[1]{\cite{#1}}
-	}
-}
-{
-}
 
 \newenvironment{acknowledgements}{\section*{Acknowledgements}}{}
 
@@ -1351,7 +987,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \@blacklistpackage[You are not supposed to load custom font packages such as]{times}
 \@blacklistpackage[You are not supposed to load custom font packages such as]{yfonts}
 
-\iftoggle{@nopdfoutputerror}{}{\pdfoutput=0} %Set \pdfoutput=0 so that we can check later during \usepackage whether the authors did put \pdfoutput=1 into their document, bit only if the nopdfoutputerror was not given
 \endinput
 %%
 %% End of file `quantumview.cls'.
