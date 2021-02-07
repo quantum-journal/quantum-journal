@@ -46,33 +46,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 
 \newcommand{\@tag}[2]{<#1>#2</#1>}
 
-\newcommand{\@redefinehtmlcommands}{
-	\renewcommand{\emph}[1]{\@tag{em}{#1}}
-	\renewcommand{\textit}[1]{\@tag{i}{#1}}
-	\renewcommand{\textbf}[1]{\@tag{b}{#1}}
-	\renewcommand{\textsuperscript}[1]{\@tag{sup}{#1}}
-	\renewcommand{\textsubscript}[1]{\@tag{sub}{#1}}
-	\renewcommand{\cite}[1]{{\textbackslash}cite\{#1\}}
-	\renewcommand{\section}[#1]{\@tag{h1}{#1}\\ }
-	\renewcommand{\section*}[#1]{\section{#1}}
-	\renewcommand{\subsection}[#1]{\@tag{h2}{#1}\\ }
-	\renewcommand{\subsection*}[#1]{\subsection{#1}}
-	\renewcommand{\subsubsection}[#1]{\@tag{h3}{#1}\\ }
-	\renewcommand{\subsubsection*}[#1]{\subsubsection{#1}}
-	\renewcommand{\paragraph}[#1]{\@tag{b}{#1}}
-	\renewcommand{\paragraph*}[#1]{\paragraph{#1}}
-	\renewcommand{\subparagraph}[#1]{\@tag{i}{#1}}
-	\renewcommand{\subparagraph*}[#1]{\subparagraph{#1}}
-	\renewenvironment{\align}{\$\$\begin{verbatim}}{\$\$\end{verbatim}}
-	\renewenvironment{\align*}{\$\$\begin{verbatim}}{\$\$\end{verbatim}}
-	\renewenvironment{\equation}{\$\$\begin{verbatim}}{\$\$\end{verbatim}}
-	\renewenvironment{\equation*}{\$\$\begin{verbatim}}{\$\$\end{verbatim}}
-	\renewenvironment{\eqnarray}{\$\$\begin{verbatim}}{\$\$\end{verbatim}}
-	\renewenvironment{\eqnarray*}{\$\$\begin{verbatim}}{\$\$\end{verbatim}}
-	\renewenvironment{\itemize}{<ul>}{</ul>}
-	\renewenvironment{\enumerate}{<ol>}{</ol>}
-}
-
 \iftoggle{@html}{\renewcommand*\familydefault{\ttdefault}}{}
 
 \AtBeginDocument{
@@ -99,7 +72,27 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\definecolor{quantumviolet}{HTML}{53257F} %Quantum violet
 	\definecolor{quantumgray}{HTML}{555555} %Quantum gray
 	\iftoggle{@html}{
-		\@redefinehtmlcommands
+		\RequirePackage{verbatim}
+	}{}
+}
+
+\AfterEndPreamble{
+	\iftoggle{@html}{
+		\renewcommand{\emph}[1]{\@tag{em}{#1}}
+		\renewcommand{\textit}[1]{\@tag{i}{#1}}
+		\renewcommand{\textbf}[1]{\@tag{b}{#1}}
+		\renewcommand{\textsuperscript}[1]{\@tag{sup}{#1}}
+		\renewcommand{\textsubscript}[1]{\@tag{sub}{#1}}
+		\renewcommand{\cite}[1]{{\textbackslash}cite\{#1\}}
+		\renewcommand{\section}[1]{\noindent\@tag{h1}{#1}\\ }
+		\renewcommand{\subsection}[1]{\noindent\@tag{h2}{#1}\\ }
+		\renewcommand{\subsubsection}[1]{\noindent\@tag{h3}{#1}\\ }
+		\renewcommand{\paragraph}[1]{\noindent\@tag{b}{#1}}
+		\renewenvironment{equation}{\endgraf \noindent \$\$ \verbatim}{\endverbatim \$\$ \endgraf}
+		\renewenvironment{align}{\endgraf \noindent \$\$ \verbatim}{\endverbatim \$\$ \endgraf}
+		\renewenvironment{eqnarray}{\endgraf \noindent \$\$ \verbatim}{\endverbatim \$\$ \endgraf}
+		%\renewenvironment{\itemize}{<ul>}{</ul>}
+		%\renewenvironment{\enumerate}{<ol>}{</ol>}
 	}{}
 }
 
@@ -120,8 +113,12 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \let\@mkboth\markboth
 \def\sectionmark##1{%
 	\markright {\MakeUppercase{%
-			\ifnumgreater{\c@secnumdepth}{\m@ne}{\thesection\quad}{}
-			##1}}}}%
+			\ifnumgreater{\c@secnumdepth}{\m@ne}
+				{\thesection\quad}
+				{}
+			##1}}%
+	}%
+}%
 
 \def\ps@myheadings{%
 	\let\@oddfoot\@empty\let\@evenfoot\@empty
@@ -140,10 +137,8 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \long\def\@makefntext##1{\parindent 1em\noindent
 \hb@xt@1.8em{%
 \hss\@textsuperscript{\normalfont\@thefnmark}}##1}%
-\ifbool{@twocolumn}
-	{\ifnumequal{\col@number}{\@ne}{\@maketitle}{\twocolumn[\@maketitle]}}
-	{\global\@topnum\z@   % Prevents figures from going at top of page.
-		\@maketitle}
+\global\@topnum\z@   % Prevents figures from going at top of page.
+\@maketitle
 \thispagestyle{fancy}%\@thanks
 \endgroup
 \setcounter{footnote}{0}%
@@ -299,10 +294,10 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 
 \newenvironment{abstract}{%
 	\ifdefempty{\maketitle}{\relax{}}{\maketitle}
-	\ifbool{@twocolumn}{\bf}{\vskip 1em \quotation}%
+	\vskip 1em \quotation%
 }
 {
-	\ifbool{@twocolumn}{}{\endquotation\vskip 2em}
+	\endquotation\vskip 2em%
 }
 
 \newenvironment{verse}
@@ -517,7 +512,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \let\@openbib@code\@empty
 
 \newenvironment{theindex}{%
-	\ifbool{@twocolumn}{\togglefalse{@restonecol}}{\toggletrue{@restonecol}}
+	\toggletrue{@restonecol}
 	\twocolumn[\section*{\indexname}]%
 	\@mkboth{\MakeUppercase\indexname}%
 	{\MakeUppercase\indexname}%
@@ -571,9 +566,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \renewcommand{\headrule}{}
 \renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\color{quantumgray}\leaders\hrule\hfil}\vss}}
 \fancyhf{}
-\iftoggle{@accepted}
-{\fancyfoot[R]{\sffamily\iftoggle{@unpublished}{\thepage}{\textcolor{quantumviolet}{\thepage}}}}
-{\fancyfoot[C]{\sffamily\iftoggle{@unpublished}{\thepage}{\textcolor{quantumviolet}{\thepage}}}}
 
 \pagenumbering{arabic}
 \raggedbottom
@@ -679,10 +671,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 				%      \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
 				\iftoggle{@titlepage}
 					{\hsize\dimexpr \linewidth\relax \@parboxrestore}%
-					{\ifbool{@twocolumn}
-						{\hsize\dimexpr 0.5\linewidth-0.5\columnsep\relax \@parboxrestore}
-						{\hsize\dimexpr \linewidth\relax \@parboxrestore}%
-					}
+					{\hsize\dimexpr \linewidth\relax \@parboxrestore}%
 				% \flushleft%
 				% \baselineskip=0pt%
 				\@printauthorextrainfo{\the@authornum}\vspace{0.5\baselineskip}%
