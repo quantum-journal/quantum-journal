@@ -88,12 +88,44 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 		\renewcommand{\subsection}[1]{\noindent\@tag{h2}{#1}\\ }
 		\renewcommand{\subsubsection}[1]{\noindent\@tag{h3}{#1}\\ }
 		\renewcommand{\paragraph}[1]{\noindent\@tag{b}{#1}}
-		\renewenvironment{equation}{\endgraf \noindent \$\$ \verbatim}{\endverbatim \$\$ \endgraf}
-		\renewenvironment{align}{\endgraf \noindent \$\$ \verbatim}{\endverbatim \$\$ \endgraf}
-		\renewenvironment{eqnarray}{\endgraf \noindent \$\$ \verbatim}{\endverbatim \$\$ \endgraf}
-		%\renewenvironment{\itemize}{<ul>}{</ul>}
-		%\renewenvironment{\enumerate}{<ol>}{</ol>}
-	}{}
+		\renewenvironment{equation}
+			{\endgraf \noindent \$\$ \verbatim}
+			{\endverbatim \$\$ \endgraf}
+		\renewenvironment{align}
+			{\endgraf \noindent \$\$ \verbatim}
+			{\endverbatim \$\$ \endgraf}
+		\renewenvironment{eqnarray}
+			{\endgraf \noindent \$\$ \verbatim}
+			{\endverbatim \$\$ \endgraf}
+		
+		%\makeatletter
+		\newcommand{\newitem}{}
+		%\newcommand{\gobblenextarg}[1]{#1\@ifnextchar~{ }{\gobblenextarg}}
+		%\makeatother
+		\renewenvironment{itemize}
+			{\endgraf \noindent <ul>\endgraf \noindent%
+				\let\olditem\item 
+				\let\item\newitem
+			 	\let\oldep\everypar  
+			 	\newtoks\everypar  
+			 	\oldep{\the\everypar<li>}
+			 	\let\oldpar\par 
+			 	\def\par{</li>\oldpar}
+	 		}
+			{\endgraf \noindent </ul> \endgraf%
+				\let\item\olditem
+				\everypar={}
+				\let\par\oldpar
+			}
+		\renewenvironment{enumerate}
+			{\endgraf \noindent <ol>\endgraf \noindent%
+				%\let\olditem\item \let\item\newitem
+			}
+			{\endgraf \noindent </ol> \endgraf%
+				%\let\item\olditem
+			}
+		%\renewcommand{\item}[2]{<li>#1 #2</li>}
+}{}
 }
 
 \setcounter{topnumber}{2}
