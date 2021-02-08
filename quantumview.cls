@@ -110,13 +110,16 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 			\def\item{\zz\par\indent<li>\def\zz{\ifhmode\unskip\fi</li>\par}}
 		}
 		\def\endenumerate{\zz\endgraf\noindent</ol>\par \let\item\olditem}
+		
+		\def\@@addnewlinebetween#1{#1 \\ \noindent }
+		\def\@affiliationsonly{\forlistloop{\@@addnewlinebetween}{\affiliations}}
 		\renewcommand{\@maketitle}{%
 			\noindent {\footnotesize Title:} \\
-			\noindent \@title \\
+			\noindent {\@title} \\
 			\noindent {\footnotesize Author:} \\
 			\noindent \@authorsonly \\
 			\noindent {\footnotesize Affiliations:} \\
-			\noindent \@printaffiliations \\
+			\noindent \@affiliationsonly \\
 		}
 }{}
 }
@@ -729,7 +732,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\ifcsdef{affiliations}{}{\csdef{affiliations}{}}%
 	\expandafter\def\csname\detokenize{#2}\endcsname{#2}%
 	\stepcounter{@affiliationcounter}%
-	\listxadd{\affiliations}{\detokenize{#2}}%
+	\listxadd{\affiliations}{\iftoggle{@html}{#2}{\detokenize{#2}}}%
 	\csxdef{affiliation\detokenize{#2}number}{\the@affiliationcounter{}}%
 	\ifcsdef{authorswithlabel#1}{%
 		\forlistcsloop{\@addaffiliation{\csname affiliation\detokenize{#2}number\endcsname}}{authorswithlabel#1}%
@@ -739,7 +742,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\booltrue{@startnewauthorgroup}
 	\ifcsdef{affiliations}{}{\csdef{affiliations}{}}%
 	\expandafter\def\csname\detokenize{#1}\endcsname{#1} %to handle special characters such as \'a and \l we create a macro whose name is the detokenized version of #1 and that expands to #1 and later call it in \@printaffiliation
-	\xifinlist{\detokenize{#1}}{\affiliations}{}{\stepcounter{@affiliationcounter}\listxadd{\affiliations}{\detokenize{#1}}\csxdef{affiliation\detokenize{#1}number}{\the@affiliationcounter{}}}%
+	\xifinlist{\detokenize{#1}}{\affiliations}{}{\stepcounter{@affiliationcounter}\listxadd{\affiliations}{\iftoggle{@html}{#1}{\detokenize{#1}}}\csxdef{affiliation\detokenize{#1}number}{\the@affiliationcounter{}}}%
 	\forlistloop{\@addaffiliation{\csname affiliation\detokenize{#1}number\endcsname}}{\@authorgroup}%
 }
 \def\@printaffiliation#1#2{\ifnumcomp{\the@affiliationcounter}{>}{1}{\llap{\textsuperscript{#1}}}{}\csname #2\endcsname\ifnumcomp{#1}{<}{\the@affiliationcounter}{\newline}{}}
