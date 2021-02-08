@@ -98,9 +98,11 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 			{\endgraf \noindent \$\$ \verbatim}
 			{\endverbatim \$\$ \endgraf}
 		% This solution for itemize and enumerate is due to David Carlisle from tex.stackexchange
-		\def\itemize{\par\noindent <ul>\let\zz\relax
-		\let\olditem\item
-		\def\item{\zz\par\indent<li>\def\zz{\ifhmode\unskip\fi</li>\par}}}
+		\def\itemize{%
+			\par\noindent <ul>\let\zz\relax
+			\let\olditem\item
+			\def\item{\zz\par\indent<li>\def\zz{\ifhmode\unskip\fi</li>\par}}
+		}
 		\def\enditemize{\zz\endgraf\noindent</ul>\par \let\item\olditem}
 		\def\enumerate{%
 			\par\noindent <ol>\let\zz\relax
@@ -108,7 +110,14 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 			\def\item{\zz\par\indent<li>\def\zz{\ifhmode\unskip\fi</li>\par}}
 		}
 		\def\endenumerate{\zz\endgraf\noindent</ol>\par \let\item\olditem}
-		
+		\renewcommand{\@maketitle}{%
+			\noindent {\footnotesize Title:} \\
+			\noindent \@title \\
+			\noindent {\footnotesize Author:} \\
+			\noindent \@authorsonly \\
+			\noindent {\footnotesize Affiliations:} \\
+			\noindent \@printaffiliations \\
+		}
 }{}
 }
 
