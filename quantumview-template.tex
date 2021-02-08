@@ -20,30 +20,40 @@
 
 \maketitle
 
-\section{Section}
-\subsection{Subsection}
-\subsubsection{Subsubsection}
-\paragraph{Test}
-Lorem Ipsum. \emph{emphasis}, \textit{italic}, \textbf{bold}, \textsuperscript{superscript}, \textsubscript{subscript}, \cite{test}
+\section{Introduction}
+Quantum Views is Quantum's venue for perspectives, views, editorials and other opinion pieces. The publishing process is different from that of regular articles in Quantum because Views are published as \emph{HTML only}, and need not be uploaded to the arXiv.
 
-Equation:
+Quantum provides the quantumview documentclass to enable authors of Views to use their common LaTeX environment to prepare their contributions. The editors at Quantum can then generate the HTML output by supplying the \texttt{html} option.
+
+Natively, the documentclass supports the following operations:
+
+\paragraph{Text formatting} The following text formats are supported: \emph{emphasis}, \textit{italic}, \textbf{bold}, \texttt{typewriter}, \textsuperscript{superscript} and \textsubscript{subscript}.
+
+\paragraph{Sectioning} Sectioning -- if needed -- can be performed using the regular \texttt{{\textbackslash}section}, \texttt{{\textbackslash}subsection}, \texttt{{\textbackslash}subsubsection} and \texttt{{\textbackslash}paragraph} commands. These will be converted to HTML header tags and therefore not show section numbers in the final HTML.
+
+\paragraph{Citations and Bibliography} \cite{test}
+
+\paragraph{Formulas} You are free to use both the \texttt{equation}
 \begin{equation}
-    \int_a^b \mathrm{d}x = b-a
+    \int_0^1 \mathrm{d}x \, |\psi(x)\rangle \! \langle \psi(x)|= \hat{O}^2
 \end{equation}
-Align:
+and \texttt{align} environment
 \begin{align}
-    \oint_C = \mathcal{Z}^2
+    \oint_C = \mathcal{Z}^2.
 \end{align}
-Itemize:
+As formulas are directly rendered on the webpage, \emph{you can not use custom commands and libraries}. 
+
+\paragraph{Lists} You are free to use both \texttt{itemize} for unordered lists,
 \begin{itemize}
     \item Item 1 lorem ipsum
     \item Item 2
 \end{itemize}
-Enumerate:
+and \texttt{enumerate} for ordered lists:
 \begin{enumerate}
     \item Item 1
     \item Item 2
 \end{enumerate}
+Note that further modifiers, \emph{e.g.}\ for roman numbering are not supported.
 
 
 \end{document}

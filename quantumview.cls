@@ -81,13 +81,14 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 		\renewcommand{\emph}[1]{\@tag{em}{#1}}
 		\renewcommand{\textit}[1]{\@tag{i}{#1}}
 		\renewcommand{\textbf}[1]{\@tag{b}{#1}}
+		\renewcommand{\texttt}[1]{\@tag{tt}{#1}}
 		\renewcommand{\textsuperscript}[1]{\@tag{sup}{#1}}
 		\renewcommand{\textsubscript}[1]{\@tag{sub}{#1}}
 		\renewcommand{\cite}[1]{{\textbackslash}cite\{#1\}}
-		\renewcommand{\section}[1]{\noindent\@tag{h1}{#1}\\ }
-		\renewcommand{\subsection}[1]{\noindent\@tag{h2}{#1}\\ }
-		\renewcommand{\subsubsection}[1]{\noindent\@tag{h3}{#1}\\ }
-		\renewcommand{\paragraph}[1]{\noindent\@tag{b}{#1}}
+		\renewcommand{\section}[1]{\noindent\@tag{h2}{#1}\\ }
+		\renewcommand{\subsection}[1]{\noindent\@tag{h3}{#1}\\ }
+		\renewcommand{\subsubsection}[1]{\noindent\@tag{h4}{#1}\\ }
+		\renewcommand{\paragraph}[1]{\par ~\\\noindent<br/>\@tag{b}{#1}}
 		\renewenvironment{equation}
 			{\endgraf \noindent \$\$ \verbatim}
 			{\endverbatim \$\$ \endgraf}
@@ -119,7 +120,9 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 			\noindent {\footnotesize Author:} \\
 			\noindent \@authorsonly \\
 			\noindent {\footnotesize Affiliations:} \\
-			\noindent \@affiliationsonly \\
+			\noindent \@affiliationsonly
+			\hline
+			\vspace{1.5em}
 		}
 }{}
 }
