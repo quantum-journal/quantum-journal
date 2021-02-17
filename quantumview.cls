@@ -46,6 +46,10 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 
 \newcommand{\@tag}[2]{<#1>#2</#1>}
 
+\RequirePackage{soul}
+\newcommand{\corr}[2]{\textcolor{red}{\st{#1}}\textcolor{blue}{#2}}
+\newcommand{\ins}[1]{\textcolor{red}{#1}}
+
 \iftoggle{@html}{\renewcommand*\familydefault{\ttdefault}}{}
 
 \AtBeginDocument{
@@ -124,6 +128,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 			\hline
 			\vspace{1.5em}
 		}
+		\renewcommand{\bibliography}[1]{~}
 }{}
 }
 

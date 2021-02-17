@@ -1,9 +1,10 @@
-\documentclass[html]{quantumview}
+\documentclass{quantumview}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
 
 
 
@@ -25,13 +26,14 @@ Quantum Views is Quantum's venue for perspectives, views, editorials and other o
 
 Quantum provides the quantumview documentclass to enable authors of Views to use their common LaTeX environment to prepare their contributions. The editors at Quantum can then generate the HTML output by supplying the \texttt{html} option.
 
-Natively, the documentclass supports the following operations:
+\section{Supported Formatting Options}
+The documentclass natively supports the following operations:
 
 \paragraph{Text formatting} The following text formats are supported: \emph{emphasis}, \textit{italic}, \textbf{bold}, \texttt{typewriter}, \textsuperscript{superscript} and \textsubscript{subscript}.
 
 \paragraph{Sectioning} Sectioning -- if needed -- can be performed using the regular \texttt{{\textbackslash}section}, \texttt{{\textbackslash}subsection}, \texttt{{\textbackslash}subsubsection} and \texttt{{\textbackslash}paragraph} commands. These will be converted to HTML header tags and therefore not show section numbers in the final HTML.
 
-\paragraph{Citations and Bibliography} \cite{test}
+\paragraph{Citations and Bibliography} You can cite references using the regular \texttt{{\textbackslash}cite} command. For example, here is some text citing a textbook~\cite{NielsenChuang2000}, a journal article~\cite{Preskill2018}, a newer preprint~\cite{SchwarzhansLockErkerFriisHuber2020} and a journal article whose preprint has an arXiv identifier in old format~\cite{AcinBrussLewensteinSanpera2001}.
 
 \paragraph{Formulas} You are free to use both the \texttt{equation}
 \begin{equation}
@@ -41,7 +43,7 @@ and \texttt{align} environment
 \begin{align}
     \oint_C = \mathcal{Z}^2.
 \end{align}
-As formulas are directly rendered on the webpage, \emph{you can not use custom commands and libraries}. 
+As formulas are directly rendered on the webpage, \emph{you can not use custom commands and libraries}. For the same reason, equations are not numbered in the final document and can not be referred to. You should thus refrain from using the \texttt{{\textbackslash}label} and \texttt{{\textbackslash}ref} commands.
 
 \paragraph{Lists} You are free to use both \texttt{itemize} for unordered lists,
 \begin{itemize}
@@ -53,7 +55,13 @@ and \texttt{enumerate} for ordered lists:
     \item Item 1
     \item Item 2
 \end{enumerate}
-Note that further modifiers, \emph{e.g.}\ for roman numbering are not supported.
+Note that further modifiers, \emph{e.g.}\ for roman numbering and additional packages like \texttt{enumerate} are not supported.
+
+\section{Copy-Editing Tools}
+The quantumview document class also provides commands that are useful in copy-editing. These are \texttt{{\textbackslash}corr} for \corr{correctons}{corrections} and \texttt{{\textbackslash}ins} \ins{for insertions}.
+
+\bibliography{quantumview-template}
+\bibliographystyle{unsrtnat}
 
 
 \end{document}
