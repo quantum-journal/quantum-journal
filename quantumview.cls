@@ -89,19 +89,21 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 		\renewcommand{\textsuperscript}[1]{\@tag{sup}{#1}}
 		\renewcommand{\textsubscript}[1]{\@tag{sub}{#1}}
 		\renewcommand{\cite}[1]{{\textbackslash}cite\{#1\}}
+		\renewcommand{\label}[1]{{\textbackslash}label\{#1\}}
+		\renewcommand{\ref}[1]{{\textbackslash}ref\{#1\}}
 		\renewcommand{\section}[1]{\noindent\@tag{h2}{#1}\\ }
 		\renewcommand{\subsection}[1]{\noindent\@tag{h3}{#1}\\ }
 		\renewcommand{\subsubsection}[1]{\noindent\@tag{h4}{#1}\\ }
 		\renewcommand{\paragraph}[1]{\par ~\\\noindent<br/>\@tag{b}{#1}}
 		\renewenvironment{equation}
-			{\endgraf \noindent \$\$ \verbatim}
-			{\endverbatim \$\$ \endgraf}
+			{\endgraf \noindent {\textbackslash}begin\{equation\} \verbatim}
+			{\endverbatim {\textbackslash}end\{equation\} \endgraf}
 		\renewenvironment{align}
-			{\endgraf \noindent \$\$ \verbatim}
-			{\endverbatim \$\$ \endgraf}
+			{\endgraf \noindent {\textbackslash}begin\{align\} \verbatim}
+			{\endverbatim {\textbackslash}end\{align\} \endgraf}
 		\renewenvironment{eqnarray}
-			{\endgraf \noindent \$\$ \verbatim}
-			{\endverbatim \$\$ \endgraf}
+			{\endgraf \noindent {\textbackslash}begin\{eqnarray\} \verbatim}
+			{\endverbatim {\textbackslash}end\{eqnarray\} \endgraf}
 		% This solution for itemize and enumerate is due to David Carlisle from tex.stackexchange
 		\def\itemize{%
 			\par\noindent <ul>\let\zz\relax
