@@ -77,8 +77,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\definecolor{quantumgray}{HTML}{555555} %Quantum gray
 	\iftoggle{@html}{
 		\RequirePackage{verbatim}
-		\RequirePackage{graphicx}		
-		\PassOptionsToPackage{draft}{graphicx}	
+		\RequirePackage[draft]{graphicx}		
 	}{}
 }
 
