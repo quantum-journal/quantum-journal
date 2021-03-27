@@ -1,4 +1,4 @@
-\documentclass{quantumview}
+\documentclass[html]{quantumview}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
@@ -6,9 +6,12 @@
 \usepackage{hyperref}
 \usepackage[numbers,sort&compress]{natbib}
 
+\begingroup
+\catcode`\$=\active
+\protected\gdef$#1${\$\detokenize{#1}\$}
+\endgroup
+\AtBeginDocument{\catcode`\$=\active}
 
-
-%\setcounter{secnumdepth}{0}
 
 \begin{document}
 
@@ -38,7 +41,7 @@ The documentclass natively supports the following operations:
 Please see quantumview-template.bib for an example of how to provide bibliographic information to BibLaTeX in a way that yields a suitable bibliography with DOI links.
 In both Quantum and Quantum Views all citations to cited works that have a DOI must include a hyperlink to the DOI of the work.
 
-\paragraph{Formulas} You are free to use both the \texttt{equation}
+\paragraph{Formulas} You are free to use inline math $\mathcal{Z} - \pi = \nabla \Gamma$ and both the \texttt{equation}
 \begin{equation}
     \int_0^1 \mathrm{d}x \, |\psi(x)\rangle \! \langle \psi(x)|= \hat{O}^2
 \end{equation}

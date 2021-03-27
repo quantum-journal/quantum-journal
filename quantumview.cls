@@ -77,14 +77,28 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\definecolor{quantumgray}{HTML}{555555} %Quantum gray
 	\iftoggle{@html}{
 		\RequirePackage{verbatim}
+		\RequirePackage{graphicx}		
+		\PassOptionsToPackage{draft}{graphicx}	
 	}{}
 }
+
+%\iftoggle{@html}{	
+	% convert inline math
+%	\begingroup
+%	\catcode`\$=\active
+%	\protected\gdef$#1${\$\detokenize{#1}\$}
+%	\endgroup
+%	\AtBeginDocument{\catcode`\$=\active}
+%}{}
+
+
 
 \AfterEndPreamble{
 	\iftoggle{@html}{
 		% remove stry hyphens in HTML
 		\hyphenpenalty=10000
 		\exhyphenpenalty=10000
+		% convert other commands
 		\renewcommand{\emph}[1]{\@tag{em}{#1}}
 		\renewcommand{\textit}[1]{\@tag{i}{#1}}
 		\renewcommand{\textbf}[1]{\@tag{b}{#1}}
@@ -130,10 +144,12 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 			\noindent \@authorsonly \\
 			\noindent {\footnotesize Affiliations:} \\
 			\noindent \@affiliationsonly
-			\hline
+			\par\noindent\rule{\textwidth}{0.4pt}
 			\vspace{1.5em}
 		}
 		\renewcommand{\bibliography}[1]{~}
+		% convert links		
+		\renewcommand{\href}[2]{<a href="#1">#2</a>}
 }{}
 }
 
