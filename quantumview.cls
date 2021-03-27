@@ -82,22 +82,12 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	}{}
 }
 
-%\iftoggle{@html}{	
-	% convert inline math
-%	\begingroup
-%	\catcode`\$=\active
-%	\protected\gdef$#1${\$\detokenize{#1}\$}
-%	\endgroup
-%	\AtBeginDocument{\catcode`\$=\active}
-%}{}
-
-
 
 \AfterEndPreamble{
 	\iftoggle{@html}{
 		% remove stry hyphens in HTML
-		\hyphenpenalty=10000
-		\exhyphenpenalty=10000
+		\righthyphenmin=62
+		\lefthyphenmin=62
 		% convert other commands
 		\renewcommand{\emph}[1]{\@tag{em}{#1}}
 		\renewcommand{\textit}[1]{\@tag{i}{#1}}
@@ -1016,6 +1006,15 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \AtEndPreamble{
 	\RequirePackage{caption}
 }
+
+\begingroup
+\catcode`\$=\active
+\protected\gdef$#1${\$\detokenize{#1}\$}
+\endgroup
+
+\iftoggle{@html}{
+	\AtBeginDocument{\catcode`\$=\active}
+}{}
 
 \endinput
 %%
