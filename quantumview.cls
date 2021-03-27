@@ -28,8 +28,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \newcommand*\@ptsize{}
 
 \newtoggle{@restonecol}
-\newtoggle{@titlepage}
-\togglefalse{@titlepage}
 
 \newtoggle{@html}
 \togglefalse{@html}
@@ -207,13 +205,12 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\let \footnote \thanks
 	\noindent%
 	\begin{minipage}{\textwidth}%
-          \iftoggle{@titlepage}{\centering}{}%
           \noindent{\huge\hyphenpenalty=5000 \@printtitle\par}%
         \end{minipage}%
 	\vskip 1.5em%
-	\iftoggle{@titlepage}{}{\begin{flushleft}}%
+	\begin{flushleft}%
 		\noindent \@printauthors
-	\iftoggle{@titlepage}{}{\end{flushleft}}%
+	\end{flushleft}%
 	\vskip 1em%
 	\noindent\@printaffiliations
 	\vskip 0em%
@@ -522,17 +519,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 
 \newenvironment{thebibliography}[1]
 {%
-  \makeatletter%
-  \iftoggle{@noarxiv}{}{%
-    \ltx@ifpackageloaded{natbib}{}{%
-      \ltx@ifpackageloaded{biblatex}{
-        \ClassWarning{quantumview}{Unfortunately quantumview cannot recommend the use of BibLaTeX due to incompatibilities between locally installed versions of BibLaTeX and the version used by the arXiv.}%
-      }{%
-        \ClassWarning{quantumview}{The quantumview class recommends generating the bibliography from a BibTeX file containing DOIs with natbib in order to ensure the generation of DOI hyperlinks}%
-      }%
-    }%
-  }%
-  \makeatother%
   \section*{\refname}%
   \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
   \list{\@biblabel{\@arabic\c@enumiv}}%
@@ -715,9 +701,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 				%      \interlinepenalty\interfootnotelinepenalty
 				%      \splittopskip\footnotesep
 				%      \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
-				\iftoggle{@titlepage}
-					{\hsize\dimexpr \linewidth\relax \@parboxrestore}%
-					{\hsize\dimexpr \linewidth\relax \@parboxrestore}%
+				\hsize\dimexpr \linewidth\relax \@parboxrestore%
 				% \flushleft%
 				% \baselineskip=0pt%
 				\@printauthorextrainfo{\the@authornum}\vspace{0.5\baselineskip}%
