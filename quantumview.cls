@@ -82,6 +82,8 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 
 \AfterEndPreamble{
 	\iftoggle{@html}{
+		% remove stry hyphens in HTML
+		\hyphenpenalty=10000
 		\renewcommand{\emph}[1]{\@tag{em}{#1}}
 		\renewcommand{\textit}[1]{\@tag{i}{#1}}
 		\renewcommand{\textbf}[1]{\@tag{b}{#1}}
