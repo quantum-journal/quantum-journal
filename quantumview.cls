@@ -92,9 +92,9 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 		\renewcommand{\texttt}[1]{\@tag{tt}{#1}}
 		\renewcommand{\textsuperscript}[1]{\@tag{sup}{#1}}
 		\renewcommand{\textsubscript}[1]{\@tag{sub}{#1}}
-		\renewcommand{\cite}[1]{{\textbackslash}cite\{#1\}}
-		\renewcommand{\label}[1]{{\textbackslash}label\{#1\}}
-		\renewcommand{\ref}[1]{{\textbackslash}ref\{#1\}}
+		\renewcommand{\cite}[1]{{\textbackslash}cite\{\detokenize{#1}\}}
+		\renewcommand{\label}[1]{{\textbackslash}label\{\detokenize{#1}\}}
+		\renewcommand{\ref}[1]{{\textbackslash}ref\{\detokenize{#1}\}}
 		\renewcommand{\section}[1]{\noindent\@tag{h2}{#1}\\ }
 		\renewcommand{\subsection}[1]{\noindent\@tag{h3}{#1}\\ }
 		\renewcommand{\subsubsection}[1]{\noindent\@tag{h4}{#1}\\ }
