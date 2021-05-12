@@ -1,0 +1,84 @@
+\documentclass[a4paper,twocolumn,11pt]{quantumarticle}
+\pdfoutput=1
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage[resetlabels]{multibib}
+\newcites{article}{Article references}
+\newcites{repo}{Repository references}
+\newcites{web}{Website references}
+\newcites{book}{Book references}
+
+\begin{document}
+\title{Template demonstrating the quantum bibstyle}
+
+\author{David Wierichs}
+\affiliation{Institute for Theoretical Physics, University of Cologne, Germany}
+
+\maketitle
+
+\onecolumn
+\section{Reference class <article>}
+For the <article> class, the <title> is printed in \emph{italics}. The <journal> is not reformatted, the <volume> printed in \textbf{bold font}. We also include the <pages> if present and the <year> in round brackets ().
+<doi> links are always included if given, the same holds for <eprint>. Only if neither of these two fields is given do we use the <url> to provide a hyperlink to the article.
+Code repositories are linked whenever provided via the <code> field, which is a non-standard field in 
+quantum.bst. 
+
+Examples:
+
+\begin{tabular}{ccccc}
+    <doi>& <eprint> & <url> & <code> & result \\
+    $\checkmark$ & $\checkmark$ & $\checkmark\big / \times$ & $\checkmark$ & \citearticle{article_doi_eprint_url_code} \\
+    $\checkmark$ & $\checkmark$ & $\checkmark\big / \times$ & $\times$ & \citearticle{article_doi_eprint_url} \\
+    $\times$ & $\checkmark$ & $\checkmark\big / \times$ & $\checkmark$ & \citearticle{article_eprint_url_code} \\
+    $\times$ & $\checkmark$ & $\checkmark\big / \times$ & $\times$ & \citearticle{article_eprint_url} \\
+    $\times$ & $\times$ & $\checkmark\big / \times$ & $\checkmark$ & \citearticle{article_url_code} \\
+    $\times$ & $\times$ & $\checkmark\big / \times$ & $\times$ & \citearticle{article_url} \\
+\end{tabular}
+
+Note that in particular citations via a URL alone are not recommended. If you want to cite a website or code repository, please use the respective reference classes <website> or <repository> (see below).
+
+\bibliographystylearticle{../bibtex_wand/quantum2}
+\bibliographyarticle{quantum_bst_demo.bib}
+
+\pagebreak
+\section{Reference class <repository>}
+For the custom <repository> reference class, the <author> field is used if given but is not required (in contrast to the <article> class).
+If the repository address is given via <code> (strongly recommended), a properly formatted repository name is printed and links to the given address, including potentially version-, branch- or even commit-specific links.
+If no <code> entry is given, <url> is used as address instead, without any formatting of the printed text; Either <code> or <url> have to be provided.
+A title is not considered even if given.
+TODO: Consider a year in any way?
+
+\begin{tabular}{ccc}
+    <code>& <url> & result \\
+    $\checkmark$ & $\checkmark\big / \times$ &\citerepo{repo_code_url} \\
+    $\times$ & $\checkmark$ &\citerepo{repo_url} \\
+    $\times$ & $\times$ & invalid \\
+\end{tabular}
+
+Note that if you want both a <url> and a <code> link to be displayed, you can use the <website> reference class presented below for that.
+
+\bibliographystylerepo{../bibtex_wand/quantum2}
+\bibliographyrepo{quantum_bst_demo.bib}
+
+\section{Reference class <website>}
+For the new custom reference class <website>, we require a <title> and a <url> which are both printed always.
+<author> is optional and printed if given, the same holds for <code>, which is formatted as repository link like for <repository>. If you want to provide <code> but not <url>, the reference class <repository> (see above) is made for you.
+
+\begin{tabular}{ccc}
+    <author>& <code> & result \\
+    $\checkmark$ & $\checkmark$ &\citeweb{web_author_code} \\
+    $\times$ & $\checkmark$ &\citeweb{web_code} \\
+    $\checkmark$ & $\times$ &\citeweb{web_author} \\
+    $\times$ & $\times$ &\citeweb{web} \\
+\end{tabular}
+
+Note that if you want both a <url> and a <code> link to be displayed, you can use the <website> reference class presented below for that.
+
+\bibliographystyleweb{../bibtex_wand/quantum2}
+\bibliographyweb{quantum_bst_demo.bib}
+
+\end{document}
