@@ -7,83 +7,85 @@
 \usepackage{amssymb}
 \usepackage{hyperref}
 \usepackage[resetlabels]{multibib}
-%\newcites{article}{Article references}
-%\newcites{repo}{Repository references}
-%\newcites{web}{Website references}
-%\newcites{book}{Book references}
-
-\newcites{article,repo,web}%
-{Article references,%
-Repository references,%
-Website references}
+\newcites{article}{Article references}
+\newcites{repo}{Repository references}
+\newcites{web}{Website references}
+\newcites{book}{Book references}
+\newcites{tests}{Test references}
 
 \begin{document}
-\title{Template demonstrating the quantum bibstyle}
-
-\author{David Wierichs}
-\affiliation{Institute for Theoretical Physics, University of Cologne, Germany}
-
-\maketitle
-
-\onecolumn
-\section{Reference class \texttt{<article>}}
-For the \texttt{<article>} class, the \texttt{<title>} is printed in \emph{italics}. The \texttt{<journal>} is not reformatted, the \texttt{<volume>} printed in \textbf{bold font}. We also include the \texttt{<pages>} if present and the \texttt{<year>} in round brackets ().
-\texttt{<doi>} links are always included if given, the same holds for \texttt{<eprint>}. Only if neither of these two fields is given do we use the \texttt{<url>} to provide a hyperlink to the article.
-Code repositories are linked whenever provided via the \texttt{<code>} field, which is a non-standard field in 
-quantum.bst. 
-
-Examples:
-
-\begin{tabular}{ccccc}
-    \texttt{<doi>}& \texttt{<eprint>} & \texttt{<url>} & \texttt{<code>} & result \\
-    $\checkmark$ & $\checkmark$ & $\checkmark\big / \times$ & $\checkmark$ & \citearticle{article_doi_eprint_url_code} \\
-    $\checkmark$ & $\checkmark$ & $\checkmark\big / \times$ & $\times$ & \citearticle{article_doi_eprint_url} \\
-    $\times$ & $\checkmark$ & $\checkmark\big / \times$ & $\checkmark$ & \citearticle{article_eprint_url_code} \\
-    $\times$ & $\checkmark$ & $\checkmark\big / \times$ & $\times$ & \citearticle{article_eprint_url} \\
-    $\times$ & $\times$ & $\checkmark\big / \times$ & $\checkmark$ & \citearticle{article_url_code} \\
-    $\times$ & $\times$ & $\checkmark\big / \times$ & $\times$ & \citearticle{article_url} \\
-\end{tabular}
-
-Note that in particular citations via a URL alone are not recommended. If you want to cite a website or code repository, please use the respective reference classes \texttt{<website>} or \texttt{<repository>} (see below).
-
-\bibliographystylearticle{quantum}
-\bibliographyarticle{quantum_bst_demo}
-
-\pagebreak
-\section{Reference class \texttt{<repository>}}
-For the custom \texttt{<repository>} reference class, the \texttt{<author>} field is used if given but is not required (in contrast to the \texttt{<article>} class).
-If the repository address is given via \texttt{<code>} (strongly recommended), a properly formatted repository name is printed and links to the given address, including potentially version-, branch- or even commit-specific links.
-If no \texttt{<code>} entry is given, \texttt{<url>} is used as address instead, without any formatting of the printed text; Either \texttt{<code>} or \texttt{<url>} have to be provided.
-A title is not considered even if given.
-TODO: Consider a year in any way?
-
-\begin{tabular}{ccc}
-    \texttt{<code>}& \texttt{<url>} & result \\
-    $\checkmark$ & $\checkmark\big / \times$ &\citerepo{repo_code_url} \\
-    $\times$ & $\checkmark$ &\citerepo{repo_url} \\
-    $\times$ & $\times$ & invalid \\
-\end{tabular}
-
-Note that if you want both a \texttt{<url>} and a \texttt{<code>} link to be displayed, you can use the \texttt{<website>} reference class presented below for that.
-
-\bibliographystylerepo{quantum}
-\bibliographyrepo{quantum_bst_demo}
-
-\section{Reference class \texttt{<website>}}
-For the new custom reference class \texttt{<website>}, we require a \texttt{<title>} and a \texttt{<url>} which are both printed always.
-\texttt{<author>} is optional and printed if given, the same holds for \texttt{<code>}, which is formatted as repository link like for \texttt{<repository>}. If you want to provide \texttt{<code>} but not \texttt{<url>}, the reference class \texttt{<repository>} (see above) is made for you.
-
-\begin{tabular}{ccc}
-    \texttt{<author>} & \texttt{<code>} & result \\
-    $\checkmark$ & $\checkmark$ &\citeweb{web_author_code} \\
-    $\times$ & $\checkmark$ &\citeweb{web_code} \\
-    $\checkmark$ & $\times$ &\citeweb{web_author} \\
-    $\times$ & $\times$ &\citeweb{web} \\
-\end{tabular}
-
-Note that if you want both a \texttt{<url>} and a \texttt{<code>} link to be displayed, you can use the \texttt{<website>} reference class presented below for that.
-
-\bibliographystyleweb{quantum}
-\bibliographyweb{quantum_bst_demo}
-
+	\title{Template demonstrating the quantum bibstyle}
+	
+	\author{David Wierichs}
+	\affiliation{Institute for Theoretical Physics, University of Cologne, Germany}
+	
+	\maketitle
+	
+	\onecolumn
+	\section{Reference class \texttt{article}}
+	For the \texttt{article} class, the \texttt{title} is printed in \emph{italics}. The \texttt{journal} is not reformatted, the \texttt{volume} printed in \textbf{bold font}. We also include the \texttt{pages} if present and the \texttt{year} in round brackets ().
+	\texttt{doi} links are always included if given, the same holds for \texttt{eprint}. Only if neither of these two fields is given do we use the \texttt{url} to provide a hyperlink to the article.
+	Code repositories are linked whenever provided via the \texttt{code} field, which is a non-standard field in 
+	quantum.bst. 
+	
+	Examples:
+	
+	\begin{tabular}{ccccc}
+		\texttt{doi}& \texttt{eprint} & \texttt{url} & \texttt{code} & result \\
+		$\checkmark$ & $\checkmark$ & $\checkmark\big / \times$ & $\checkmark$ & \citearticle{article_doi_eprint_url_code} \\
+		$\checkmark$ & $\checkmark$ & $\checkmark\big / \times$ & $\times$ & \citearticle{article_doi_eprint_url} \\
+		$\times$ & $\checkmark$ & $\checkmark\big / \times$ & $\checkmark$ & \citearticle{article_eprint_url_code} \\
+		$\times$ & $\checkmark$ & $\checkmark\big / \times$ & $\times$ & \citearticle{article_eprint_url} \\
+		$\times$ & $\times$ & $\checkmark\big / \times$ & $\checkmark$ & \citearticle{article_url_code} \\
+		$\times$ & $\times$ & $\checkmark\big / \times$ & $\times$ & \citearticle{article_url} \\
+	\end{tabular}
+	
+	Note that in particular citations via a URL alone are not recommended. If you want to cite a website or code repository, please use the respective reference classes \texttt{website} or \texttt{repository} (see below).
+	
+	\bibliographystylearticle{quantum}
+	\bibliographyarticle{quantum_bst_demo}
+	
+	\pagebreak
+	\section{Reference class \texttt{repository}}
+	For the custom \texttt{repository} reference class, the \texttt{author} field is used if given but is not required (in contrast to the \texttt{article} class).
+	If the repository address is given via \texttt{code} (strongly recommended), a properly formatted repository name is printed and links to the given address, including potentially version-, branch- or even commit-specific links.
+	If no \texttt{code} entry is given, \texttt{url} is used as address instead, without any formatting of the printed text; Either \texttt{code} or \texttt{url} have to be provided.
+	A title is not considered even if given.
+	TODO: Consider a year in any way?
+	
+	\begin{tabular}{ccc}
+		\texttt{code}& \texttt{url} & result \\
+		$\checkmark$ & $\checkmark\big / \times$ &\citerepo{repo_code_url} \\
+		$\times$ & $\checkmark$ &\citerepo{repo_url} \\
+		$\times$ & $\times$ & invalid \\
+	\end{tabular}
+	
+	Note that if you want both a \texttt{url} and a \texttt{code} link to be displayed, you can use the \texttt{website} reference class presented below for that.
+	
+	\bibliographystylerepo{quantum}
+	\bibliographyrepo{quantum_bst_demo}
+	
+	\section{Reference class \texttt{website}}
+	For the new custom reference class \texttt{website}, we require a \texttt{title} and a \texttt{url} which are both printed always.
+	\texttt{author} is optional and printed if given, the same holds for \texttt{code}, which is formatted as repository link like for \texttt{repository}. If you want to provide \texttt{code} but not \texttt{url}, the reference class \texttt{repository} (see above) is made for you.
+	
+	\begin{tabular}{ccc}
+		\texttt{author} & \texttt{code} & result \\
+		$\checkmark$ & $\checkmark$ &\citeweb{web_author_code} \\
+		$\times$ & $\checkmark$ &\citeweb{web_code} \\
+		$\checkmark$ & $\times$ &\citeweb{web_author} \\
+		$\times$ & $\times$ &\citeweb{web} \\
+	\end{tabular}
+	
+	Note that if you want both a \texttt{url} and a \texttt{code} link to be displayed, you can use the \texttt{website} reference class presented below for that.
+	
+	\bibliographystyleweb{quantum}
+	\bibliographyweb{quantum_bst_demo}
+	
+	\section{Tests}
+	Directly from the arxiv~\citetests{hubregtsen2021training}, arxiv via Zotero~\citetests{hubregtsen2021training_2}, some more testcases~\citetests{holevo2012quantum,Holevo_2012,akers2020simple,katariya2021geometric,katariya2021geometric_2}
+	
+	\bibliographystyletests{quantum}
+	\bibliographytests{quantum_bst_demo}
+	
 \end{document}
