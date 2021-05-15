@@ -15,6 +15,7 @@ ENTRY
     booktitle
     chapter
     code
+    date
     doi
     edition
     editor
@@ -22,6 +23,7 @@ ENTRY
     howpublished
     institution
     journal
+    journaltitle
     key
     month
     note
@@ -32,6 +34,7 @@ ENTRY
     publisher
     school
     series
+    shortjournal
     title
     type
     url
@@ -258,7 +261,7 @@ FUNCTION {format.editors}
 FUNCTION {format.title}
 { title empty$
     { "" }
-    { title "t" change.case$ emphasize }
+    { "``" title * "''" *  }
   if$
 }
 
@@ -334,13 +337,13 @@ FUNCTION {n.dashify}
 
 FUNCTION {format.date}
 { year empty$
-    { "" }
+    { "~(" date #1 #4 substring$ * ")" * }
     { "~(" year * ")" * }
   if$
 }
 
 FUNCTION {format.btitle}
-{ title emphasize
+{ title
 }
 
 FUNCTION {tie.or.space.connect}
@@ -437,15 +440,6 @@ FUNCTION {format.pages}
 
 FUNCTION {format.vol.num.pages}
 { " " volume field.or.null boldfont *
-  number empty$
-    'skip$
-    { "(" number * ")" * *
-      volume empty$
-        { "there's a number but no volume in " cite$ * warning$ }
-        'skip$
-      if$
-    }
-  if$
   pages empty$
     'skip$
     { duplicate$ empty$
@@ -515,12 +509,12 @@ FUNCTION {format.tr.number}
 
 FUNCTION {format.article.crossref}
 { key empty$
-    { journal empty$
+    { format.journal empty$
         { "need key or journal for " cite$ * " to crossref " * crossref *
           warning$
           ""
         }
-        { "In {\em " journal * "\/}" * }
+        { "In {\em " format.journal * "\/}" * }
       if$
     }
     { "In " key * }
@@ -665,19 +659,33 @@ FUNCTION {format.article.links}
   format.code output
 }
 
+FUNCTION {format.journal}
+{ journal missing$
+    { 
+    shortjournal missing$
+      {
+      journaltitle missing$
+        { "" }
+        'journaltitle
+      if$
+      }
+      'shortjournal
+    if$
+    }
+    'journal
+  if$
+}
 FUNCTION {article}
 { output.bibitem
   format.authors "author" output.check
   new.block
   format.title "title" output.check
   crossref missing$
-    { journal missing$
-      journal #1 #5 substring$ "arXiv" =
-      or
+    { journal #1 #5 substring$ "arXiv" =
         'skip$
         { 
         new.block
-        journal "journal" output.check
+        format.journal "journal or shortjournal or journaltitle" output.check
         format.vol.num.pages output
         format.date "year" output.check
         }

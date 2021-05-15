@@ -6,6 +6,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{hyperref}
+\usepackage{csquotes}
 \usepackage[resetlabels]{multibib}
 \newcites{article}{Article references}
 \newcites{repo}{Repository references}
@@ -16,11 +17,13 @@
 \begin{document}
 	\title{Template demonstrating the quantum bibstyle}
 	
-	\author{David Wierichs}
+	\author{David~Wierichs}
 	\affiliation{Institute for Theoretical Physics, University of Cologne, Germany}
-	
+    \author{Johannes~Jakob~Meyer}
+    \affiliation{Dahlem Center for Complex Quantum Systems, Freie Universit\"{a}t Berlin, 14195 Berlin, Germany}
+    \affiliation{QMATH, Department of Mathematical Sciences, University of Copenhagen, 2100 Copenhagen, Denmark}
+
 	\maketitle
-	
 	\onecolumn
 	\section{Reference class \texttt{article}}
 	For the \texttt{article} class, the \texttt{title} is printed in \emph{italics}. The \texttt{journal} is not reformatted, the \texttt{volume} printed in \textbf{bold font}. We also include the \texttt{pages} if present and the \texttt{year} in round brackets ().
