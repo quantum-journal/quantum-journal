@@ -1,6 +1,7 @@
 ###################################################################
 # This file shows how to create a plot that integrates seamlessly
 # with the quantumarticle document class using matplotlib and rsmf.
+# This script requires the packages numpy, matplotlib and rsmf.
 ###################################################################
 
 import numpy as np
