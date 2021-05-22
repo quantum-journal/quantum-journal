@@ -5,8 +5,8 @@
 %
 % In addition to added arxiv and DOI hyperlinks, the file style incorporates design
 % choices made for Quantum journal, in particular in the light of online availability.
-% Furthermore, this file style introduces the reference classes <repository> and 
-% <website>.
+% Furthermore, this file style introduces the reference classes repository and 
+% website.
 
 ENTRY
   { address
@@ -261,7 +261,7 @@ FUNCTION {format.editors}
 FUNCTION {format.title}
 { title empty$
     { "" }
-    { "``" title * "''" *  }
+    { "``" title "t" change.case$ * "''" *  }
   if$
 }
 
@@ -337,7 +337,11 @@ FUNCTION {n.dashify}
 
 FUNCTION {format.date}
 { year empty$
-    { "~(" date #1 #4 substring$ * ")" * }
+    { date empty$
+        { "" }
+        { "~(" date #1 #4 substring$ * ")" * }
+      if$
+    }
     { "~(" year * ")" * }
   if$
 }
@@ -507,6 +511,23 @@ FUNCTION {format.tr.number}
   if$
 }
 
+FUNCTION {format.journal}
+{ journal missing$
+    { 
+    journaltitle missing$
+      {
+      shortjournal missing$
+        { "" }
+        'shortjournal
+      if$
+      }
+      'journaltitle
+    if$
+    }
+    'journal
+  if$
+}
+
 FUNCTION {format.article.crossref}
 { key empty$
     { format.journal empty$
@@ -659,35 +680,27 @@ FUNCTION {format.article.links}
   format.code output
 }
 
-FUNCTION {format.journal}
-{ journal missing$
-    { 
-    shortjournal missing$
-      {
-      journaltitle missing$
-        { "" }
-        'journaltitle
-      if$
-      }
-      'shortjournal
-    if$
-    }
-    'journal
-  if$
-}
 FUNCTION {article}
 { output.bibitem
   format.authors "author" output.check
   new.block
   format.title "title" output.check
   crossref missing$
-    { journal #1 #5 substring$ "arXiv" =
+    { journal empty$
+      archivePrefix "arXiv" = not
+      and
+        { "journal is a missing field for entry" cite$ * warning$ }
+        'skip$
+      if$
+      journal #1 #5 substring$ "arXiv" =
+      archivePrefix "arXiv" =
+      or
         'skip$
         { 
-        new.block
-        format.journal "journal or shortjournal or journaltitle" output.check
-        format.vol.num.pages output
-        format.date "year" output.check
+          new.block
+          format.journal "journal, shortjournal and journaltitle" output.check
+          format.vol.num.pages output
+          format.date "year" output.check
         }
       if$
       format.article.links
@@ -696,8 +709,6 @@ FUNCTION {article}
       format.pages output
     }
   if$
-  new.block
-  note output
   fin.entry
 }
 
@@ -729,8 +740,6 @@ FUNCTION {book}
   format.edition output
   format.date "year" output.check
   format.eprint output
-  new.block
-  note output
   fin.entry
 }
 
@@ -744,8 +753,6 @@ FUNCTION {booklet}
   address output
   format.date output
   format.eprint output
-  new.block
-  note output
   fin.entry
 }
 
@@ -779,8 +786,6 @@ FUNCTION {inbook}
   format.edition output
   format.date "year" output.check
   format.eprint output
-  new.block
-  note output
   fin.entry
 }
 
@@ -806,8 +811,6 @@ FUNCTION {incollection}
     }
   if$
   format.eprint output
-  new.block
-  note output
   fin.entry
 }
 
@@ -841,8 +844,6 @@ FUNCTION {inproceedings}
     }
   if$
   format.eprint output
-  new.block
-  note output
   fin.entry
 }
 
@@ -878,8 +879,6 @@ FUNCTION {manual}
   format.edition output
   format.date output
   format.eprint output
-  new.block
-  note output
   fin.entry
 }
 
@@ -894,24 +893,7 @@ FUNCTION {mastersthesis}
   address output
   format.date "year" output.check
   format.eprint output
-  new.block
-  note output
   fin.entry
-}
-
-FUNCTION {misc}
-{ output.bibitem
-  format.authors output
-  title howpublished new.block.checkb
-  format.title output
-  howpublished new.block.checka
-  howpublished output
-  format.date output
-  format.eprint output
-  new.block
-  note output
-  fin.entry
-  empty.misc.check
 }
 
 FUNCTION {phdthesis}
@@ -925,9 +907,31 @@ FUNCTION {phdthesis}
   address output
   format.date "year" output.check
   format.eprint output
-  new.block
-  note output
   fin.entry
+}
+
+FUNCTION {misc}
+{ archivePrefix "arXiv" =
+  primaryClass empty$ not
+  and
+    { 
+      article
+    }
+    {
+      output.bibitem
+      format.authors output
+      title howpublished new.block.checkb
+      format.title output
+      howpublished new.block.checka
+      howpublished output
+      format.date output
+      format.eprint output
+      new.block
+      note output
+      fin.entry
+      empty.misc.check
+    }
+  if$
 }
 
 FUNCTION {proceedings}
@@ -961,8 +965,6 @@ FUNCTION {proceedings}
     }
   if$
   format.eprint output
-  new.block
-  note output
   fin.entry
 }
 
@@ -977,8 +979,6 @@ FUNCTION {techreport}
   address output
   format.date "year" output.check
   format.eprint output
-  new.block
-  note output
   fin.entry
 }
 
@@ -1005,8 +1005,6 @@ FUNCTION {repository}
     { format.url "url" output.check }
     { format.code output }
   if$
-  new.block
-  note output
   fin.entry
 }
 
