@@ -5,7 +5,7 @@
 %
 % In addition to added arxiv and DOI hyperlinks, the file style incorporates design
 % choices made for Quantum journal, in particular in the light of online availability.
-% Furthermore, this file style introduces the reference classes repository and 
+% Furthermore, this file style introduces the reference classes repository and
 % website.
 
 ENTRY
@@ -48,7 +48,7 @@ ENTRY
 INTEGERS { output.state before.all mid.sentence after.sentence after.block len }
 
 FUNCTION {init.state.consts}
-{ 
+{
   #0 'before.all :=
   #1 'mid.sentence :=
   #2 'after.sentence :=
@@ -286,14 +286,14 @@ FUNCTION { format.arxiv.hyperlink }
 FUNCTION {format.eprint}
 { eprint empty$
     { "" }
-    { 
+    {
       primaryClass empty$
-        {" eprint:~\href{http://arxiv.org/abs/" eprint format.arxiv.hyperlink * "}" * 
+        {" eprint:~\href{http://arxiv.org/abs/" eprint format.arxiv.hyperlink * "}" *
 	 "{arXiv:" * eprint format.longeprint * "}" *}
 	{ archivePrefix empty$
-            {" eprint:~\href{http://arxiv.org/abs/" eprint format.arxiv.hyperlink * "}" * 
+            {" eprint:~\href{http://arxiv.org/abs/" eprint format.arxiv.hyperlink * "}" *
 	     "{arXiv:" * eprint format.longeprint * "}" *}
-            {" eprint:~\href{http://arxiv.org/abs/" eprint format.arxiv.hyperlink * "}" * 
+            {" eprint:~\href{http://arxiv.org/abs/" eprint format.arxiv.hyperlink * "}" *
 	     "{" * archivePrefix * ":" * eprint format.longeprint * "}" *}
           if$
         }
@@ -513,7 +513,7 @@ FUNCTION {format.tr.number}
 
 FUNCTION {format.journal}
 { journal missing$
-    { 
+    {
     journaltitle missing$
       {
       shortjournal missing$
@@ -613,9 +613,9 @@ FUNCTION {format.incoll.inproc.crossref}
 INTEGERS { ptr found.slashes }
 
 FUNCTION {extract.repo}
-{ 
-  "github.com/" #11  
-    "www.github.com/" #15  
+{
+  "github.com/" #11
+    "www.github.com/" #15
       "https://github.com/" #19
         code
       chop.word
@@ -630,7 +630,7 @@ FUNCTION {extract.repo}
       'skip$
     if$
     ptr #1 + 'ptr := }
-  while$ 
+  while$
   #2 found.slashes =
     { t #1 ptr #2 - substring$ }
     { t #1 ptr substring$ }
@@ -641,7 +641,7 @@ FUNCTION {format.version}
 {
   version empty$
     { "" }
-    { 
+    {
       "v" version #1 #1 substring$ =
         { " " version * }
         { " v" version * }
@@ -665,7 +665,7 @@ FUNCTION {format.url}
 }
 
 FUNCTION {format.article.links}
-{ 
+{
   new.block
   format.doi output
   new.block
@@ -696,7 +696,7 @@ FUNCTION {article}
       archivePrefix "arXiv" =
       or
         'skip$
-        { 
+        {
           new.block
           format.journal "journal, shortjournal and journaltitle" output.check
           format.vol.num.pages output
@@ -914,9 +914,7 @@ FUNCTION {misc}
 { archivePrefix "arXiv" =
   primaryClass empty$ not
   and
-    { 
-      article
-    }
+    article
     {
       output.bibitem
       format.authors output
