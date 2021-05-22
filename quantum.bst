@@ -434,9 +434,13 @@ FUNCTION {multi.page.check}
 FUNCTION {format.pages}
 { pages empty$
     { "" }
-    { pages multi.page.check
-        { "pages" pages n.dashify tie.or.space.connect }
-        { "page" pages tie.or.space.connect }
+    { output.state mid.sentence =
+        { "P" }
+        { "p" }
+      if$
+      pages multi.page.check
+        { "ages" * pages n.dashify tie.or.space.connect }
+        { "age" * pages tie.or.space.connect }
       if$
     }
   if$
@@ -457,9 +461,18 @@ FUNCTION {format.vol.num.pages}
 FUNCTION {format.chapter.pages}
 { chapter empty$
     'format.pages
-    { type empty$
-        { "chapter" }
-        { type "l" change.case$ }
+    { 
+      output.state mid.sentence =
+        { type empty$
+            { "chapter" }
+            { type "l" change.case$ }
+          if$
+        }
+        { type empty$
+            { "Chapter" }
+            { type }
+          if$
+        }
       if$
       chapter tie.or.space.connect
       pages empty$
@@ -664,7 +677,7 @@ FUNCTION {format.url}
   if$
 }
 
-FUNCTION {format.article.links}
+FUNCTION {output.links}
 {
   new.block
   format.doi output
@@ -703,7 +716,7 @@ FUNCTION {article}
           format.date "year" output.check
         }
       if$
-      format.article.links
+      output.links
     }
     { format.article.crossref output.nonnull
       format.pages output
@@ -724,22 +737,26 @@ FUNCTION {book}
     }
   if$
   new.block
-  format.btitle "title" output.check
+  format.title "title" output.check
+  new.block
   crossref missing$
     { format.bvolume output
+      format.chapter.pages output
       new.block
       format.number.series output
       new.sentence
       publisher "publisher" output.check
       address output
     }
-    { new.block
+    { format.chapter.pages output
+      new.block
       format.book.crossref output.nonnull
     }
   if$
-  format.edition output
   format.date "year" output.check
-  format.eprint output
+  new.block
+  format.edition output
+  output.links
   fin.entry
 }
 
@@ -757,36 +774,12 @@ FUNCTION {booklet}
 }
 
 FUNCTION {inbook}
-{ output.bibitem
-  author empty$
-    { format.editors "author and editor" output.check }
-    { format.authors output.nonnull
-      crossref missing$
-        { "author and editor" editor either.or.check }
-        'skip$
-      if$
-    }
+{
+  format.chapter.pages empty$
+    { "`inbook' requires chapter or pages, otherwise use `book'" cite$ * warning$ }
+    'skip$
   if$
-  new.block
-  format.btitle "title" output.check
-  crossref missing$
-    { format.bvolume output
-      format.chapter.pages "chapter and pages" output.check
-      new.block
-      format.number.series output
-      new.sentence
-      publisher "publisher" output.check
-      address output
-    }
-    { format.chapter.pages "chapter and pages" output.check
-      new.block
-      format.book.crossref output.nonnull
-    }
-  if$
-  format.edition output
-  format.date "year" output.check
-  format.eprint output
-  fin.entry
+  book
 }
 
 FUNCTION {incollection}
@@ -914,7 +907,9 @@ FUNCTION {misc}
 { archivePrefix "arXiv" =
   primaryClass empty$ not
   and
-    article
+    {
+      article
+    }
     {
       output.bibitem
       format.authors output

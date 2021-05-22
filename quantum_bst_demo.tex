@@ -82,11 +82,13 @@ Note that in particular citations via a URL alone are not recommended. If you wa
 \bibliographyarticle{quantum_bst_demo}
 
 \section{Reference class \texttt{book}}\label{sec:book}
+For the reference class \texttt{book}, the \texttt{title}, the \texttt{year}, the \texttt{publisher} as well as \emph{either} the \texttt{author} \emph{or} the \texttt{editor} field must be given.
+The \texttt{volume}, \texttt{number} and \texttt{series}, the (publisher) \texttt{address}, the \texttt{edition} as well as links in the fields \texttt{doi}, \texttt{eprint} and \texttt{url} are optional.
+The order in which links are printed is the same as for \texttt{article}, Section \ref{sec:article}.
+Some example \texttt{book} references are \citebook{book_author_doi_url, book_author_url_edition}.
 
-%\citebook{}
-
-%\bibliographystylebook{quantum}
-%\bibliographybook{quantum_bst_demo}
+\bibliographystylebook{quantum}
+\bibliographybook{quantum_bst_demo}
 
 \section{Reference class \texttt{repository}}\label{sec:repo}
 For the custom \texttt{repository} reference class, the \texttt{author} field is used if given but is not required (in contrast to the \texttt{article} class).
@@ -144,9 +146,10 @@ We provide some examples, not covering all cases, because \texttt{misc} is very 
 
 %\citeother{article_url_code}
 
-%\subsection{Reference class \texttt{inbook}}\label{sec:inbook}
+\subsection{Reference class \texttt{inbook}}\label{sec:inbook}
 
-%\citeother{article_url_code}
+The reference class \texttt{inbook} is an alias for \texttt{book} with the additional requirement that \texttt{chapter}, \texttt{pages} or both are provided.
+Examples would be Refs.~\citeother{inbook_author_doi_url_chapter, inbook_author_doi_url_chapter_pages}.
 
 %\subsection{Reference class \texttt{incollection}}\label{sec:incollection}
 
@@ -180,8 +183,8 @@ We provide some examples, not covering all cases, because \texttt{misc} is very 
 
 %\citeother{article_url_code}
 
-%\bibliographystyleother{quantum}
-%\bibliographyother{quantum_bst_demo}
+\bibliographystyleother{quantum}
+\bibliographyother{quantum_bst_demo}
 
 \section{Tests}\label{sec:tests}
 Directly from the arxiv~\citetests{hubregtsen2021training}, arxiv via Zotero~\citetests{hubregtsen2021training_2}, some more testcases~\citetests{holevo2012quantum,Holevo_2012,akers2020simple,katariya2021geometric,katariya2021geometric_2}
