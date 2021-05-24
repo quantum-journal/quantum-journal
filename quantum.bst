@@ -375,10 +375,6 @@ FUNCTION {format.date}
   if$
 }
 
-FUNCTION {format.btitle}
-{ title
-}
-
 FUNCTION {tie.or.space.connect}
 { duplicate$ text.length$ #3 <
     { "~" }
@@ -397,7 +393,11 @@ FUNCTION {either.or.check}
 FUNCTION {format.bvolume}
 { volume empty$
     { "" }
-    { "volume" volume tie.or.space.connect
+    { mid.sentence output.state =
+        { "v" }
+        { "V" }
+      if$
+      "olume" * volume tie.or.space.connect
       series empty$
         'skip$
         { " of " * series emphasize * }
@@ -491,17 +491,13 @@ FUNCTION {format.chapter.pages}
 { chapter empty$
     'format.pages
     {
-      output.state mid.sentence =
-        { type empty$
-            { "chapter" }
-            { type "l" change.case$ }
-          if$
-        }
-        { type empty$
-            { "Chapter" }
-            { type }
-          if$
-        }
+      type empty$
+        { "Chapter" }
+        { type }
+      if$
+      mid.sentence output.state =
+        { "l" change.case$ }
+        'skip$
       if$
       chapter tie.or.space.connect
       pages empty$
@@ -746,21 +742,13 @@ FUNCTION {is.arxiv.article}
   if$
 }
 
-FUNCTION {article}
+FUNCTION {arxiv.article}
 { output.bibitem
   format.authors "author" output.check
   new.block
   format.title "title" output.check
   crossref missing$
-    { is.arxiv.article
-        'skip$
-        {
-          new.block
-          get.journal "journal, shortjournal and journaltitle" output.check
-          format.vol.num.pages output
-          format.date "year" output.check
-        }
-      if$
+    {
       new.block
       output.links
     }
@@ -771,16 +759,38 @@ FUNCTION {article}
   fin.entry
 }
 
+FUNCTION {std.article}
+{ output.bibitem
+  format.authors "author" output.check
+  new.block
+  format.title "title" output.check
+  crossref missing$
+    { new.block
+      get.journal "journal, shortjournal and journaltitle" output.check
+      format.vol.num.pages output
+      format.date "year" output.check
+      new.block
+      output.links
+    }
+    { format.article.crossref output.nonnull
+      format.pages output
+    }
+  if$
+  fin.entry
+}
+
+FUNCTION {article}
+{ is.arxiv.article
+    'arxiv.article
+    'std.article
+  if$
+}
+
 FUNCTION {book}
 { output.bibitem
   author empty$
     { format.editors "author and editor" output.check }
-    { format.authors output.nonnull
-      crossref missing$
-        { "author and editor" editor either.or.check }
-        'skip$
-      if$
-    }
+    { format.authors output.nonnull }
   if$
   new.block
   format.title "title" output.check
@@ -901,7 +911,7 @@ FUNCTION {manual}
     { format.authors output.nonnull }
   if$
   new.block
-  format.btitle "title" output.check
+  format.title "title" output.check
   author empty$
     { organization empty$
         { address new.block.checka
@@ -939,7 +949,7 @@ FUNCTION {phdthesis}
 { output.bibitem
   format.authors "author" output.check
   new.block
-  format.btitle "title" output.check
+  format.title "title" output.check
   new.block
   "PhD thesis" format.thesis.type output.nonnull
   school "school" output.check
@@ -949,25 +959,25 @@ FUNCTION {phdthesis}
   fin.entry
 }
 
+FUNCTION {std.misc}
+{ output.bibitem
+  format.authors output
+  title howpublished new.block.checkb
+  format.title output
+  howpublished new.block.checka
+  howpublished output
+  format.date output
+  format.eprint output
+  new.block
+  note output
+  fin.entry
+  empty.misc.check
+}
+
 FUNCTION {misc}
 { is.arxiv.article
-    {
-      article
-    }
-    {
-      output.bibitem
-      format.authors output
-      title howpublished new.block.checkb
-      format.title output
-      howpublished new.block.checka
-      howpublished output
-      format.date output
-      format.eprint output
-      new.block
-      note output
-      fin.entry
-      empty.misc.check
-    }
+    'arxiv.article
+    'std.misc
   if$
 }
 
@@ -978,7 +988,7 @@ FUNCTION {proceedings}
     { format.editors output.nonnull }
   if$
   new.block
-  format.btitle "title" output.check
+  format.title "title" output.check
   format.bvolume output
   format.number.series output
   address empty$
