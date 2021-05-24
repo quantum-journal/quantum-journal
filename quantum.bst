@@ -57,6 +57,53 @@ FUNCTION {init.state.consts}
 
 STRINGS { s t }
 
+FUNCTION {not}
+{   { #0 }
+    { #1 }
+  if$
+}
+
+FUNCTION {and}
+{   'skip$
+    { pop$ #0 }
+  if$
+}
+
+FUNCTION {or}
+{   { pop$ #1 }
+    'skip$
+  if$
+}
+
+FUNCTION {string.length}
+{
+  #1 'len :=
+  {duplicate$ duplicate$ #1 len substring$ = not}
+    {len #1 + 'len :=}
+  while$
+  pop$ len
+}
+
+FUNCTION {contains.substring}
+{ 's :=
+  't :=
+  s string.length 'len :=
+    { t empty$ not }
+    { t #1 len substring$ s =
+        { "" 't :=
+          #1
+        }
+        { t #2 global.max$ substring$ 't :=
+          t empty$
+            { #0 }
+            'skip$
+          if$
+        }
+      if$
+    }
+  while$
+}
+
 FUNCTION {output.nonnull}
 { 's :=
   output.state mid.sentence =
@@ -124,24 +171,6 @@ FUNCTION {new.sentence}
         { after.sentence 'output.state := }
       if$
     }
-  if$
-}
-
-FUNCTION {not}
-{   { #0 }
-    { #1 }
-  if$
-}
-
-FUNCTION {and}
-{   'skip$
-    { pop$ #0 }
-  if$
-}
-
-FUNCTION {or}
-{   { pop$ #1 }
-    'skip$
   if$
 }
 
@@ -461,7 +490,7 @@ FUNCTION {format.vol.num.pages}
 FUNCTION {format.chapter.pages}
 { chapter empty$
     'format.pages
-    { 
+    {
       output.state mid.sentence =
         { type empty$
             { "chapter" }
@@ -524,31 +553,31 @@ FUNCTION {format.tr.number}
   if$
 }
 
-FUNCTION {format.journal}
+FUNCTION {get.journal}
 { journal missing$
     {
     journaltitle missing$
       {
       shortjournal missing$
         { "" }
-        'shortjournal
+        { shortjournal }
       if$
       }
-      'journaltitle
+      { journaltitle }
     if$
     }
-    'journal
+    { journal }
   if$
 }
 
 FUNCTION {format.article.crossref}
 { key empty$
-    { format.journal empty$
+    { get.journal empty$
         { "need key or journal for " cite$ * " to crossref " * crossref *
           warning$
           ""
         }
-        { "In {\em " format.journal * "\/}" * }
+        { "In {\em " get.journal * "\/}" * }
       if$
     }
     { "In " key * }
@@ -683,7 +712,7 @@ FUNCTION {output.links}
   format.doi output
   new.block
   format.eprint output
-  doi empty$ eprint empty$ and
+  doi missing$ eprint missing$ and
     { new.block
       format.url "url" output.check
     }
@@ -693,29 +722,46 @@ FUNCTION {output.links}
   format.code output
 }
 
+FUNCTION {is.arxiv.article}
+{
+  archivePrefix missing$
+    { get.journal empty$
+        { #0 }
+        { get.journal "l" change.case$ "arxiv" contains.substring
+          get.journal "arXiv" contains.substring
+          or
+            { #1 }
+            { #0 }
+          if$
+        }
+      if$
+    }
+    { archivePrefix "l" change.case$ "arxiv" =
+        { #1 }
+        { "The `archivePrefix' " archivePrefix * " is not supported for entry" * cite$ * warning$ 
+          #0
+        }
+      if$
+    }
+  if$
+}
+
 FUNCTION {article}
 { output.bibitem
   format.authors "author" output.check
   new.block
   format.title "title" output.check
   crossref missing$
-    { journal empty$
-      archivePrefix "arXiv" = not
-      and
-        { "journal is a missing field for entry" cite$ * warning$ }
-        'skip$
-      if$
-      journal #1 #5 substring$ "arXiv" =
-      archivePrefix "arXiv" =
-      or
+    { is.arxiv.article
         'skip$
         {
           new.block
-          format.journal "journal, shortjournal and journaltitle" output.check
+          get.journal "journal, shortjournal and journaltitle" output.check
           format.vol.num.pages output
           format.date "year" output.check
         }
       if$
+      new.block
       output.links
     }
     { format.article.crossref output.nonnull
@@ -904,9 +950,7 @@ FUNCTION {phdthesis}
 }
 
 FUNCTION {misc}
-{ archivePrefix "arXiv" =
-  primaryClass empty$ not
-  and
+{ is.arxiv.article
     {
       article
     }
