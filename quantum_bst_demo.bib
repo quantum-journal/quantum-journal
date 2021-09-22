@@ -1,7 +1,23 @@
+preamble{"\DoNotMakeWarningsErrors"}
+preamble{"\MakeDoiLinksExplicit"}
+
+@article{andreas_test_case,
+  title = {Toolbox for Reconstructing Quantum Theory from Rules on Information Acquisition},
+  author = {H\"{o}hn, Philipp A.},
+  year = {2017},
+  month = dec,
+  volume = {1},
+  pages = {38},
+  doi = {10.22331/q-2017-12-14-38},
+  archivePrefix = {arXiv},
+  eprint = {1412.8323},
+  eprinttype = {arxiv},
+  journal = {Quantum}
+}
+
 @article{article_doi_eprint_url_code,
   doi = {10.22331/q-2017-04-25-1},
   url = {https://doi.org/10.22331/q-2017-04-25-1},
-  title = {Self-testing in parallel with {CHSH}},
   author = {McKague, Matthew},
   issn = {2521-327X},
   publisher = {{Verein zur F{\"{o}}rderung des Open Access Publizierens in den Quantenwissenschaften}},
@@ -10,8 +26,10 @@
   pages = {1},
   month = apr,
   year = {2017},
-  eprint = {1609.09584},
-  code = {https://github.com/tony-blake/Hybrid-x509-s}
+  title = {Self-testing in parallel with {CHSH}},
+  code = {https://github.com/tony-blake/Hybrid-x509-s},
+  archivePrefix = {arXiv},
+  eprint = {1609.09584}
 }
 
 @article{article_doi_eprint_url,
@@ -80,9 +98,32 @@
   url={https://github.com/johannesjmeyer/rsmf}
 }
 
+@repository{repo_code_year,
+  title={Right-size my figures},
+  year={2021},
+  author={Johannes Jakob Meyer},
+  commit={1fcb463},
+  code={https://github.com/johannesjmeyer/rsmf}
+}
+
+@repository{repo_code_year_version,
+  title={Right-size my figures},
+  year={2021},
+  author={Johannes Jakob Meyer},
+  version={v0.1},
+  code={https://github.com/johannesjmeyer/rsmf}
+}
+
 @repository{repo_url,
   author={Johannes Jakob Meyer},
   url={https://github.com/johannesjmeyer/rsmf}
+}
+
+@repository{repo_code_year_commit,
+  author={David Wierichs},
+  code={https://github.com/quantum-journal/quantum-journal/pull/123/commits/1fcb463b560fbcd93843cc7c9aefb8ccecf8089e},
+  commit={1fcb463},
+  year={2021}
 }
 
 @website{web_author_code,
@@ -96,6 +137,13 @@
   author={The Wiki-authors},
   title={Wikipedia},
   url={https://wikipedia.com}
+}
+
+@website{web_author_date,
+  author={The Wiki-authors},
+  title={Wikipedia},
+  url={https://wikipedia.com},
+  urldate={12.07.2019}
 }
 
 @website{web_code,
@@ -204,6 +252,7 @@ Type: Article},
     number = {2},
     pages = {1--170},
     year = {2021},
+    url = {https://doi.org/10.1007/s11128-021-02992-7},
     publisher = {Springer}
 }
 
@@ -214,6 +263,8 @@ Type: Article},
 	booktitle = {The 22nd International Conference on Artificial Intelligence and Statistics},
 	author = {Liang, Tengyuan and Poggio, Tomaso and Rakhlin, Alexander and Stokes, James},
 	date = {2019},
+	url = {http://proceedings.mlr.press/v89/liang19a/liang19a.pdf},
+	eprint = {1711.01530},
 	langid = {english}
 }
 
@@ -228,6 +279,8 @@ Type: Article},
 	urldate = {2019-06-11},
 	date = {2010}
 }
+
+% preamble{"\MakeDoiLinksExplicit"}
 
 @misc{misc_arxiv,
     title = {Training Quantum Embedding Kernels on Near-Term Quantum Computers}, 
@@ -266,6 +319,25 @@ Type: Article},
   edition = {10th {A}nniversary}
 }
 
+@book{book_editor_doi,
+  doi = {10.1017/cbo9780511976667},
+  year = {2009},
+  publisher = {Cambridge University Press},
+  chapter = {1},
+  pages = {70},
+  editor = {Simon Capelin},
+  title = {Quantum Computation and Quantum Information}
+}
+@book{book_editor_doi2,
+  doi = {10.1017/cbo9780511976667},
+  year = {2009},
+  publisher = {Cambridge University Press},
+  volume = {1},
+  pages = {70},
+  editor = {Simon Capelin},
+  title = {Quantum Computation and Quantum Information}
+}
+
 @inbook{inbook_author_doi_url_chapter,
   doi = {10.1017/cbo9780511976667},
   url = {https://doi.org/10.1017/cbo9780511976667},
@@ -297,4 +369,152 @@ Type: Article},
   publisher = {Cambridge University Press},
   author = {Michael A. Nielsen and Isaac L. Chuang},
   title = {Quantum Computation and Quantum Information}
+}
+
+@misc{article_arxiv,
+  title={Decoding the Entanglement Structure of Monitored Quantum Circuits}, 
+  author={Beni Yoshida},
+  year={2021},
+  eprint={2109.08691},
+  archivePrefix={arXiv},
+  primaryClass={quant-ph}
+}
+
+@booklet{booklet,
+  title        = {The title of the booklet},
+  author       = {Laura Caxton}, 
+  howpublished = {How it was published},
+  address      = {The address of the publisher},
+  month        = 7,
+  year         = 1993,
+  note         = {An optional note}
+}
+
+@unpublished{unpublished,
+  author       = {Petra Marcheford}, 
+  title        = {The title of the unpublished work},
+  note         = {A note is required to provide context},
+  month        = 7,
+  year         = 1993
+}
+
+% The following two entries are not meant to be used but were
+% used to verify statements in the template.
+article{article_trailing_comma,
+  author={Matthew McKague},
+  doi = {10.1017/cbo9780511976667},
+  year={2017},
+  journal={Quantum},
+  volume={1},
+  title={Self-testing in parallel with {CHSH}},
+}
+
+article{article_missing_comma,
+ author={Matthew McKague},
+ doi = {10.1017/cbo9780511976667},
+ year={2017},
+ journal={Quantum},
+ volume={1}
+ title={Self-testing in parallel with {CHSH}}
+}
+
+@incollection{incollection,
+  author       = {Lex Farindon}, 
+  title        = {Title of part of the collection},
+  booktitle    = {Title of the collection},
+  publisher    = {The name of the publisher},
+  year         = {1993},
+  editor       = {An editor},
+  volume       = 4,
+  series       = 5,
+  chapter      = 8,
+  pages        = {201-213},
+  address      = {The address of the publisher},
+  edition      = 3,
+  month        = 7,
+}
+
+@conference{conference,
+  author       = {Zoe Draper}, 
+  title        = {Title of part of the conference},
+  booktitle    = {Title of the conference},
+  year         = 1993,
+  editor       = {The editor},
+  volume       = 4,
+  series       = 5,
+  pages        = 213,
+  address      = {The address of the publisher},
+  month        = 7,
+  organization = {The organization},
+  publisher    = {The publisher},
+  url          = {https://ecosia.org},
+  note         = {An optional note}
+}
+
+@conference{inproceedings,
+  author       = {Mark Hammington}, 
+  title        = {The title of the work},
+  booktitle    = {The title of the proceedings},
+  year         = 1993,
+  editor       = {The editor},
+  volume       = 4,
+  series       = 5,
+  pages        = 213,
+  month        = 7,
+  url          = {10.1351/pac199264060907},
+  publisher    = {The publisher}
+}
+
+@techreport{CoplenKrouse,
+  author = {Tyler B. Coplen and H. R. Krouse and John Karl Böhlke},
+  doi = {10.1351/pac199264060907},
+  url = {https://doi.org/10.1351/pac199264060907},
+  title = {{R}eporting of nitrogen-isotope abundances},
+  journal = {Pure and Applied Chemistry},
+  number = {6},
+  institution = {{I}nternational {U}nion of {P}ure and {A}pplied {C}hemistry},
+  volume = {64},
+  year = {1992},
+  pages = {907--908},
+  type = {Custom type TR}
+}
+
+@manual{manual,
+  title        = {The title of the manual},
+  author       = {Alex Scottson}, 
+  organization = {The organization},
+  address      = {The address of the publisher},
+  edition      = 3,
+  month        = 7,
+  year         = 1993
+}
+
+@mastersthesis{mastersthesis,
+  author       = {Kilian Harwood}, 
+  title        = {The title of the thesis},
+  school       = {The school of the thesis},
+  year         = 1993,
+  address      = {The address of the publisher},
+  month        = 7
+}
+
+@phdthesis{phdthesis,
+  author       = {Gottesman, Daniel Eric}, 
+  title        = {{S}tabilizer {C}odes and {Q}uantum {E}rror {C}orrection},
+  school       = {{C}alifornia {I}nstitute of {T}echnology},
+  year         = {1997},
+  doi          = {10.7907/rzr7-dt72}
+}
+
+@proceedings{proceedings,
+  title        = {The title of the proceedings},
+  year         = 1993,
+  editor       = {Sarah Kidwelly},
+  volume       = 4,
+  series       = 5,
+  address      = {The address of the publisher},
+  month        = 7,
+  organization = {The organization},
+  url          = {xkcd.com},
+  publisher    = {The name of the publisher}
 }
