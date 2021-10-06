@@ -8,7 +8,9 @@ This is version 5.1 of `quantumarticle`, the document class for typesetting arti
 
 [More information](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-template.pdf) on using quantumarticle and on typesetting manuscripts for Quantum can be found in the accompanying template.
 
-[Documentation](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.pdf) of all class options is also provided. 
+[Extra information on the Quantum bibstyle](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum_bst_demo.pdf) can be found in the bibstyle demo.
+
+[Documentation](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.pdf) of all class options is also provided.
 
 
 ## Installation and usage
@@ -62,6 +64,7 @@ In addition, this document class come bundled with two new extras (currently in 
 * improved typesetting of authors if titlepage is used
 * added explanation for how to use BibTeX on the arXiv
 * fixed equations in template
+* introduced the Quantum bibstyle `quantum.bst` together with the demo file `quantum_bst_demo`
 
 ### New in v5.0:
 
@@ -75,7 +78,7 @@ In addition, this document class come bundled with two new extras (currently in 
 * enforce that users put `\pdfoutput=1` (as recommended by the arXiv) to prevent problems with multi-line hyper links
 * improved error messages
 * fixed a bug that lead to the title not being centered with the `titlepage` option
-* better layout of titles 
+* better layout of titles
 * fixed various bugs in option processing
 * the document class is now documented in `quantumarticle.pdf`
 * introduced the plotting notebook `quantum-plots.ipynb` as a beta feature
@@ -86,7 +89,8 @@ In addition, this document class come bundled with two new extras (currently in 
 
 Developed by: Christian Gogolin, Christopher Granade, Johannes J. Meyer, and Victor V. Albert
 
-With contributions from: Shahnawaz Ahmed, Andrey Rakhubovsky, liantze, and Abhinav Deshpande
+With contributions from: Shahnawaz Ahmed, Andrey Rakhubovsky, liantze,
+Abhinav Deshpande, and David Wierichs
 
 ## Contributing
 
@@ -98,7 +102,7 @@ Improvements submitted as pull requests against the `develop` branch are very mu
 
 ## Copyright
 
-Copyright 2017, 2018, 2019, 2020
+Copyright 2017, 2018, 2019, 2020, 2021
 Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
 (http://quantum-journal.org/about/)
 
@@ -113,4 +117,4 @@ http://www.latex-project.org/lppl.txt
 and version 1.3c or later is part of all distributions of LaTeX
 version 2005/12/01 or later.
 
-[comment]: # (To submit to the overleaf galary: push, open the project, go to Journals and Services and click Submit to Overleaf Gallery. To submit to sharelatex: write them an email)
+[comment]: # (To submit to the overleaf gallery: push, open the project, go to Journals and Services and click Submit to Overleaf Gallery. To submit to sharelatex: write them an email)
