@@ -50,11 +50,13 @@ The `quantumarticle` class tries to be **maximally compatible** with existing do
 
 ## Beta features
 
-In addition, this document class come bundled with two new extras (currently in beta phase):
+In addition, this document class come bundled with three new extras (currently in beta phase):
 
 1. The quantum-plots.ipynb Jupyter notebook and matplotlib style for effortlessly producing professional looking plots in python.
 
 2. The quantum-lyx-template.lyx LxY layout, which allow you to generate the LaTeX source of your quantumarticle manuscript with the LyX document processor.
+
+3. The quantum.bst bibliography style for BibTeX, see the corresponding demo for usage details.
 
 ## Changelog
 
