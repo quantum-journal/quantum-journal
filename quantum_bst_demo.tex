@@ -18,7 +18,7 @@
 \newcites{repo}{repository references}
 \newcites{web}{website references}
 \newcites{other}{Other references}
-\newcites{tests}{Test references}
+%\newcites{tests}{Test references}
 
 \begin{document}
 \title{Template demonstrating the quantum bibstyle}
@@ -44,17 +44,15 @@ We use the opportunity of talking about bibtex entries to give an overview of th
     \texttt{misc} & Section \ref{sec:misc}\\
     Other classes & Section \ref{sec:other}\\
     \hspace{0.8cm}\texttt{booklet} & Section \ref{sec:booklet}\\
-    \hspace{0.8cm}\texttt{conference} & Section \ref{sec:conference}\\
     \hspace{0.8cm}\texttt{inbook} & Section \ref{sec:inbook}\\
     \hspace{0.8cm}\texttt{incollection} & Section \ref{sec:incollection}\\
     \hspace{0.8cm}\texttt{inproceedings} & Section \ref{sec:inproceedings}\\
-    % \hspace{0.8cm}\texttt{manual} & Section \ref{sec:manual}\\
-    % \hspace{0.8cm}\texttt{mastersthesis} & Section \ref{sec:mastersthesis}\\
-    % \hspace{0.8cm}\texttt{phdthesis} & Section \ref{sec:phdthesis}\\
-    % \hspace{0.8cm}\texttt{proceedings} & Section \ref{sec:proceedings}\\
-    % \hspace{0.8cm}\texttt{techreport} & Section \ref{sec:techreport}\\
+    \hspace{0.8cm}\texttt{conference} & Section \ref{sec:conference}\\
+    \hspace{0.8cm}\texttt{manual} & Section \ref{sec:manual}\\
+    \hspace{0.8cm}\texttt{mastersthesis}\&\texttt{phdthesis} & Section \ref{sec:theses}\\
+    \hspace{0.8cm}\texttt{proceedings} & Section \ref{sec:proceedings}\\
+    \hspace{0.8cm}\texttt{techreport} & Section \ref{sec:techreport}\\
     \hspace{0.8cm}\texttt{unpublished} & Section \ref{sec:unpublished}\\
-    % Mixed tests & Section \ref{sec:tests}\\
 \end{tabular}
 \end{center}
 
@@ -66,6 +64,10 @@ In Sec.~\ref{sec:customization} we describe a few minimal options for customizat
 \section{Reference class \texttt{article}}\label{sec:article}
 For the \texttt{article} class, the \texttt{title} is printed in \emph{italics}. The \texttt{journal} is not reformatted, the \texttt{volume} printed in \textbf{bold font}. We also include the \texttt{pages} if present and the \texttt{year} in round brackets ().
 \texttt{doi} links are always included if given, the same holds for \texttt{eprint}. Only if neither of these two fields is given do we use the \texttt{url} to provide a hyperlink to the article.
+If the custom field \texttt{shorturl} is provided, it is used to manually pretty-print the URL.
+This can be useful if a URL contains long character strings, particularly if they are not human-readable.
+The \texttt{url} field is used as linked URL, that is \texttt{shorturl} only changes the printed appearance
+and not the function of the hyperlink.
 Code repositories are linked whenever provided via the \texttt{code} field, which is a non-standard field in 
 quantum.bst. 
 
@@ -176,7 +178,7 @@ This class is an alias for \texttt{inproceedings}.
 \subsection{Reference class \texttt{manual}}\label{sec:manual}
 The reference class \texttt{manual} only requires a \texttt{title}. It uses the optional fields \texttt{author}, \texttt{organization}, \texttt{address}, \texttt{edition}, \texttt{year}, and \texttt{eprint} \citeother{manual}.
 
-\subsection{Reference classes \texttt{mastersthesis} and \texttt{phdthesis}}\label{sec:mastersthesis}
+\subsection{Reference classes \texttt{mastersthesis} and \texttt{phdthesis}}\label{sec:theses}
 Both thesis reference classes are identical up to the note that remarks the type of thesis. They require the fields \texttt{author}, \texttt{title}, \texttt{school}, \texttt{year} and allow optionally for \texttt{address} and \texttt{eprint} as well as a \texttt{doi}.
 
 \citeother{mastersthesis, phdthesis}
@@ -263,14 +265,16 @@ to the preamble \emph{before} including
 \end{verbatim*}
 where the option \texttt{numbers} is required to make the bibliography style work.
 
+\iffalse
 \section{Tests}\label{sec:tests}
 % \citetests{article_trailing_comma}
 
-Directly from the arxiv~\citetests{hubregtsen2021training}, arxiv via Zotero~\citetests{hubregtsen2021training_2}, some more testcases~\citetests{holevo2012quantum,Holevo_2012,akers2020simple,katariya2021geometric,katariya2021geometric_2,jain2010guaranteed}
+Directly from the arxiv~\citetests{mendez2021dissipation}, arxiv via Zotero~\citetests{mendez2021dissipation_2}, some more testcases~\citetests{holevo2012quantum,Holevo_2012,akers2020simple,katariya2021geometric,katariya2021geometric_2,jain2010guaranteed}
 
 Andrea's test case: \citetests{andreas_test_case}.
 
 \bibliographystyletests{quantum}
 \bibliographytests{quantum_bst_demo}
+\fi
 	
 \end{document}

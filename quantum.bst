@@ -35,6 +35,7 @@ ENTRY
     school
     series
     shortjournal
+    shorturl
     title
     type
     url
@@ -822,15 +823,19 @@ FUNCTION {format.code}
 }
 
 FUNCTION {format.url}
-{ url empty$
-    { "" }
-    { " url:~\href{" url * "}{" * "https://" #8 url chop.word * "}" * }
+{ shorturl empty$
+    { url empty$
+        { "" }
+        { " url:~\href{" url * "}{" * "https://" #8 url chop.word * "}" * }
+      if$
+    }
+    { " url:~\href{" url * "}{" * "https://" #8 shorturl chop.word * "}" * }
   if$
 }
 
 FUNCTION {check.links}
 { doi missing$ eprint missing$ and
-    { format.url "url" no.output.check pop$ }
+    { format.url "doi, eprint and url" no.output.check pop$ }
     'skip$
   if$
 }
