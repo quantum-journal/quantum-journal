@@ -2,7 +2,7 @@
 
 # LaTeX document class for Quantum
 
-This is version 5.1 of `quantumarticle`, the document class for typesetting articles in Quantum - the open journal for quantum science.
+This is version 6.0 of `quantumarticle`, the document class for typesetting articles in Quantum - the open journal for quantum science.
 
 [Click here](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.cls) to download the latest stable version.
 
@@ -60,13 +60,16 @@ In addition, this document class come bundled with three new extras (currently i
 
 ## Changelog
 
+### New in v6.0
+
+* introduced the Quantum bibstyle `quantum.bst` together with the demo file `quantum_bst_demo`
+
 ### New in v5.1
 
 * fix for workaround in ltxgrid no longer being necessary and, on the contrary, causing an error under TeXLive 2020, with revtex/ltygrid 4.2e/4.2d
 * improved typesetting of authors if titlepage is used
 * added explanation for how to use BibTeX on the arXiv
 * fixed equations in template
-* introduced the Quantum bibstyle `quantum.bst` together with the demo file `quantum_bst_demo`
 
 ### New in v5.0:
 
@@ -85,7 +88,6 @@ In addition, this document class come bundled with three new extras (currently i
 * the document class is now documented in `quantumarticle.pdf`
 * introduced the plotting notebook `quantum-plots.ipynb` as a beta feature
 * introduced the LyX template `quantum-lyx-template.lyx` as a beta feature
-
 
 ## Contributors
 
