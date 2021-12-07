@@ -105,6 +105,8 @@ Citations to other works should appear in the References section at the end of t
 \end{theorem}
 
 This can be achieved in several ways, depending on how you are formatting your bibliography.
+This done easiest using the custom bibliography style for Quantum,
+please refer to its separate demo for details (\texttt{quantum\_bst\_demo.pdf}).
 Suppose the DOI of an article \cite{examplecitation} that you want to cite is \texttt{10.22331/idonotexist}.
 If you are formatting your bibliography manually, you can cite this work using the following in your \texttt{thebibliography} environment:
 \begin{verbatim}
@@ -141,15 +143,16 @@ All special characters must be input via their respective LaTeX commands.
 
 If you are using BibTeX, you can load the \texttt{natbib} package by putting
 \begin{verbatim}
-\usepackage[numbers,sort&compress]{natbib}
+\usepackage[numbers]{natbib}
 \end{verbatim}
-in the preamble of your document and then use the \texttt{plainnat} citation style by including your BibTeX bibliography \texttt{mybibliography.bib} where you want the bibliography to appear as follows:
+in the preamble of your document and then use the \texttt{quantum} citation style by including your BibTeX bibliography \texttt{mybibliography.bib} where you want the bibliography to appear as follows:
 \begin{verbatim}
-\bibliographystyle{plainnat}
+\bibliographystyle{quantum}
 \bibliography{mybibliography}
 \end{verbatim}
 The quantumarticle class automatically detects that the \texttt{natbib} package was loaded and redefines the \texttt{\textbackslash{}doi} command to create hyperlinks.
 This is likely the easiest option if you are converting from another document class.
+The \texttt{quantum.bst} bibliography style is currently a beta feature and feedback is very much appreciated. Please open a \href{https://github.com/quantum-journal/quantum-journal/issues}{github issue} or write an email to \href{mailto:latex@quantum-journal.org}{latex@quantum-journal.org} if you come across any bugs or possible improvements.
 
 If you want to use BibLaTeX, you can instead add
 \begin{verbatim}
@@ -253,7 +256,7 @@ The quantumarticle document class comes bundled with a \href{https://raw.githubu
 \label{sec:version}
 This is quantumarticle version v\quantumarticleversion.
 
-\bibliographystyle{plain}
+\bibliographystyle{quantum}
 \begin{thebibliography}{9}
 \bibitem{examplecitation}
   Name Surname,
@@ -276,11 +279,16 @@ This is quantumarticle version v\quantumarticleversion.
 
 
 
-\onecolumn\newpage
+\onecolumn
 \appendix
 
 \section{First section of the appendix}
 Quantum allows the usage of appendices.
+If you want your appendices to appear in \texttt{onecolumn} mode but the rest of the 
+document in \texttt{twocolumn} mode, you can insert the command 
+\texttt{\textbackslash{}onecolumn\textbackslash{}newpage} before
+\texttt{\textbackslash{}appendix}.
+
 
 \subsection{Subsection}
 Ideally, the command \texttt{\textbackslash{}appendix} should be put before the appendices to get appropriate section numbering.
@@ -290,8 +298,6 @@ Equations continue to be numbered sequentially.
   A \neq B
 \end{equation}
 You are free to change this in case it is more appropriate for your article, but a consistent and unambiguous numbering of sections and equations must be ensured.
-
-If you want your appendices to appear in \texttt{onecolumn} mode but the rest of the document in \texttt{twocolumn} mode, you can insert the command \texttt{\textbackslash{}onecolumn\textbackslash{}newpage} before \texttt{\textbackslash{}appendix}.
 
 \section{Problems and Bugs}
 In case you encounter problems using the quantumarticle class please analyze the error message carefully and look for help online; \href{http://tex.stackexchange.com/}{http://tex.stackexchange.com/} is an excellent resource.

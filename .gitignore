@@ -161,3 +161,6 @@ pythontex-files-*/
 
 # Latexian
 TSWLatexianTemp*
+
+# David's bst working dir
+bsts/**

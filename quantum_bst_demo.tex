@@ -1,0 +1,281 @@
+\documentclass[a4paper,twocolumn,11pt]{quantumarticle}
+\pdfoutput=1
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\PassOptionsToPackage{compress}{natbib}
+\usepackage[numbers]{natbib}
+\usepackage{listings}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage[resetlabels]{multibib}
+
+\newcites{article}{article references}
+\newcites{book}{book references}
+\newcites{misc}{misc references}
+\newcites{repo}{repository references}
+\newcites{web}{website references}
+\newcites{other}{Other references}
+%\newcites{tests}{Test references}
+
+\begin{document}
+\title{Template demonstrating the quantum bibstyle}
+
+\author{David~Wierichs}
+\affiliation{Institute for Theoretical Physics, University of Cologne, Germany}
+\author{Johannes~Jakob~Meyer}
+\affiliation{Dahlem Center for Complex Quantum Systems, Freie Universit\"{a}t Berlin, 14195 Berlin, Germany}
+\affiliation{QMATH, Department of Mathematical Sciences, University of Copenhagen, 2100 Copenhagen, Denmark}
+
+\maketitle
+
+\section{Overview}\label{sec:overview}
+
+We use the opportunity of talking about bibtex entries to give an overview of the available reference classes:
+
+\begin{center}
+\begin{tabular}{ll}
+    \texttt{article} & Section \ref{sec:article}\\
+    \texttt{book} & Section \ref{sec:book}\\
+    \texttt{repository} & Section \ref{sec:repo}\\
+    \texttt{website} & Section \ref{sec:web}\\
+    \texttt{misc} & Section \ref{sec:misc}\\
+    Other classes & Section \ref{sec:other}\\
+    \hspace{0.8cm}\texttt{booklet} & Section \ref{sec:booklet}\\
+    \hspace{0.8cm}\texttt{inbook} & Section \ref{sec:inbook}\\
+    \hspace{0.8cm}\texttt{incollection} & Section \ref{sec:incollection}\\
+    \hspace{0.8cm}\texttt{inproceedings} & Section \ref{sec:inproceedings}\\
+    \hspace{0.8cm}\texttt{conference} & Section \ref{sec:conference}\\
+    \hspace{0.8cm}\texttt{manual} & Section \ref{sec:manual}\\
+    \hspace{0.8cm}\texttt{mastersthesis}\&\texttt{phdthesis} & Section \ref{sec:theses}\\
+    \hspace{0.8cm}\texttt{proceedings} & Section \ref{sec:proceedings}\\
+    \hspace{0.8cm}\texttt{techreport} & Section \ref{sec:techreport}\\
+    \hspace{0.8cm}\texttt{unpublished} & Section \ref{sec:unpublished}\\
+\end{tabular}
+\end{center}
+
+All of these reference classes are available in standard bibtex style files as well, with the exception of \texttt{repository} and \texttt{website}.
+Of course there may be other style files supporting reference classes with the same name, but the implementation in quantum.bst will not be based on any of those.
+In Sec.~\ref{sec:customization} we describe a few minimal options for customization of the quantum bibstyle.
+
+
+\section{Reference class \texttt{article}}\label{sec:article}
+For the \texttt{article} class, the \texttt{title} is printed in quotation marks. The \texttt{journal} is not reformatted, the \texttt{volume} printed in \textbf{bold font}. We also include the \texttt{pages} if present and the \texttt{year} in round brackets ().
+\texttt{doi} links are always included if given, the same holds for \texttt{eprint}. Only if neither of these two fields is given do we use the \texttt{url} to provide a hyperlink to the article.
+If the custom field \texttt{shorturl} is provided, it is used to manually pretty-print the URL.
+This can be useful if a URL contains long character strings, particularly if they are not human-readable.
+The \texttt{url} field is used as linked URL, that is \texttt{shorturl} only changes the printed appearance
+and not the function of the hyperlink.
+Code repositories are linked whenever provided via the \texttt{code} field, which is a non-standard field in 
+quantum.bst. 
+
+Examples:
+
+\begin{tabular}{ccccc}
+    \texttt{doi}& \texttt{eprint} & \texttt{url} & \texttt{code} & result \\
+    $\checkmark$ & $\checkmark$ & $\checkmark\big / \times$ & $\checkmark$ & \citearticle{article_doi_eprint_url_code} \\
+    $\checkmark$ & $\checkmark$ & $\checkmark\big / \times$ & $\times$ & \citearticle{article_doi_eprint_url} \\
+    $\times$ & $\checkmark$ & $\checkmark\big / \times$ & $\checkmark$ & \citearticle{article_eprint_url_code} \\
+    $\times$ & $\checkmark$ & $\checkmark\big / \times$ & $\times$ & \citearticle{article_eprint_url} \\
+    $\times$ & $\times$ & $\checkmark$ & $\checkmark$ & \citearticle{article_url_code} \\
+    $\times$ & $\times$ & $\checkmark$ (\texttt{shorturl}) & $\checkmark$ & \citearticle{article_url_code_shorturl} \\
+    $\times$ & $\times$ & $\checkmark$ & $\times$ & \citearticle{article_url} \\
+\end{tabular}
+
+Note that in particular article citations via a URL alone are not recommended. If you want to cite a website or code repository, please use the respective reference classes \texttt{website} or \texttt{repository} (see below).
+
+If an \texttt{article} citation only has an arXiv id but no journal reference, the journal title is skipped accordingly \citearticle{article_arxiv}.
+
+\bibliographystylearticle{quantum}
+\bibliographyarticle{quantum_bst_demo}
+
+\section{Reference class \texttt{book}}\label{sec:book}
+For the reference class \texttt{book}, the \texttt{title}, the \texttt{year}, the \texttt{publisher} as well as \emph{either} the \texttt{author} \emph{or} the \texttt{editor} field must be given.
+The \texttt{volume}, \texttt{number} and \texttt{series}, the (publisher) \texttt{address}, the \texttt{edition} as well as links in the fields \texttt{doi}, \texttt{eprint} and \texttt{url} are optional.
+The order in which links are printed is the same as for \texttt{article}, see Sec.~\ref{sec:article}.
+Some example \texttt{book} references are \citebook{book_author_doi_url, book_author_url_edition, book_editor_doi, book_editor_doi2}.
+
+\bibliographystylebook{quantum}
+\bibliographybook{quantum_bst_demo}
+
+\section{Reference class \texttt{repository}}\label{sec:repo}
+For the custom \texttt{repository} reference class, the \texttt{author} field is used if given but is not required (in contrast to the \texttt{article} class).
+If the repository address is given via \texttt{code} (strongly recommended), a properly formatted repository name is printed and links to the given address, including potentially version-, branch- or even commit-specific links.
+If no \texttt{code} entry is given, \texttt{url} is used as address instead, without any formatting of the printed text; Either \texttt{code} or \texttt{url} have to be provided.
+
+\begin{tabular}{ccc}
+    \texttt{code}& \texttt{url} & result \\
+    $\checkmark$ & $\checkmark\big / \times$ &\citerepo{repo_code_url} \\
+    $\times$ & $\checkmark$ &\citerepo{repo_url} \\
+    $\times$ & $\times$ & invalid \\
+\end{tabular}
+
+Providing a year is optional, a title is \emph{not} considered even if given \citerepo{repo_code_year}.
+Note that if you want both a \texttt{url} and a \texttt{code} link to be displayed, you can use the \texttt{website} reference class presented below for that.
+
+To specify the version of a software repository, use the new \texttt{version} field, see \citerepo{repo_code_year_version}. Even more specifically, the commit hash can be given via the \texttt{commit} field, like in \citerepo{repo_code_year_commit}. Note, however, that no check is performed between the provided \texttt{code} url and the \texttt{commit} or \texttt{version} fields, so that users have to assert consistency between these fields.
+
+\bibliographystylerepo{quantum}
+\bibliographyrepo{quantum_bst_demo}
+
+\section{Reference class \texttt{website}}\label{sec:web}
+For the new custom reference class \texttt{website}, we require a \texttt{title} and a \texttt{url} which are both printed always.
+\texttt{author} is optional and printed if given, the same holds for \texttt{code}, which is formatted as repository link like for \texttt{repository}. If you want to provide \texttt{code} but not \texttt{url}, the reference class \texttt{repository} (see above) is made for you.
+
+\begin{tabular}{ccc}
+    \texttt{author} & \texttt{code} & result \\
+    $\checkmark$ & $\checkmark$ &\citeweb{web_author_code} \\
+    $\times$ & $\checkmark$ &\citeweb{web_code} \\
+    $\checkmark$ & $\times$ &\citeweb{web_author} \\
+    $\times$ & $\times$ &\citeweb{web} \\
+\end{tabular}
+
+An access date can be given via either \texttt{date} or \texttt{urldate}, as in \citeweb{web_author_date}, with \texttt{urldate} taking precedence over \texttt{date}.
+
+\bibliographystyleweb{quantum}
+\bibliographyweb{quantum_bst_demo}
+
+\section{Reference class \texttt{misc}}\label{sec:misc}
+The reference class \texttt{misc} is meant to be used for miscellaneous entries that do not fall into any of the provided categories.
+As such, \texttt{misc} entries display the generic properties \texttt{author}, \texttt{title}, \texttt{howpublished}, \texttt{date}, \texttt{eprint} and \texttt{note}, the only requirement being at least one of these fields to be provided and non-empty.
+As the reference class \texttt{article} covers the case of preprint articles, the \texttt{misc} class was modified to refer back to \texttt{article} if \texttt{archivePrefix} is set to ``arxiv'' or an anyhow capitalized version thereof \emph{and} \texttt{primaryClass} is provided.
+
+We provide some examples, not covering all cases, because \texttt{misc} is very flexible and there are many possibilities.
+\begin{itemize}
+    \item A citation that actually is an article on the arXiv: \citemisc{misc_arxiv}
+    \item A footnote-like reference only containing a note: \citemisc{misc_note}
+    \item A reference to a private correspondence: \citemisc{misc_correspondence}
+\end{itemize}
+
+\bibliographystylemisc{quantum}
+\bibliographymisc{quantum_bst_demo}
+
+\section{Other reference classes}\label{sec:other}
+\subsection{Reference class \texttt{booklet}}\label{sec:booklet}
+The reference class \texttt{booklet} allows for rather flexible references, focusing on information of publishing:
+The only required field is the \texttt{title}, optional fields are \texttt{author}, \texttt{howpublished}, \texttt{address}, \texttt{year/date}, an \texttt{eprint} reference, and finally a custom \texttt{note} \citeother{booklet}.
+
+\subsection{Reference class \texttt{inbook}}\label{sec:inbook}
+
+The reference class \texttt{inbook} is an alias for \texttt{book} and will produce the same output.
+The only difference is that that \texttt{chapter}, \texttt{pages}, or both are \emph{required} for \texttt{inbook}.
+Examples would be Refs.~\citeother{inbook_author_doi_url_chapter, inbook_author_doi_url_chapter_pages, inbook_author_doi_url_volume_chapter_pages}.
+
+\subsection{Reference class \texttt{incollection}}\label{sec:incollection}
+The reference class \texttt{incollection} requires the fields \texttt{author}, \texttt{title}, \texttt{booktitle}, \texttt{publisher} and \texttt{year}.
+Optional entries are \texttt{doi}, \texttt{editor}, \texttt{volume}, \texttt{chapter}, \texttt{pages}, \texttt{number}, \texttt{series}, \texttt{address}, \texttt{edition}, and \texttt{eprint}. This class mostly behaves like \texttt{book} but references a collection of which the referenced item is part.
+\citeother{incollection}
+
+\subsection{Reference class \texttt{inproceedings}}\label{sec:inproceedings}
+The reference class \texttt{inproceedings} requires the fields \texttt{author}, \texttt{title}, \texttt{booktitle}, \texttt{publisher} and \texttt{year}.
+Optional entries are \texttt{doi}, \texttt{editor}, \texttt{volume}, \texttt{chapter}, \texttt{pages}, \texttt{number}, \texttt{series}, \texttt{address}, \texttt{edition}, and \texttt{eprint}. This class mostly behaves like \texttt{book} but references a collection of which the referenced item is part.
+\citeother{inproceedings, conference, liang2019fisher-rao}
+
+\subsection{Reference class \texttt{conference}}\label{sec:conference}
+This class is an alias for \texttt{inproceedings}.
+
+\subsection{Reference class \texttt{manual}}\label{sec:manual}
+The reference class \texttt{manual} only requires a \texttt{title}. It uses the optional fields \texttt{author}, \texttt{organization}, \texttt{address}, \texttt{edition}, \texttt{year}, and \texttt{eprint} \citeother{manual}.
+
+\subsection{Reference classes \texttt{mastersthesis} and \texttt{phdthesis}}\label{sec:theses}
+Both thesis reference classes are identical up to the note that remarks the type of thesis. They require the fields \texttt{author}, \texttt{title}, \texttt{school}, \texttt{year} and allow optionally for \texttt{address} and \texttt{eprint} as well as a \texttt{doi}.
+
+\citeother{mastersthesis, phdthesis}
+
+\subsection{Reference class \texttt{proceedings}}\label{sec:proceedings}
+The reference class \texttt{proceedings} can be used to cite full proceedings instead of a single contribution therein.
+Required fields are \texttt{title} and \texttt{year} and the class makes use of \texttt{editor}, \texttt{organization}, \texttt{volume}, \texttt{number}, \texttt{series}, \texttt{address}, \texttt{publisher}, \texttt{organization}, \texttt{doi}, and \texttt{eprint} \citeother{proceedings}.
+
+\subsection{Reference class \texttt{techreport}}\label{sec:techreport}
+The reference class \texttt{techreport} requires the fields \texttt{author}, \texttt{title}, \texttt{institution}, and \texttt{year}.
+In addition, the fields \texttt{address}, \texttt{eprint}, \texttt{doi}, \texttt{number}, and \texttt{type} (to specify the kind of technical report further) may be provided \citeother{CoplenKrouse}.
+
+\subsection{Reference class \texttt{unpublished}}\label{sec:unpublished}
+The reference class \texttt{unpublished} requires the \texttt{author}, \texttt{title}, and \texttt{note} fields.
+Optionally, a \texttt{year/date} as well as an \texttt{eprint} reference may be provided.
+\citeother{unpublished}
+
+\bibliographystyleother{quantum}
+\bibliographyother{quantum_bst_demo}
+
+\section{Customization}\label{sec:customization}
+
+\paragraph{Warnings raise Errors}
+By default, the quantum bibstyle tries to catch as many bibtex warnings and raises a proper compiling error if any warnings are found. This is to avoid silent bibtex warnings that yield partial reference outputs while hiding the warnings raised by bibtex in the \texttt{.blg} file.
+Note that not all warnings are caught, though. In particular, syntax errors like a missing comma in a \texttt{bibitem}, which cause bibtex to interrupt for that item alone, are only caught if they lead to required fields being missing.
+
+An example for a caught mistake is
+{\small
+\begin{verbatim}
+@article{article_missing_comma,
+ author={Matthew McKague},
+ doi={10.1017/cbo9780511976667},
+ year={2017},
+ journal={Quantum},
+ volume={1}
+ title={Self-testing in parallel with {CHSH}}
+}
+\end{verbatim}
+}
+Here, the missing comma after \texttt{volume={1}} would make bibtex abort the processing of the item, leading
+to the \texttt{title} field, which is required, being missed.
+In contrast, the following would not be caught:
+{\small
+\begin{verbatim}
+@article{article_trailing_comma,
+ author={Matthew McKague},
+ doi={10.1017/cbo9780511976667},
+ year={2017},
+ journal={Quantum},
+ volume={1},
+ title={Self-testing in parallel with {CHSH}},
+}
+\end{verbatim}
+}
+The additional comma in the \texttt{title} line raises an internal bibtex warning, which the bibstyle file cannot catch. While in this case no harm is done, there are errors that are not caught but simultaneously lead to incomplete output.
+
+If you want to turn off these errors raised from bibtex warnings, include the entry
+\begin{verbatim*}
+@preamble{"\DoNotMakeWarningsErrors"}
+\end{verbatim*}
+anywhere in the \emph{bibliography} (i.e. the \texttt{.bib} file) like one would include a reference.
+
+\emph{Note:} Commenting the above \texttt{@preamble} entry out via \texttt{\%} will \emph{not} deactivate it as bibtex does not attribute commenting functionality to \texttt{\%}. Instead, you can simply remove the leading \texttt{@}, as is currently done in the \texttt{.bib} file accompanying this document (\texttt{quantum\_bst\_demo.bib}).
+
+\paragraph{Explicit DOI links}
+By default, and if the entry \texttt{doi} is provided for a \texttt{bibitem}, the quantum bibstyle will link to the DOI via the \texttt{journal/volume/issue} part of the citation for articles and via the a) \texttt{volume/chapter/pages} or b) \texttt{number/series} or c) \texttt{publisher} part for books, with a) taking precedence if provided over b) taking precedence if provided over c).
+This behaviour can be changed to output explicit DOI links instead. To do so, include the entry
+\begin{verbatim*}
+@preamble{"\MakeDoiLinksExplicit"}
+\end{verbatim*}
+anywhere in the \emph{bibliography} (i.e. the \texttt{.bib} file) like one would include a reference.
+
+\paragraph{Compression}
+By default, the quantum bibstyle prints the numbers for all references separately and does not compress
+a range of citations, like so: [1, 6, 7, 8, 11, 12, 13, 14].
+This has the advantage of making all references explicitly accessible from the citation position and enables readers to find all occurrences of a given reference.
+If you prefer to compress citations (like so: [1, 6-8, 11-14]), simply add
+\begin{verbatim*}
+\PassOptionsToPackage{compress}{natbib}
+\end{verbatim*}
+to the preamble \emph{before} including
+\begin{verbatim*}
+\usepackage[numbers]{natbib}
+\end{verbatim*}
+where the option \texttt{numbers} is required to make the bibliography style work.
+
+\iffalse
+\section{Tests}\label{sec:tests}
+% \citetests{article_trailing_comma}
+
+Directly from the arxiv~\citetests{mendez2021dissipation}, arxiv via Zotero~\citetests{mendez2021dissipation_2}, some more testcases~\citetests{holevo2012quantum,Holevo_2012,akers2020simple,katariya2021geometric,katariya2021geometric_2,jain2010guaranteed}
+
+Andrea's test case: \citetests{andreas_test_case}.
+
+\bibliographystyletests{quantum}
+\bibliographytests{quantum_bst_demo}
+\fi
+	
+\end{document}
