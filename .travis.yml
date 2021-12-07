@@ -33,9 +33,9 @@ script:
     - bibtex quantumview-template
     - pdflatex -interaction=nonstopmode -halt-on-error quantumview-template.tex
     # Test whether the bst demo compiles.
-    - pdflatex -interaction=nonstopmode -halt-on-error quantum_bst_demo.tex
-    - bibtex quantum_bst_demo
-    - pdflatex -interaction=nonstopmode -halt-on-error quantum_bst_demo.tex
+    - pdflatex -interaction=nonstopmode -halt-on-error quantum-bibliographystyle-demo.tex
+    - bibtex quantum-bibliographystyle-demo
+    - pdflatex -interaction=nonstopmode -halt-on-error quantum-bibliographystyle-demo.tex
     # Test whether the installer works.
     - bash install.sh
     # Test whether the template compiles against the installed version.
