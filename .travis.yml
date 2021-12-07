@@ -11,6 +11,7 @@ addons:
         - texlive-fonts-extra
         - texlive-latex-recommended
         - texlive-latex-extra
+        - texlive-bibtex-extra
         # Some of the additional packages we depend on,
         # such as {ltxgrid}, are shipped with the "publishers"
         # Ubuntu package.
