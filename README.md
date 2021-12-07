@@ -62,6 +62,7 @@ In addition, this document class come bundled with two new extras (currently in 
 
 * introduced the Quantum bibstyle `quantum.bst` together with the demo file `quantum_bst_demo`
 * Removed the quantum-plots package, which is superseeded by [rsmf](https://pypi.org/project/rsmf/)
+* Fixed typo in allowfontchangeintitle option
 
 ### New in v5.1
 
