@@ -3,7 +3,6 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
-\PassOptionsToPackage{compress}{natbib}
 \usepackage[numbers]{natbib}
 \usepackage{listings}
 
@@ -18,7 +17,6 @@
 \newcites{repo}{repository references}
 \newcites{web}{website references}
 \newcites{other}{Other references}
-%\newcites{tests}{Test references}
 
 \begin{document}
 \title{Template demonstrating the quantum bibstyle}
@@ -265,17 +263,5 @@ to the preamble \emph{before} including
 \usepackage[numbers]{natbib}
 \end{verbatim*}
 where the option \texttt{numbers} is required to make the bibliography style work.
-
-\iffalse
-\section{Tests}\label{sec:tests}
-% \citetests{article_trailing_comma}
-
-Directly from the arxiv~\citetests{mendez2021dissipation}, arxiv via Zotero~\citetests{mendez2021dissipation_2}, some more testcases~\citetests{holevo2012quantum,Holevo_2012,akers2020simple,katariya2021geometric,katariya2021geometric_2,jain2010guaranteed}
-
-Andrea's test case: \citetests{andreas_test_case}.
-
-\bibliographystyletests{quantum}
-\bibliographytests{quantum_bst_demo}
-\fi
 	
 \end{document}
