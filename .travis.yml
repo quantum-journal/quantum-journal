@@ -24,6 +24,9 @@ addons:
         # We go with cm-super here due to issues with fonts-lmodern raising
         # apt errors.
         - cm-super
+        # multibib is required for the separate bibliographies in the
+        # quantum-bibliographystyle-demo file.
+        - multibib
 script:
     # Test whether the template compiles.
     - pdflatex -interaction=nonstopmode -halt-on-error quantum-template.tex
