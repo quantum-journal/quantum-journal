@@ -1,0 +1,1217 @@
+% \CheckSum{538}
+%
+% \iffalse
+%% Package `multibib' to use with LaTeX2e.
+%%
+%% Copyright (C) 2008 by Thorsten Hansen
+%%
+%
+% This work may be distributed and/or modified under the conditions of
+% the LaTeX Project Public License, either version 1.3 of this license
+% or any later version. The latest version of this license is in
+% http://www.latex-project.org/lppl.txt and version 1.3 or later is
+% part of all distributions of LaTeX version 2003/12/01 or
+% later.
+%
+% This work has the LPPL maintenance status "maintained". The Current
+% Maintainer of this work is Thorsten Hansen.
+%
+% This is a contributed file to the LaTeX2e system.
+%
+%
+%<*dtx>
+          \ProvidesFile{multibib.dtx}
+%</dtx>
+%<package>\NeedsTeXFormat{LaTeX2e}
+%<package>\ProvidesPackage{multibib}
+%<driver>\ProvidesFile{multibib.drv}
+% \fi
+%         \ProvidesFile{multibib.dtx}
+          [2008/12/10 v1.4 Multiple bibliographies for one document.]
+%
+% \iffalse
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{ifthen}
+%
+% Sort `General´ before macros starting with `@'.
+%
+\makeatletter
+\def\changes@#1#2#3{%
+\protected@edef\@tempa{\noexpand\glossary{#1\levelchar
+                                \ifx\saved@macroname\@empty
+                                  \space
+                                  \actualchar
+                                  \generalname
+                                \else
+                                  \space                   %  <-- \space added
+                                  \expandafter\@gobble
+                                  \saved@macroname
+                                  \actualchar
+                                  \string\verb\quotechar*%
+                                  \verbatimchar\saved@macroname
+                                  \verbatimchar
+                                \fi
+                                :\levelchar #3}}%
+ \@tempa\endgroup\@esphack}
+\makeatother
+%
+%
+%                    
+\CodelineIndex
+\RecordChanges
+%\OnlyDescription
+\begin{document}
+\DocInput{multibib.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \newcommand{\class}[1]{\textsf{#1}}
+% \newcommand{\option}[1]{\textsf{#1}}
+% \newcommand{\komascript}{KOMA-\textsc{Script}}
+% \newcommand{\package}[1]{\textsf{#1}}
+% \newcommand{\macrott}[1]{\texttt{\symbol{'134}#1}}
+% \renewcommand*\descriptionlabel[1]{\hspace\labelsep\option{#1}}
+%
+% ^^A
+% ^^A A rule to separate figures from the text.
+% ^^A (Modified code from bibtopic.dtx).
+% ^^A
+% \newcommand\toprule[1][]{^^A
+%   \ifthenelse{\equal{#1}{}}{^^A
+%     \noindent{\makebox[\textwidth][t]{\hrulefill}}^^A
+%     }{%
+%     \noindent{\makebox[\textwidth][t]{\hrulefill^^A
+%               \raisebox{-.5ex}{ \small\ttfamily#1 }\hrulefill}}^^A
+%     }%
+%   \par\noindent}
+%
+% \newcommand\bottomrule{\noindent\rule[\baselineskip]{\textwidth}{.6pt}}
+%
+%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \hyphenation{bib-lio-gra-phy bib-lio-gra-phies}
+%
+% \GetFileInfo{multibib.dtx}
+% \title{The \textsf{multibib} Package}
+% \author{Thorsten Hansen\\
+%         \normalsize Thorsten.Hansen@psychol.uni-giessen.de}
+% \date{\fileversion\quad \filedate}
+% \maketitle
+%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \GlossaryPrologue{\section*{{Change History}}%
+%                   \markboth{{Change History}}{{Change History}}%
+%                   Version numbers suffixed with characters have not
+%                   been released.} 
+% \def\levelchar{-}
+%
+% \changes{v1.0}{1999/07/27}{Initial version}
+% \changes{v1.1}{1999/01/14}{Documentation.}
+% \changes{v1.1a}{2001/10/06}{Equivalents of macros \macrott{citep} and 
+%                             \macrott{citet} added.}
+% \changes{v1.1b}{2001/10/10}{Evoke \package{multibib}'s \macrott{@citex} 
+%                             variant not for standard \macrott{cite} 
+%                             commands.}
+% \changes{v1.1c}{2001/10/16}{Equivalents of macros \macrott{citealp} and
+%                             \macrott{citealt} added.}
+% \changes{v1.1d}{2001/11/04}{Spurious letters occurring for bibstyle
+%                             \textsf{alpha} removed.}
+% \changes{v1.1e}{2001/11/04}{Additional definition of \macrott{refname} 
+%                             in \macrott{newcites} loop.}
+% \changes{v1.2}{2003/03/24}{Documentation.}
+% \changes{v1.2a}{2003/07/15}{General compatibility mechanism for packages
+%                 which redefine \macrott{@citex}, motivated
+%                 by compatibility to \package{cite} v4.0.}
+% \changes{v1.2b}{2003/09/22}{General compatibility mechanism for packages 
+%                 which define their own cite commands, motivated by 
+%                 compatibility to \package{jurabib}.}
+% \changes{v1.2c}{2004/01/23}{Code streamlined.}
+% \changes{v1.3}{2004/01/24}{Documentation.}
+% \changes{v1.3a}{2004/02/09}{Continuous numerical labels with natbib.}
+% \changes{v1.3b}{2004/02/10}{\macrott{isnumber} changed to accept
+%                 arguments with \macrott{fi}, e.g.,
+%                 {\macrott{iffalse}{bjko}\macrott{fi}}.}  
+% \changes{v1.3c}{2004/02/10}{Allow \macrott{bibliographystyle<s>} to
+%                 be used in the preamble.} 
+% \changes{v1.3d}{2005/10/25}{New option \option{labeled}.}
+% \changes{v1.4}{2008/12/10}{Documentation.}
+%                          
+%
+%
+%
+% \begin{abstract}
+%   The \package{multibib} package allows to create references to
+%   multiple bibliographies within one document. It thus provides a
+%   complementary functionality to packages like \package{bibunits} or
+%   \package{chapterbib}, which allow to create one bibliography for
+%   multiple, but different parts of the document. The package
+%   introduces the generic macro |\newcites| which generates
+%   user-defined citation and bibliography commands for each new
+%   bibliography in the document. The new commands can be used
+%   intuitively, since both syntax and semantics are similar to their
+%   standard \LaTeX\ equivalents. Each bibliography can have its
+%   individual style and \BibTeX\ data file(s). Citations to each
+%   bibliography are collected in a new auxiliary file to be processed
+%   by \BibTeX. The \package{multibib} package is compatible with
+%   \package{cite}, \package{inlinebib}, \package{jurabib} (to be
+%   loaded before \package{multibib}), \package{natbib}, 
+%   \package{suthesis} and \komascript\ classes. 
+% \end{abstract}
+%
+%
+%
+%
+% \section{Usage Notes}
+%
+% Suppose, you have to separate your citations into two bibliographies,
+% one for primary literature and one for secondary literature. The
+% \package{multibib} package defines the |\newcite| command which
+% introduces a new family of cite and bibliography commands. 
+% \begin{verbatim}
+%   \newcites{sec}{Secondary Literature}
+% \end{verbatim}
+% In this case the generic macro defines four new commands,
+% suffixed by the first argument.    
+% \begin{verbatim}
+%   \citesec  
+%   \nocitesec
+%   \bibliographystylesec  
+%   \bibliographysec
+% \end{verbatim}
+% The second argument of |\newcites| provides the title of the corresponding
+% bibliography. All these new commands accept the same parameters as
+% their standard \LaTeX\ equivalents and behave analogous to.---In the
+% example above, the bibliography for primary literature can be
+% generated by \LaTeX's standard commands. When the document is
+% processed, an auxiliary file |sec.aux| is generated, which needs to
+% be compiled through \BibTeX.
+%
+% The tiny \verb|\newcites| command is not limited to one bibliography.
+% In fact, you can generate as much bibliographies as you like (only
+% limited by the maximum number of \TeX's output files, usually~16).
+% In the following example, separate bibliographies are created for
+% own articles, submitted articles, internal reports, and other work.
+% \begin{verbatim}
+%   \newcites{own,submitted,internal}%
+%     {Own Work,%
+%      Submitted Work,%
+%      {Technical Reports, Master Theses and Ph.D. Theses}}
+% \end{verbatim}
+% Note that a title containing commas needs to be grouped. Again, the
+% bibliography for other work is generated by \LaTeX's standard
+% commands.
+%
+% \DescribeMacro{\newcites}
+% After this introductory examples, let's look at the precise
+% definition of |\newcites|. The command
+% |\newcites|\marg{suffix\_list}\marg{heading\_list} defines a new
+% family of commands for each suffix~\meta{s} in \meta{suffix\_list},
+% namely |\cite|\meta{s}, |\nocite|\meta{s},
+% |\bibliographystyle|\meta{s}, and |\bibliography|\meta{s} . The
+% \meta{suffix\_list} is a comma separated list of letters, i.e, the
+% same characters which are allowed as part of a \TeX\ command. The
+% \meta{heading\_list} is a comma separated list of words, i.e, the
+% same sort of input (including commands) that can be used as argument
+% of, e.g., |\section|. The commands |\cite|\meta{s} and
+% |\nocite|\meta{s} generate citations that appear in the
+% corresponding bibliography which is generated by
+% |\bibliography|\meta{s}. The title of this bibliography is defined
+% by the entry \meta{h} in \meta{heading\_list} at the same position
+% as \meta{s} in \meta{suffix\_list}. The individual style of the
+% bibliography can be defined by |\bibliographystyle|\meta{s}.
+% 
+% \DescribeMacro{\setbiblabelwidth}
+% When using numerical reference schemes like, e.g., \textsf{plain},
+% the labels in the bibliography have sometimes the wrong width. In
+% this case you can set the desired label width using
+% |\setbiblabelwidth|\marg{number}, in the same fashion as you would
+% specify the label width with |\thebibliography|\marg{number}. 
+%
+% It is also possible to let \LaTeX\ do the job by using
+% \package{multibib}'s variant \textsf{mbplain} instead of
+% \textsf{plain} as bibliography style. The modification does not
+% affect the formatting style but only internal values, such that
+% \LaTeX\ can determine the right width. More precisely,
+% \textsf{mbplain} sets the longest label to the number of entries in
+% the bibliography, while \textsf{plain} takes the smallest number
+% which has the same width as the number of entries. For example, if
+% your bibliography has 29~entries, \textsf{plain} sets the label to
+% 10 while \textsf{mbplain} sets the label to~29. This is done by
+% modifying the function \texttt{longest.label.pass}.
+% \begin{verbatim}
+% FUNCTION {longest.label.pass}
+% { number.label int.to.str$ 'label :=
+%   number.label #1 + 'number.label :=
+%   label width$ longest.label.width >
+%   label width$ longest.label.width =   %% added in mbplain
+%   or                                   %% added in mbplain
+%     { label 'longest.label :=
+%       label width$ 'longest.label.width :=
+%     }
+%     'skip$
+%   if$
+% }
+% \end{verbatim}
+% If you use other numerical styles than \textsf{plain}, you can
+% customize your favorite style accordingly.
+%
+%
+%
+% \subsection{Package Options}
+% \begin{description}
+% \item[labeled] Add the internal suffixes for each
+%      bibliography as prefixes to the labels to the bibliography. For
+%      example, if you define  
+% \begin{verbatim}\newcites{A,B,C}%
+%   {Own \LaTeX\ Work,%
+%   Submitted,%
+%   {Habilitations, Dissertations and Diploma Thesis}}
+% \end{verbatim}
+%      and specify a numerical bibstyle
+%      \verb+\bibliographystyleA{plain}+, the labels in the
+%      bibliography and the cited references will be [A1], [A2], [A3],
+%      \dots; analogously, \verb+\bibliographystyleB{plain}+ results
+%      in labels and cited references [B1], [B2], [B3],\dots; and
+%      \verb+\bibliographystyleC{plain}+ results in labels and cited
+%      references [C1], [C2], [C3], \dots . This option is useful
+%      together with option \option{resetlabels} and numerical
+%      reference schemes.
+%
+% \item[resetlabels] When using numerical reference schemes,
+%      start each bibliography with~`[1]'. Default is continuous numbering, 
+%      such that labels are created unambiguously.
+% \end{description}
+% 
+%
+%
+% \subsection{\textnormal{\BibTeX} Processing}
+%
+% For each bibliography a corresponding auxiliary file \meta{s}|.aux|
+% is generated, that needs to be compiled through \BibTeX. This can be
+% done by the following bash-script.
+% \begin{verbatim}
+%    #!/bin/bash
+%    for file in *.aux ; do
+%      bibtex `basename $file .aux`
+%    done
+% \end{verbatim}
+% 
+%
+%
+% \subsection{Limitations}
+%
+% \begin{itemize}
+% \item When numerical reference schemes are used and references to the
+%       same item appear in different bibliographies, the labels
+%       cannot be resolved properly. Rather, the replacement text
+%       (i.e, the number) is used which is defined in the auxiliary
+%       file read last.
+% \item When using author-year reference schemes, entries with the
+%       same author and year combinations which appear in different
+%       bibliographies get the same label.
+%       In this case you have to manually add some hints to which
+%       bibliography the entry refers, e.g.,\\ 
+%       |\cite[in primary literature]{Foo:1999a}| vs.\ \\  
+%       |\citesec[in secondary literature]{Foo:1999b}|.\\
+%        You can also edit the |.bbl| files created by \BibTeX\ and
+%       add `a', `b',\dots\ to the labels, but your changes will
+%       be overwritten by subsequent \BibTeX\ runs. The
+%       differentiating letters `a', `b',\dots\ cannot be added
+%       automatically by \BibTeX\ since the entries appear in
+%       different auxiliary files.
+% \item With \package{natbib}, you cannot use numerical and
+%       author-year reference schemes together. Typographically, this
+%       is regarded bad style anyway.
+% \item For \package{jurabib} and \package{multibib}, the order of
+%       loading is important: \package{jurabib} must be loaded before 
+%       \package{multibib}.
+% \end{itemize}
+%
+%
+%
+%
+% \section{Example}
+% 
+% Let's now consider a complete example with two bibliographies, one
+% for \TeX\ and \LaTeX\ references and one for Postscript references.
+% For demonstration purposes, different styles are used for the two
+% references, namely \textsf{alpha} for \TeX\ and \LaTeX\ references and
+% \textsf{plain} for Postscript references. Typographically, different
+% bibliography styles are regarded as bad and therefore should be
+% avoided in real documents. The reference data are supposed to be
+% stored in a common \BibTeX\ data file |lit.bib|. Note that the
+% heading of the Postscript references is redefined with
+% |\renewcommand{\refname}|.
+
+% \begin{figure}[h]
+% \hspace*{-25mm}\begin{minipage}[t]{0.6\textwidth}
+% \toprule
+% {\let\small\footnotesize
+% \begin{verbatim}
+% \documentclass{article}
+% \usepackage{multibib}
+% \newcites{ltex}{\TeX\ and \LaTeX\ References}
+% 
+% \begin{document}
+% References to the \TeX book \citeltex{Knuth:1991} 
+% and to Lamport's \LaTeX\ book, which appears 
+% only in the references\nociteltex{Lamport:1994}. 
+% Finally a cite to a Postscript tutorial
+% \cite{Adobe:1985}.
+% 
+% \bibliographystyleltex{alpha}
+% \bibliographyltex{lit}
+% 
+% \renewcommand{\refname}{Postscript References}
+% \bibliographystyle{plain}
+% \bibliography{lit}
+% 
+% \end{document}
+% \end{verbatim}}
+% \bottomrule
+% \end{minipage}
+% \hspace{5mm}
+% \begin{minipage}[t]{0.65\textwidth}
+% \toprule
+% \leftmargini1mm
+% \begin{quote}
+%   \footnotesize
+%   References to the \TeX book \cite{Knuth:1991} 
+%   and to Lamport's \LaTeX\ book, which appears 
+%   only in the references\nocite{Lamport:1994}. 
+%   Finally a cite to a Postscript tutorial
+%   \cite{Adobe:1985}.
+%   {\let\section\subsubsection
+%   \renewcommand{\refname}{\TeX\ and \LaTeX\ References}
+%   \begin{thebibliography}{Lam94}
+%   \bibitem[Knu91]{Knuth:1991}
+%   Donald~E. Knuth.
+%   \newblock {\em The {\TeX} book}.
+%   \newblock Addison-Wesley, Reading, Massachusetts, 1991.
+%   \bibitem[Lam94]{Lamport:1994}
+%   Leslie Lamport.
+%   \newblock {\em {\LaTeX:} A Document Preparation System}.
+%   \newblock Addison-Wesley, Reading, Massachusetts, 2 edition, 1994.
+%   \end{thebibliography}}
+%   {\let\section\subsubsection
+%   \renewcommand{\refname}{Postscript References}
+%   \begin{thebibliography}{1}
+%   \bibitem{Adobe:1985}
+%   {Adobe {S}ystem {I}ncorporated}.
+%   \newblock {\em Postscript Language Tutorial and Cookbook}.
+%   \newblock Addison-Wesley, Reading, Massachusetts, 1985.
+%   \end{thebibliography}}
+% \end{quote}
+% \vspace{3.25mm}
+% \bottomrule
+% \end{minipage}
+% \caption{Example input and output.}
+% \end{figure}
+% 
+% To process your document, three runs of \LaTeX\ and two runs of \BibTeX\
+% are required.
+%
+% \vbox{%
+% \begin{verbatim}
+%   latex mydoc
+%   bibtex mydoc
+%   bibtex ltex
+%   latex mydoc
+%   latex mydoc
+% \end{verbatim}}
+%
+%
+%
+%
+% \section{Notes for Class and Package Writers}
+% 
+% Packages such as \package{cite} or \package{natbib} which modify the
+% internal macro |\@citex| called from |\cite| by, e.g., changing
+% the number of arguments, and/or define new variants of |\cite|, such as
+% \package{natbib}'s |\citep|, deserve a special handling to ensure
+% compatibility to \package{multibib}. In the first case, the problem
+% arise because \package{multibib}'s redefinition of |\@citex| to write to
+% a new auxiliary file |\@newciteauxhandle| instead of writing to
+% |\@auxout| is overwritten. In the second case, the problem arise
+% because \package{multibib} is unaware of additional cite commands and
+% thus cannot define the new variants. The problems can
+% be solved by using the compatibility mechanisms
+% supported by \package{multibib} as described in the following.
+% 
+%
+%
+% \subsection{Packages which modify \macrott{@citex}}
+% 
+% Packages which modify |\@citex| can be made compatible to
+% \package{multibib} by making the following three changes to the code:
+% \begin{enumerate}
+% \item Add the following code:
+%   \begin{verbatim}
+%   \providecommand\@newciteauxhandle{\@auxout}
+%   \def\@restore@auxhandle{\gdef\@newciteauxhandle{\@auxout}}
+%   \AtBeginDocument{%
+%     \@ifundefined{newcites}{\global\let\@restore@auxhandle\relax}{}}
+%   \end{verbatim}
+% The first line defines |\@newciteauxhandle| to the default value
+% |\@auxout| if |\@newciteauxhandle| is not already defined. The
+% second line defines macro |\@restoreauxhandle| which sets
+% |\@newciteauxhandle| to its default value. The next two lines
+% |\let| macro |\@restoreauxhandle| to |\relax| in case
+% \package{multibib} is not loaded and |\newcites| is undefined.
+% \item In the redefinitions of |\@citex| replace |\@auxout| by
+%   |\@newciteauxhandle|.
+% \item At the end of the each |\@citex| redefinitions add the macro
+%   |\@restoreauxhandle|.
+% \end{enumerate}
+% At present, packages \package{cite} and \package{jurabib} use this
+% compatibility mechanism.
+% 
+%
+%
+% \subsection{Packages which define new cite commands}
+% 
+% Packages which define new cite commands can add these commands using
+% |\@mb@citenamelist|. The default definition, which
+% already includes \package{natbib}'s cite variants, is given below.
+% \begin{verbatim}
+%   \def\@mb@citenamelist{cite,citep,citet,citealp,citealt}
+% \end{verbatim}
+% A package which defines, e.g, a new cite command |\footcite| informs
+% \package{multibib} about this command by defining
+% \begin{verbatim}
+%   \def\@mb@citenamelist{cite,citep,citet,citealp,citealt,footcite}
+% \end{verbatim}
+% At present, package \package{jurabib} use this compatibility mechanism.
+%
+%
+%
+% \subsection{Advantages of the compatibility mechanism}
+%
+% Compared to a solution where all compatibility patching is done by
+% \package{multibib}, such as is presently the case for
+% \package{natbib}, the above solution has several advantages: 
+% \begin{enumerate}
+% \item The mechanisms provides a general solution for several
+%   packages. Any new package can be made compatible with \package{multibib}
+%   without the need for a new release of \package{multibib}.
+% \item Existing packages can change the number of arguments to
+%   |\@citex| or introduce new cite macros without the need to change
+%   \package{multibib}.
+% \item If |\@citex| needs to read the next input character, this
+%   character is available and not masked by \package{multibib}'s |let|s
+%   which follow the |\@std@citex|. This is important for the
+%   \package{cite} package.
+% \item More efficient code. A single |\let| in |\@restore@auxhandle|
+%   instead of four.
+% \end{enumerate}
+%
+%
+%
+%
+% \section{Brief Discussion of Related Packages}
+% 
+% \paragraph{Similar packages.} The \package{bibtopic} package addresses the
+% same issue as the present package, using a completely different
+% approach. The user has to provide a separate \BibTeX\ data file
+% |liti.bib| for each bibliography and can generate the corresponding
+% bibliography within a |btSect| environment.
+%
+% \begin{verbatim}
+% \begin{btSect}{liti}
+%   \btPrintCited
+% \end{btSect}
+% \end{verbatim}
+%
+% Using |\btPrintNotCited|, a complementary bibliography showing all
+% entries not cited in the document can also be generated.
+% Additionally, an environment |btunit| is defined to generate
+% bibliographies for different units of the text, thus partly
+% offering the functionality of packages like \package{bibunits} or
+% \package{chapterbib}. Besides its powerful functionality, the
+% \package{bibtopic} package has some drawbacks and restrictions:
+% \begin{itemize}
+% \item less intuitive user interface
+% \item the user has to split his \BibTeX\ data files
+% \item bibliography styles that put some material between the begin
+%       of\\ |thebibliography| and the first |\bibitem| deserve a
+%       special handling
+% \item does not work with bibliography style |unsorted| 
+% \item and more, see Sec.~`Restrictions' of the \package{bibtopic}
+%       documentation
+% \end{itemize}
+% 
+% Finally, due to its large size (1059 lines) and implementation
+% approach, processing is probably slower. In a nutshell,
+% \package{bibtopic} does the following: for each bibliography, a
+% |\citation{*}| command is written to a new, corresponding auxiliary
+% file, such that \emph{all} entries of the \BibTeX\ data base are
+% extracted. Then, by reimplementing the |\bibitem| command, all items
+% which do not occur in a special list of labels, produced by the cite
+% commands, are deleted. Obviously, doing part of \BibTeX's work
+% requires some amount of memory and time (and programming skills,
+% noteworthy |;-)|).
+%
+% 
+% \paragraph{Complementary packages.} The packages \package{bibunits}
+% and \package{chapterbib} provide commands to generate multiple
+% bibliographies, too. The main difference is, that with these
+% packages a single bibliography is generated for multiple, but
+% different parts of the text. Therefore, within a certain unit, i.e.,
+% part of the text, citations can only be made to a single,
+% corresponding bibliography. On the other hand, with
+% \package{multibib}, within the same (but single) part, citations can
+% be generated for multiple bibliographies. 
+%
+% \paragraph{Analogous packages.} The \package{multind} package allows
+% multiple indexes.
+%    
+%
+%
+%
+% \section{Acknowledgments} 
+%
+% The author thanks Donald Arseneau for suggesting the compatibility mechanism
+% for packages which modify |\@citex|. Further, the author
+% acknowledges the contributions of numerous people, in particular
+% Jens Berger and Frank Mittelbach, whose suggestions and bug reports have 
+% helped to improve \package{multibib}.
+%
+%
+% 
+%
+% \StopEventually{\PrintIndex\PrintChanges}
+%
+%
+%
+%
+% \section{The Macros}
+%
+% One paradigm which guided the development of the code was to use
+% standard \LaTeX\ commands as much as possible, and to customize their
+% behavior using |\let|.
+%
+% 
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
+%
+%
+% \subsection{Option Handling}
+%    \changes{v1.0i}{2000/01/12}{New option \option{resetlabels}.}
+%
+% \begin{macro}{\ifcontinuouslabels}
+%    Define a new if to switch between continuous labeling of
+%    bibliographies (default) and start of labels with~`[1]'. The latter 
+%    can be activated with option \option{resetlabels}.
+%    \begin{macrocode}
+\newif\ifcontinuouslabels 
+\continuouslabelstrue
+\DeclareOption{resetlabels}{\continuouslabelsfalse} 
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{labeled}
+%    \changes{v1.3d}{2005/10/25}{Define option \option{labeled}.}
+%
+%    Define a new option to add the internal suffixes for each
+%    bibliography as labels to the bibitems.
+%    \begin{macrocode}
+\newif\iflabeled
+\labeledfalse
+\DeclareOption{labeled}{\labeledtrue}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+%
+% \noindent Finally, process all package options.
+%
+%    \begin{macrocode}
+\ProcessOptions
+%    \end{macrocode}
+%   
+%
+% \subsection{Preliminaries}
+%
+% \begin{macro}{\mylop}
+% \begin{macro}{\mylopoff}
+%    Variation of |\lop|, using `|,|' as separator instead of `|\|'
+%    to extract the elements in the first argument of |\newcites|
+%    (cf.~The \TeX book, p. 378).  
+%    \begin{macrocode}
+\def\mylop#1\to#2{\expandafter\mylopoff#1\mylopoff#1#2}
+\long\def\mylopoff#1,#2\mylopoff#3#4{\def#4{#1}\def#3{#2}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%
+% \begin{macro}{\@newciteauxhandle}
+%    \changes{v1.1b}{2001/10/10}{Handle removed.}
+%
+%    Define a new handle of the auxiliary file for all |\cite| and
+%    |\nocite| commands, standard as well as newly defined. For the
+%    standard commands, this handle is let to |\auxout|. Since version
+%    1.1b the definition |\let\@newciteauxhandle\@auxout| is no longer
+%    needed since  below we reset |\@citex| to its standard value
+%    after each call of |\mb@@citex|. 
+% \end{macro}
+%
+%
+% \begin{macro}{\std@@citex}
+% \begin{macro}{\mb@@citex}
+%    \changes{v1.0f}{2000/01/10}{Update to \package{natbib} v7.0:
+%                                save \macrott{@auxout} before
+%                                redefinition instead of encapsulation
+%                                in braces.}    
+%    \changes{v1.1b}{2001/10/10}{\macrott{global} setting of 
+%             \macrott{@save@auxout}; setting of \macrott{newciteauxhandle}
+%             removed; instead, reset \macrott{citex} to its standard 
+%             version.}
+%    \changes{v1.2a}{2003/07/15}{New definition of \macrott{mb@@citex}
+%             only if \macrott{@newciteauxhandle} is not already
+%             defined by compatible packages.}
+%                    
+%
+%    Definitions of |\mb@@citex| to replace |\@citex| in the definition of     
+%    the various |cite| commands. The idea is to write to a specific file
+%    referred to |\@newciteauxhandle| instead of |\@auxout|.  Below in the
+%    definition of the specific |\cite<s>| and |\nocite<s>| commands,
+%    |\@newciteauxhandle| is set to the new auxiliary files |<s>.aux|. If
+%    |\@newciteauxhandle| is already defined by compatible packages, simply
+%    |\let| macro |\mb@@citex| to |\@citex|
+%  
+%    If \package{natbib} is loaded, a variant of |\@citex| with an 
+%    additional optional argument is needed. Macro |\NAT@set@cites|
+%    invokes \package{natbib}'s |\cite| and |\@citex| definitions.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{natbib}{%
+    \NAT@set@cites
+    \let\std@@citex\@citex
+    \def\mb@@citex[#1][#2]#3{%
+      \global\let\@save@auxout\@auxout
+      \let\@auxout\@newciteauxhandle 
+      \std@@citex[#1][#2]{#3}%
+      \let\@auxout\@save@auxout
+      \let\@citex\std@@citex}%
+  }{% else
+    \@ifundefined{@newciteauxhandle}{% not defined by compatible packages
+      \let\std@@citex\@citex
+      \def\mb@@citex[#1]#2{{%
+        \let\@auxout\@newciteauxhandle
+        \std@@citex[#1]{#2}}%
+        \let\@citex\std@@citex}%
+      }{\let\mb@@citex\@citex}%
+  }%
+}%
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%
+% \begin{macro}{\@newusecounter}
+% \begin{macro}{\newusecounter}
+%    Do not reset counter to zero at begin of bibliography. This
+%    generates continuous numbering of references through all new
+%    bibliographies to ensure that numerical references are created
+%    unambiguously. To reset the counter only for the \emph{first}
+%    bibliography, |\newusecounter| is initially let to |\usecounter|.
+%    Below, in the definition of the new bibliographies,
+%    |\newusecounter| is let to |\@newusecounter|.
+%    \begin{macrocode}
+\def\@newusecounter#1{\@nmbrlisttrue\def\@listctr{#1}}
+\let\newusecounter\usecounter
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%
+% \begin{macro}{\std@bibliography}
+% \begin{macro}{\bibliography}
+%    \changes{v1.0a}{1999/07/27}{Continuous numbering also for 
+%                                \macrott{bibliography}.}
+%    \changes{v1.0i}{2000/01/12}{Change to respond to option
+%                                \option{resetlabels}.} 
+%
+%    To ensure continuous numbering, the |\newusecounter| is
+%    redefined also for the standard |\bibliography|, same as for the
+%    new |\bibliography|\meta{s} macros.
+%    \begin{macrocode}
+\let\std@bibliography\bibliography
+\def\bibliography#1{%
+  \ifcontinuouslabels
+    \let\usecounter\newusecounter
+  \fi
+  \std@bibliography{#1}%
+  \ifcontinuouslabels
+    \global\let\newusecounter\@newusecounter
+  \fi}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%
+% \begin{macro}{\mb@biblabelwidth}
+% \begin{macro}{\setbiblabelwidth}
+%    \changes{v1.0e}{1999/12/12}{New macro.}
+%
+%    The macro |\setbiblabelwidth| explicitly sets the width of the
+%    labels in the bibliography. An internal counter
+%    |\mb@biblabelwidth| is introduced and a macro |\setbiblabelwidth|
+%    which simply assigns its argument to the new counter. The value
+%    of the counter is then used in \package{multibib}'s modification
+%    of |\thebibliography|.
+%    \begin{macrocode}
+\newcount\mb@biblabelwidth
+\newcommand\setbiblabelwidth[1]{\mb@biblabelwidth #1}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%
+% \begin{macro}{\std@thebibliography}
+% \begin{macro}{\thebibliography}
+%    \changes{v1.0b}{1999/07/30}{Correct label width for numerical
+%                                reference schemes.}
+%    \changes{v1.0e}{1999/12/12}{Works with \macrott{setbiblabelwidth}.}
+%    \changes{v1.0i}{2000/01/14}{No change of label width for option
+%                                \option{resetlabels}.} 
+%    \changes{v1.0k}{1999/01/14}{\package{suthesis} compatibility.}
+%    \changes{v1.3a}{2004/02/09}{Natbib specific definition of
+%    thebibliography, modified to use \macrott{usecounter}.}
+%
+%    The argument of |\thebibliography| determines the width of the
+%    labels in the bibliography. First it is checked if the parameter
+%    is a number. If it is not a number, we do not have to care about
+%    setting label widths and can simply call |\std@thebibliography|.
+%    Otherwise we check if the label width is not set explicitly,
+%    i.e., |\mb@biblabelwidth=0|. In this case the label width is determined
+%    as the the last label in the previous bibliography |\c@enumiv|
+%    plus the number of labels in the current bibliography |#1|
+%    (provided the bibliography style computes the values right,
+%    like \textsf{mbplain}). If the value is set explicitly
+%    by~|\mb@biblabelwidth|, this value is used and then reset to zero
+%    such that only the labels in the current bibliography are affected.
+%
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{suthesis}%
+    {\def\thebibliography#1{%
+       \newpage
+       \addcontentsline{toc}{chapter}{\bibname}%
+       \@ldthebibliography{#1}}}%
+    {}%
+  \@ifpackageloaded{natbib}%
+    {%
+
+
+\renewenvironment{thebibliography}[1]{%
+ \bibsection\parindent \z@\bibpreamble\bibfont\list
+   {\@biblabel{\arabic{NAT@ctr}}}{\@bibsetup{#1}%
+    \usecounter{NAT@ctr}}% %% only changed here to usecounter
+    \ifNAT@openbib
+      \renewcommand\newblock{\par}
+    \else
+      \renewcommand\newblock{\hskip .11em \@plus.33em \@minus.07em}%
+    \fi
+    \sloppy\clubpenalty4000\widowpenalty4000
+    \sfcode`\.=1000\relax
+    \let\citeN\cite \let\shortcite\cite
+    \let\citeasnoun\cite
+ }{\def\@noitemerr{%
+  \PackageWarning{natbib}
+     {Empty `thebibliography' environment}}%
+  \endlist\vskip-\lastskip}
+
+      \let\std@thebibliography\thebibliography
+      \def\thebibliography#1{%
+        \@isnumber{#1}%
+        {\ifnum\mb@biblabelwidth=0
+          \@tempcnta\c@NAT@ctr %% changed here to c@NAT@ctr
+          \ifcontinuouslabels
+          \advance\@tempcnta#1%
+          \fi
+          \std@thebibliography{\@arabic\@tempcnta}%
+          \else
+          \std@thebibliography{\@arabic\mb@biblabelwidth}%
+        \global\mb@biblabelwidth 0
+        \fi}%
+        {\std@thebibliography{#1}}%
+     }%
+   }%
+   {% else, natbib not loaded
+     \let\std@thebibliography\thebibliography
+
+     \def\thebibliography#1{%
+        \@isnumber{#1}%
+          {\ifnum\mb@biblabelwidth=0
+            \@tempcnta\c@enumiv
+            \ifcontinuouslabels
+            \advance\@tempcnta#1%
+            \fi
+            \std@thebibliography{\@arabic\@tempcnta}%
+            \else
+            \std@thebibliography{\@arabic\mb@biblabelwidth}%
+          \global\mb@biblabelwidth 0
+          \fi}%
+        {\std@thebibliography{#1}}%
+    }%
+   }%
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%
+% \begin{macro}{\@isnumber}
+%    \changes{v1.0g}{2000/01/10}{Empty string is not handled as number.}
+%    \changes{v1.1d}{2001/01/04}{Execute \macrott{@scannumber} in
+%                                \macrott{hbox}.}
+%    \changes{v1.3b}{2004/02/10}{\macrott{isnumber} changed to accept
+%                                arguments with \macrott{fi}, e.g.,
+%                                {\macrott{iffalse}{bjko}\macrott{fi}}.}  
+%
+%    Macro |\@isnumber| behaves as follows: If |#1| is a number (which
+%    may contain blanks at arbitrary positions), |#2| is executed,
+%    else |#3|.
+%
+%    \begin{macrocode}
+\newcommand{\@isnumber}[3]{%
+  \def\argdef{#1}%
+  \edef\argedef{#1}%
+  \ifx\argedef\empty
+    #3
+  \else
+    \ifx\argdef\argedef
+      \global\@tempswafalse
+      \setbox\@tempboxa=\hbox{\@scannumber#1\plugh}%
+      \if@tempswa#2\else#3\fi
+    \else
+      #3
+    \fi
+  \fi}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\@scannumber}
+%    \changes{v1.1d}{2001/01/04}{Initialize \macrott{plugh} with
+%                                \macrott{relax}; simply \macrott{relax} 
+%                                when the \macrott{testchar} is not a digit 
+%                                instead of \macrott{@gobbletillplugh}.} 
+%
+%    Macro |\@scannumber| evaluates the single characters
+%    of its argument. If all characters are digits or
+%    blanks,|\@scannumber| is recursively evoked until it finally  
+%    reads |\plugh| which marks the end of the argument (in
+%    macro |\@isnumber|) and sets |\@tempswatrue| which is then used
+%    in |\@isnumber|. If the tested character is not a digit, the
+%    macro exits, leaving |\@tempswa| unchanged.
+%
+%    \begin{macrocode}
+\let\plugh\relax
+\newcommand{\@scannumber}[1]{%
+  \let\testchar#1%
+  \ifx \testchar 0\let\next\@scannumber
+  \else\ifx \testchar 1\let\next\@scannumber
+  \else\ifx \testchar 2\let\next\@scannumber
+  \else\ifx \testchar 3\let\next\@scannumber
+  \else\ifx \testchar 4\let\next\@scannumber
+  \else\ifx \testchar 5\let\next\@scannumber
+  \else\ifx \testchar 6\let\next\@scannumber
+  \else\ifx \testchar 7\let\next\@scannumber
+  \else\ifx \testchar 8\let\next\@scannumber
+  \else\ifx \testchar 9\let\next\@scannumber
+  \else\ifx \testchar \plugh \let\next\relax \global\@tempswatrue
+  \else \let\next\relax
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+  \next}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\@gobbletillplugh}
+%    \changes{v1.1d}{2001/01/04}{Macro removed.}
+%
+%    Macro |\@gobbletillplug| gobbles all input up to (and including)
+%    |\plugh| by defining |\def\@gobbletillplugh#1\plugh{}|. Since
+%    version 1.1d, |\@scannumber| is evaluated in a |\hbox| and the
+%    gobbling is no longer needed.
+% \end{macro}
+%
+%
+% \begin{macro}{\mb@addtocontents}
+%    \changes{v1.0d}{1999/08/19}{Add bibliography name to table of contents.}
+%
+%    Some styles like \package{suthesis} or \komascript\ classes like
+%    \class{scrartcl} with option \option{bibtotoc} redefine
+%    |\bibliography| such that the heading of the bibliography appears
+%    in the table of contents. Entries for the table of contents are
+%    generated by writing the appropriate information to |\@auxout|.
+%    Because |\@auxout| is locally redefined when the bibliography is
+%    read, entries go to the wrong file. Therefore, a macro
+%    |\mb@addtocontents| is introduced which writes to |\temp@auxout|.
+%    Below, in the definition of the new |\bibliography|\meta{s},
+%    |\mb@addtocontents| replaces the standard |\addtocontents|, and
+%    |\temp@auxout| is set to the default |\@auxout|.
+%    \begin{macrocode}
+\long\def\mb@addtocontents#1#2{%
+  \protected@write\temp@auxout
+    {\let\label\@gobble \let\index\@gobble \let\glossary\@gobble}%
+    {\string\@writefile{#1}{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\bibname}
+%    \changes{v1.0h}{2000/01/10}{Changed to evoke \macrott{refname} instead.} 
+%    \changes{v1.0j}{2000/01/13}{New implementation: Check if
+%                                \macrott{bibname} is undefined
+%                                instead of checking if class
+%                                \class{book} or \class{report} is loaded.} 
+%    \changes{v1.1e}{2001/01/04}{Macro removed.}
+%
+%    Package~\package{multibib} redefines the headings of the new
+%    bibliographies using |\refname|. Some classes like \class{book} and
+%    \class{report} use |\bibname| instead of |\refname|. Instead of
+%    changing the definition of |\bibname|, we simply define
+%    |\refname| in the same was as |\bibname| in the |newcites| loop below.
+% \end{macro}
+%
+%
+% \begin{macro}{\@mb@citenamelist}
+%    \changes{v1.2b}{2003/09/22}{Macro added.}
+%   
+%    Define list of cite commands to be processed within the
+%    |\newcites| loop below. If already defined by other packages,
+%    |\relax|.
+%    \begin{macrocode}
+\@ifundefined{@mb@citenamelist}%
+  {\def\@mb@citenamelist{cite,citep,citet,citealp,citealt}}%
+  {\relax}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+%
+% \subsection{The \texttt{newcites} loop}
+%
+% \begin{macro}{\newcites}
+%    Loop over all headings in \meta{heading\_list}. The current
+%    heading is stored in |\@newrefname|, the corresponding suffix is
+%    stored in |\@suffix|.
+%    \begin{macrocode}
+\def\newcites#1#2{%
+  \def\@suffixlist{#1,}%
+  \@for\@newrefname:=#2\do{%
+    \mylop\@suffixlist\to\@suffix
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@refname<s>}
+%    Define the reference title |\protected|, such that the title can
+%    contain control sequences as, e.g., in the title `\LaTeX\
+%    References'. 
+%    \begin{macrocode}
+    \expandafter\protected@edef\csname refname\@suffix\endcsname
+      {\@newrefname}%
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\@auxout<s>}
+% \begin{macro}{\@auxout<s>name}
+%    \changes{v1.0c}{1999/08/19}{\macrott{makeatletter} when input new 
+%                                auxiliary files.}
+%
+%    Define new write. Input the auxiliary file if it exists before
+%    opening it, to read the replacement text for the |\cite| commands
+%    which is generated by |\bibcite|. Because some styles (like
+%    \package{inlinebib.sty}) write command names containing an |@| to 
+%    the auxiliary files, |\makeatletter| is locally set.
+%    \begin{macrocode}
+    \if@filesw
+      \expandafter\newwrite\csname @auxout\@suffix\endcsname
+      \expandafter\edef\csname @auxout\@suffix name\endcsname{\@suffix}%
+      \begingroup
+        \makeatletter
+        \@input@{\csname @auxout\@suffix name\endcsname .aux}%
+      \endgroup
+      \immediate\openout\csname @auxout\@suffix\endcsname
+                        \csname @auxout\@suffix name\endcsname .aux
+    \fi
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%    Define new |\cite| and |\nocite|. For |\nocite|, we simple let
+%    |\@auxout| to the new auxiliary file. For |\cite|, this
+%    approach does not work because |\cite| can have an optional
+%    argument, so we cannot enclose the redefinition of |\@auxout| in
+%    braces. We slightly modify |\@citex| (see above) to use a special
+%    handle, |\@newciteauxhandle|, which is let to the new auxiliary file.
+%
+% \begin{macro}{\cite<s>}
+%    \changes{v1.2b}{2003/09/22}{Loop over \macrott{@mb@citenamelist} added.}
+%
+%    For each \meta{citename} in |\@mb@citenamelist|, define
+%    \package{multibib}'s new \meta{citename}\meta{s} commands. For
+%    example, if \meta{citename} := |cite| and if \meta{s} := |own|, a command
+%    |\citeown| is defined as:
+%    \begin{verbatim}
+%      \def\citeown{%
+%        \let\@citex\mb@@citex
+%        \let\@newciteauxhandle\@auxoutown
+%        \cite}
+%    \end{verbatim}
+%    \begin{macrocode}
+    \@for\@citename:=\@mb@citenamelist\do{%
+      \expandafter\edef\csname \@citename\@suffix\endcsname{%
+        \let\noexpand\@citex\noexpand\mb@@citex
+        \let\noexpand\@newciteauxhandle\csname @auxout\@suffix\endcsname
+        \noexpand\csname\@citename\endcsname}%
+    }%
+%
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\nocite<s>}
+%    \changes{v1.2c}{2004/01/23}{\macrott{let} \macrott{@citex}
+%             \macrott{mb@@citex} removed.}
+%
+%    Define new |\nocite|\meta{s}, e.g., if \meta{s} := |own|, a
+%    command |\nociteown| is defined as:
+%    \begin{verbatim}
+%      \def\nociteown##1{{%
+%        \let\@auxout\@auxoutown
+%        \nocite{##1}}}
+%    \end{verbatim}
+%    \begin{macrocode}
+    \expandafter\edef\csname nocite\@suffix\endcsname##1{{%
+      \let\noexpand\@auxout\csname @auxout\@suffix\endcsname
+      \noexpand\nocite{##1}}}% 
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\bibitem<s>}
+%
+%    \changes{v1.3d}{2005/10/25}{Define a bibliography specific
+%                    version of \macrott{@bibitem} and
+%                    \macrott{@biblabel} if \option{labeled} is
+%                    active.}  
+%
+%    \begin{macrocode}
+    \iflabeled % if option labeled
+      \expandafter\edef\csname @bibitem\@suffix\endcsname##1{%
+        \noexpand\item
+        \noexpand\if@filesw \noexpand\immediate\noexpand\write\noexpand\@auxout
+        {\noexpand\string\noexpand\bibcite{##1}%
+           {\@suffix\noexpand\the\noexpand\value{\noexpand\@listctr}}}%
+        \noexpand\fi
+        \noexpand\ignorespaces}%
+      \expandafter\edef\csname @biblabel\@suffix\endcsname##1{[\@suffix##1]}%
+    \fi % end if option labeled
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\bibliography<s>}
+%    \changes{v1.0i}{2000/01/12}{Remove setting of \macrott{usecounter} and
+%                                \macrott{newusecounter} which is done
+%                                in redefined \macrott{bibliography}.}   
+%    \changes{v1.1e}{2001/01/04}{Definition of \macrott{bibname} analogously
+%                                to \macrott{refname}.}
+%    \changes{v1.3d}{2005/10/25}{Activate the bibliography specific
+%                    versions of \macrott{@bibitem} and
+%                    \macrott{@biblabel} if \option{labeled} is
+%                    active.}  
+%
+%    Define new |\bibliography|\meta{s} equivalents.
+%    The standard |\bibliography| macro does
+%    two things: The bibdata file is written to the auxiliary file
+%    |\@auxout| and the |.bbl| file |\jobname.bbl| is inputed. For
+%    |\bibliography|\meta{s}, we thus let both |\@auxout| 
+%    and |\jobname| refer to the new auxiliary file \meta{s}|.aux|.
+%    Since some styles and classes write the heading
+%    of the bibliography to the table of contents, the old meaning of
+%    |\@auxout| is saved in |\temp@auxout| and |\addtocontents| is locally
+%    replaced by \package{multibib}s variant |\mb@addtocontents|
+%    (defined above) which writes to |\temp@auxout| instead of
+%    |\auxout|. Further, the heading of the bibliography generated by
+%    |\refname| or |\bibname| depending on the class is set to the
+%    particular heading of |\bibliography|\meta{s}. After this
+%    redefinitions, the standard |\bibliography| can be evoked. 
+%    Extra braces are needed to encapsulate the various |\let|s.
+%    \begin{macrocode}  
+    \expandafter\edef\csname bibliography\@suffix\endcsname##1{{%
+      \let\noexpand\temp@auxout\noexpand\@auxout 
+      \let\noexpand\addtocontents\noexpand\mb@addtocontents
+      \let\noexpand\@auxout\csname @auxout\@suffix\endcsname
+      \let\noexpand\jobname
+         \expandafter\noexpand\csname @auxout\@suffix name\endcsname
+      \let\noexpand\refname
+          \expandafter\noexpand\csname refname\@suffix\endcsname
+      \let\noexpand\bibname
+          \expandafter\noexpand\csname refname\@suffix\endcsname
+      \iflabeled
+        \let\noexpand\@bibitem
+            \expandafter\noexpand\csname @bibitem\@suffix\endcsname
+        \let\noexpand\@biblabel
+            \expandafter\noexpand\csname @biblabel\@suffix\endcsname
+      \fi
+      \noexpand\bibliography{##1}%
+      }}
+%    \end{macrocode}
+% \end{macro}
+%
+% \newpage
+%
+% \begin{macro}{\bibliographystyle<s>}
+% \changes{v1.3c}{2004/02/10}{Write directly the \macrott{bibstyle}
+%                macro to the specific auxfile instead of redefining a
+%                auxhandle and then using the standard
+%                \macrott{bibliographystyle} macro.} 
+%
+%    Define new |\bibliographystyle|\meta{s} equivalents.
+%    \begin{macrocode}  
+    \expandafter\edef\csname bibliographystyle\@suffix\endcsname##1{%
+      \noexpand\if@filesw
+        \noexpand\immediate\noexpand\write\csname @auxout\@suffix\endcsname
+          {\noexpand\string\noexpand\bibstyle{##1}}%
+      \noexpand\fi}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+%    Close loop and end macro.
+%    \begin{macrocode}
+   }%
+}
+%    \end{macrocode}
+%
+%
+%    Finally, restrict the use of |\newcites| to the preamble such that
+%    the auxiliary files can be |\@input@|ed.
+%    \begin{macrocode}
+\@onlypreamble\newcites
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
+%
+% \PrintIndex
+% \PrintChanges
+% \Finale
+%
