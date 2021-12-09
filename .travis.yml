@@ -11,6 +11,8 @@ addons:
         - texlive-fonts-extra
         - texlive-latex-recommended
         - texlive-latex-extra
+        # texlive-bibtex-extra contains the multibib package which is used by
+        # the quantum-bibliographystyle-demo.
         - texlive-bibtex-extra
         # Some of the additional packages we depend on,
         # such as {ltxgrid}, are shipped with the "publishers"
@@ -35,6 +37,7 @@ script:
     - pdflatex -interaction=nonstopmode -halt-on-error quantumview-template.tex
     # Test whether the bst demo compiles.
     - pdflatex -interaction=nonstopmode -halt-on-error quantum-bibliographystyle-demo.tex
+    # For multibib, bibtex is called on the sub-bib files.
     - bibtex article
     - bibtex book
     - bibtex misc
