@@ -80,7 +80,7 @@ STRINGS { m }
 FUNCTION {my.warning}
 { 'm :=
   warnings.are.errors
-    { "\ReferToOutput" write$
+    { "\ReferToPDFOutput" write$
       newline$
       "{\color{red}{ This bibitem caused a bibtex warning: " m * "entry.}}" *
       write$
@@ -93,7 +93,7 @@ FUNCTION {my.warning}
 FUNCTION {my.crossref.warning}
 { 'm :=
   warnings.are.errors
-    { "\ReferToOutput" write$
+    { "\ReferToPDFOutput" write$
       newline$
       "{\color{red}{This bibitem caused a crossref-bibtex warning: need " m * "to crossref.}}" *
       write$
