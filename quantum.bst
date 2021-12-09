@@ -27,6 +27,7 @@ ENTRY
     key
     month
     note
+    nolink
     number
     organization
     pages
@@ -79,7 +80,7 @@ STRINGS { m }
 FUNCTION {my.warning}
 { 'm :=
   warnings.are.errors
-    { "\QuantumBstError" write$
+    { "\ReferToOutput" write$
       newline$
       "{\color{red}{ This bibitem caused a bibtex warning: " m * "entry.}}" *
       write$
@@ -92,7 +93,7 @@ FUNCTION {my.warning}
 FUNCTION {my.crossref.warning}
 { 'm :=
   warnings.are.errors
-    { "\QuantumBstError" write$
+    { "\ReferToOutput" write$
       newline$
       "{\color{red}{This bibitem caused a crossref-bibtex warning: need " m * "to crossref.}}" *
       write$
@@ -212,6 +213,14 @@ FUNCTION {no.output.check}
 { 't :=
   duplicate$ empty$
     { pop$ "empty " t * " in " * my.warning }
+    'skip$
+  if$
+}
+
+FUNCTION {no.output.check.links}
+{ 't :=
+  duplicate$ empty$ nolink missing$ and
+    { pop$ "empty " t * ". If none of these fields is applicable for the cited work, please include the field `nolink = \{\}`, in the bib " * my.warning }
     'skip$
   if$
 }
@@ -835,7 +844,7 @@ FUNCTION {format.url}
 
 FUNCTION {check.links}
 { doi missing$ eprint missing$ and
-    { format.url "doi, eprint and url" no.output.check pop$ }
+    { format.url "doi, eprint and url" no.output.check.links pop$ }
     'skip$
   if$
 }
