@@ -35,7 +35,12 @@ script:
     - pdflatex -interaction=nonstopmode -halt-on-error quantumview-template.tex
     # Test whether the bst demo compiles.
     - pdflatex -interaction=nonstopmode -halt-on-error quantum-bibliographystyle-demo.tex
-    - bibtex quantum-bibliographystyle-demo
+    - bibtex article
+    - bibtex book
+    - bibtex misc
+    - bibtex repo
+    - bibtex web
+    - bibtex other
     - pdflatex -interaction=nonstopmode -halt-on-error quantum-bibliographystyle-demo.tex
     # Test whether the installer works.
     - bash install.sh
