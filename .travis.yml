@@ -6,7 +6,7 @@ dist: trusty
 
 
 before_install:
-  - sudo apt-get -q update
+  - sudo apt-get -qq update
 
 addons:
     apt:
