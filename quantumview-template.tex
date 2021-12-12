@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{hyperref}
+\usepackage{fixltx2e}
 \usepackage[numbers,sort&compress]{natbib}
 
 \begin{document}
@@ -25,7 +26,8 @@ Quantum provides the quantumview documentclass to enable authors of Views to use
 \section{Supported Formatting Options}
 The documentclass natively supports the following operations:
 
-\paragraph{Text formatting} The following text formats are supported: \emph{emphasis}, \textit{italic}, \textbf{bold}, \texttt{typewriter}, \textsuperscript{superscript} and \textsubscript{subscript}.
+\paragraph{Text formatting} The following text formats are supported:
+\emph{emphasis}, \textit{italic}, \textbf{bold}, \texttt{typewriter}, \textsuperscript{superscript} and \textsubscript{subscript}.
 
 \paragraph{Sectioning} Sectioning -- if needed -- can be performed using the regular \texttt{{\textbackslash}section}, \texttt{{\textbackslash}subsection}, \texttt{{\textbackslash}subsubsection} and \texttt{{\textbackslash}paragraph} commands. These will be converted to HTML header tags and therefore not show section numbers in the final HTML.
 
@@ -60,7 +62,7 @@ Note that further modifiers, \emph{e.g.}\ for roman numbering and additional pac
 The quantumview document class also provides commands that are useful in copy-editing. These are \texttt{{\textbackslash}corr} for \corr{correctons}{corrections} and \texttt{{\textbackslash}ins} \ins{for insertions}.
 
 \bibliography{quantumview-template}
-\bibliographystyle{unsrtnat}
+\bibliographystyle{quantum}
 
 
 \end{document}

@@ -8,7 +8,7 @@ This is version 6.0 of `quantumarticle`, the document class for typesetting arti
 
 [More information](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-template.pdf) on using quantumarticle and on typesetting manuscripts for Quantum can be found in the accompanying template.
 
-[Extra information on the Quantum bibstyle](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum_bst_demo.pdf) can be found in the bibstyle demo.
+[Extra information on the Quantum bibstyle](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-bibliographystyle-demo.pdf) can be found in the bibstyle demo.
 
 [Documentation](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.pdf) of all class options is also provided.
 
@@ -60,7 +60,7 @@ In addition, this document class come bundled with two new extras (currently in 
 
 ### New in v6.0
 
-* introduced the Quantum bibstyle `quantum.bst` together with the demo file `quantum_bst_demo`
+* introduced the Quantum bibstyle `quantum.bst` together with the demo file `quantum-bibliographystyle-demo`
 * Removed the quantum-plots package, which is superseeded by [rsmf](https://pypi.org/project/rsmf/)
 * Fixed typo in allowfontchangeintitle option
 
