@@ -52,14 +52,14 @@ ENTRY
 % State descriptors
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
-INTEGERS 
-  { output.state 
-    before.all 
-    mid.sentence 
-    after.sentence 
-    after.block 
-    len 
-    explicit.doi.links 
+INTEGERS
+  { output.state
+    before.all
+    mid.sentence
+    after.sentence
+    after.block
+    len
+    explicit.doi.links
     warnings.are.errors
   }
 
@@ -80,14 +80,13 @@ STRINGS { m }
 FUNCTION {my.warning}
 { 'm :=
   warnings.are.errors
-    { "\ReferToPDFOutput" write$
-      newline$
-      "{\color{red}{ This bibitem caused a bibtex warning: " m * "entry.}}" *
+    { "{\color{red}This bibitem caused a bibtex warning: "
+      m * "}\PackageError{quantum.bst}{\quantumbsterror}{\quantumbsterror}" *
       write$
     }
     'skip$
   if$
-  m cite$ * warning$ 
+  m cite$ * warning$
 }
 
 FUNCTION {my.crossref.warning}
@@ -100,7 +99,7 @@ FUNCTION {my.crossref.warning}
     }
     'skip$
   if$
-  "need " m * " for " * cite$ * " to crossref " * crossref * warning$ 
+  "need " m * " for " * cite$ * " to crossref " * crossref * warning$
 }
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
@@ -220,7 +219,12 @@ FUNCTION {no.output.check}
 FUNCTION {no.output.check.links}
 { 't :=
   duplicate$ empty$ nolink missing$ and
-    { pop$ "empty " t * ". If none of these fields is applicable for the cited work, please include the field `nolink = \{\}`, in the bib " * my.warning }
+    { pop$ "empty " t * ". " *
+      "If none of these fields is applicable for the cited work you can include the field " *
+%      newline$ *
+      "\verb|`nolink = {}`| in its bib" *
+      my.warning
+    }
     'skip$
   if$
 }
@@ -411,7 +415,7 @@ FUNCTION {format.eprint}
     { "" }
     {
       primaryClass empty$
-        { " \href{http://arxiv.org/abs/" eprint format.arxiv.hyperlink * "}" * 
+        { " \href{http://arxiv.org/abs/" eprint format.arxiv.hyperlink * "}" *
           "{arXiv:" * eprint format.longeprint * "}" *
         }
 	    { archivePrefix empty$
@@ -545,7 +549,7 @@ FUNCTION {format.bvol.chap.pages}
     'skip$
     { duplicate$ empty$
         { #0 }
-        { ", " * 
+        { ", " *
           #1
         }
       if$
@@ -556,7 +560,7 @@ FUNCTION {format.bvol.chap.pages}
     'skip$
     { duplicate$ empty$
         { #0 }
-        { ", " * 
+        { ", " *
           #1
         }
       if$
@@ -884,7 +888,7 @@ FUNCTION {is.arxiv.article}
         { #0 }
         { archivePrefix "l" change.case$ "arxiv" =
           { #1 }
-          { "The `archivePrefix' " archivePrefix * " is not supported for entry" * my.warning 
+          { "The `archivePrefix' " archivePrefix * " is not supported for entry" * my.warning
             #0
           }
         if$
@@ -932,11 +936,11 @@ FUNCTION {std.article}
   crossref missing$
     { new.block
       get.journal "journal, shortjournal and journaltitle" no.output.check
-      format.vol.num.pages * 
+      format.vol.num.pages *
       doi missing$
       explicit.doi.links
       or
-        'skip$ 
+        'skip$
         { add.doi.link }
       if$
       output
@@ -978,7 +982,7 @@ FUNCTION {thesis.start}
 FUNCTION {thesis.end}
 {
   new.block
-  school "school" output.check 
+  school "school" output.check
   new.block
   address output
   format.year "year" output.check
@@ -1011,13 +1015,13 @@ FUNCTION {book}
   new.block
   #0 'doi.linked :=
   crossref missing$
-    { format.bvol.chap.pages 
+    { format.bvol.chap.pages
       duplicate$ empty$
       doi missing$
       explicit.doi.links
       or or
         'skip$
-        { add.doi.link 
+        { add.doi.link
           #1 'doi.linked :=
         }
       if$
@@ -1030,7 +1034,7 @@ FUNCTION {book}
       doi.linked
       or or or
         'skip$
-        { add.doi.link 
+        { add.doi.link
           #1 'doi.linked :=
         }
       if$
@@ -1042,7 +1046,7 @@ FUNCTION {book}
       doi.linked
       or or
         'skip$
-        { add.doi.link 
+        { add.doi.link
           #1 'doi.linked :=
         }
       if$
@@ -1087,7 +1091,7 @@ FUNCTION {website}
   new.block
   code empty$
     'skip$
-    { format.code output 
+    { format.code output
       new.block
     }
   if$
@@ -1149,7 +1153,7 @@ FUNCTION {proceedings}
         'skip$
         { organization output }
       if$
-      new.block      
+      new.block
       publisher output
     }
   if$
@@ -1197,13 +1201,13 @@ FUNCTION {incollection}
   crossref missing$
     { format.in.ed.booktitle "booktitle" output.check
       new.block
-      format.bvol.chap.pages 
+      format.bvol.chap.pages
       duplicate$ empty$
       doi missing$
       explicit.doi.links
       or or
         'skip$
-        { add.doi.link 
+        { add.doi.link
           #1 'doi.linked :=
         }
       if$
@@ -1216,7 +1220,7 @@ FUNCTION {incollection}
       doi.linked
       or or or
         'skip$
-        { add.doi.link 
+        { add.doi.link
           #1 'doi.linked :=
         }
       if$
@@ -1228,7 +1232,7 @@ FUNCTION {incollection}
       doi.linked
       or or
         'skip$
-        { add.doi.link 
+        { add.doi.link
           #1 'doi.linked :=
         }
       if$
@@ -1259,13 +1263,13 @@ FUNCTION {inproceedings}
   crossref missing$
     { format.in.ed.booktitle "booktitle" output.check
       new.block
-      format.bvol.chap.pages 
+      format.bvol.chap.pages
       duplicate$ empty$
       doi missing$
       explicit.doi.links
       or or
         'skip$
-        { add.doi.link 
+        { add.doi.link
           #1 'doi.linked :=
         }
       if$
@@ -1278,7 +1282,7 @@ FUNCTION {inproceedings}
       doi.linked
       or or or
         'skip$
-        { add.doi.link 
+        { add.doi.link
           #1 'doi.linked :=
         }
       if$
@@ -1627,13 +1631,13 @@ FUNCTION {begin.bib}
       #1 'warnings.are.errors :=
     }
     { preamble$ "MakeDoiLinksExplicit" contains.substring
-        { #1 'explicit.doi.links := 
+        { #1 'explicit.doi.links :=
           "\newcommand{\MakeDoiLinksExplicit}{}" write$ newline$
         }
         { #0 'explicit.doi.links := }
       if$
       preamble$ "DoNotMakeWarningsErrors" contains.substring
-        { #0 'warnings.are.errors := 
+        { #0 'warnings.are.errors :=
           "\newcommand{\DoNotMakeWarningsErrors}{}" write$ newline$
         }
         { #1 'warnings.are.errors := }
