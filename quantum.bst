@@ -4,8 +4,8 @@
 %
 % In addition to added arxiv and DOI hyperlinks, the file style incorporates design
 % choices made for Quantum journal, in particular in the light of online availability.
-% Furthermore, this file style introduces the reference classes repository and
-% website.
+% Furthermore, this file style introduces some custom reference classes as well as
+% custom entry fields.
 
 ENTRY
   { address
@@ -80,8 +80,12 @@ STRINGS { m }
 FUNCTION {my.warning}
 { 'm :=
   warnings.are.errors
-    { "{\color{red}This bibitem caused a bibtex warning: "
-      m * "}\PackageError{quantum.bst}{\quantumbsterror}{\quantumbsterror}" *
+    { "{\color{red} This bibitem caused a BibTeX warning: "
+      m * " entry.}\PackageError{quantum.bst}{The bibitem " *
+      cite$ *
+      " caused a BibTeX warning}" *
+      "{By default, quantum.bst handles BibTeX warnings like compilation " *
+      "errors. Please refer to the bibliography style demo for details.}" *
       write$
     }
     'skip$
@@ -94,7 +98,12 @@ FUNCTION {my.crossref.warning}
   warnings.are.errors
     { "\ReferToPDFOutput" write$
       newline$
-      "{\color{red}{This bibitem caused a crossref-bibtex warning: need " m * "to crossref.}}" *
+      "{\color{red} This bibitem caused a crossref-BibTeX warning: need "
+      m * " to crossref.}\PackageError{quantum.bst}{The crossref bibitem " *
+      cite$ *
+      " caused a BibTeX warning}" *
+      "{By default, quantum.bst handles BibTeX warnings like compilation " *
+      "errors. Please refer to the bibliography style demo for details.}" *
       write$
     }
     'skip$
@@ -221,8 +230,7 @@ FUNCTION {no.output.check.links}
   duplicate$ empty$ nolink missing$ and
     { pop$ "empty " t * ". " *
       "If none of these fields is applicable for the cited work you can include the field " *
-%      newline$ *
-      "\verb|`nolink = {}`| in its bib" *
+      "\newline\verb|`nolink = {}`| in its bib" *
       my.warning
     }
     'skip$
