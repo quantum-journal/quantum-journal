@@ -80,8 +80,8 @@ STRINGS { m }
 FUNCTION {my.warning}
 { 'm :=
   warnings.are.errors
-    { "{\color{red} This bibitem caused a BibTeX warning: "
-      m * " entry.}\PackageError{quantum.bst}{The bibitem " *
+    { "{\color{red}{ This bibitem caused a BibTeX warning: "
+      m * " entry.}}\PackageError{quantum.bst}{The bibitem " *
       cite$ *
       " caused a BibTeX warning}" *
       "{By default, quantum.bst handles BibTeX warnings like compilation " *
