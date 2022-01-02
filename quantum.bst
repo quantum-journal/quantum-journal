@@ -69,6 +69,7 @@ INTEGERS
     ptr
     found.slashes
     doi.linked
+    dont.link.doi
     number.label
     longest.label.width
   }
@@ -923,7 +924,7 @@ FUNCTION {is.arxiv.article}
 }
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-% Raw citation classes that are aliased in the public citation classis
+% Raw citation classes that are aliased in the public citation classes
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 FUNCTION {arxiv.article}
@@ -1019,6 +1020,19 @@ FUNCTION {article}
   if$
 }
 
+FUNCTION {conditional.doi.link}
+{ 'dont.link.doi :=
+  duplicate$ empty$ dont.link.doi or 
+    { 'skip$ }
+    { add.doi.link
+      #1 'doi.linked :=
+    }
+  if$
+  output
+}
+
+
+
 FUNCTION {book}
 { output.bibitem
   author empty$
@@ -1031,16 +1045,8 @@ FUNCTION {book}
   #0 'doi.linked :=
   crossref missing$
     { format.bvol.chap.pages
-      duplicate$ empty$
-      doi missing$
-      explicit.doi.links
-      or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      doi missing$ explicit.doi.links or
+      conditional.doi.link
       new.block
       format.number.series
       duplicate$ empty$
@@ -1479,140 +1485,6 @@ MACRO {tcs} {"Theoretical Comput. Sci."}
 READ
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-% SORTING
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-
-FUNCTION {sortify}
-{ purify$
-  "l" change.case$
-}
-
-FUNCTION {sort.format.names}
-{ 's :=
-  #1 'nameptr :=
-  ""
-  s num.names$ 'numnames :=
-  numnames 'namesleft :=
-    { namesleft #0 > }
-    { nameptr #1 >
-        { "   " * }
-        'skip$
-      if$
-      s nameptr "{vv{ } }{ll{ }}{  f{ }}{  jj{ }}" format.name$ 't :=
-      nameptr numnames = t "others" = and
-        { "et al" * }
-        { t sortify * }
-      if$
-      nameptr #1 + 'nameptr :=
-      namesleft #1 - 'namesleft :=
-    }
-  while$
-}
-
-FUNCTION {sort.format.title}
-{ 't :=
-  "A " #2
-    "An " #3
-      "The " #4 t chop.word
-    chop.word
-  chop.word
-  sortify
-  #1 global.max$ substring$
-}
-
-FUNCTION {author.sort}
-{ author empty$
-    { key empty$
-        { "to sort, need author or key in " my.warning
-          ""
-        }
-        { key sortify }
-      if$
-    }
-    { author sort.format.names }
-  if$
-}
-
-FUNCTION {author.editor.sort}
-{ author empty$
-    { editor empty$
-        { key empty$
-            { "to sort, need author, editor, or key in " my.warning
-              ""
-            }
-            { key sortify }
-          if$
-        }
-        { editor sort.format.names }
-      if$
-    }
-    { author sort.format.names }
-  if$
-}
-
-FUNCTION {author.organization.sort}
-{ author empty$
-    { organization empty$
-        { key empty$
-            { "to sort, need author, organization, or key in " my.warning
-              ""
-            }
-            { key sortify }
-          if$
-        }
-        { "The " #4 organization chop.word sortify }
-      if$
-    }
-    { author sort.format.names }
-  if$
-}
-
-FUNCTION {editor.organization.sort}
-{ editor empty$
-    { organization empty$
-        { key empty$
-            { "to sort, need editor, organization, or key in " my.warning
-              ""
-            }
-            { key sortify }
-          if$
-        }
-        { "The " #4 organization chop.word sortify }
-      if$
-    }
-    { editor sort.format.names }
-  if$
-}
-
-FUNCTION {presort}
-{ type$ "book" =
-  type$ "inbook" =
-  or
-    'author.editor.sort
-    { type$ "proceedings" =
-        'editor.organization.sort
-        { type$ "manual" =
-            'author.organization.sort
-            'author.sort
-          if$
-        }
-      if$
-    }
-  if$
-  "    "
-  *
-  year field.or.null sortify
-  *
-  "    "
-  *
-  title field.or.null
-  sort.format.title
-  *
-  #1 entry.max$ substring$
-  'sort.key$ :=
-}
-
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % OUTPUT GENERATION
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
@@ -1638,10 +1510,10 @@ EXECUTE {initialize.longest.label}
 ITERATE {longest.label.pass}
 
 FUNCTION {begin.bib}
-{ preamble$ empty$
-    { #0 'explicit.doi.links :=
-      #1 'warnings.are.errors :=
-    }
+{ #0 'explicit.doi.links :=
+  #1 'warnings.are.errors :=
+  preamble$ empty$
+    'skip$
     { preamble$ "MakeDoiLinksExplicit" contains.substring
         { #1 'explicit.doi.links :=
           "\newcommand{\MakeDoiLinksExplicit}{}" write$ newline$
