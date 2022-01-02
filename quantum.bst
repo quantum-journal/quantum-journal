@@ -229,8 +229,8 @@ FUNCTION {no.output.check.links}
 { 't :=
   duplicate$ empty$ nolink missing$ and
     { pop$ "empty " t * ". " *
-      "If none of these fields is applicable for the cited work you can include the field " *
-      "\newline\verb|`nolink = {}`| in its bib" *
+      "If none of these fields is applicable for the cited work you can include the " *
+      "\newline\verb|`nolink = {},`| in its bib" *
       my.warning
     }
     'skip$
