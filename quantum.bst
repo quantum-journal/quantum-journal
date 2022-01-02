@@ -79,26 +79,24 @@ STRINGS { m mm }
 
 FUNCTION {my.warning}
 { 'm :=
+  "{\color{red}{ This bibitem caused a BibTeX warning: " m * " entry.}}" *
   warnings.are.errors
-    { "{\color{red}{ This bibitem caused a BibTeX warning: "
-      m * " entry.}}\PackageError{quantum.bst}{The bibitem " *
+    { "\PackageError{quantum.bst}{The bibitem " *
       cite$ *
       " caused a BibTeX warning}" *
       "{By default, quantum.bst handles BibTeX warnings like compilation " *
       "errors. Please refer to the bibliography style demo for details.}" *
-      write$
     }
     'skip$
   if$
+  write$
   m cite$ * warning$
 }
 
 FUNCTION {my.warning.newline}
 { 'mm :=
   'm :=
-  "{\color{red}{ This bibitem caused a BibTeX warning: "
-  m *
-  "}}" *
+  "{\color{red}{ This bibitem caused a BibTeX warning: " m * "}}" *
   write$
   newline$
   "{\color{red}{" mm * " entry.}}" *
