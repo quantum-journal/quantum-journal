@@ -75,7 +75,7 @@ FUNCTION {init.state.consts}
 % Custom warning
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
-STRINGS { m }
+STRINGS { m mm }
 
 FUNCTION {my.warning}
 { 'm :=
@@ -90,6 +90,28 @@ FUNCTION {my.warning}
     }
     'skip$
   if$
+  m cite$ * warning$
+}
+
+FUNCTION {my.warning.newline}
+{ 'mm :=
+  'm :=
+  "{\color{red}{ This bibitem caused a BibTeX warning: "
+  m *
+  "}}" *
+  write$
+  newline$
+  "{\color{red}{" mm * " entry.}}" *
+  warnings.are.errors
+    { "\PackageError{quantum.bst}{The bibitem " *
+      cite$ *
+      " caused a BibTeX warning}" *
+      "{By default, quantum.bst handles BibTeX warnings like compilation " *
+      "errors. Please refer to the bibliography style demo for details.}" *
+    }
+    'skip$
+  if$
+  write$
   m cite$ * warning$
 }
 
@@ -230,9 +252,8 @@ FUNCTION {no.output.check.links}
   duplicate$ empty$ nolink missing$ and
     { pop$ "empty " t * ". " *
       "If none of these fields is applicable for the cited work you can include the field " *
-      newline$
-      "\verb|`nolink = {}`| in its bib" *
-      my.warning
+      "\verb|`nolink = {}`| in its bib"
+      my.warning.newline
     }
     'skip$
   if$
