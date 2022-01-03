@@ -1,6 +1,7 @@
 % This is the BibTeX style file for the Quantum journal.
-% It is based on hyperabbrv.bst (see ), and the extensions by Aram Harrow (see )
-% and Andrew Comech (see https://www.math.tamu.edu/~comech/tools/bibtex-doi-eprint/).
+% It is based on hyperabbrv.bst, and the extensions by Aram Harrow 
+% (see https://github.com/harrow/arxiv-bibstyle) and Andrew Comech 
+% (see https://www.math.tamu.edu/~comech/tools/bibtex-doi-eprint/).
 %
 % In addition to added arxiv and DOI hyperlinks, the file style incorporates design
 % choices made for Quantum journal, in particular in the light of online availability.
@@ -49,19 +50,31 @@ ENTRY
   {}
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-% State descriptors
+% Variables and state descriptors
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 INTEGERS
-  { output.state
+  { 
+    output.state
     before.all
     mid.sentence
     after.sentence
     after.block
-    len
+    length
     explicit.doi.links
     warnings.are.errors
+    nameptr
+    namesleft
+    numnames
+    multiresult
+    ptr
+    found.slashes
+    doi.linked
+    number.label
+    longest.label.width
   }
+
+STRINGS { s t m longest.label label }
 
 FUNCTION {init.state.consts}
 {
@@ -74,8 +87,6 @@ FUNCTION {init.state.consts}
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % Custom warning
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-
-STRINGS { m mm }
 
 FUNCTION {my.warning}
 { 'm :=
@@ -94,12 +105,12 @@ FUNCTION {my.warning}
 }
 
 FUNCTION {my.warning.newline}
-{ 'mm :=
+{ 's :=
   'm :=
   "{\color{red}{ This bibitem caused a BibTeX warning: " m * "}}" *
   write$
   newline$
-  "{\color{red}{" mm * " entry.}}" *
+  "{\color{red}{" s * " entry.}}" *
   warnings.are.errors
     { "\PackageError{quantum.bst}{The bibitem " *
       cite$ *
@@ -116,9 +127,7 @@ FUNCTION {my.warning.newline}
 FUNCTION {my.crossref.warning}
 { 'm :=
   warnings.are.errors
-    { "\ReferToPDFOutput" write$
-      newline$
-      "{\color{red} This bibitem caused a crossref-BibTeX warning: need "
+    { "{\color{red} This bibitem caused a crossref-BibTeX warning: need "
       m * " to crossref.}\PackageError{quantum.bst}{The crossref bibitem " *
       cite$ *
       " caused a BibTeX warning}" *
@@ -157,23 +166,21 @@ FUNCTION {or}
 % String manipulation
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
-STRINGS { s t }
-
 FUNCTION {string.length}
 {
-  #1 'len :=
-  {duplicate$ duplicate$ #1 len substring$ = not}
-    {len #1 + 'len :=}
+  #1 'length :=
+  {duplicate$ duplicate$ #1 length substring$ = not}
+    {length #1 + 'length :=}
   while$
-  pop$ len
+  pop$ length
 }
 
 FUNCTION {contains.substring}
 { 's :=
   't :=
-  s string.length 'len :=
+  s string.length 'length :=
     { t empty$ not }
-    { t #1 len substring$ s =
+    { t #1 length substring$ s =
         { "" 't :=
           #1
         }
@@ -190,9 +197,9 @@ FUNCTION {contains.substring}
 
 FUNCTION {chop.word}
 { 's :=
-  'len :=
-  s #1 len substring$ =
-    { s len #1 + global.max$ substring$ }
+  'length :=
+  s #1 length substring$ =
+    { s length #1 + global.max$ substring$ }
     's
   if$
 }
@@ -349,21 +356,12 @@ FUNCTION {tie.or.space.connect}
 % Entry formatting
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
-FUNCTION {emphasize}
-{ duplicate$ empty$
-    { pop$ "" }
-    { "{\em " swap$ * "}" * }
-  if$
-}
-
 FUNCTION {boldfont}
 { duplicate$ empty$
     { pop$ "" }
     { "{\bf " swap$ * "}" * }
   if$
 }
-
-INTEGERS { nameptr namesleft numnames }
 
 FUNCTION {format.names}
 { 's :=
@@ -420,13 +418,6 @@ FUNCTION {format.title}
   if$
 }
 
-FUNCTION { format.longeprint }
-{ duplicate$ #1 #5 substring$ "arXiv" =
-     { #7 #15 substring$  }
-     { "" * }
-  if$
-}
-
 FUNCTION { format.arxiv.hyperlink }
 { duplicate$ #1 #6 substring$ "arXiv:" =
     { #7 #9 substring$  }
@@ -441,21 +432,24 @@ FUNCTION { format.arxiv.hyperlink }
 FUNCTION {format.eprint}
 { eprint empty$
     { "" }
-    {
-      primaryClass empty$
-        { " \href{http://arxiv.org/abs/" eprint format.arxiv.hyperlink * "}" *
-          "{arXiv:" * eprint format.longeprint * "}" *
-        }
-	    { archivePrefix empty$
-            { " \href{http://arxiv.org/abs/" eprint format.arxiv.hyperlink * "}" *
-	          "{arXiv:" * eprint format.longeprint * "}" *
-            }
-            { " \href{http://arxiv.org/abs/" eprint format.arxiv.hyperlink * "}" *
-	          "{" * archivePrefix * ":" * eprint format.longeprint * "}" *
-            }
+    { archivePrefix empty$
+        { primaryClass empty$
+            { "arXiv" }
+            { primaryClass }
           if$
         }
+        { archivePrefix }
       if$
+      " \href{http://arxiv.org/abs/"
+      eprint format.arxiv.hyperlink *
+      "}{" *
+      swap$ *
+      ":" *
+      eprint #1 #5 substring$ "arXiv" =
+        { eprint #7 #15 substring$ * }
+        { eprint * }
+      if$
+      "}" *
     }
   if$
 }
@@ -521,8 +515,6 @@ FUNCTION {format.chapter}
   if$
   chapter tie.or.space.connect
 }
-
-INTEGERS { multiresult }
 
 FUNCTION {multi.page.check}
 { 't :=
@@ -808,8 +800,6 @@ FUNCTION {format.incoll.inproc.crossref}
   " \cite{" * crossref * "}" *
 }
 
-INTEGERS { ptr found.slashes }
-
 FUNCTION {extract.repo}
 {
   "github.com/" #11
@@ -934,7 +924,7 @@ FUNCTION {is.arxiv.article}
 }
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-% Raw citation classes that are aliased in the public citation classis
+% Raw citation classes that are aliased in the public citation classes
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 FUNCTION {arxiv.article}
@@ -1030,7 +1020,19 @@ FUNCTION {article}
   if$
 }
 
-INTEGERS { doi.linked }
+FUNCTION {conditional.doi.link}
+{ duplicate$ empty$
+  doi missing$
+  explicit.doi.links
+  doi.linked
+  or or or
+    { 'skip$ }
+    { add.doi.link
+      #1 'doi.linked :=
+    }
+  if$
+  output
+}
 
 FUNCTION {book}
 { output.bibitem
@@ -1044,41 +1046,14 @@ FUNCTION {book}
   #0 'doi.linked :=
   crossref missing$
     { format.bvol.chap.pages
-      duplicate$ empty$
-      doi missing$
-      explicit.doi.links
-      or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
       new.block
       format.number.series
-      duplicate$ empty$
-      doi missing$
-      explicit.doi.links
-      doi.linked
-      or or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
       new.sentence
       publisher "publisher" no.output.check
-      doi missing$
-      explicit.doi.links
-      doi.linked
-      or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
+      new.sentence
       address output
     }
     { format.chapter.pages output
@@ -1230,40 +1205,13 @@ FUNCTION {incollection}
     { format.in.ed.booktitle "booktitle" output.check
       new.block
       format.bvol.chap.pages
-      duplicate$ empty$
-      doi missing$
-      explicit.doi.links
-      or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
       new.block
       format.number.series
-      duplicate$ empty$
-      doi missing$
-      explicit.doi.links
-      doi.linked
-      or or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
       new.sentence
       publisher "publisher" no.output.check
-      doi missing$
-      explicit.doi.links
-      doi.linked
-      or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
+      conditional.doi.link
       address missing$
         'skip$
         { ", " * address * }
@@ -1288,33 +1236,15 @@ FUNCTION {inproceedings}
   new.block
   format.title "title" output.check
   new.block
+  #0 'doi.linked :=
   crossref missing$
     { format.in.ed.booktitle "booktitle" output.check
       new.block
       format.bvol.chap.pages
-      duplicate$ empty$
-      doi missing$
-      explicit.doi.links
-      or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
       new.block
       format.number.series
-      duplicate$ empty$
-      doi missing$
-      explicit.doi.links
-      doi.linked
-      or or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
       address empty$
         { organization publisher new.sentence.checkb
           organization output
@@ -1491,146 +1421,8 @@ MACRO {tcs} {"Theoretical Comput. Sci."}
 READ
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-% SORTING
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-
-FUNCTION {sortify}
-{ purify$
-  "l" change.case$
-}
-
-FUNCTION {sort.format.names}
-{ 's :=
-  #1 'nameptr :=
-  ""
-  s num.names$ 'numnames :=
-  numnames 'namesleft :=
-    { namesleft #0 > }
-    { nameptr #1 >
-        { "   " * }
-        'skip$
-      if$
-      s nameptr "{vv{ } }{ll{ }}{  f{ }}{  jj{ }}" format.name$ 't :=
-      nameptr numnames = t "others" = and
-        { "et al" * }
-        { t sortify * }
-      if$
-      nameptr #1 + 'nameptr :=
-      namesleft #1 - 'namesleft :=
-    }
-  while$
-}
-
-FUNCTION {sort.format.title}
-{ 't :=
-  "A " #2
-    "An " #3
-      "The " #4 t chop.word
-    chop.word
-  chop.word
-  sortify
-  #1 global.max$ substring$
-}
-
-FUNCTION {author.sort}
-{ author empty$
-    { key empty$
-        { "to sort, need author or key in " my.warning
-          ""
-        }
-        { key sortify }
-      if$
-    }
-    { author sort.format.names }
-  if$
-}
-
-FUNCTION {author.editor.sort}
-{ author empty$
-    { editor empty$
-        { key empty$
-            { "to sort, need author, editor, or key in " my.warning
-              ""
-            }
-            { key sortify }
-          if$
-        }
-        { editor sort.format.names }
-      if$
-    }
-    { author sort.format.names }
-  if$
-}
-
-FUNCTION {author.organization.sort}
-{ author empty$
-    { organization empty$
-        { key empty$
-            { "to sort, need author, organization, or key in " my.warning
-              ""
-            }
-            { key sortify }
-          if$
-        }
-        { "The " #4 organization chop.word sortify }
-      if$
-    }
-    { author sort.format.names }
-  if$
-}
-
-FUNCTION {editor.organization.sort}
-{ editor empty$
-    { organization empty$
-        { key empty$
-            { "to sort, need editor, organization, or key in " my.warning
-              ""
-            }
-            { key sortify }
-          if$
-        }
-        { "The " #4 organization chop.word sortify }
-      if$
-    }
-    { editor sort.format.names }
-  if$
-}
-
-FUNCTION {presort}
-{ type$ "book" =
-  type$ "inbook" =
-  or
-    'author.editor.sort
-    { type$ "proceedings" =
-        'editor.organization.sort
-        { type$ "manual" =
-            'author.organization.sort
-            'author.sort
-          if$
-        }
-      if$
-    }
-  if$
-  "    "
-  *
-  year field.or.null sortify
-  *
-  "    "
-  *
-  title field.or.null
-  sort.format.title
-  *
-  #1 entry.max$ substring$
-  'sort.key$ :=
-}
-
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % OUTPUT GENERATION
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-
-STRINGS { longest.label label }
-
-INTEGERS { number.label longest.label.width }
 
 FUNCTION {initialize.longest.label}
 { "" 'longest.label :=
@@ -1654,10 +1446,10 @@ EXECUTE {initialize.longest.label}
 ITERATE {longest.label.pass}
 
 FUNCTION {begin.bib}
-{ preamble$ empty$
-    { #0 'explicit.doi.links :=
-      #1 'warnings.are.errors :=
-    }
+{ #0 'explicit.doi.links :=
+  #1 'warnings.are.errors :=
+  preamble$ empty$
+    'skip$
     { preamble$ "MakeDoiLinksExplicit" contains.substring
         { #1 'explicit.doi.links :=
           "\newcommand{\MakeDoiLinksExplicit}{}" write$ newline$
