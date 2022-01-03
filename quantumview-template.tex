@@ -1,0 +1,68 @@
+\documentclass{quantumview}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{fixltx2e}
+\usepackage[numbers,sort&compress]{natbib}
+
+\begin{document}
+
+\title{Template demonstrating the quantumview document class}
+
+\author{Johannes Jakob Meyer}
+\affiliation{Dahlem Center for Complex Quantum Systems, Freie Universität Berlin, 14195 Berlin, Germany}
+\affiliation{QMATH, Department of Mathematical Sciences, K{\o}benhavns Universitet, 2100 K{\o}benhavn \O, Denmark}
+\orcid{0000-0003-1533-8015}
+
+\maketitle
+
+\section{Introduction}
+Quantum Views is Quantum's venue for perspectives, views, editorials and other opinion pieces. The publishing process is different from that of regular articles in Quantum because Views are published as \emph{HTML only}, and need not be uploaded to the arXiv.
+
+Quantum provides the quantumview documentclass to enable authors of Views to use their common LaTeX environment to prepare their contributions. The editors at Quantum can then generate the HTML output by supplying the \texttt{html} option.
+
+\section{Supported Formatting Options}
+The documentclass natively supports the following operations:
+
+\paragraph{Text formatting} The following text formats are supported:
+\emph{emphasis}, \textit{italic}, \textbf{bold}, \texttt{typewriter}, \textsuperscript{superscript} and \textsubscript{subscript}.
+
+\paragraph{Sectioning} Sectioning -- if needed -- can be performed using the regular \texttt{{\textbackslash}section}, \texttt{{\textbackslash}subsection}, \texttt{{\textbackslash}subsubsection} and \texttt{{\textbackslash}paragraph} commands. These will be converted to HTML header tags and therefore not show section numbers in the final HTML.
+
+\paragraph{Citations and Bibliography} You can cite references using the regular \texttt{{\textbackslash}cite} command. For example, here is some text citing a textbook~\cite{Nielsen_Chuang_2000}, a journal article~\cite{Preskill2018}, a newer preprint~\cite{SchwarzhansLockErkerFriisHuber2020} and a journal article whose preprint has an arXiv identifier in old format~\cite{AcinBrussLewensteinSanpera2001}.
+
+Please see quantumview-template.bib for an example of how to provide bibliographic information to BibLaTeX in a way that yields a suitable bibliography with DOI links.
+In both Quantum and Quantum Views all citations to cited works that have a DOI must include a hyperlink to the DOI of the work.
+
+\paragraph{Formulas} You are free to use inline math $\mathcal{Z} - \pi = \nabla \Gamma$ and both the \texttt{equation}
+\begin{equation}
+    \int_0^1 \mathrm{d}x \, |\psi(x)\rangle \! \langle \psi(x)|= \hat{O}^2
+\end{equation}
+and \texttt{align} environment
+\begin{align}
+    \oint_C = \mathcal{Z}^2.
+\end{align}
+As formulas are directly rendered on the webpage, \emph{you can not use custom commands and libraries}. If you are unsure wether or not the command you want to use is supported, please consult the MathJax documentation. You should thus refrain from using the \texttt{{\textbackslash}label} and \texttt{{\textbackslash}ref} commands.
+
+\paragraph{Lists} You are free to use both \texttt{itemize} for unordered lists,
+\begin{itemize}
+    \item Item 1 lorem ipsum
+    \item Item 2
+\end{itemize}
+and \texttt{enumerate} for ordered lists:
+\begin{enumerate}
+    \item Item 1
+    \item Item 2
+\end{enumerate}
+Note that further modifiers, \emph{e.g.}\ for roman numbering and additional packages like \texttt{enumerate} are not supported.
+
+\section{Copy-Editing Tools}
+The quantumview document class also provides commands that are useful in copy-editing. These are \texttt{{\textbackslash}corr} for \corr{correctons}{corrections} and \texttt{{\textbackslash}ins} \ins{for insertions}.
+
+\bibliography{quantumview-template}
+\bibliographystyle{quantum}
+
+
+\end{document}

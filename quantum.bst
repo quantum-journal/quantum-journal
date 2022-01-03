@@ -1,6 +1,7 @@
 % This is the BibTeX style file for the Quantum journal.
-% It is based on hyperabbrv.bst (see ), and the extensions by Aram Harrow (see )
-% and Andrew Comech (see https://www.math.tamu.edu/~comech/tools/bibtex-doi-eprint/).
+% It is based on hyperabbrv.bst, and the extensions by Aram Harrow 
+% (see https://github.com/harrow/arxiv-bibstyle) and Andrew Comech 
+% (see https://www.math.tamu.edu/~comech/tools/bibtex-doi-eprint/).
 %
 % In addition to added arxiv and DOI hyperlinks, the file style incorporates design
 % choices made for Quantum journal, in particular in the light of online availability.
@@ -69,7 +70,6 @@ INTEGERS
     ptr
     found.slashes
     doi.linked
-    dont.link.doi
     number.label
     longest.label.width
   }
@@ -1021,8 +1021,11 @@ FUNCTION {article}
 }
 
 FUNCTION {conditional.doi.link}
-{ 'dont.link.doi :=
-  duplicate$ empty$ dont.link.doi or 
+{ duplicate$ empty$
+  doi missing$
+  explicit.doi.links
+  doi.linked
+  or or or
     { 'skip$ }
     { add.doi.link
       #1 'doi.linked :=
@@ -1030,8 +1033,6 @@ FUNCTION {conditional.doi.link}
   if$
   output
 }
-
-
 
 FUNCTION {book}
 { output.bibitem
@@ -1045,33 +1046,13 @@ FUNCTION {book}
   #0 'doi.linked :=
   crossref missing$
     { format.bvol.chap.pages
-      doi missing$ explicit.doi.links or
-      conditional.doi.link
+      conditional.doi.link output
       new.block
       format.number.series
-      duplicate$ empty$
-      doi missing$
-      explicit.doi.links
-      doi.linked
-      or or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
       new.sentence
       publisher "publisher" no.output.check
-      doi missing$
-      explicit.doi.links
-      doi.linked
-      or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
       new.sentence
       address output
     }
@@ -1224,40 +1205,13 @@ FUNCTION {incollection}
     { format.in.ed.booktitle "booktitle" output.check
       new.block
       format.bvol.chap.pages
-      duplicate$ empty$
-      doi missing$
-      explicit.doi.links
-      or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
       new.block
       format.number.series
-      duplicate$ empty$
-      doi missing$
-      explicit.doi.links
-      doi.linked
-      or or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
       new.sentence
       publisher "publisher" no.output.check
-      doi missing$
-      explicit.doi.links
-      doi.linked
-      or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
+      conditional.doi.link
       address missing$
         'skip$
         { ", " * address * }
@@ -1282,33 +1236,15 @@ FUNCTION {inproceedings}
   new.block
   format.title "title" output.check
   new.block
+  #0 'doi.linked :=
   crossref missing$
     { format.in.ed.booktitle "booktitle" output.check
       new.block
       format.bvol.chap.pages
-      duplicate$ empty$
-      doi missing$
-      explicit.doi.links
-      or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
       new.block
       format.number.series
-      duplicate$ empty$
-      doi missing$
-      explicit.doi.links
-      doi.linked
-      or or or
-        'skip$
-        { add.doi.link
-          #1 'doi.linked :=
-        }
-      if$
-      output
+      conditional.doi.link output
       address empty$
         { organization publisher new.sentence.checkb
           organization output

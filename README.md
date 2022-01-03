@@ -2,13 +2,15 @@
 
 # LaTeX document class for Quantum
 
-This is version 5.1 of `quantumarticle`, the document class for typesetting articles in Quantum - the open journal for quantum science.
+This is version 6.0 of `quantumarticle`, the document class for typesetting articles in Quantum - the open journal for quantum science.
 
 [Click here](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.cls) to download the latest stable version.
 
 [More information](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-template.pdf) on using quantumarticle and on typesetting manuscripts for Quantum can be found in the accompanying template.
 
-[Documentation](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.pdf) of all class options is also provided. 
+[Extra information on the Quantum bibstyle](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantum-bibliographystyle-demo.pdf) can be found in the bibstyle demo.
+
+[Documentation](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.pdf) of all class options is also provided.
 
 
 ## Installation and usage
@@ -50,11 +52,17 @@ The `quantumarticle` class tries to be **maximally compatible** with existing do
 
 In addition, this document class come bundled with two new extras (currently in beta phase):
 
-1. The quantum-plots.ipynb Jupyter notebook and matplotlib style for effortlessly producing professional looking plots in python.
+1. The quantum-lyx-template.lyx LxY layout, which allow you to generate the LaTeX source of your quantumarticle manuscript with the LyX document processor.
 
-2. The quantum-lyx-template.lyx LxY layout, which allow you to generate the LaTeX source of your quantumarticle manuscript with the LyX document processor.
+2. The quantum.bst bibliography style for BibTeX, see the corresponding demo for usage details.
 
 ## Changelog
+
+### New in v6.0
+
+* introduced the Quantum bibstyle `quantum.bst` together with the demo file `quantum-bibliographystyle-demo`
+* Removed the quantum-plots package, which is superseeded by [rsmf](https://pypi.org/project/rsmf/)
+* Fixed typo in allowfontchangeintitle option
 
 ### New in v5.1
 
@@ -75,18 +83,18 @@ In addition, this document class come bundled with two new extras (currently in 
 * enforce that users put `\pdfoutput=1` (as recommended by the arXiv) to prevent problems with multi-line hyper links
 * improved error messages
 * fixed a bug that lead to the title not being centered with the `titlepage` option
-* better layout of titles 
+* better layout of titles
 * fixed various bugs in option processing
 * the document class is now documented in `quantumarticle.pdf`
 * introduced the plotting notebook `quantum-plots.ipynb` as a beta feature
 * introduced the LyX template `quantum-lyx-template.lyx` as a beta feature
 
-
 ## Contributors
 
 Developed by: Christian Gogolin, Christopher Granade, Johannes J. Meyer, and Victor V. Albert
 
-With contributions from: Shahnawaz Ahmed, Andrey Rakhubovsky, liantze, and Abhinav Deshpande
+With contributions from: Shahnawaz Ahmed, Andrey Rakhubovsky, liantze,
+Abhinav Deshpande, and David Wierichs
 
 ## Contributing
 
@@ -98,7 +106,7 @@ Improvements submitted as pull requests against the `develop` branch are very mu
 
 ## Copyright
 
-Copyright 2017, 2018, 2019, 2020
+Copyright 2017, 2018, 2019, 2020, 2021
 Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
 (http://quantum-journal.org/about/)
 
@@ -113,4 +121,4 @@ http://www.latex-project.org/lppl.txt
 and version 1.3c or later is part of all distributions of LaTeX
 version 2005/12/01 or later.
 
-[comment]: # (To submit to the overleaf galary: push, open the project, go to Journals and Services and click Submit to Overleaf Gallery. To submit to sharelatex: write them an email)
+[comment]: # (To submit to the overleaf gallery: push, open the project, go to Journals and Services and click Submit to Overleaf Gallery. To submit to sharelatex: write them an email)

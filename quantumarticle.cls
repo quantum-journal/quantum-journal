@@ -19,9 +19,9 @@
 %% version 2005/12/01 or later.
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\def\quantumarticleversion{5.1}
+\def\quantumarticleversion{6.0}
 \ProvidesClass{quantumarticle}
-[2020/10/27 v\quantumarticleversion
+[2021/12/07 v\quantumarticleversion
 class for Quantum - the open journal for quantum science (https://quantum-journal.org)]
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
