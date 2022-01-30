@@ -135,7 +135,7 @@ a4paper
 \begin_inset Quotes erd
 \end_inset
 
- by default) needs to be specified in the 
+ by default) needs to be specified in the
 \begin_inset Quotes eld
 \end_inset
 
@@ -143,7 +143,7 @@ Document Class
 \begin_inset Quotes erd
 \end_inset
 
- part of the 
+ part of the
 \begin_inset Quotes eld
 \end_inset
 
@@ -155,7 +155,7 @@ Document -> Settings
 \end_layout
 
 \begin_layout Itemize
-When exporting to TeX, pick the 
+When exporting to TeX, pick the
 \begin_inset Quotes eld
 \end_inset
 
@@ -163,7 +163,7 @@ LaTeX (pdflatex)
 \begin_inset Quotes erd
 \end_inset
 
- option in 
+ option in
 \begin_inset Quotes eld
 \end_inset
 
@@ -300,19 +300,19 @@ http://quantum-journal.org
 \end_layout
 
 \begin_layout Thanks
-You can use the 
+You can use the
 \begin_inset Formula $\texttt{\textbackslash email}$
 \end_inset
 
-, 
+,
 \begin_inset Formula $\texttt{\textbackslash homepage}$
 \end_inset
 
-, and 
+, and
 \begin_inset Formula $\texttt{\textbackslash thanks}$
 \end_inset
 
- commands to add additional information for the preceding 
+ commands to add additional information for the preceding
 \begin_inset Formula $\texttt{\textbackslash author}$
 \end_inset
 
@@ -339,7 +339,7 @@ Institute for Quantum Optics & Quantum Information (IQOQI), Austrian Academy
 \end_layout
 
 \begin_layout Author
-Christopher Granade
+Cassandra Granade
 \end_layout
 
 \begin_layout Affiliation
@@ -375,53 +375,53 @@ Institute for Quantum Information and Matter \& Walter Burke Institute for
 \end_layout
 
 \begin_layout Abstract
-In the standard, 
+In the standard,
 \begin_inset Formula $\texttt{twocolumn}$
 \end_inset
 
 , layout the abstract is typeset as a bold face first paragraph.
- Quantum also supports a 
+ Quantum also supports a
 \begin_inset Formula $\texttt{onecolumn}$
 \end_inset
 
  layout with the abstract above the text.
- Both can be combined with the 
+ Both can be combined with the
 \begin_inset Formula $\texttt{titlepage}$
 \end_inset
 
  option to obtain a format with dedicated title and abstract pages that
  are not included in the page count.
  This format can be more suitable for long articles.
- The 
+ The
 \begin_inset Formula $\texttt{abstract}$
 \end_inset
 
- environment can appear both before and after the 
+ environment can appear both before and after the
 \begin_inset Formula $\texttt{\textbackslash maketitle}$
 \end_inset
 
- command and calling 
+ command and calling
 \begin_inset Formula $\texttt{\textbackslash maketitle}$
 \end_inset
 
- is optional, as long as there is an 
+ is optional, as long as there is an
 \begin_inset Formula $\texttt{abstract}$
 \end_inset
 
 .
- Both 
+ Both
 \begin_inset Formula $\texttt{abstract}$
 \end_inset
 
- and 
+ and
 \begin_inset Formula $\texttt{\textbackslash maketitle}$
 \end_inset
 
- however must be placed after all other 
+ however must be placed after all other
 \begin_inset Formula $\texttt{\textbackslash author}$
 \end_inset
 
-, 
+,
 \begin_inset Formula $\texttt{\textbackslash affiliation}$
 \end_inset
 
@@ -444,11 +444,11 @@ noprefix "false"
 \end_inset
 
 .
- If you provide the ORCID number of an author by using the 
+ If you provide the ORCID number of an author by using the
 \begin_inset Formula $\texttt{\textbackslash orcid}$
 \end_inset
 
- command, the author name becomes a link to their page on 
+ command, the author name becomes a link to their page on
 \begin_inset CommandInset href
 LatexCommand href
 name "orcid.org"
@@ -461,21 +461,21 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-In the 
+In the
 \begin_inset Formula $\texttt{twocolumn}$
 \end_inset
 
- layout and without the 
+ layout and without the
 \begin_inset Formula $\texttt{titlepage}$
 \end_inset
 
  option there can be a paragraph directly following the abstract before
  the first section.
- In 
+ In
 \begin_inset Formula $\texttt{onecolumn}$
 \end_inset
 
- format or with a dedicated 
+ format or with a dedicated
 \begin_inset Formula $\texttt{titlepage}$
 \end_inset
 
@@ -483,7 +483,7 @@ In the
 \end_layout
 
 \begin_layout Standard
-Note that clicking the title performs a search for that title on 
+Note that clicking the title performs a search for that title on
 \begin_inset CommandInset href
 LatexCommand href
 name "quantum-journal.org"
@@ -495,12 +495,12 @@ literal "false"
 .
  In this way readers can easily verify whether a work using the quantumarticle
  class was actually published in Quantum.
- If you would like to use 
+ If you would like to use
 \begin_inset Formula $\texttt{quantumarticle}$
 \end_inset
 
  for manuscripts not yet accepted in Quantum, or not even intended for submissio
-n to Quantum, please use the 
+n to Quantum, please use the
 \begin_inset Formula $\texttt{unpublished}$
 \end_inset
 
@@ -509,16 +509,16 @@ n to Quantum, please use the
  By default, this class also performs various checks to make sure the manuscript
  will compile well on the arXiv.
  If you do not intend to submit your manuscript to Quantum or the arXiv,
- you can switch off these checks with the 
+ you can switch off these checks with the
 \begin_inset Formula $\texttt{noarxiv}$
 \end_inset
 
  option.
- On the contrary, by giving the 
+ On the contrary, by giving the
 \begin_inset Formula $\texttt{accepted=YYYY-MM-DD}$
 \end_inset
 
- option, with 
+ option, with
 \begin_inset Formula $\texttt{YYYY-MM-DD}$
 \end_inset
 
@@ -561,7 +561,7 @@ Every figure must have an informative caption and a number.
  you see fit.
  The same applies for tables, boxes, and other floating elements.
  Quantum provides a Jupyter notebook to create plots that integrate seamlessly
- with 
+ with
 \begin_inset Formula $\texttt{quantumarticle}$
 \end_inset
 
@@ -580,7 +580,7 @@ noprefix "false"
 \end_inset
 
 .
- Figures spanning multiple columns can by typeset with the usual 
+ Figures spanning multiple columns can by typeset with the usual
 \begin_inset Formula $\texttt{figure*}$
 \end_inset
 
@@ -632,7 +632,7 @@ Sectioning and equations
 Sections, subsections, subsubsections, and paragraphs should be typeset
  with the standard LaTeX commands.
  You can use the standard commands for equations.
-\begin_inset Formula 
+\begin_inset Formula
 \begin{align}
 E & =m\,c^{2}\label{eq:emc}\\
 a^{2}+b^{2} & =c^{2}\\
@@ -642,11 +642,11 @@ H\,|\psi\rangle & =E\,|\psi\rangle\\
 
 \end_inset
 
-For multi-line equations 
+For multi-line equations
 \begin_inset Formula $\texttt{align}$
 \end_inset
 
- is 
+ is
 \begin_inset CommandInset href
 LatexCommand href
 name "preferable"
@@ -655,17 +655,17 @@ literal "false"
 
 \end_inset
 
- over 
+ over
 \begin_inset Formula $\texttt{eqnarray}$
 \end_inset
 
 .
  Please refrain from using the latter.
- For complex equations you may want to consider using the 
+ For complex equations you may want to consider using the
 \begin_inset Formula $\texttt{IEEEeqnarray}$
 \end_inset
 
- environment from the 
+ environment from the
 \begin_inset Formula $\texttt{IEEEtrantools}$
 \end_inset
 
@@ -698,7 +698,7 @@ noprefix "false"
 
 \end_inset
 
-, or just 
+, or just
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:emc"
@@ -708,11 +708,11 @@ noprefix "false"
 
 \end_inset
 
- is up to you, but please be consistent and use the 
+ is up to you, but please be consistent and use the
 \begin_inset Formula $\texttt{\textbackslash eqref\{\dots\}}$
 \end_inset
 
- command instead of writing 
+ command instead of writing
 \begin_inset Formula $\texttt{(\textbackslash ref\{\dots\})}$
 \end_inset
 
@@ -782,7 +782,7 @@ status open
 
 [DOI links are required]
 \backslash
- 
+
 \backslash
 
 \backslash
@@ -793,11 +793,11 @@ status open
 
  Important: As Quantum is a member of Crossref, all references to works
  that have a DOI must be hyperlinked according to the DOI.
- Those links must start with 
+ Those links must start with
 \begin_inset Formula $\texttt{https://doi.org/}$
 \end_inset
 
- (preferred), or 
+ (preferred), or
 \begin_inset Formula $\texttt{http://dx.doi.org/}$
 \end_inset
 
@@ -808,7 +808,7 @@ status open
 \begin_layout Standard
 This can be achieved in several ways, depending on how you are formatting
  your bibliography.
- Suppose the DOI of an article 
+ Suppose the DOI of an article
 \begin_inset CommandInset citation
 LatexCommand cite
 key "examplecitation"
@@ -816,13 +816,13 @@ literal "false"
 
 \end_inset
 
- that you want to cite is 
+ that you want to cite is
 \begin_inset Formula $\texttt{10.22331/idonotexist}$
 \end_inset
 
 .
  If you are formating your bibliography manually, you can cite this work
- using the following in your 
+ using the following in your
 \begin_inset Formula $\texttt{thebibliography}$
 \end_inset
 
@@ -832,25 +832,25 @@ literal "false"
 \begin_layout Verbatim
 
 \backslash
-bibitem{examplecitation}   
+bibitem{examplecitation}
 \end_layout
 
 \begin_layout Verbatim
-  Name Surname,   
+  Name Surname,
 \end_layout
 
 \begin_layout Verbatim
-  
+
 \backslash
-href{https://doi.org/10.22331/         
+href{https://doi.org/10.22331/
 \end_layout
 
 \begin_layout Verbatim
-      idonotexist}{Quantum         
+      idonotexist}{Quantum
 \end_layout
 
 \begin_layout Verbatim
-      
+
 \backslash
 textbf{123}, 123456 (1916).}
 \end_layout
@@ -865,7 +865,7 @@ status open
 \backslash
 bf One citation per bibitem}]
 \backslash
- 
+
 \backslash
 
 \backslash
@@ -875,7 +875,7 @@ bf One citation per bibitem}]
 \end_inset
 
 Important: If you are formatting your bibliography manually, please do not
- group multiple citations into one 
+ group multiple citations into one
 \begin_inset Formula $\texttt{\textbackslash bibitem}$
 \end_inset
 
@@ -888,7 +888,7 @@ Important: If you are formatting your bibliography manually, please do not
 \begin_layout Standard
 We encourage the use of BibTeX to generate your bibliography from the BibTeX
  meta-data provided by publishers.
- For DOI linking to work, the BibTeX file must contain the 
+ For DOI linking to work, the BibTeX file must contain the
 \begin_inset Formula $\texttt{doi}$
 \end_inset
 
@@ -896,35 +896,35 @@ We encourage the use of BibTeX to generate your bibliography from the BibTeX
 \end_layout
 
 \begin_layout Verbatim
-@article{examplecitation,   
+@article{examplecitation,
 \end_layout
 
 \begin_layout Verbatim
- author = {Surname, Name},   
+ author = {Surname, Name},
 \end_layout
 
 \begin_layout Verbatim
- title = {Title},   
+ title = {Title},
 \end_layout
 
 \begin_layout Verbatim
- journal = {Quantum},   
+ journal = {Quantum},
 \end_layout
 
 \begin_layout Verbatim
- volume = {123},   
+ volume = {123},
 \end_layout
 
 \begin_layout Verbatim
- page = {123456},   
+ page = {123456},
 \end_layout
 
 \begin_layout Verbatim
- year = {1916},  
+ year = {1916},
 \end_layout
 
 \begin_layout Verbatim
- doi = {10.22331/idonotexist}, 
+ doi = {10.22331/idonotexist},
 \end_layout
 
 \begin_layout Verbatim
@@ -934,7 +934,7 @@ We encourage the use of BibTeX to generate your bibliography from the BibTeX
 \begin_layout Standard
 Several authors had problems because of Unicode characters in their BibTeX
  files.
- Be advised that 
+ Be advised that
 \begin_inset CommandInset href
 LatexCommand href
 name "BibTeX does not support Unicode characters"
@@ -948,7 +948,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-If you are using BibTeX, you can load the 
+If you are using BibTeX, you can load the
 \begin_inset Formula $\texttt{natbib}$
 \end_inset
 
@@ -962,11 +962,11 @@ usepackage[numbers,sort&compress]{natbib}
 \end_layout
 
 \begin_layout Standard
-in the preamble of your document and then use the 
+in the preamble of your document and then use the
 \begin_inset Formula $\texttt{plainnat}$
 \end_inset
 
- citation style by including your BibTeX bibliography 
+ citation style by including your BibTeX bibliography
 \begin_inset Formula $\texttt{mybibliography.bib}$
 \end_inset
 
@@ -976,7 +976,7 @@ in the preamble of your document and then use the
 \begin_layout Verbatim
 
 \backslash
-bibliographystyle{plainnat} 
+bibliographystyle{plainnat}
 \end_layout
 
 \begin_layout Verbatim
@@ -986,11 +986,11 @@ bibliography{mybibliography}
 \end_layout
 
 \begin_layout Standard
-The quantumarticle class automatically detects that the 
+The quantumarticle class automatically detects that the
 \begin_inset Formula $\texttt{natbib}$
 \end_inset
 
- package was loaded and redefines the 
+ package was loaded and redefines the
 \begin_inset Formula $\texttt{\textbackslash doi}$
 \end_inset
 
@@ -1006,7 +1006,7 @@ If you want to used BibLaTeX, you can instead add
 \begin_layout Verbatim
 
 \backslash
-usepackage[backend=bibtex]{biblatex} 
+usepackage[backend=bibtex]{biblatex}
 \end_layout
 
 \begin_layout Verbatim
@@ -1030,7 +1030,7 @@ where appropriate.
  You then have to upload the .bbl file along with the other source files
  when submitting to the arXiv.
  Due to incompatibilities between different LaTeX version we unfortunately
- cannot recommend this option 
+ cannot recommend this option
 \begin_inset CommandInset citation
 LatexCommand cite
 key "biblatexsubmittingtothearxiv"
@@ -1042,25 +1042,25 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The quantumarticle class automatically detects that the 
+The quantumarticle class automatically detects that the
 \begin_inset Formula $\texttt{biblatex}$
 \end_inset
 
- package was loaded, sets the default option 
+ package was loaded, sets the default option
 \begin_inset Formula $\texttt{doi=true}$
 \end_inset
 
  to include the DOI in the bibliography, and declares a suitable field format
  to make it a hyperlink.
- Due to issues with 
+ Due to issues with
 \begin_inset Formula $\texttt{biber}$
 \end_inset
 
- we recommend to use the 
+ we recommend to use the
 \begin_inset Formula $\texttt{bibtex}$
 \end_inset
 
- backend of 
+ backend of
 \begin_inset Formula $\texttt{biblatex}$
 \end_inset
 
@@ -1069,7 +1069,7 @@ The quantumarticle class automatically detects that the
 
 \begin_layout Standard
 More information on how to get DOI links in your document can be found on
- StackExchange 
+ StackExchange
 \begin_inset CommandInset citation
 LatexCommand cite
 key "howtogetdoilinksinbibliography,automaticallyaddingdoifieldstoahandmadebibliography"
@@ -1079,7 +1079,7 @@ literal "false"
 
 .
  Feel free to change the appearance of citations in any way you like by
- using a different 
+ using a different
 \begin_inset Formula $\texttt{bibliographystyle}$
 \end_inset
 
@@ -1094,7 +1094,7 @@ status open
 
 \begin_layout Plain Layout
 
-[Use 
+[Use
 \backslash
 texttt{
 \backslash
@@ -1117,7 +1117,7 @@ pdfoutput=1
 \end_deeper
 \begin_layout Theorem
 within the first 5 lines of your main LaTeX file, as suggested by the arXiv
- 
+
 \begin_inset CommandInset citation
 LatexCommand cite
 key "arxivpdfoutput"
@@ -1144,7 +1144,7 @@ name "sec:plots"
 \end_layout
 
 \begin_layout Standard
-Quantum provides a 
+Quantum provides a
 \begin_inset CommandInset href
 LatexCommand href
 name "Jupyter notebook"
@@ -1153,7 +1153,7 @@ literal "false"
 
 \end_inset
 
- based on the widely used 
+ based on the widely used
 \begin_inset CommandInset href
 LatexCommand href
 name "matplotlib"
@@ -1163,17 +1163,17 @@ literal "false"
 \end_inset
 
  library that greatly simplifies the creation of plots that integrate seamlessly
- with the 
+ with the
 \begin_inset Formula $\texttt{quantumarticle}$
 \end_inset
 
  document class.
- This is intended as a service to the authors, is 
+ This is intended as a service to the authors, is
 \shape italic
 not
 \shape default
  mandatory, and currently in beta stage.
- You can download the 
+ You can download the
 \begin_inset CommandInset href
 LatexCommand href
 name "quantum-plots.ipynb"
@@ -1182,7 +1182,7 @@ literal "false"
 
 \end_inset
 
- notebook and accompanying 
+ notebook and accompanying
 \begin_inset CommandInset href
 LatexCommand href
 name "quantum-plots.mplstyle"
@@ -1191,7 +1191,7 @@ literal "false"
 
 \end_inset
 
- file from the 
+ file from the
 \begin_inset CommandInset href
 LatexCommand href
 name "quantumarticle GitHub repository"
@@ -1202,7 +1202,7 @@ literal "false"
 
 .
  You only need to specify the font size and paper format that were passed
- as options to 
+ as options to
 \begin_inset Formula $\texttt{quantumarticle}$
 \end_inset
 
@@ -1251,25 +1251,25 @@ Quantum encourages you to load the following extra packages:
 \begin_layout Verbatim
 
 \backslash
-usepackage[utf8]{inputenc} 
+usepackage[utf8]{inputenc}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-usepackage[english]{babel} 
+usepackage[english]{babel}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-usepackage[T1]{fontenc} 
+usepackage[T1]{fontenc}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-usepackage{amsmath} 
+usepackage{amsmath}
 \end_layout
 
 \begin_layout Verbatim
@@ -1279,16 +1279,16 @@ usepackage{hyperref}
 \end_layout
 
 \begin_layout Standard
-If you do not load the 
+If you do not load the
 \begin_inset Formula $\texttt{hyperref}$
 \end_inset
 
  package, quantumarticle automatically loads it for you.
- Packages that change font settings, such as 
+ Packages that change font settings, such as
 \begin_inset Formula $\texttt{times}$
 \end_inset
 
- or 
+ or
 \begin_inset Formula $\texttt{helvet}$
 \end_inset
 
@@ -1300,16 +1300,16 @@ Wide equations
 \end_layout
 
 \begin_layout Standard
-Very wide equations can be shown expanding over both columns using the 
+Very wide equations can be shown expanding over both columns using the
 \begin_inset Formula $\texttt{widetext}$
 \end_inset
 
  environment.
- In 
+ In
 \begin_inset Formula $\texttt{onecolumn}$
 \end_inset
 
- mode, the 
+ mode, the
 \begin_inset Formula $\texttt{widetext}$
 \end_inset
 
@@ -1317,7 +1317,7 @@ Very wide equations can be shown expanding over both columns using the
 \end_layout
 
 \begin_layout Wide Text
-\begin_inset Formula 
+\begin_inset Formula
 \begin{equation}
 |\mathrm{AME}(n=6,q=5)\rangle=\sum_{i,j,k=0}^{4}|i,j,k,i+j+k,i+2j+3k,i+3j+4k\rangle
 \end{equation}
@@ -1337,15 +1337,15 @@ Indent here different from tex file.
 
 \end_inset
 
-To enable this feature in 
+To enable this feature in
 \begin_inset Formula $\texttt{twocolumn}$
 \end_inset
 
- mode, 
+ mode,
 \begin_inset Formula $\texttt{quantumarticle}$
 \end_inset
 
- relies on the package 
+ relies on the package
 \begin_inset Formula $\texttt{ltxgrid}$
 \end_inset
 
@@ -1367,7 +1367,7 @@ name "sec:title-information"
 
 \begin_layout Standard
 You can provide information on authors and affiliations in the common format
- also used by 
+ also used by
 \begin_inset Formula $\texttt{revtex}$
 \end_inset
 
@@ -1377,49 +1377,49 @@ You can provide information on authors and affiliations in the common format
 \begin_layout Verbatim
 
 \backslash
-title{Title} 
+title{Title}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-author{Author 1} 
+author{Author 1}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-author{Author 2} 
+author{Author 2}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-affiliation{Affiliation 1} 
+affiliation{Affiliation 1}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-author{Author 3} 
+author{Author 3}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-affiliation{Affiliation 2} 
+affiliation{Affiliation 2}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-author{Author 4} 
+author{Author 4}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-affiliation{Affiliation 1} 
+affiliation{Affiliation 1}
 \end_layout
 
 \begin_layout Verbatim
@@ -1431,16 +1431,16 @@ affiliation{Affiliation 3}
 \begin_layout Standard
 In this example affiliation 1 will be associated with authors 1, 2, and
  4, affiliation 2 with author 3 and affiliation 3 with author 4.
- Repeated affiliations are automatically recognized and typeset in 
+ Repeated affiliations are automatically recognized and typeset in
 \begin_inset Formula $\texttt{superscriptaddress}$
 \end_inset
 
  style.
- Alternatively you can use a format similar to that of the 
+ Alternatively you can use a format similar to that of the
 \begin_inset Formula $\texttt{authblk}$
 \end_inset
 
- package and the 
+ package and the
 \begin_inset Formula $\texttt{elsearticle}$
 \end_inset
 
@@ -1460,43 +1460,43 @@ Not implemented in LyX, would have to manually enter LaTeX code for this.
 \begin_layout Verbatim
 
 \backslash
-title{Title} 
+title{Title}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-author[1]{Author 1} 
+author[1]{Author 1}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-author[1]{Author 2} 
+author[1]{Author 2}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-author[2]{Author 3} 
+author[2]{Author 3}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-author[1,3]{Author 4} 
+author[1,3]{Author 4}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-affil[1]{Affiliation 1} 
+affil[1]{Affiliation 1}
 \end_layout
 
 \begin_layout Verbatim
 
 \backslash
-affil[2]{Affiliation 1} 
+affil[2]{Affiliation 1}
 \end_layout
 
 \begin_layout Verbatim
@@ -1513,7 +1513,7 @@ literal "false"
 
 \end_inset
 
-Name Surname, 
+Name Surname,
 \begin_inset ERT
 status open
 
@@ -1521,7 +1521,7 @@ status open
 
 
 \backslash
-href{https://doi.org/10.22331/ idonotexist}{Quantum 
+href{https://doi.org/10.22331/ idonotexist}{Quantum
 \backslash
 textbf{123}, 123456 (1916)}
 \end_layout
@@ -1539,7 +1539,7 @@ literal "false"
 
 \end_inset
 
-StackExchange discussion on 
+StackExchange discussion on
 \begin_inset CommandInset href
 LatexCommand href
 name "``Biblatex: submitting to the arXiv'' (2017-01-10)"
@@ -1559,7 +1559,7 @@ literal "false"
 
 \end_inset
 
-Help article published by the arXiv on 
+Help article published by the arXiv on
 \begin_inset CommandInset href
 LatexCommand href
 name "``Considerations for TeX Submissions'' (2017-01-10)"
@@ -1579,7 +1579,7 @@ literal "false"
 
 \end_inset
 
-StackExchange discussion on 
+StackExchange discussion on
 \begin_inset CommandInset href
 LatexCommand href
 name "``How to get DOI links in bibliography'' (2016-11-18)"
@@ -1599,7 +1599,7 @@ literal "false"
 
 \end_inset
 
-StackExchange discussion on 
+StackExchange discussion on
 \begin_inset CommandInset href
 LatexCommand href
 name "``Automatically adding DOI fields to a hand-made bibliography'' (2016-11-18)"
