@@ -1,8 +1,8 @@
-#% Do not delete the line below; configure depends on this      
+#% Do not delete the line below; configure depends on this
 #  \DeclareLaTeXClass[quantumarticle]{Quantum Article}
 #  \DeclareCategory{Articles}
-## Victor V. Albert <valbert4@gmail.com>, 
-## helped by layout by Christopher Granade
+## Victor V. Albert <valbert4@gmail.com>,
+## helped by layout by Cassandra Granade
 
 # Read the definitions from article.layout
 Input article.layout

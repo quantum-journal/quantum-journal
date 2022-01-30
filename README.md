@@ -91,7 +91,7 @@ In addition, this document class come bundled with two new extras (currently in 
 
 ## Contributors
 
-Developed by: Christian Gogolin, Christopher Granade, Johannes J. Meyer, and Victor V. Albert
+Developed by: Christian Gogolin, Cassandra Granade, Johannes J. Meyer, and Victor V. Albert
 
 With contributions from: Shahnawaz Ahmed, Andrey Rakhubovsky, liantze,
 Abhinav Deshpande, and David Wierichs
