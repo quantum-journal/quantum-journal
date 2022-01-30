@@ -1026,7 +1026,7 @@ FUNCTION {conditional.doi.link}
   explicit.doi.links
   doi.linked
   or or or
-    { 'skip$ }
+    'skip$
     { add.doi.link
       #1 'doi.linked :=
     }
@@ -1462,7 +1462,8 @@ FUNCTION {begin.bib}
         }
         { #1 'warnings.are.errors := }
       if$
-      preamble$ write$ newline$ }
+      preamble$ write$ newline$ 
+    }
   if$
   "\begin{thebibliography}{"  longest.label  * "}" * write$ newline$
 }
