@@ -255,7 +255,7 @@ FUNCTION {chop.word}
   %       int - Length of substring to match
   %       str - Substring to match
   % Returns: str - (Potentially) chopped string
-{ 's :=
+  's :=
   'length :=
   s #1 length substring$ =
     { s length #1 + global.max$ substring$ }
