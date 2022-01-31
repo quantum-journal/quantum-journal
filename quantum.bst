@@ -55,29 +55,43 @@ ENTRY
 
 INTEGERS
   { 
+    % These are state describing integers to control
+    % punctuation, capitalization, and line breaks
     output.state
     before.all
     mid.sentence
     after.sentence
     after.block
+
+    multiresult
+    doi.linked
+
+    % Counters
     length
-    explicit.doi.links
-    warnings.are.errors
-    nameptr
     namesleft
     numnames
-    multiresult
-    ptr
     found.slashes
-    doi.linked
     number.label
     longest.label.width
+
+    % Config integers
+    %  - whether to print out DOI links explicitly or add the link to parts of the
+    %    citation itself.
+    explicit.doi.links 
+    %  - whether to raise compilation errors from (many) BibTeX warnings
+    warnings.are.errors
+
+    % pointers
+    nameptr
+    ptr
   }
 
 STRINGS { s t m longest.label label }
 
 FUNCTION {init.state.consts}
-{
+{ % Initialize the global state describing integeres for punctuation
+  % Args:
+  % Returns:
   #0 'before.all :=
   #1 'mid.sentence :=
   #2 'after.sentence :=
@@ -89,14 +103,18 @@ FUNCTION {init.state.consts}
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 FUNCTION {my.warning}
-{ 'm :=
+{ % Print cited element in bibliography with error message in red.
+  % If warnings.are.errors (default:True), raise a \PackageError
+  % Args: str - Warning message
+  % Returns:
+  'm :=
   "{\color{red}{ This bibitem caused a BibTeX warning: " m * " entry.}}" *
   warnings.are.errors
     { "\PackageError{quantum.bst}{The bibitem " *
       cite$ *
       " caused a BibTeX warning}" *
       "{By default, quantum.bst handles BibTeX warnings like compilation " *
-      "errors. Please refer to the bibliography style demo for details.}" *
+      "errors. Please refer to the bibliography style demo for details and options.}" *
     }
     'skip$
   if$
@@ -105,7 +123,14 @@ FUNCTION {my.warning}
 }
 
 FUNCTION {my.warning.newline}
-{ 's :=
+{ % Print cited element in bibliography with error message in red.
+  % If warnings.are.errors (default:True), raise a \PackageError
+  % This function includes a newline in the bibliography to ensure
+  % that the error message for missing links is formatted correctly.
+  % Args: str - Second line of warning message
+  %       str - First line of warning message
+  % Returns:
+  's :=
   'm :=
   "{\color{red}{ This bibitem caused a BibTeX warning: " m * "}}" *
   write$
@@ -125,7 +150,11 @@ FUNCTION {my.warning.newline}
 }
 
 FUNCTION {my.crossref.warning}
-{ 'm :=
+{ % Print cited crossref element in bibliography with error message in red.
+  % If warnings.are.errors (default:True), raise a \PackageError
+  % Args: str - Warning message
+  % Returns:
+  'm :=
   warnings.are.errors
     { "{\color{red} This bibitem caused a crossref-BibTeX warning: need "
       m * " to crossref.}\PackageError{quantum.bst}{The crossref bibitem " *
@@ -145,19 +174,30 @@ FUNCTION {my.crossref.warning}
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 FUNCTION {not}
-{   { #0 }
+{ % Logical NOT of a "Boolean"
+  % Args: int - Boolean to negate
+  % Returns: int - negated Boolean
+    { #0 }
     { #1 }
   if$
 }
 
 FUNCTION {and}
-{   'skip$
+{ % Logical AND between two "Booleans"
+  % Args: int - First Boolean to combine
+  %       int - Second Boolean to combine
+  % Returns: int - logical AND of input Booleans
+    'skip$
     { pop$ #0 }
   if$
 }
 
 FUNCTION {or}
-{   { pop$ #1 }
+{ % Logical OR between two "Booleans"
+  % Args: int - First Boolean to combine
+  %       int - Second Boolean to combine
+  % Returns: int - logical OR of input Booleans
+    { pop$ #1 }
     'skip$
   if$
 }
@@ -167,24 +207,38 @@ FUNCTION {or}
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 FUNCTION {string.length}
-{
+{ % Count the length of a string
+  % Args: str - String to count
+  % Returns: int - Length of input string
   #1 'length :=
+  % Increase the length by 1 until the substring of the current length is the full string
   {duplicate$ duplicate$ #1 length substring$ = not}
     {length #1 + 'length :=}
   while$
+  % Pop the string and return the length
   pop$ length
 }
 
 FUNCTION {contains.substring}
-{ 's :=
+{ % Check whether a substring is contained in a string
+  % Args: str - Substring to find in larger string
+  %       str - String to find the substring in
+  % Returns: int("Boolean") - whether the substring is contained in the string
+  's :=
   't :=
+  % Count the length of the substring
   s string.length 'length :=
-    { t empty$ not }
+  % cut away starting characters of the string until it is empty or the substring is found
+  { t empty$ not }
+    % Check whether the current string starts with the substring
     { t #1 length substring$ s =
-        { "" 't :=
+        { % If yes, empty the string and return #1
+          "" 't :=
           #1
         }
-        { t #2 global.max$ substring$ 't :=
+        { % If not, delete the first character of the string
+          t #2 global.max$ substring$ 't :=
+          % If the string is empty, return #0
           t empty$
             { #0 }
             'skip$
@@ -196,6 +250,11 @@ FUNCTION {contains.substring}
 }
 
 FUNCTION {chop.word}
+{ % Chop the beginning of a string if it matches a given second string
+  % Args: str - String to chop
+  %       int - Length of substring to match
+  %       str - Substring to match
+  % Returns: str - (Potentially) chopped string
 { 's :=
   'length :=
   s #1 length substring$ =
@@ -1031,7 +1090,6 @@ FUNCTION {conditional.doi.link}
       #1 'doi.linked :=
     }
   if$
-  output
 }
 
 FUNCTION {book}
