@@ -1,6 +1,6 @@
 % This is the BibTeX style file for the Quantum journal.
-% It is based on hyperabbrv.bst, and the extensions by Aram Harrow 
-% (see https://github.com/harrow/arxiv-bibstyle) and Andrew Comech 
+% It is based on hyperabbrv.bst, and the extensions by Aram Harrow
+% (see https://github.com/harrow/arxiv-bibstyle) and Andrew Comech
 % (see https://www.math.tamu.edu/~comech/tools/bibtex-doi-eprint/).
 %
 % In addition to added arxiv and DOI hyperlinks, the file style incorporates design
@@ -54,7 +54,7 @@ ENTRY
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 INTEGERS
-  { 
+  {
     % These are state describing integers to control
     % punctuation, capitalization, and line breaks
     output.state
@@ -77,7 +77,7 @@ INTEGERS
     % Config integers
     %  - whether to print out DOI links explicitly or add the link to parts of the
     %    citation itself.
-    explicit.doi.links 
+    explicit.doi.links
     %  - whether to raise compilation errors from (many) BibTeX warnings
     warnings.are.errors
 
@@ -268,7 +268,12 @@ FUNCTION {chop.word}
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 FUNCTION {output.nonnull}
-{ 's :=
+{ % Output a string that is guaranteed not to be empty
+  % Args: str - String to process
+  % Returns:
+  % The written output via write$ depends on the position in a sentence or block,
+  % as stored in outpute.state, which is updated accordingly.
+  's :=
   output.state mid.sentence =
     'write$
     { output.state after.block =
@@ -289,14 +294,21 @@ FUNCTION {output.nonnull}
 }
 
 FUNCTION {output}
-{ duplicate$ empty$
+{ % Output a string if it is not empty
+  % Args: str - String to check and output
+  % Returns:
+  duplicate$ empty$
     'pop$
     'output.nonnull
   if$
 }
 
 FUNCTION {output.check}
-{ 't :=
+{ % Check whether a string is empty, output it if it is not, and raise a my.warning if it is.
+  % Args: str - Describing string of argument that is checked to provide a useful error message
+  %       str - String to check and output if it is not empty
+  % Returns:
+  't :=
   duplicate$ empty$
     { pop$ "empty " t * " in " * my.warning }
     'output.nonnull
@@ -304,7 +316,11 @@ FUNCTION {output.check}
 }
 
 FUNCTION {no.output.check}
-{ 't :=
+{ % Check whether a string is empty and raise a my.warning if it is.
+  % Args: str - Describing string of argument that is checked to provide a useful error message
+  %       str - String to check
+  % Returns:
+  't :=
   duplicate$ empty$
     { pop$ "empty " t * " in " * my.warning }
     'skip$
@@ -312,7 +328,14 @@ FUNCTION {no.output.check}
 }
 
 FUNCTION {no.output.check.links}
-{ 't :=
+{ % Check whether a string is empty and raise a my.warning.newline if it is.
+  % Args: str - Describing string of argument that is checked to provide a useful error message
+  %       str - String to check
+  % Returns:
+  % The separate handling from no.output.check is the special warning message that contains
+  % special characters, requiring us to use my.warning.newline. In addition, if the field
+  % `nolink` is not missing (it may be empty though), the warning is not raised.
+  't :=
   duplicate$ empty$ nolink missing$ and
     { pop$ "empty " t * ". " *
       "If none of these fields is applicable for the cited work you can include the field " *
@@ -324,7 +347,12 @@ FUNCTION {no.output.check.links}
 }
 
 FUNCTION {output.bibitem}
-{ newline$
+{ % Write the current buffer and the header for a new bibitem to the bbl file and
+  % updates the output.state
+  % Args: str - Current buffer is written to the bbl file
+  % Returns: str - An empty string
+  newline$
+  % Write the header for a new bibitem
   "\bibitem{" write$
   cite$ write$
   "}" write$
@@ -334,38 +362,52 @@ FUNCTION {output.bibitem}
 }
 
 FUNCTION {fin.entry}
-{ add.period$
+{ % Finalize an entry by appending a period if appropriate and writing to the bbl file
+  % Args: str - Current string to write to the bbl file
+  % Returns:
+  add.period$
   write$
   newline$
 }
 
 FUNCTION {new.block}
-{ output.state before.all =
+{ % Start a new block in an entry, setting the output.state accordingly
+  % Args:
+  % Returns:
+  output.state before.all =
     'skip$
     { after.block 'output.state := }
   if$
 }
 
 FUNCTION {new.sentence}
-{ output.state after.block =
+{ % Start a new sentence in an entry, setting the output.state accordingly
+  % Args:
+  % Returns:
+  output.state after.block =
+  output.state before.all =
+  or
     'skip$
-    { output.state before.all =
-        'skip$
-        { after.sentence 'output.state := }
-      if$
-    }
+    { after.sentence 'output.state := }
   if$
 }
 
 FUNCTION {new.block.checka}
-{ empty$
+{ % Start a new block in an entry if the input string is not empty
+  % Args: str - String to decide whether a new block is started
+  % Returns:
+  empty$
     'skip$
     'new.block
   if$
 }
 
 FUNCTION {new.block.checkb}
-{ empty$
+{ % Start a new block in an entry if any of two input strings are not empty
+  % Args: str - Second string to decide whether a new block is started
+  %       str - First string to decide whether a new block is started
+  % Returns:
+  empty$
   swap$ empty$
   and
     'skip$
@@ -374,14 +416,21 @@ FUNCTION {new.block.checkb}
 }
 
 FUNCTION {new.sentence.checka}
-{ empty$
+{ % Start a new sentence in an entry if the input string is not empty
+  % Args: str - String to decide whether a new sentence is started
+  % Returns:
+  empty$
     'skip$
     'new.sentence
   if$
 }
 
 FUNCTION {new.sentence.checkb}
-{ empty$
+{ % Start a new sentence in an entry if any of two input strings are not empty
+  % Args: str - Second string to decide whether a new sentence is started
+  %       str - First string to decide whether a new sentence is started
+  % Returns:
+  empty$
   swap$ empty$
   and
     'skip$
@@ -390,60 +439,113 @@ FUNCTION {new.sentence.checkb}
 }
 
 FUNCTION {field.or.null}
-{ duplicate$ empty$
+{ % Replace an empty field or string by the empty string ""
+  % Args: str - Field or string to check and replace
+  % Returns: str - The input string if it was not empty, else ""
+  % This function does nothing on strings, it just replaces empty (but defined)
+  % fields by the empty string in order to allow for string comparisons and other operations
+  % that are not defined on empty (non-string) fields.
+  duplicate$ empty$
     { pop$ "" }
     'skip$
   if$
 }
 
-FUNCTION {either.or.check}
-{ empty$
-    'pop$
-    { "can't use both " swap$ * " fields in " * my.warning }
+FUNCTION {tie.or.space.connect}
+{ % Connect two strings with a space or a non-breaking ~
+  % Args: str - Second string to connect. If it is shorter than 3 characters, a ~ is used
+  %       str - First string to connect.
+  % Returns: str - The connected strings.
+  duplicate$ text.length$ #3 <
+    { % Use a ~ if the second string is shorter than 3 characters
+      "~"
+    }
+    { % Use a space else
+      " "
+    }
+  if$
+  % Bring the strings in the order (first string, connector, second string) and merge them
+  swap$ * *
+}
+
+FUNCTION {init.longest.label}
+{ % Initializes globally used variables to determine the longest label in the bibliography
+  % Args:
+  % Returns:
+  "" 'longest.label :=
+  #1 'number.label :=
+  #0 'longest.label.width :=
+}
+
+FUNCTION {longest.label.pass}
+{ % Update the longest.label.width and the longest.label, as measured by width$
+  % Args:
+  % Returns:
+  % Note that this function does not require any input from the bilbiography items,
+  % but only depends on the number of items.
+  number.label int.to.str$ 'label :=
+  number.label #1 + 'number.label :=
+  label width$ longest.label.width >
+    { label 'longest.label :=
+      label width$ 'longest.label.width :=
+    }
+    'skip$
   if$
 }
 
-FUNCTION {tie.or.space.connect}
-{ duplicate$ text.length$ #3 <
-    { "~" }
-    { " " }
-  if$
-  swap$ * *
-}
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % Entry formatting
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 FUNCTION {boldfont}
-{ duplicate$ empty$
+{ % Add a bold font formatting string to a string (if it is not empty)
+  % Args: str - The string to format in bold font
+  % Returns: str - The input string wrapped in a formatting string for bold font
+  % Only add the formatting string to a non-empty string
+  duplicate$ empty$
     { pop$ "" }
     { "{\bf " swap$ * "}" * }
   if$
 }
 
 FUNCTION {format.names}
-{ 's :=
+{ % Format a given string with names
+  % Args: str - The string with names
+  % Returns: str - The formatted names
+  's :=
+  % initialize pointer, counter for names and counter for names to handle left
   #1 'nameptr :=
   s num.names$ 'numnames :=
   numnames 'namesleft :=
-    { namesleft #0 > }
+  % Iterate over names
+  { namesleft #0 > }
     { s nameptr "{ff~}{vv~}{ll}{, jj}" format.name$ 't :=
       nameptr #1 >
-        { namesleft #1 >
-            { ", " * t * }
-            { numnames #2 >
-                { "," * }
+        { % After the first name, include connecting characters
+          namesleft #1 >
+            { % If there is more than the current name left, use a comma
+              ", " * t *
+            }
+            { % If there is only the current name left, use "and" or "et al."
+              numnames #2 >
+                { % Add a comma before "and" if there were more than two names
+                  "," *
+                }
                 'skip$
               if$
               t "others" =
-                { " et~al." * }
+                { % Replace "and others" by "et~al."
+                  " et~al." *
+                }
                 { " and " * t * }
               if$
             }
           if$
         }
-        't
+        { % Simply write the first name to buffer
+          t
+        }
       if$
       nameptr #1 + 'nameptr :=
       namesleft #1 - 'namesleft :=
@@ -452,44 +554,68 @@ FUNCTION {format.names}
 }
 
 FUNCTION {format.authors}
-{ author empty$
+{ % Apply format.names to the author field and return it
+  % Args:
+  % Returns: str - author field formatted via format.names
+  % If the author field is empty, the empty string is returned instead.
+  author empty$
     { "" }
     { author format.names }
   if$
 }
 
 FUNCTION {format.editors}
-{ editor empty$
+{ % Apply format.names to the editor field, add a remark "editor(s)" to it, and return it
+  % Args:
+  % Returns: str - editor field formatted via format.names, with ", editor(s)" appended.
+  % If the editor field is empty, the empty string is returned instead.
+  editor empty$
     { "" }
-    { editor format.names
+    {
+      editor format.names
+      ", editor" *
+      % Add plural "s" if multiple editors are given
       editor num.names$ #1 >
-        { ", editors" * }
-        { ", editor" * }
+        { "s" * }
+        'skip$
       if$
     }
   if$
 }
 
 FUNCTION {format.title}
-{ title empty$
+{ % Wrap the title in quotation marks and change its capitalization.
+  % Args:
+  % Returns: str - title field wrapped in quotation marks with new capitalization
+  % Note that change.case$ together with the option "t" removes all capitalization
+  % of text that is not in curly braces, except for the very first character.
+  title empty$
     { "" }
     { "``" title "t" change.case$ * "''" *  }
   if$
 }
 
 FUNCTION { format.arxiv.hyperlink }
-{ duplicate$ #1 #6 substring$ "arXiv:" =
+{ % Extract the arXiv handle from a string, removing a leading "arXiv"
+  % Args: str - The string to extract the handle from
+  % Returns: str - The extracted arXiv handle
+  % If the string starts with "arxiv:" or "arxiv" (or any capitalized version of these),
+  % the length-9 handle is extracted, otherwise the original string is returned.
+  duplicate$ #1 #6 substring$ "l" change.case$ "arxiv:" =
     { #7 #9 substring$  }
-    { duplicate$ #1 #5 substring$ "arXiv" =
+    { duplicate$ #1 #5 substring$ "l" change.case$ "arxiv" =
       { #6 #9 substring$  }
-      { "" * }
+      'skip$
     if$
     }
   if$
 }
 
 FUNCTION {format.eprint}
-{ eprint empty$
+{ % Format the eprint link, including the hyperlink and the link text.
+  % Args:
+  % Returns: str - Hyperlink to extracted arxiv reference
+  eprint empty$
     { "" }
     { archivePrefix empty$
         { primaryClass empty$
@@ -514,18 +640,31 @@ FUNCTION {format.eprint}
 }
 
 FUNCTION {add.doi.link}
-{ "\href{https://dx.doi.org/" doi * "}{" * swap$ * "}" * }
+{ % Add a hyperlink referring to a DOI reference to a string, using the doi field.
+  % Args: str - String to add the hyperlink to
+  % Returns: str - Input string with hyperlink added
+  "\href{https://dx.doi.org/" doi * "}{" * swap$ * "}" *
+}
 
 FUNCTION {n.dashify}
-{ 't :=
+{ % Replace single dashes by double dashes
+  % Args: str - Input string to be modified
+  % Returns: str - Input string with single dashes replaced by double dashes
+  't :=
   ""
-    { t empty$ not }
+  % Iterate over the characters in the string
+  { t empty$ not }
     { t #1 #1 substring$ "-" =
-        { t #1 #2 substring$ "--" = not
-            { "--" *
+        {
+          t #1 #2 substring$ "--" = not
+            { % If the current `t` starts with a "-" but not with "--", replace
+              % the single dash with "--" and cut the leading dash from `t`
+              "--" *
               t #2 global.max$ substring$ 't :=
             }
-            {   { t #1 #1 substring$ "-" = }
+            { % If the current `t` starts with a "--", add all dashes in the
+              % current `t` to the output string without any replacement
+              { t #1 #1 substring$ "-" = }
                 { "-" *
                   t #2 global.max$ substring$ 't :=
                 }
@@ -533,7 +672,9 @@ FUNCTION {n.dashify}
             }
           if$
         }
-        { t #1 #1 substring$ *
+        { % If the current `t` does not start with a dash, simply move the first
+          % character to the output string.
+          t #1 #1 substring$ *
           t #2 global.max$ substring$ 't :=
         }
       if$
@@ -542,7 +683,12 @@ FUNCTION {n.dashify}
 }
 
 FUNCTION {format.year}
-{ year empty$
+{ % Format the year of an entry
+  % Args:
+  % Returns: str - Formatted year in brackets
+  % If the year field is empty, the year is extracted from the date field, assuming
+  % that it starts with the year.
+  year empty$
     { date empty$
         { "" }
         { "~(" date #1 #4 substring$ * ")" * }
@@ -553,7 +699,11 @@ FUNCTION {format.year}
 }
 
 FUNCTION {format.urldate}
-{ urldate empty$
+{ % Format the date on which a URL was accessed
+  % Args:
+  % Returns: str - The formatted date in brackets with a remark "accessed:"
+  % The urldate field preceeds the date field.
+  urldate empty$
     { date empty$
         { "" }
         { "(accessed:~" date * ")" * }
@@ -564,7 +714,11 @@ FUNCTION {format.urldate}
 }
 
 FUNCTION {format.chapter}
-{ type empty$
+{ % Format the chapter field for an entry
+  % Args: int - "Boolean" indicating whether the "Chapter" should be turned to lower case
+  % Returns: str - The formatted chapter with leading "Chapter" string.
+  % If the field `type` is not empty, it is used instead of the generic "Chapter".
+  type empty$
     { "Chapter" }
     { type }
   if$
@@ -576,19 +730,25 @@ FUNCTION {format.chapter}
 }
 
 FUNCTION {multi.page.check}
-{ 't :=
+{ % Check whether a string indicates multiple pages
+  % Args: str - The string describing a page or multiple pages
+  % Returns: int - "Boolean" indicating whether the string describes multiple pages
+  't :=
   #0 'multiresult :=
-    { multiresult not
-      t empty$ not
-      and
-    }
-    { t #1 #1 substring$
+  { multiresult not
+    t empty$ not
+    and
+  }
+    { % Check whether the first character in the current `t` is one of "-", "," or "+"
+      t #1 #1 substring$
       duplicate$ "-" =
       swap$ duplicate$ "," =
       swap$ "+" =
       or or
         { #1 'multiresult := }
-        { t #2 global.max$ substring$ 't := }
+        { % Remove the first character from the current `t`
+          t #2 global.max$ substring$ 't :=
+        }
       if$
     }
   while$
@@ -596,7 +756,10 @@ FUNCTION {multi.page.check}
 }
 
 FUNCTION {format.pages}
-{   { "p" }
+{ % Format the pages field of an entry
+  % Args: int - "Boolean" indicating whether to capitalize the word "page(s)"
+  % Returns: str - The formatted pages field, including the word "page(s)"
+    { "p" }
     { "P" }
   if$
   pages multi.page.check
@@ -606,7 +769,11 @@ FUNCTION {format.pages}
 }
 
 FUNCTION {format.bvol.series}
-{ volume empty$
+{ % Format the book volume and the series of an entry
+  % Args:
+  % Returns: str - The volume and series field formatted into one string.
+  % Raises a warning if the field `number` is present in addition to `volume`.
+  volume empty$
     { "" }
     { mid.sentence output.state =
         { "v" }
@@ -617,13 +784,21 @@ FUNCTION {format.bvol.series}
         'skip$
         { " of " * series * }
       if$
-      "volume and number" number either.or.check
+      number empty$
+        'skip$
+        { "can't use both volume and number fields in " * my.warning }
+      if$
     }
   if$
 }
 
 FUNCTION {format.bvol.chap.pages}
-{ format.bvol.series
+{ % Format the book volume, series and the chapter and pages of an entry
+  % Args:
+  % Returns: str - The volume and series field formatted into one string.
+  % This function wraps the previously defined functions format.bvol.series,
+  % format.chapter, and format.pages into one.
+  format.bvol.series
   chapter empty$
     'skip$
     { duplicate$ empty$
@@ -649,7 +824,12 @@ FUNCTION {format.bvol.chap.pages}
 }
 
 FUNCTION {format.number.series}
-{ volume empty$
+{ % Format the number and the series of an entry
+  % Args:
+  % Returns: str - The number and series field formatted into one string.
+  % The returned string is empty if the `volume` field is not empty.
+  % Raises a warning if the field `series` is empty.
+  volume empty$
     { number empty$
         { series field.or.null }
         { output.state mid.sentence =
@@ -669,7 +849,11 @@ FUNCTION {format.number.series}
 }
 
 FUNCTION {format.edition}
-{ edition empty$
+{ % Format the edition field of an entry
+  % Args:
+  % Returns: str - The edition of the entry with "edition" comment, if it
+  %     is not contained in the field itself already.
+  edition empty$
   { "" }
   { output.state mid.sentence =
     { edition "l" change.case$ }
@@ -683,31 +867,30 @@ FUNCTION {format.edition}
   if$
 }
 
-FUNCTION {format.vol.num.pages}
-{ " " volume field.or.null boldfont *
+FUNCTION {format.vol.pages}
+{ % Format the volume and pages for an article entry
+  % Args:
+  % Returns: The volume and page numbers as a single string
+  volume field.or.null boldfont
   pages empty$
     'skip$
     { duplicate$ empty$
         { pop$ mid.sentence output.state = format.pages }
-        { ", " * pages n.dashify * }
+        { " " swap$ * ", " * pages n.dashify * }
       if$
     }
   if$
 }
 
 FUNCTION {format.chapter.pages}
-{ chapter empty$
+{ % Format the chapter and pages for an entry
+  % Args:
+  % Returns: str - chapter and pages description in one string
+  chapter empty$
     { #0 format.pages }
     {
-      type empty$
-        { "Chapter" }
-        { type }
-      if$
       mid.sentence output.state =
-        { "l" change.case$ }
-        'skip$
-      if$
-      chapter tie.or.space.connect
+      format.chapter
       pages empty$
         'skip$
         { ", " *  #1 format.pages * }
@@ -717,7 +900,10 @@ FUNCTION {format.chapter.pages}
 }
 
 FUNCTION {format.in.ed.booktitle}
-{ booktitle empty$
+{ % Format the booktitle together with editors of an entry
+  % Args:
+  % Returns: The booktitle for an entry contained in the book.
+  booktitle empty$
     { "" }
     { editor empty$
         { "In " booktitle * }
@@ -728,9 +914,14 @@ FUNCTION {format.in.ed.booktitle}
 }
 
 FUNCTION {empty.misc.check}
-{ author empty$ title empty$ howpublished empty$
+{ % Checks whether all relevant fields for a misc entry are empty
+  % Args:
+  % Returns:
+  % Raises a warning if all fields are empty
+  author empty$ title empty$ howpublished empty$
   month empty$ year empty$ note empty$
   and and and and and
+  % Only warn for entries that actually have a key
   key empty$ not and
     { "all relevant fields are empty in " my.warning }
     'skip$
@@ -738,7 +929,10 @@ FUNCTION {empty.misc.check}
 }
 
 FUNCTION {format.thesis.type}
-{ type empty$
+{ % Replace a string with the type field if given, and add a DOI link
+  % Args: str - String to add the DOI link to, or to replace by the `type` field.
+  % Returns: str - Input string or `type` string if present, with DOI link.
+  type empty$
     'skip$
     { pop$
       type "t" change.case$
@@ -753,7 +947,11 @@ FUNCTION {format.thesis.type}
 }
 
 FUNCTION {format.tr.number}
-{ type empty$
+{ % Format the number of a technical report and add the remark "Technical Report"
+  % or the `type` field if present.
+  % Args:
+  % Returns: str - `type` field or "Technical Report" together with the `number` field
+  type empty$
     { "Technical Report" }
     'type
   if$
@@ -764,7 +962,11 @@ FUNCTION {format.tr.number}
 }
 
 FUNCTION {get.journal}
-{ journal missing$
+{ % Obtain the journal from either journal, journaltitle or shortjournal,
+  % in that order of priority
+  % Args:
+  % Returns: str - The name of the journal.
+  journal missing$
     {
     journaltitle missing$
       {
@@ -781,7 +983,10 @@ FUNCTION {get.journal}
 }
 
 FUNCTION {format.article.crossref}
-{ key empty$
+{ % Fomat a cross-reference of an article
+  % Args:
+  % Returns: str - Crossref entry for an article incl. citation
+  key empty$
     { get.journal empty$
         { "key or journal" my.crossref.warning
           ""
@@ -795,7 +1000,10 @@ FUNCTION {format.article.crossref}
 }
 
 FUNCTION {format.crossref.editor}
-{ editor #1 "{vv~}{ll}" format.name$
+{ % Fomat the editors for a cross-reference to a book, collection or proceedings
+  % Args:
+  % Returns: str - Editors names formatted for a cross-reference.
+  editor #1 "{vv~}{ll}" format.name$
   editor num.names$ duplicate$
   #2 >
     { pop$ " et~al." * }
@@ -812,7 +1020,10 @@ FUNCTION {format.crossref.editor}
 }
 
 FUNCTION {format.book.crossref}
-{ volume empty$
+{ % Fomat a cross-reference to a book
+  % Args:
+  % Returns: str - Crossref entry to a book incl. citation
+  volume empty$
     { "volume" my.crossref.warning
       "In "
     }
@@ -840,7 +1051,10 @@ FUNCTION {format.book.crossref}
 }
 
 FUNCTION {format.incoll.inproc.crossref}
-{ editor empty$
+{ % Fomat a cross-reference for an entry from a collection or proceedings
+  % Args:
+  % Returns: str - Crossref entry to the collection/proceedings incl. citation.
+  editor empty$
   editor field.or.null author field.or.null =
   or
     { key empty$
@@ -860,7 +1074,10 @@ FUNCTION {format.incoll.inproc.crossref}
 }
 
 FUNCTION {extract.repo}
-{
+{ % Obtain the repository name from the `code` field
+  % Args:
+  % Returns: str - The repository name to print
+  % Look for registered formatting of github repos and remove them
   "github.com/" #11
     "www.github.com/" #15
       "https://github.com/" #19
@@ -868,6 +1085,7 @@ FUNCTION {extract.repo}
       chop.word
     chop.word
   chop.word
+  % Extract the part of the repository name until the second slash
   't :=
   #0 'found.slashes :=
   #1 'ptr :=
@@ -878,6 +1096,7 @@ FUNCTION {extract.repo}
     if$
     ptr #1 + 'ptr := }
   while$
+  % Return only the part up to the second slash from above
   #2 found.slashes =
     { t #1 ptr #2 - substring$ }
     { t #1 ptr substring$ }
@@ -885,7 +1104,9 @@ FUNCTION {extract.repo}
 }
 
 FUNCTION {format.version}
-{
+{ % Format the `version` field of an entry with `code` field
+  % Args:
+  % Returns: str - The version with a "v" abbreviation
   version empty$
     { "" }
     {
@@ -898,7 +1119,9 @@ FUNCTION {format.version}
 }
 
 FUNCTION {format.commit}
-{
+{ % Format the `commit` field of an entry with `code` field
+  % Args:
+  % Returns: str - The commit field with the remark "commit"
   commit empty$
     { "" }
     { " commit:" commit #1 #7 substring$ * }
@@ -906,14 +1129,22 @@ FUNCTION {format.commit}
 }
 
 FUNCTION {format.code}
-{ code empty$
+{ % Format the `code` field
+  % Args:
+  % Returns: str - The `code` field with version and commit,
+  %   including a link to the repository
+  code empty$
     { "" }
     { " code:~\href{" code * "}{" * extract.repo * format.version * format.commit * "}" * }
   if$
 }
 
 FUNCTION {format.url}
-{ shorturl empty$
+{ % Format a url
+  % Args:
+  % Returns: str - The `shorturl` (preferred) or `url` field including a link
+  % The "https" part is removed from the printed string of the hyperlink
+  shorturl empty$
     { url empty$
         { "" }
         { " url:~\href{" url * "}{" * "https://" #8 url chop.word * "}" * }
@@ -924,33 +1155,45 @@ FUNCTION {format.url}
 }
 
 FUNCTION {check.links}
-{ doi missing$ eprint missing$ and
+{ % Check that one of the fields providing a hyperlink is present and raise a warning if not
+  % Args:
+  % Returns:
+  % The fields of which one should be present are `doi`, `eprint` and
+  % `url`. Setting the (empty) field `nolink={}` suppresses this warning.
+  doi missing$ eprint missing$ and
     { format.url "doi, eprint and url" no.output.check.links pop$ }
     'skip$
   if$
 }
 
 FUNCTION {output.links}
-{
+{ % Output the links of an entry
+  % Args:
+  % Returns:
   new.block
   explicit.doi.links
-    { doi missing$
+    { % If explicit DOI links are set via the config, output it
+      % explicitly (if it's not missing)
+      doi missing$
         'skip$
         { " doi:~" doi add.doi.link * output
           new.block
         }
       if$
     }
-    'skip$
+    'skip$ % Without explicit DOI links, it has already been added to another string.
   if$
+  % Add eprint link
   format.eprint output
   doi missing$ eprint missing$ and
-    { new.block
+    { % If the DOI and the eprint link are missing, add the `url` field hyperlink
+      new.block
       format.url output
     }
     'skip$
   if$
   new.block
+  % Add the code hyperlink
   format.code output
 }
 
@@ -959,7 +1202,15 @@ FUNCTION {output.links}
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 FUNCTION {is.arxiv.article}
-{
+{ % Determine whether an article class is an arxiv article only.
+  % Args:
+  % Returns: int - "Boolean" indicating whether the entry is an arxiv article only
+  % The article is considered an arxiv article only if
+  % - get.journal delivers an empty string and the `archivePrefix` field matches "arxiv"
+  %   (up to capitalization)
+  % - "arxiv" (or a capitalized version of it) is present in the output of get.journal
+  % If the output of get.journal is empty and the `archivePrefix` field is present but not
+  % known, a warning is raised.
   get.journal empty$
     { archivePrefix missing$
         { #0 }
@@ -973,8 +1224,6 @@ FUNCTION {is.arxiv.article}
       if$
     }
     { get.journal "l" change.case$ "arxiv" contains.substring
-      get.journal "arXiv" contains.substring
-      or
         { #1 }
         { #0 }
       if$
@@ -987,7 +1236,8 @@ FUNCTION {is.arxiv.article}
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 FUNCTION {arxiv.article}
-{ output.bibitem
+{ % Format an arxiv-only article
+  output.bibitem
   format.authors "author" output.check
   new.block
   format.title "title" output.check
@@ -1006,14 +1256,15 @@ FUNCTION {arxiv.article}
 }
 
 FUNCTION {std.article}
-{ output.bibitem
+{ % Format a standard published article
+  output.bibitem
   format.authors "author" output.check
   new.block
   format.title "title" output.check
   crossref missing$
     { new.block
       get.journal "journal, shortjournal and journaltitle" no.output.check
-      format.vol.num.pages *
+      format.vol.pages *
       doi missing$
       explicit.doi.links
       or
@@ -1034,7 +1285,8 @@ FUNCTION {std.article}
 }
 
 FUNCTION {std.misc}
-{ output.bibitem
+{ % Format a standard misc entry
+  output.bibitem
   format.authors output
   title howpublished new.block.checkb
   format.title output
@@ -1049,7 +1301,8 @@ FUNCTION {std.misc}
 }
 
 FUNCTION {thesis.start}
-{ output.bibitem
+{ % Format the first part of a thesis entry
+  output.bibitem
   format.authors "author" output.check
   new.block
   format.title "title" output.check
@@ -1057,7 +1310,7 @@ FUNCTION {thesis.start}
 }
 
 FUNCTION {thesis.end}
-{
+{ % Format the second (and last) part of a thesis entry
   new.block
   school "school" output.check
   new.block
@@ -1479,32 +1732,13 @@ MACRO {tcs} {"Theoretical Comput. Sci."}
 READ
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-% OUTPUT GENERATION
+% BIBLIOGRAPHY HEADER AND FOOTER
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
-FUNCTION {initialize.longest.label}
-{ "" 'longest.label :=
-  #1 'number.label :=
-  #0 'longest.label.width :=
-}
-
-FUNCTION {longest.label.pass}
-{ number.label int.to.str$ 'label :=
-  number.label #1 + 'number.label :=
-  label width$ longest.label.width >
-    { label 'longest.label :=
-      label width$ 'longest.label.width :=
-    }
-    'skip$
-  if$
-}
-
-EXECUTE {initialize.longest.label}
-
-ITERATE {longest.label.pass}
-
 FUNCTION {begin.bib}
-{ #0 'explicit.doi.links :=
+{ % Print the beginning of the bibliography to the .bbl file. Also set the
+  % "Booleans" for the global config of DOI link printing and handling of warnings.
+  #0 'explicit.doi.links :=
   #1 'warnings.are.errors :=
   preamble$ empty$
     'skip$
@@ -1520,21 +1754,36 @@ FUNCTION {begin.bib}
         }
         { #1 'warnings.are.errors := }
       if$
-      preamble$ write$ newline$ 
+      preamble$ write$ newline$
     }
   if$
   "\begin{thebibliography}{"  longest.label  * "}" * write$ newline$
 }
 
-EXECUTE {begin.bib}
-
-EXECUTE {init.state.consts}
-
-ITERATE {call.type$}
-
 FUNCTION {end.bib}
-{ newline$
+{ % Print the ending of the bibliography to the .bbl file.
+  newline$
   "\end{thebibliography}" write$ newline$
 }
 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% EXECUTION
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+% Initialize global constants indicating the positions in an entry
+EXECUTE {init.state.consts}
+
+% Initialize global variables for the longest label
+EXECUTE {init.longest.label}
+
+% Determine the longest label that will be needed
+ITERATE {longest.label.pass}
+
+% Begin the library and handle the preamble
+EXECUTE {begin.bib}
+
+% Create all bibliography entries
+ITERATE {call.type$}
+
+% Finalize the library
 EXECUTE {end.bib}
