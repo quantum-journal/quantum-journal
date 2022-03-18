@@ -106,7 +106,7 @@ Improvements submitted as pull requests against the `develop` branch are very mu
 
 ## Copyright
 
-Copyright 2017, 2018, 2019, 2020, 2021
+Copyright 2017, 2018, 2019, 2020, 2021, 2022
 Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
 (http://quantum-journal.org/about/)
 
