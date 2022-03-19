@@ -11,6 +11,9 @@ addons:
         - texlive-fonts-extra
         - texlive-latex-recommended
         - texlive-latex-extra
+        # texlive-bibtex-extra contains the multibib package which is used by
+        # the quantum-bibliographystyle-demo.
+        - texlive-bibtex-extra
         # Some of the additional packages we depend on,
         # such as {ltxgrid}, are shipped with the "publishers"
         # Ubuntu package.
@@ -28,6 +31,20 @@ script:
     # Test whether the template compiles.
     - pdflatex -interaction=nonstopmode -halt-on-error quantum-template.tex
     - pdflatex -interaction=nonstopmode -halt-on-error quantum-template.tex
+    # Test whether the view template compiles.
+    - pdflatex -interaction=nonstopmode -halt-on-error quantumview-template.tex
+    - bibtex quantumview-template
+    - pdflatex -interaction=nonstopmode -halt-on-error quantumview-template.tex
+    # Test whether the bst demo compiles.
+    - pdflatex -interaction=nonstopmode -halt-on-error quantum-bibliographystyle-demo.tex
+    # For multibib, bibtex is called on the sub-bib files.
+    - bibtex article
+    - bibtex book
+    - bibtex misc
+    - bibtex repo
+    - bibtex web
+    - bibtex other
+    - pdflatex -interaction=nonstopmode -halt-on-error quantum-bibliographystyle-demo.tex
     # Test whether the installer works.
     - bash install.sh
     # Test whether the template compiles against the installed version.
