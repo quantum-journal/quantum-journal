@@ -222,8 +222,7 @@ if ($CTAN) {
         quantum-template.tex, `
         quantum-template.pdf, `
         example-plot.pdf, `
-        quantum.bst,
-        quantumarticle.layout, `
+        quantum.bst, `
         quantum-bibliographystyle-demo.tex, `
         quantum-bibliographystyle-demo.bib, `
         quantum-bibliographystyle-demo.pdf, `
