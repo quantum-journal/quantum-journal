@@ -1362,7 +1362,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	}
 }
 \AtEndPreamble{
-	\providecommand{\@elsearticlecommandsnotsupportederror}{\ClassError{quantumarticle}{The elsearticle style \string\cortext{}, \string\corref{}, \string\fntext{}, \string\fnref{}, \string\tnotetext{}, and \string\tnoteref{} commands are not supported by quantumarticle. Please refrain from using footnotes in the title part of your document and use the \string\tahnks{} command for author footnotes instead.}{}}
+	\providecommand{\@elsearticlecommandsnotsupportederror}{\ClassError{quantumarticle}{The elsearticle style \string\cortext{}, \string\corref{}, \string\fntext{}, \string\fnref{}, \string\tnotetext{}, and \string\tnoteref{} commands are not supported by quantumarticle. Please refrain from using footnotes in the title part of your document and use the \string\thanks{} command for author footnotes instead.}{}}
 	\providecommand{\cortext}[2][]{\@elsearticlecommandsnotsupportederror} %corresponding author information
 	\providecommand{\corref}[1]{\@elsearticlecommandsnotsupportederror} %corresponding author information reference
 	\providecommand{\fntext}[2][]{\@elsearticlecommandsnotsupportederror} %author footnote
