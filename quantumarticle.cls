@@ -481,7 +481,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\noindent%
 	\begin{minipage}{\textwidth}%
           \iftoggle{@titlepage}{\centering}{}%
-          \noindent{\huge\hyphenpenalty=5000 \@printtitle\par}%
+          \noindent{\huge\hyphenpenalty=50000 \@printtitle\par}%
         \end{minipage}%
 	\vskip 1.5em%
 	\iftoggle{@titlepage}{}{\begin{flushleft}}%

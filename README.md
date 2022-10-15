@@ -61,6 +61,7 @@ In addition, this document class comes bundled with two new extras (currently in
 ### New in v6.1
 
 * Added explanation of the difference between regular and [shotDOIs](https://shortdoi.org/) and why the latter cannot be used in bibliographies
+* Further increased hyphen penalty of title
 
 ### New in v6.0
 
