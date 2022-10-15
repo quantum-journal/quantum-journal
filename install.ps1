@@ -215,5 +215,20 @@ if ($CTAN) {
     #endregion
 
     # Once we have PoShTeX, we can then directly invoke Export-CTANArchive.
-    Export-CTANArchive -ArchiveLayout Simple quantumarticle.cls, quantum-template.pdf, quantum-template.tex, README.md, quantumarticle.tex, quantumarticle.pdf
+    Export-CTANArchive -ArchiveLayout Simple `
+        quantumarticle.cls, `
+        quantumarticle.tex, `
+        quantumarticle.pdf, `
+        quantum-template.tex, `
+        quantum-template.pdf, `
+        example-plot.pdf, `
+        quantum.bst, `
+        quantum-bibliographystyle-demo.tex, `
+        quantum-bibliographystyle-demo.bib, `
+        quantum-bibliographystyle-demo.pdf, `
+        quantumview.cls, `
+        quantumview-template.tex, `
+        quantumview-template.bib, `
+        quantumview-template.pdf, `
+        README.md
 }
