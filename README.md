@@ -2,7 +2,7 @@
 
 # LaTeX document class for Quantum
 
-This is version 6.0 of `quantumarticle`, the document class for typesetting articles in Quantum - the open journal for quantum science.
+This is version 6.1 of `quantumarticle`, the document class for typesetting articles in Quantum - the open journal for quantum science.
 
 [Click here](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.cls) to download the latest stable version.
 
