@@ -58,6 +58,10 @@ In addition, this document class comes bundled with two new extras (currently in
 
 ## Changelog
 
+### New in v6.1
+
+* Added explanation of the difference between regular and [shotDOIs](https://shortdoi.org/) and why the latter cannot be used in bibliographies
+
 ### New in v6.0
 
 * introduced the Quantum bibstyle `quantum.bst` together with the demo file `quantum-bibliographystyle-demo`
