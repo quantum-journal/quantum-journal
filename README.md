@@ -58,6 +58,10 @@ In addition, this document class comes bundled with two new extras (currently in
 
 ## Changelog
 
+### New in v6.1
+
+* Fix for long urls in bibliography items not breaking correctly.
+
 ### New in v6.0
 
 * introduced the Quantum bibstyle `quantum.bst` together with the demo file `quantum-bibliographystyle-demo`
