@@ -1147,10 +1147,10 @@ FUNCTION {format.url}
   shorturl empty$
     { url empty$
         { "" }
-        { " url:~\href{" url * "}{" * "https://" #8 url chop.word * "}" * }
+	{ " url:~\url{" url * "}" * }
       if$
     }
-    { " url:~\href{" url * "}{" * "https://" #8 shorturl chop.word * "}" * }
+    { " url:~\url{" url * "}" * }
   if$
 }
 
