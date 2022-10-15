@@ -144,7 +144,7 @@ function refresh_tex_hash {
         [TeXDistributions] $tex_dist = [TeXDistributions]::Other,
         [string] $tex_userdir = ""
     )
-    
+
     switch ($tex_dist) {
         "MiKTeX" {
             initexmf --update-fndb;
