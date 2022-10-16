@@ -2,7 +2,7 @@
 
 # LaTeX document class for Quantum
 
-This is version 6.0 of `quantumarticle`, the document class for typesetting articles in Quantum - the open journal for quantum science.
+This is version 6.1 of `quantumarticle`, the document class for typesetting articles in Quantum - the open journal for quantum science.
 
 [Click here](https://raw.githubusercontent.com/quantum-journal/quantum-journal/master/quantumarticle.cls) to download the latest stable version.
 
@@ -60,7 +60,11 @@ In addition, this document class comes bundled with two new extras (currently in
 
 ### New in v6.1
 
+
 * Fix for long urls in bibliography items not breaking correctly.
+
+* Added explanation of the difference between regular and [shotDOIs](https://shortdoi.org/) and why the latter cannot be used in bibliographies
+* Further increased hyphen penalty of title
 
 ### New in v6.0
 

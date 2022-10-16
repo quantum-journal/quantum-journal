@@ -600,11 +600,11 @@ FUNCTION { format.arxiv.hyperlink }
   % Args: str - The string to extract the handle from
   % Returns: str - The extracted arXiv handle
   % If the string starts with "arxiv:" or "arxiv" (or any capitalized version of these),
-  % the length-9 handle is extracted, otherwise the original string is returned.
+  % the length-10 handle is extracted, otherwise the original string is returned.
   duplicate$ #1 #6 substring$ "l" change.case$ "arxiv:" =
-    { #7 #9 substring$  }
+    { #7 #10 substring$  }
     { duplicate$ #1 #5 substring$ "l" change.case$ "arxiv" =
-      { #6 #9 substring$  }
+      { #6 #10 substring$  }
       'skip$
     if$
     }
