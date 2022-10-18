@@ -1150,7 +1150,7 @@ FUNCTION {format.url}
 	{ " url:~\url{" url * "}" * }
       if$
     }
-    { " url:~\url{" url * "}" * }
+    { " url:~\href{" url * "}{" * "https://" #8 shorturl chop.word * "}" * }
   if$
 }
 
