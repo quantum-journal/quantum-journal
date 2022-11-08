@@ -1135,7 +1135,11 @@ FUNCTION {format.code}
   %   including a link to the repository
   code empty$
     { "" }
-    { " code:~\href{" code * "}{" * extract.repo * format.version * format.commit * "}" * }
+    { code "l" change.case$ "github" contains.substring
+        { " code:~\href{" code * "}{" * extract.repo * format.version * format.commit * "}" * }
+        { " code:~\href{" code * "}{" * code * "}" * }
+      if$
+    }
   if$
 }
 
