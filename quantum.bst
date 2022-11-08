@@ -366,6 +366,10 @@ FUNCTION {fin.entry}
   % Args: str - Current string to write to the bbl file
   % Returns:
   add.period$
+  pagebackref
+    " Appearances:~" *
+    'skip$
+  if$
   write$
   newline$
 }
@@ -1744,6 +1748,7 @@ FUNCTION {begin.bib}
   % "Booleans" for the global config of DOI link printing and handling of warnings.
   #0 'explicit.doi.links :=
   #1 'warnings.are.errors :=
+  #0 'pagebackref :=
   preamble$ empty$
     'skip$
     { preamble$ "MakeDoiLinksExplicit" contains.substring
@@ -1757,6 +1762,12 @@ FUNCTION {begin.bib}
           "\newcommand{\DoNotMakeWarningsErrors}{}" write$ newline$
         }
         { #1 'warnings.are.errors := }
+      if$
+      preamble$ "PageBackRef" contains.substring
+        { #1 'pagebackref :=
+          "\newcommand{\PageBackRef}{}" write$ newline$
+        }
+        { #0 'pagebackref := }
       if$
       preamble$ write$ newline$
     }

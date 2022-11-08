@@ -240,13 +240,22 @@ If you want to turn off these errors raised from bibtex warnings, include the en
 \end{verbatim*}
 anywhere in the \emph{bibliography} (i.e. the \texttt{.bib} file) like one would include a reference.
 
-\emph{Note:} Commenting the above \texttt{@preamble} entry out via \texttt{\%} will \emph{not} deactivate it as bibtex does not attribute commenting functionality to \texttt{\%}. Instead, you can simply remove the leading \texttt{@}, as is currently done in the \texttt{.bib} file accompanying this document (\texttt{quantum\_bst\_demo.bib}).
+\emph{Note:} Commenting the above \texttt{@preamble} entry out via \texttt{\%} will \emph{not} deactivate it as bibtex does not attribute commenting functionality to \texttt{\%}. Instead, you can simply remove the leading \texttt{@}, as is currently done in the \texttt{.bib} file accompanying this document (\texttt{quantum-bibliographystyle-demo.bib}).
 
 \paragraph{Explicit DOI links}
 By default, and if the entry \texttt{doi} is provided for a \texttt{bibitem}, the quantum bibstyle will link to the DOI via the \texttt{journal/volume/issue} part of the citation for articles and via the a) \texttt{volume/chapter/pages} or b) \texttt{number/series} or c) \texttt{publisher} part for books, with a) taking precedence if provided over b) taking precedence if provided over c).
 This behaviour can be changed to output explicit DOI links instead. To do so, include the entry
 \begin{verbatim*}
 @preamble{"\MakeDoiLinksExplicit"}
+\end{verbatim*}
+anywhere in the \emph{bibliography} (i.e. the \texttt{.bib} file) like one would include a reference.
+
+\paragraph{Indicator for page backreferences}
+The \texttt{hyperref} package, for example, allows for the option \texttt{pagebackref}, which adds links to each bibliography entry that point from the entry to its citations throughout the document.
+When this is used, it may be nice to have a word towards the end of the entry that indicates what the -- otherwise bare -- numbers added to the entry mean.
+The word ``Appearances'' can be added automatically by including the entry
+\begin{verbatim*}
+@preamble{"\PageBackRef"}
 \end{verbatim*}
 anywhere in the \emph{bibliography} (i.e. the \texttt{.bib} file) like one would include a reference.
 
