@@ -21,7 +21,7 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \def\quantumarticleversion{6.1}
 \ProvidesClass{quantumarticle}
-[2022/10/15 v\quantumarticleversion
+[2022/11/08 v\quantumarticleversion
 class for Quantum - the open journal for quantum science (https://quantum-journal.org)]
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
