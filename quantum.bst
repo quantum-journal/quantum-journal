@@ -80,6 +80,9 @@ INTEGERS
     explicit.doi.links
     %  - whether to raise compilation errors from (many) BibTeX warnings
     warnings.are.errors
+    %  - whether to append the word "Appearances" to entries, for hyperref's 
+    %  pagebackref option
+    pagebackref
 
     % pointers
     nameptr
@@ -367,7 +370,7 @@ FUNCTION {fin.entry}
   % Returns:
   add.period$
   pagebackref
-    " Appearances:~" *
+    { " Appearances:~" * }
     'skip$
   if$
   write$
