@@ -6,7 +6,7 @@
 %% Copyright 2016,2017,2018,2019,2020,2021,2022
 %% Verein zur Förderung des Open Access Publizierens in den Quantenwissenschaften
 %% (https://quantum-journal.org/about/)
-%% 
+%%
 %% It is derived from `article.cls' available from
 %% https://www.ctan.org/pkg/article
 %%
@@ -17,11 +17,11 @@
 %%    http://www.latex-project.org/lppl.txt
 %% and version 1.3c or later is part of all distributions of LaTeX
 %% version 2005/12/01 or later.
-%% 
+%%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\def\quantumarticleversion{6.0}
+\def\quantumarticleversion{6.1}
 \ProvidesClass{quantumarticle}
-[2021/12/07 v\quantumarticleversion
+[2022/11/08 v\quantumarticleversion
 class for Quantum - the open journal for quantum science (https://quantum-journal.org)]
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
@@ -91,7 +91,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \DeclareOptionX{titlepage}{\toggletrue{@titlepage}}
 \DeclareOptionX{notitlepage}{\togglefalse{@titlepage}}
 
-\DeclareOptionX{onecolumn}{\boolfalse{@twocolumn}}	
+\DeclareOptionX{onecolumn}{\boolfalse{@twocolumn}}
 \DeclareOptionX{twocolumn}{\booltrue{@twocolumn}}
 
 \DeclareOptionX{leqno}{\input{leqno.clo}}
@@ -232,7 +232,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \ExecuteOptionsX{10pt,oneside,twocolumn,notitlepage,final}
 \ProcessOptionsX
 % Throw an error if no paper size was manually specified
-% Simply defaulting to a4paper gives inconsistent behaviour when submitting to the arXiv as the arXiv seems to sometimes set a4paper and sometimes letterpaper, maybe depending on the geographic region of the submitter? 
+% Simply defaulting to a4paper gives inconsistent behaviour when submitting to the arXiv as the arXiv seems to sometimes set a4paper and sometimes letterpaper, maybe depending on the geographic region of the submitter?
 \iftoggle{@papersizespecified}
 {
 }
@@ -270,7 +270,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
     {%
       \@pdfoutputerror%
     }
-  } 
+  }
   \ifinlist{#2}{\@packageblacklist}{
     \ifcsdef{@packageblacklisterrormessage#2}{
       \ClassError{quantumarticle}{\csname @packageblacklisterrormessage#2\endcsname}{}}{}
@@ -293,7 +293,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \@highpenalty 301
 
 \AfterEndPreamble{
-	% avoid use of today	
+	% avoid use of today
 	\ifcsdef{today}
 	{
 		\iftoggle{@allowtoday}
@@ -354,9 +354,9 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 
 \ltx@ifpackageloaded{ltxgrid}{
   \@ifpackagelater{ltxgrid}{2020/10/03}
-  {}% on 2020/10/03 ltxgrid 4.2e (or 4.2d?) was released, which not only fixes the bug we try to work around here but also the fix below causes an error from this version on. 
+  {}% on 2020/10/03 ltxgrid 4.2e (or 4.2d?) was released, which not only fixes the bug we try to work around here but also the fix below causes an error from this version on.
   {
-	%repair what ltxutils has destroyed (see https://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend) 
+	%repair what ltxutils has destroyed (see https://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend)
 	\patchcmd\enddocument
 	{\deadcycles}
 	{\let\AfterEndDocument\@firstofone
@@ -481,7 +481,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\noindent%
 	\begin{minipage}{\textwidth}%
           \iftoggle{@titlepage}{\centering}{}%
-          \noindent{\huge\hyphenpenalty=5000 \@printtitle\par}%
+          \noindent{\huge\hyphenpenalty=50000 \@printtitle\par}%
         \end{minipage}%
 	\vskip 1.5em%
 	\iftoggle{@titlepage}{}{\begin{flushleft}}%
@@ -762,7 +762,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\@starttoc{toc}%
 }
 
-\newcommand*\l@part[2]{%	
+\newcommand*\l@part[2]{%
 	\ifnumgreater{\c@tocdepth}{-2}{\relax
 		\addpenalty\@secpenalty
 		\addvspace{2.25em \@plus\p@}%
@@ -960,8 +960,8 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \pagenumbering{arabic}
 \ifbool{@twoside}{}{\raggedbottom}
 \ifbool{@twocolumn}{
-	\twocolumn 
-	\sloppy 
+	\twocolumn
+	\sloppy
 	\flushbottom
 }{
 	\onecolumn
@@ -1185,7 +1185,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 % email, homepage, and thanks handling
 % be careful - this section is highly sensitive to the positioning of the % marks
 \def\@printauthorextrainfo#1{
-	\csname @authorname#1\endcsname: 
+	\csname @authorname#1\endcsname:
 	\ifcsdef{author#1emails}
 	{%
 		\forlistcsloop{\@@spaceafter}{author#1emails}%
@@ -1302,7 +1302,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 		% \fill[xshift=.95\@eQ] (0,0.5) node (eastend) {} -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- ++(-\@sl,-0.5) -- ++(\@xt,0) -- cycle;
 		% \begin{scope}
 		%   \clip[xshift=.95\@eQ,overlay] (0.5\@xt,0.5) -- ++(-\@sl,-0.5) -- (0,0) -- (0.5\@xt,0.5) ++(-2\@xt,0) -- ++(-\@sl,-0.5) -- ($(-2*\@sl,0)$) -- ++(\@sl,0.5) --cycle;
-		%   \fill[xshift=.95\@eQ] (0,0) -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- cycle;    
+		%   \fill[xshift=.95\@eQ] (0,0) -- ++(-\@sl,0.5) -- ++(-\@xt,0) -- ++(\@sl,-0.5) -- cycle;
 		% \end{scope}
 		\node[overlay,anchor=base west,opacity=0] {Q};
 		% <> leg in front
@@ -1321,7 +1321,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 		\fill[shift={($(current bounding box.south east)+(0.110\@eQ,0)$)}] (\@cw,0) -- ++($(0,\@ch)-(0,\@rl)$) to[out=90,in=0,looseness=1.22] ++($(-1.22\@rl,\@rl)$) -- ($(\@w,\@ch)$) -- ++(0,-\@w) -- ($(1.22\@rl,\@ch-\@w)$) to[out=0,in=90,looseness=1.3,rounded corners=0] ($(\@cw,\@ch)-(\@w,\@rl)$) -- ($(\@cw,0)-(\@w,-\@w)$) --
 		($(\@rl,\@w)$) to[out=180,in=-100,looseness=0.95,rounded corners=0] ($(1.05\@w,0.33\@ch)$) to[out=80,in=176,looseness=1.0] ($(\@cw-\@w,0.47\@ch)$) to[rounded corners=0] ++(0,-\@cr) to[rounded corners=0] ++($(0,\@cr+\@w)$) to[out=176,in=0] ($(1.2\@rl,0.48\@ch)+(0,\@w)$) to[out=180,in=90,rounded corners=0] ($(0.05\@w,0.33\@ch)$) to[out=-90,in=180,looseness=1.1,rounded corners=0] ($(\@rl,0)$) -- cycle;
 		\node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {a};
-		% \fill[shift={($(current bounding box.south east)+(0.110\@eQ,0)$)}] (\@cw,0) -- ++($(0,\@ch)-(0,\@rl)$) to[out=90,in=0,looseness=1.22] ++($(-1.22\@rl,\@rl)$) -- ($(\@w,\@ch-0.1\@w)$) -- ++(0.1\@w,-\@w) -- ($(1.22\@rl,\@ch-\@w)$) to[out=0,in=90,looseness=1.3,rounded corners=0] ($(\@cw,\@ch)-(\@w,\@rl)$) -- ($(\@cw,0)-(\@w,-\@w)$) -- 
+		% \fill[shift={($(current bounding box.south east)+(0.110\@eQ,0)$)}] (\@cw,0) -- ++($(0,\@ch)-(0,\@rl)$) to[out=90,in=0,looseness=1.22] ++($(-1.22\@rl,\@rl)$) -- ($(\@w,\@ch-0.1\@w)$) -- ++(0.1\@w,-\@w) -- ($(1.22\@rl,\@ch-\@w)$) to[out=0,in=90,looseness=1.3,rounded corners=0] ($(\@cw,\@ch)-(\@w,\@rl)$) -- ($(\@cw,0)-(\@w,-\@w)$) --
 		% ($(\@rl,\@w)$) to[out=180,in=-100,looseness=0.95,rounded corners=0] ($(1.05\@w,0.33\@ch)$) to[out=80,in=176,looseness=1.0] ($(\@cw-\@w,0.47\@ch)$) to[rounded corners=0] ++(0,-\@cr) to[rounded corners=0] ++($(0,\@cr+\@w)$) to[out=176,in=0] ($(1.2\@rl,0.48\@ch)+(0,\@w)$) to[out=180,in=90,rounded corners=0] ($(0.05\@w,0.33\@ch)$) to[out=-90,in=180,looseness=1.1,rounded corners=0] ($(\@rl,0)$) -- cycle;
 		% \node[overlay,anchor=base east,opacity=0] at (current bounding box.south east) {a};
 		%n
@@ -1362,7 +1362,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	}
 }
 \AtEndPreamble{
-	\providecommand{\@elsearticlecommandsnotsupportederror}{\ClassError{quantumarticle}{The elsearticle style \string\cortext{}, \string\corref{}, \string\fntext{}, \string\fnref{}, \string\tnotetext{}, and \string\tnoteref{} commands are not supported by quantumarticle. Please refrain from using footnotes in the title part of your document and use the \string\tahnks{} command for author footnotes instead.}{}}
+	\providecommand{\@elsearticlecommandsnotsupportederror}{\ClassError{quantumarticle}{The elsearticle style \string\cortext{}, \string\corref{}, \string\fntext{}, \string\fnref{}, \string\tnotetext{}, and \string\tnoteref{} commands are not supported by quantumarticle. Please refrain from using footnotes in the title part of your document and use the \string\thanks{} command for author footnotes instead.}{}}
 	\providecommand{\cortext}[2][]{\@elsearticlecommandsnotsupportederror} %corresponding author information
 	\providecommand{\corref}[1]{\@elsearticlecommandsnotsupportederror} %corresponding author information reference
 	\providecommand{\fntext}[2][]{\@elsearticlecommandsnotsupportederror} %author footnote
@@ -1379,7 +1379,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	{\PassOptionsToPackage{allcolors=quantumviolet}{hyperref}}
 
 \ifcsdef{pdfoutput}
-{	
+{
 	\ifnumequal{\pdfoutput}{0}
 	{}
 	{\PassOptionsToPackage{breaklinks=true}{hyperref}}%setting this option produces a warning if \pdfoutput=0
@@ -1391,7 +1391,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 
 \AtBeginDocument{%
 
-	\RequirePackage{hyperref}%	
+	\RequirePackage{hyperref}%
 
 	\@ifpackageloaded{natbib}{%
 		\setlength{\bibsep}{0pt plus 0.3ex}
@@ -1427,7 +1427,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 {
 	\PassOptionsToPackage{numbers}{natbib}
 	\PassOptionsToPackage{sort&compress}{natbib}
-	
+
 	\providecommand{\ao}{Appl.\  Opt.}
 	\providecommand{\ap}{Appl.\  Phys.}
 	\providecommand{\apl}{Appl.\ Phys.\ Lett.}

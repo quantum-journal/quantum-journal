@@ -80,6 +80,9 @@ INTEGERS
     explicit.doi.links
     %  - whether to raise compilation errors from (many) BibTeX warnings
     warnings.are.errors
+    %  - whether to append the word "Appearances" to entries, for hyperref's 
+    %  pagebackref option
+    pagebackref
 
     % pointers
     nameptr
@@ -366,6 +369,10 @@ FUNCTION {fin.entry}
   % Args: str - Current string to write to the bbl file
   % Returns:
   add.period$
+  pagebackref
+    { " Appearances:~" * }
+    'skip$
+  if$
   write$
   newline$
 }
@@ -600,11 +607,11 @@ FUNCTION { format.arxiv.hyperlink }
   % Args: str - The string to extract the handle from
   % Returns: str - The extracted arXiv handle
   % If the string starts with "arxiv:" or "arxiv" (or any capitalized version of these),
-  % the length-9 handle is extracted, otherwise the original string is returned.
+  % the length-10 handle is extracted, otherwise the original string is returned.
   duplicate$ #1 #6 substring$ "l" change.case$ "arxiv:" =
-    { #7 #9 substring$  }
+    { #7 #10 substring$  }
     { duplicate$ #1 #5 substring$ "l" change.case$ "arxiv" =
-      { #6 #9 substring$  }
+      { #6 #10 substring$  }
       'skip$
     if$
     }
@@ -1135,7 +1142,11 @@ FUNCTION {format.code}
   %   including a link to the repository
   code empty$
     { "" }
-    { " code:~\href{" code * "}{" * extract.repo * format.version * format.commit * "}" * }
+    { code "l" change.case$ "github" contains.substring
+        { " code:~\href{" code * "}{" * extract.repo * format.version * format.commit * "}" * }
+        { " code:~\href{" code * "}{" * code * "}" * }
+      if$
+    }
   if$
 }
 
@@ -1147,7 +1158,7 @@ FUNCTION {format.url}
   shorturl empty$
     { url empty$
         { "" }
-        { " url:~\href{" url * "}{" * "https://" #8 url chop.word * "}" * }
+	{ " url:~\url{" url * "}" * }
       if$
     }
     { " url:~\href{" url * "}{" * "https://" #8 shorturl chop.word * "}" * }
@@ -1740,6 +1751,7 @@ FUNCTION {begin.bib}
   % "Booleans" for the global config of DOI link printing and handling of warnings.
   #0 'explicit.doi.links :=
   #1 'warnings.are.errors :=
+  #0 'pagebackref :=
   preamble$ empty$
     'skip$
     { preamble$ "MakeDoiLinksExplicit" contains.substring
@@ -1753,6 +1765,12 @@ FUNCTION {begin.bib}
           "\newcommand{\DoNotMakeWarningsErrors}{}" write$ newline$
         }
         { #1 'warnings.are.errors := }
+      if$
+      preamble$ "PageBackRef" contains.substring
+        { #1 'pagebackref :=
+          "\newcommand{\PageBackRef}{}" write$ newline$
+        }
+        { #0 'pagebackref := }
       if$
       preamble$ write$ newline$
     }
