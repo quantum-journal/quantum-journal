@@ -879,11 +879,15 @@ FUNCTION {format.vol.pages}
   % Args:
   % Returns: The volume and page numbers as a single string
   volume field.or.null boldfont
+  duplicate$ empty$
+    'skip$
+    { " " swap$ * }
+  if$
   pages empty$
     'skip$
     { duplicate$ empty$
         { pop$ mid.sentence output.state = format.pages }
-        { " " swap$ * ", " * pages n.dashify * }
+        { ", " * pages n.dashify * }
       if$
     }
   if$
