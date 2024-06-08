@@ -650,7 +650,7 @@ FUNCTION {add.doi.link}
 { % Add a hyperlink referring to a DOI reference to a string, using the doi field.
   % Args: str - String to add the hyperlink to
   % Returns: str - Input string with hyperlink added
-  "\href{https://dx.doi.org/" doi * "}{" * swap$ * "}" *
+  "\href{https://doi.org/" doi * "}{" * swap$ * "}" *
 }
 
 FUNCTION {n.dashify}
