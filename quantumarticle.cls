@@ -347,6 +347,8 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 	\RequirePackage{ltxgrid}%ltxgrid should be loaded before etoolbox, otherwise terrible things can happen: https://tex.stackexchange.com/questions/343856/biblatex-produces-incomplete-bcf-with-biber-backend?noredirect=1#comment843815_343856 but if this is actually done, even more terrible things happen, so we partially repair what ltxgrid messes up below...
 	\newcommand*{\twocolumn}[1][]{#1\twocolumngrid}
 	\newcommand*{\onecolumn}{\onecolumngrid}
+	%restore the kernel definition of \addtocontents that ltxutil replaced, because biblatex (at least 3.19) can only patch the kernel definition
+	\long\def\addtocontents#1#2{\protected@write\@auxout{\let\label\@gobble \let\index\@gobble \let\glossary\@gobble}{\string\@writefile{#1}{#2}}}
 \fi
 \let\if@twocolumn\origif@twocolumn
 
