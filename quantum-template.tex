@@ -8,6 +8,8 @@
 
 \usepackage{tikz}
 \usepackage{lipsum}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 \newtheorem{theorem}{Theorem}
 
@@ -72,6 +74,18 @@ See Fig.~\ref{fig:figure1} for an example of how to include figures.
 Feel free to place them at the top or bottom of the page, or in the middle of a paragraph as you see fit.
 Try to place them on the same page as the text referring to them.
 A figure on the first page can help readers remember and recognize your work more easily.
+
+\section{Algorithms}
+The \texttt{algorithm} package's floating environment is incompatible with the \texttt{ltxgrid} package used by \texttt{quantumarticle}. To work around this, place a non-floating \texttt{algorithm} environment inside a standard floating \texttt{figure}, as in Algorithm~\ref{alg:example}.
+\begin{figure}[t]
+  \begin{algorithm}[H]
+    \caption{Example algorithm}
+    \label{alg:example}
+    \begin{algorithmic}
+      \State Most important line.
+    \end{algorithmic}
+  \end{algorithm}
+\end{figure}
 
 \section{Sectioning and equations}
 Sections, subsections, subsubsections, and paragraphs should be typeset with the standard LaTeX commands.

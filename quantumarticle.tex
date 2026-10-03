@@ -177,6 +177,20 @@
 	\subsubsection{Tables}
 	Tables are typeset using the standard \texttt{table} environment for single-column tables and \texttt{table*} for multi-column tables.
 
+	\subsubsection{Algorithms}
+	The floating environment provided by the \texttt{algorithm} package is incompatible with the \texttt{ltxgrid} package used by \texttt{quantumarticle}, and can cause compilation errors. To typeset a floating algorithm, use the \texttt{algorithm} environment with the \texttt{[H]} placement specifier inside a standard \texttt{figure} environment, as shown in the template:
+	\begin{verbatim}
+	\begin{figure}[t]
+	  \begin{algorithm}[H]
+	    \caption{My algorithm}
+	    \begin{algorithmic}
+	      \State Most important line.
+	    \end{algorithmic}
+	  \end{algorithm}
+	\end{figure}
+	\end{verbatim}
+	This makes the algorithm itself non-floating while the surrounding figure can float normally.
+
 	\subsection{Plots}
 	Quantum provides a Jupyter notebook to create plots that integrate seamlessly with \texttt{quantumarticle}.
 
