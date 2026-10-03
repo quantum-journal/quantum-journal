@@ -953,9 +953,6 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 \PassOptionsToPackage{doi=true}{biblatex}
 
 \AtBeginDocument{%
-
-	\RequirePackage{hyperref}%	
-
 	\@ifpackageloaded{natbib}{%
 		\setlength{\bibsep}{0pt plus 0.3ex}
 		\@ifpackageloaded{doi}{}{%
@@ -988,6 +985,7 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 
 \AtEndPreamble{
 	\RequirePackage{caption}
+	\RequirePackage{hyperref}
 }
 
 \begingroup
