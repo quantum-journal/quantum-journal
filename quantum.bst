@@ -83,6 +83,12 @@ INTEGERS
     %  - whether to append the word "Appearances" to entries, for hyperref's 
     %  pagebackref option
     pagebackref
+    %  - maximum number of authors to show (zero means unlimited)
+    author.limit
+    authors.only
+    truncated.names
+    author.limit.temp
+    author.limit.digit
 
     % pointers
     nameptr
@@ -264,6 +270,63 @@ FUNCTION {chop.word}
     { s length #1 + global.max$ substring$ }
     's
   if$
+}
+
+FUNCTION {parse.digit}
+{ % Convert a single decimal digit string to an integer
+  duplicate$ "0" =
+    { pop$ #0 }
+    { duplicate$ "1" =
+        { pop$ #1 }
+        { duplicate$ "2" =
+            { pop$ #2 }
+            { duplicate$ "3" =
+                { pop$ #3 }
+                { duplicate$ "4" =
+                    { pop$ #4 }
+                    { duplicate$ "5" =
+                        { pop$ #5 }
+                        { duplicate$ "6" =
+                            { pop$ #6 }
+                            { duplicate$ "7" =
+                                { pop$ #7 }
+                                { duplicate$ "8" =
+                                    { pop$ #8 }
+                                    { duplicate$ "9" =
+                                        { pop$ #9 }
+                                        { pop$ #0 }
+                                      if$
+                                    }
+                                  if$
+                                }
+                              if$
+                            }
+                          if$
+                        }
+                      if$
+                    }
+                  if$
+                }
+              if$
+            }
+          if$
+        }
+      if$
+    }
+  if$
+}
+
+FUNCTION {append.author.limit.digit}
+{ % Append a digit to author.limit
+  'author.limit.digit :=
+  #0 'author.limit.temp :=
+  #0 'ptr :=
+  { ptr #10 < }
+    { author.limit author.limit.temp + 'author.limit.temp :=
+      ptr #1 + 'ptr :=
+    }
+  while$
+  author.limit.temp author.limit.digit + 'author.limit :=
 }
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
@@ -525,6 +588,15 @@ FUNCTION {format.names}
   #1 'nameptr :=
   s num.names$ 'numnames :=
   numnames 'namesleft :=
+  #0 'truncated.names :=
+  author.limit #0 >
+  authors.only #0 > and
+  numnames author.limit > and
+    { author.limit 'namesleft :=
+      #1 'truncated.names :=
+    }
+    'skip$
+  if$
   % Iterate over names
   { namesleft #0 > }
     { s nameptr "{ff~}{vv~}{ll}{, jj}" format.name$ 't :=
@@ -535,23 +607,34 @@ FUNCTION {format.names}
               ", " * t *
             }
             { % If there is only the current name left, use "and" or "et al."
-              numnames #2 >
-                { % Add a comma before "and" if there were more than two names
-                  "," *
+              truncated.names
+                { ", " * t * " et~al." * }
+                { numnames #2 >
+                    { % Add a comma before "and" if there were more than two names
+                      "," *
+                    }
+                    'skip$
+                  if$
+                  t "others" =
+                    { % Replace "and others" by "et~al."
+                      " et~al." *
+                    }
+                    { " and " * t * }
+                  if$
                 }
-                'skip$
-              if$
-              t "others" =
-                { % Replace "and others" by "et~al."
-                  " et~al." *
-                }
-                { " and " * t * }
               if$
             }
           if$
         }
         { % Simply write the first name to buffer
-          t
+          truncated.names
+            { namesleft #1 =
+                { t " et~al." * }
+                { t }
+              if$
+            }
+            { t }
+          if$
         }
       if$
       nameptr #1 + 'nameptr :=
@@ -567,7 +650,10 @@ FUNCTION {format.authors}
   % If the author field is empty, the empty string is returned instead.
   author empty$
     { "" }
-    { author format.names }
+    { #1 'authors.only :=
+      author format.names
+      #0 'authors.only :=
+    }
   if$
 }
 
@@ -579,6 +665,7 @@ FUNCTION {format.editors}
   editor empty$
     { "" }
     {
+      #0 'authors.only :=
       editor format.names
       ", editor" *
       % Add plural "s" if multiple editors are given
@@ -1752,6 +1839,7 @@ FUNCTION {begin.bib}
   #0 'explicit.doi.links :=
   #1 'warnings.are.errors :=
   #0 'pagebackref :=
+  #0 'author.limit :=
   preamble$ empty$
     'skip$
     { preamble$ "MakeDoiLinksExplicit" contains.substring
@@ -1771,6 +1859,25 @@ FUNCTION {begin.bib}
           "\newcommand{\PageBackRef}{}" write$ newline$
         }
         { #0 'pagebackref := }
+      if$
+      preamble$ 't :=
+      { t empty$ not }
+        { t #1 #12 substring$ "\MaxAuthors{" =
+            { t #13 global.max$ substring$ 't :=
+              #0 'author.limit :=
+              { t empty$ not t #1 #1 substring$ "}" = not and }
+                { t #1 #1 substring$ parse.digit append.author.limit.digit
+                  t #2 global.max$ substring$ 't :=
+                }
+              while$
+            }
+            { t #2 global.max$ substring$ 't :=             }
+          if$
+        }
+      while$
+      preamble$ "MaxAuthors{" contains.substring
+        { "\newcommand{\MaxAuthors}[1]{}" write$ newline$ }
+        'skip$
       if$
       preamble$ write$ newline$
     }
