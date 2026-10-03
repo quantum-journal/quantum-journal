@@ -1389,9 +1389,11 @@ class for Quantum - the open journal for quantum science (https://quantum-journa
 %enable DOIs if biblatex is used by default
 \PassOptionsToPackage{doi=true}{biblatex}
 
-\AtBeginDocument{%
-
+\AtEndPreamble{%
 	\RequirePackage{hyperref}%
+}
+
+\AtBeginDocument{%
 
 	\@ifpackageloaded{natbib}{%
 		\setlength{\bibsep}{0pt plus 0.3ex}

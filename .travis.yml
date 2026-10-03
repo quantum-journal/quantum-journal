@@ -28,6 +28,8 @@ addons:
         # apt errors.
         - cm-super
 script:
+    # Test that quantumarticle loads hyperref before the begin-document hook.
+    - pdflatex -interaction=nonstopmode -halt-on-error tests/quantumarticle-no-hyperref.tex
     # Test whether the template compiles.
     - pdflatex -interaction=nonstopmode -halt-on-error quantum-template.tex
     - pdflatex -interaction=nonstopmode -halt-on-error quantum-template.tex
