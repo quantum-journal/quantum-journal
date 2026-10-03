@@ -200,6 +200,13 @@ Optionally, a \texttt{year/date} as well as an \texttt{eprint} reference may be 
 
 \section{Customization}\label{sec:customization}
 
+\paragraph{Maximum number of authors}
+By default, the quantum bibstyle prints all authors. To show only the first three authors when a reference has more than three, include the entry
+\begin{verbatim*}
+@preamble{"\MaxAuthors{3}"}
+\end{verbatim*}
+anywhere in the \emph{bibliography} (i.e. the \texttt{.bib} file). The omitted authors are indicated by ``et al.'' Editors are not affected by this option.
+
 \paragraph{Warnings raise Errors}
 By default, the quantum bibstyle tries to catch as many bibtex warnings and raises a proper compiling error if any warnings are found. This is to avoid silent bibtex warnings that yield partial reference outputs while hiding the warnings raised by bibtex in the \texttt{.blg} file.
 Note that not all warnings are caught, though. In particular, syntax errors like a missing comma in a \texttt{bibitem}, which cause bibtex to interrupt for that item alone, are only caught if they lead to required fields being missing.
