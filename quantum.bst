@@ -356,7 +356,9 @@ FUNCTION {output.bibitem}
   % Returns: str - An empty string
   newline$
   % Write the header for a new bibitem
-  "\bibitem{" write$
+  "\bibitem[" write$
+  format.citation.label write$
+  "]{" write$
   cite$ write$
   "}" write$
   newline$
@@ -569,6 +571,40 @@ FUNCTION {format.authors}
     { "" }
     { author format.names }
   if$
+}
+
+FUNCTION {format.citation.names}
+{ author empty$
+    { editor empty$
+        { key empty$
+            { cite$ }
+            { key }
+          if$
+        }
+        { editor format.names }
+      if$
+    }
+    { author format.names }
+  if$
+}
+
+FUNCTION {format.citation.year}
+{ year empty$
+    { date empty$
+        { "n.d." }
+        { date #1 #4 substring$ }
+      if$
+    }
+    { year }
+  if$
+}
+
+FUNCTION {format.citation.label}
+{ format.citation.names
+  duplicate$ "(" *
+  format.citation.year *
+  ")" *
+  swap$ *
 }
 
 FUNCTION {format.editors}
